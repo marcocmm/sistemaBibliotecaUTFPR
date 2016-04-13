@@ -13,13 +13,13 @@ import javax.persistence.Persistence;
  *
  * @author a1602063
  */
-public abstract class GenericDao<T> {
+public abstract class GenericDAO<T> {
 
     public static EntityManager entityManager = Persistence.createEntityManagerFactory("UP").createEntityManager();
 
     private Class clazz;
 
-    public GenericDao(Class clazz) {
+    public GenericDAO(Class clazz) {
         this.clazz = clazz;
     }
 
