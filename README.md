@@ -1,1 +1,1 @@
-#Sisteminha de controle das salinhas da bilioteca
+#Sistema Web de controle das salas de estudos da bilioteca
