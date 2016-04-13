@@ -1,1 +1,1 @@
-#Sistema Web de controle das salas de estudos da bilioteca
+#Sistema Web de controle das salas de estudos da biblioteca
