@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.edu.utfpr.biblioteca.salas.model;
+package br.edu.utfpr.biblioteca.salas.dao;
 
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -13,13 +13,13 @@ import javax.persistence.Persistence;
  *
  * @author a1602063
  */
-public abstract class GenericDAO<T> {
+public abstract class GenericDao<T> {
 
     public static EntityManager entityManager = Persistence.createEntityManagerFactory("UP").createEntityManager();
 
     private Class clazz;
 
-    public GenericDAO(Class clazz) {
+    public GenericDao(Class clazz) {
         this.clazz = clazz;
     }
 
