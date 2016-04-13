@@ -8,22 +8,29 @@ package br.edu.utfpr.biblioteca.salas.model;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 
 @Entity
 @Table(name="Reservas")
 public class Reserva {
-    @Column(name="id")
+    @Id
+    @GeneratedValue
+    @Column(name="id", nullable = false)
     private int id;
-    @Column(name="quantidade_alunos")
+    @Column(name="quantidade_alunos", nullable = false)
     private int quantidadeAlunos;
-    @Column(name="data_inicial")
+    @Temporal(javax.persistence.TemporalType.DATE)
+    @Column(name="data_inicial", nullable = false)
     private Date dataInicial;
-    @Column(name="data_final")
+    @Temporal(javax.persistence.TemporalType.DATE)
+    @Column(name="data_final", nullable = false)
     private Date dataFinal;
-    @Column(name="estudante_ra")
+    @Column(name="estudante_ra", nullable = false, length = 10)
     private Estudante estudanteRA;
-    @Column(name="sala_id")
+    @Column(name="sala_id", nullable = false)
     private Sala sala;
 
     public int getId() {
