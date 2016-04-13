@@ -18,7 +18,7 @@ public class Sala {
         return id;
     }
 
-    public void setPontos(int id) {
+    public void setId(int id) {
         this.id = id;
     }
 
