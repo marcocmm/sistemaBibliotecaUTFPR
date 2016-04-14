@@ -22,7 +22,12 @@
             <id>EclipseLink</id>
             <url>http://download.eclipse.org/rt/eclipselink/maven.repo</url>
         </repository>
-    
+        <repository>
+            <url>http://repository.primefaces.org/</url>
+            <id>PrimeFaces-maven-lib</id>
+            <layout>default</layout>
+            <name>Repository for library PrimeFaces-maven-lib</name>
+        </repository>
     </repositories>
     
     <dependencies>
@@ -40,11 +45,11 @@
             <version>1.9.5</version>
         </dependency>
         
-        <dependency>
+<!--        <dependency>
             <groupId>org.eclipse.persistence</groupId>
             <artifactId>eclipselink</artifactId>
             <version>2.5.2</version>
-        </dependency>
+        </dependency>-->
         
         <dependency>
             <groupId>org.eclipse.persistence</groupId>
@@ -52,7 +57,16 @@
             <version>2.5.2</version>
             <scope>provided</scope>
         </dependency>
-        
+        <dependency>
+            <groupId>org.glassfish</groupId>
+            <artifactId>javax.faces</artifactId>
+            <version>2.2.7</version>
+        </dependency>
+        <dependency>
+            <groupId>org.primefaces</groupId>
+            <artifactId>primefaces</artifactId>
+            <version>5.0</version>
+        </dependency>
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
