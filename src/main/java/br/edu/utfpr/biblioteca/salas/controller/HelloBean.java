@@ -1,3 +1,5 @@
+package br.edu.utfpr.biblioteca.salas.controller;
+
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
