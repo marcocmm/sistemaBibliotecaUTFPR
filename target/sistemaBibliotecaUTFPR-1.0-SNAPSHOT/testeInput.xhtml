@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Cadastro</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <p:panelGrid columns="3">
+                <p:outputLabel value="Nome:"/>
+                <p:inputText id="nome" value="#{pessoaMB.pessoa.nome}" size="20"  required="true" requiredMessage="Campo Obrigatório"> 
+                    <f:validateLength minimum="2" />
+                </p:inputText>
+                <p:message for="nome" />
+                <p:outputLabel value="Endereço:"/>
+                <p:inputText id="end" value="#{pessoaMB.pessoa.endereco}" size="20" required="true" requiredMessage="Campo Obrigatório"/>
+                <p:message for="end" />
+                <p:outputLabel value="Número:"/>
+                <p:inputText id="nro" value="#{pessoaMB.pessoa.numero}" size="20" />
+                <p:message for="nro" /> 
+                <p:outputLabel value="Telefone:"/>
+                <p:inputText id="tel" value="#{pessoaMB.pessoa.telefone}" size="20" />
+                <p:message for="tel" />
+                <p:outputLabel value="Cidade:"/>
+                <p:inputText id="mun" value="#{pessoaMB.pessoa.cidade}" size="20" required="true" requiredMessage="Campo Obrigatório"/>
+                <p:message for="mun" />
+                <p:commandButton value="Envar" id="nonAjax" actionListener="#{pessoaMB.salvarPessoa}" ajax="false" icon="ui-icon-check"/>
+                <p:commandButton id="btnL" value="Limpar" type="reset" ajax="false"/>
+            </p:panelGrid>
+        </h:form>
+
+        <br />
+        <br />
+        <p:panelGrid columns="1">
+            <h:dataTable id="tablePessoa" value="#{pessoaMB.pessoaLista}" var="p" title="Pessoas Cadastradas" border="1" rows="10" >
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="NOME" />
+                    </f:facet>
+                    <h:outputText value="#{p.nome}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="ENDEREÇO" />
+                    </f:facet>
+                    <h:outputText value="#{p.endereco}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="NÚMERO" />
+                    </f:facet>
+                    <h:outputText value="#{p.numero}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="TELEFONE" />
+                    </f:facet>
+                    <h:outputText value="#{p.telefone}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="CIDADE" />
+                    </f:facet>
+                    <h:outputText value="#{p.cidade}"/>
+                </h:column>
+            </h:dataTable>
+        </p:panelGrid>
+    </h:body>
+</html>
