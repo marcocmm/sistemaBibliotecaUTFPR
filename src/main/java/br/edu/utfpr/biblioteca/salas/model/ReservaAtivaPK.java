@@ -20,7 +20,7 @@ import javax.validation.constraints.Size;
  * @author mateus
  */
 @Embeddable
-public class ReservasAtivasPK implements Serializable {
+public class ReservaAtivaPK implements Serializable {
 
     @Basic(optional = false)
     @NotNull
@@ -33,10 +33,10 @@ public class ReservasAtivasPK implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date reservaDataInicial;
 
-    public ReservasAtivasPK() {
+    public ReservaAtivaPK() {
     }
 
-    public ReservasAtivasPK(String reservaEstudanteRa, Date reservaDataInicial) {
+    public ReservaAtivaPK(String reservaEstudanteRa, Date reservaDataInicial) {
         this.reservaEstudanteRa = reservaEstudanteRa;
         this.reservaDataInicial = reservaDataInicial;
     }
@@ -68,10 +68,10 @@ public class ReservasAtivasPK implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ReservasAtivasPK)) {
+        if (!(object instanceof ReservaAtivaPK)) {
             return false;
         }
-        ReservasAtivasPK other = (ReservasAtivasPK) object;
+        ReservaAtivaPK other = (ReservaAtivaPK) object;
         if ((this.reservaEstudanteRa == null && other.reservaEstudanteRa != null) || (this.reservaEstudanteRa != null && !this.reservaEstudanteRa.equals(other.reservaEstudanteRa))) {
             return false;
         }

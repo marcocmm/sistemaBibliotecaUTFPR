@@ -33,7 +33,7 @@ import javax.validation.constraints.NotNull;
 @Table(name = "Reservas")
 @NamedQueries({
     @NamedQuery(name = "Reservas.findAll", query = "SELECT r FROM Reservas r")})
-public class Reservas implements Serializable {
+public class Reserva implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -56,26 +56,26 @@ public class Reservas implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataFinal;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "reservaId")
-    private List<ReservasAtivas> reservasAtivasList;
+    private List<ReservaAtiva> reservasAtivasList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "reservas")
-    private List<ReservasAtivas> reservasAtivasList1;
+    private List<ReservaAtiva> reservasAtivasList1;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "reservas1")
-    private List<ReservasAtivas> reservasAtivasList2;
+    private List<ReservaAtiva> reservasAtivasList2;
     @JoinColumn(name = "estudante_ra", referencedColumnName = "ra")
     @ManyToOne(optional = false)
-    private Estudantes estudanteRa;
+    private Estudante estudanteRa;
     @JoinColumn(name = "sala_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Salas salaId;
+    private Sala salaId;
 
-    public Reservas() {
+    public Reserva() {
     }
 
-    public Reservas(Integer id) {
+    public Reserva(Integer id) {
         this.id = id;
     }
 
-    public Reservas(Integer id, int quantidadeAlunos, Date dataInicial, Date dataFinal) {
+    public Reserva(Integer id, int quantidadeAlunos, Date dataInicial, Date dataFinal) {
         this.id = id;
         this.quantidadeAlunos = quantidadeAlunos;
         this.dataInicial = dataInicial;
@@ -114,43 +114,43 @@ public class Reservas implements Serializable {
         this.dataFinal = dataFinal;
     }
 
-    public List<ReservasAtivas> getReservasAtivasList() {
+    public List<ReservaAtiva> getReservasAtivasList() {
         return reservasAtivasList;
     }
 
-    public void setReservasAtivasList(List<ReservasAtivas> reservasAtivasList) {
+    public void setReservasAtivasList(List<ReservaAtiva> reservasAtivasList) {
         this.reservasAtivasList = reservasAtivasList;
     }
 
-    public List<ReservasAtivas> getReservasAtivasList1() {
+    public List<ReservaAtiva> getReservasAtivasList1() {
         return reservasAtivasList1;
     }
 
-    public void setReservasAtivasList1(List<ReservasAtivas> reservasAtivasList1) {
+    public void setReservasAtivasList1(List<ReservaAtiva> reservasAtivasList1) {
         this.reservasAtivasList1 = reservasAtivasList1;
     }
 
-    public List<ReservasAtivas> getReservasAtivasList2() {
+    public List<ReservaAtiva> getReservasAtivasList2() {
         return reservasAtivasList2;
     }
 
-    public void setReservasAtivasList2(List<ReservasAtivas> reservasAtivasList2) {
+    public void setReservasAtivasList2(List<ReservaAtiva> reservasAtivasList2) {
         this.reservasAtivasList2 = reservasAtivasList2;
     }
 
-    public Estudantes getEstudanteRa() {
+    public Estudante getEstudanteRa() {
         return estudanteRa;
     }
 
-    public void setEstudanteRa(Estudantes estudanteRa) {
+    public void setEstudanteRa(Estudante estudanteRa) {
         this.estudanteRa = estudanteRa;
     }
 
-    public Salas getSalaId() {
+    public Sala getSalaId() {
         return salaId;
     }
 
-    public void setSalaId(Salas salaId) {
+    public void setSalaId(Sala salaId) {
         this.salaId = salaId;
     }
 
@@ -164,10 +164,10 @@ public class Reservas implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Reservas)) {
+        if (!(object instanceof Reserva)) {
             return false;
         }
-        Reservas other = (Reservas) object;
+        Reserva other = (Reserva) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }

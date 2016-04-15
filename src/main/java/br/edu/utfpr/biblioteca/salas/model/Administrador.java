@@ -21,10 +21,10 @@ import javax.validation.constraints.Size;
  * @author mateus
  */
 @Entity
-@Table(name = "Adminstradores")
+@Table(name = "Administradores")
 @NamedQueries({
     @NamedQuery(name = "Adminstradores.findAll", query = "SELECT a FROM Adminstradores a")})
-public class Adminstradores implements Serializable {
+public class Administrador implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -37,10 +37,10 @@ public class Adminstradores implements Serializable {
     @Column(name = "senha")
     private String senha;
 
-    public Adminstradores() {
+    public Administrador() {
     }
 
-    public Adminstradores(String login) {
+    public Administrador(String login) {
         this.login = login;
     }
 
@@ -70,10 +70,10 @@ public class Adminstradores implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Adminstradores)) {
+        if (!(object instanceof Administrador)) {
             return false;
         }
-        Adminstradores other = (Adminstradores) object;
+        Administrador other = (Administrador) object;
         if ((this.login == null && other.login != null) || (this.login != null && !this.login.equals(other.login))) {
             return false;
         }

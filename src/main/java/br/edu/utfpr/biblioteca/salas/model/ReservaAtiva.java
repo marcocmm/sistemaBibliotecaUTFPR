@@ -23,61 +23,61 @@ import javax.persistence.Table;
 @Table(name = "Reservas_Ativas")
 @NamedQueries({
     @NamedQuery(name = "ReservasAtivas.findAll", query = "SELECT r FROM ReservasAtivas r")})
-public class ReservasAtivas implements Serializable {
+public class ReservaAtiva implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @EmbeddedId
-    protected ReservasAtivasPK reservasAtivasPK;
+    protected ReservaAtivaPK reservasAtivasPK;
     @JoinColumn(name = "reserva_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Reservas reservaId;
+    private Reserva reservaId;
     @JoinColumn(name = "reserva_estudante_ra", referencedColumnName = "estudante_ra", insertable = false, updatable = false)
     @ManyToOne(optional = false)
-    private Reservas reservas;
+    private Reserva reservas;
     @JoinColumn(name = "reserva_data_inicial", referencedColumnName = "data_inicial", insertable = false, updatable = false)
     @ManyToOne(optional = false)
-    private Reservas reservas1;
+    private Reserva reservas1;
 
-    public ReservasAtivas() {
+    public ReservaAtiva() {
     }
 
-    public ReservasAtivas(ReservasAtivasPK reservasAtivasPK) {
+    public ReservaAtiva(ReservaAtivaPK reservasAtivasPK) {
         this.reservasAtivasPK = reservasAtivasPK;
     }
 
-    public ReservasAtivas(String reservaEstudanteRa, Date reservaDataInicial) {
-        this.reservasAtivasPK = new ReservasAtivasPK(reservaEstudanteRa, reservaDataInicial);
+    public ReservaAtiva(String reservaEstudanteRa, Date reservaDataInicial) {
+        this.reservasAtivasPK = new ReservaAtivaPK(reservaEstudanteRa, reservaDataInicial);
     }
 
-    public ReservasAtivasPK getReservasAtivasPK() {
+    public ReservaAtivaPK getReservasAtivasPK() {
         return reservasAtivasPK;
     }
 
-    public void setReservasAtivasPK(ReservasAtivasPK reservasAtivasPK) {
+    public void setReservasAtivasPK(ReservaAtivaPK reservasAtivasPK) {
         this.reservasAtivasPK = reservasAtivasPK;
     }
 
-    public Reservas getReservaId() {
+    public Reserva getReservaId() {
         return reservaId;
     }
 
-    public void setReservaId(Reservas reservaId) {
+    public void setReservaId(Reserva reservaId) {
         this.reservaId = reservaId;
     }
 
-    public Reservas getReservas() {
+    public Reserva getReservas() {
         return reservas;
     }
 
-    public void setReservas(Reservas reservas) {
+    public void setReservas(Reserva reservas) {
         this.reservas = reservas;
     }
 
-    public Reservas getReservas1() {
+    public Reserva getReservas1() {
         return reservas1;
     }
 
-    public void setReservas1(Reservas reservas1) {
+    public void setReservas1(Reserva reservas1) {
         this.reservas1 = reservas1;
     }
 
@@ -91,10 +91,10 @@ public class ReservasAtivas implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ReservasAtivas)) {
+        if (!(object instanceof ReservaAtiva)) {
             return false;
         }
-        ReservasAtivas other = (ReservasAtivas) object;
+        ReservaAtiva other = (ReservaAtiva) object;
         if ((this.reservasAtivasPK == null && other.reservasAtivasPK != null) || (this.reservasAtivasPK != null && !this.reservasAtivasPK.equals(other.reservasAtivasPK))) {
             return false;
         }

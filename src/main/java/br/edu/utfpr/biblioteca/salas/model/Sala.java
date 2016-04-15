@@ -26,7 +26,7 @@ import javax.validation.constraints.NotNull;
 @Table(name = "Salas")
 @NamedQueries({
     @NamedQuery(name = "Salas.findAll", query = "SELECT s FROM Salas s")})
-public class Salas implements Serializable {
+public class Sala implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -37,12 +37,12 @@ public class Salas implements Serializable {
     @Column(name = "ar")
     private Boolean ar;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "salaId")
-    private List<Reservas> reservasList;
+    private List<Reserva> reservasList;
 
-    public Salas() {
+    public Sala() {
     }
 
-    public Salas(Integer id) {
+    public Sala(Integer id) {
         this.id = id;
     }
 
@@ -62,11 +62,11 @@ public class Salas implements Serializable {
         this.ar = ar;
     }
 
-    public List<Reservas> getReservasList() {
+    public List<Reserva> getReservasList() {
         return reservasList;
     }
 
-    public void setReservasList(List<Reservas> reservasList) {
+    public void setReservasList(List<Reserva> reservasList) {
         this.reservasList = reservasList;
     }
 
@@ -80,10 +80,10 @@ public class Salas implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Salas)) {
+        if (!(object instanceof Sala)) {
             return false;
         }
-        Salas other = (Salas) object;
+        Sala other = (Sala) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }

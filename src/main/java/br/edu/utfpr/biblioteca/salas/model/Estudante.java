@@ -27,7 +27,7 @@ import javax.validation.constraints.Size;
 @Table(name = "Estudantes")
 @NamedQueries({
     @NamedQuery(name = "Estudantes.findAll", query = "SELECT e FROM Estudantes e")})
-public class Estudantes implements Serializable {
+public class Estudante implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -53,16 +53,16 @@ public class Estudantes implements Serializable {
     @Column(name = "email")
     private String email;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "estudanteRa")
-    private List<Reservas> reservasList;
+    private List<Reserva> reservasList;
 
-    public Estudantes() {
+    public Estudante() {
     }
 
-    public Estudantes(String ra) {
+    public Estudante(String ra) {
         this.ra = ra;
     }
 
-    public Estudantes(String ra, String nome, String senha, String email) {
+    public Estudante(String ra, String nome, String senha, String email) {
         this.ra = ra;
         this.nome = nome;
         this.senha = senha;
@@ -101,11 +101,11 @@ public class Estudantes implements Serializable {
         this.email = email;
     }
 
-    public List<Reservas> getReservasList() {
+    public List<Reserva> getReservasList() {
         return reservasList;
     }
 
-    public void setReservasList(List<Reservas> reservasList) {
+    public void setReservasList(List<Reserva> reservasList) {
         this.reservasList = reservasList;
     }
 
@@ -119,10 +119,10 @@ public class Estudantes implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Estudantes)) {
+        if (!(object instanceof Estudante)) {
             return false;
         }
-        Estudantes other = (Estudantes) object;
+        Estudante other = (Estudante) object;
         if ((this.ra == null && other.ra != null) || (this.ra != null && !this.ra.equals(other.ra))) {
             return false;
         }

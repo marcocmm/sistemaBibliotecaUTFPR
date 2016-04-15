@@ -2,7 +2,9 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
-CREATE DATABASE IF NOT EXISTS bdBiblioteca;
+DROP SCHEMA IF EXISTS `bdBiblioteca` ;
+CREATE SCHEMA IF NOT EXISTS `bdBiblioteca` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
+USE `bdBiblioteca` ;
 
 -- -----------------------------------------------------
 -- Table `bdBiblioteca`.`Estudantes`
@@ -65,11 +67,11 @@ CREATE INDEX `fk_reservas_estudantes_ra_idx` ON `bdBiblioteca`.`Reservas` (`estu
 
 
 -- -----------------------------------------------------
--- Table `bdBiblioteca`.`Adminstradores`
+-- Table `bdBiblioteca`.`Administradores`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `bdBiblioteca`.`Adminstradores` ;
+DROP TABLE IF EXISTS `bdBiblioteca`.`Administradores` ;
 
-CREATE TABLE IF NOT EXISTS `bdBiblioteca`.`Adminstradores` (
+CREATE TABLE IF NOT EXISTS `bdBiblioteca`.`Administradores` (
   `login` VARCHAR(15) NOT NULL,
   `senha` VARCHAR(30) NULL,
   PRIMARY KEY (`login`))
