@@ -20,6 +20,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -36,50 +37,56 @@ import javax.validation.constraints.NotNull;
 public class Reserva implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "quantidade_alunos")
     private int quantidadeAlunos;
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "data_inicial")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataInicial;
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "data_final")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataFinal;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "reservaId")
-    private List<ReservaAtiva> reservasAtivasList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "reservas")
-    private List<ReservaAtiva> reservasAtivasList1;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "reservas1")
-    private List<ReservaAtiva> reservasAtivasList2;
+
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "reserva")
+    private ReservaAtiva reservaAtiva;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "estudante")
+    private List<Estudante> estudantesReservasAtivas;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "data")
+    private List<Date> datasReservasAtivas;
+
     @JoinColumn(name = "estudante_ra", referencedColumnName = "ra")
     @ManyToOne(optional = false)
-    private Estudante estudanteRa;
+    private Estudante estudante;
+
     @JoinColumn(name = "sala_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Sala salaId;
+    private Sala sala;
 
-    public Reserva() {
+    protected Reserva() {
     }
 
-    public Reserva(Integer id) {
-        this.id = id;
-    }
-
-    public Reserva(Integer id, int quantidadeAlunos, Date dataInicial, Date dataFinal) {
-        this.id = id;
+    public Reserva(Estudante estudante, Sala sala, Date dataInicial, int quantidadeAlunos) {
         this.quantidadeAlunos = quantidadeAlunos;
         this.dataInicial = dataInicial;
-        this.dataFinal = dataFinal;
+        this.dataFinal = dataInicial;//+1h
+        this.estudante = estudante;
+        this.sala = sala;
     }
 
     public Integer getId() {
@@ -114,44 +121,44 @@ public class Reserva implements Serializable {
         this.dataFinal = dataFinal;
     }
 
-    public List<ReservaAtiva> getReservasAtivasList() {
-        return reservasAtivasList;
+    public ReservaAtiva getReservaAtiva() {
+        return reservaAtiva;
     }
 
-    public void setReservasAtivasList(List<ReservaAtiva> reservasAtivasList) {
-        this.reservasAtivasList = reservasAtivasList;
+    public void setReservaAtiva(ReservaAtiva reservaAtiva) {
+        this.reservaAtiva = reservaAtiva;
     }
 
-    public List<ReservaAtiva> getReservasAtivasList1() {
-        return reservasAtivasList1;
+    public List<Estudante> getEstudantesReservasAtivas() {
+        return estudantesReservasAtivas;
     }
 
-    public void setReservasAtivasList1(List<ReservaAtiva> reservasAtivasList1) {
-        this.reservasAtivasList1 = reservasAtivasList1;
+    public void setEstudantesReservasAtivas(List<Estudante> estudantesReservasAtivas) {
+        this.estudantesReservasAtivas = estudantesReservasAtivas;
     }
 
-    public List<ReservaAtiva> getReservasAtivasList2() {
-        return reservasAtivasList2;
+    public List<Date> getDatasReservasAtivas() {
+        return datasReservasAtivas;
     }
 
-    public void setReservasAtivasList2(List<ReservaAtiva> reservasAtivasList2) {
-        this.reservasAtivasList2 = reservasAtivasList2;
+    public void setDatasReservasAtivas(List<Date> datasReservasAtivas) {
+        this.datasReservasAtivas = datasReservasAtivas;
     }
 
-    public Estudante getEstudanteRa() {
-        return estudanteRa;
+    public Estudante getEstudante() {
+        return estudante;
     }
 
-    public void setEstudanteRa(Estudante estudanteRa) {
-        this.estudanteRa = estudanteRa;
+    public void setEstudante(Estudante estudante) {
+        this.estudante = estudante;
     }
 
-    public Sala getSalaId() {
-        return salaId;
+    public Sala getSala() {
+        return sala;
     }
 
-    public void setSalaId(Sala salaId) {
-        this.salaId = salaId;
+    public void setSala(Sala sala) {
+        this.sala = sala;
     }
 
     @Override
@@ -178,5 +185,5 @@ public class Reserva implements Serializable {
     public String toString() {
         return "br.edu.utfpr.biblioteca.salas.model.Reservas[ id=" + id + " ]";
     }
-    
+
 }

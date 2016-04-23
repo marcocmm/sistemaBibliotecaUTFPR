@@ -20,7 +20,7 @@ import javax.faces.view.ViewScoped;
 @ManagedBean
 public class EstudanteMB {
 
-    private Estudante estudante = new Estudante();
+    private Estudante estudante;
     private EstudanteDAO dao = new EstudanteDAO();
 
     public Estudante getEstudante() {

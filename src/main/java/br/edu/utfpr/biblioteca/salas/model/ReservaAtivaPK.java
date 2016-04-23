@@ -26,42 +26,43 @@ public class ReservaAtivaPK implements Serializable {
     @NotNull
     @Size(min = 1, max = 10)
     @Column(name = "reserva_estudante_ra")
-    private String reservaEstudanteRa;
+    private Estudante estudante;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "reserva_data_inicial")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date reservaDataInicial;
+    private Date dataInicial;
 
-    public ReservaAtivaPK() {
+    protected ReservaAtivaPK() {
     }
 
-    public ReservaAtivaPK(String reservaEstudanteRa, Date reservaDataInicial) {
-        this.reservaEstudanteRa = reservaEstudanteRa;
-        this.reservaDataInicial = reservaDataInicial;
+    public ReservaAtivaPK(Estudante estudante, Date dataInicial) {
+        this.estudante = estudante;
+        this.dataInicial = dataInicial;
     }
 
-    public String getReservaEstudanteRa() {
-        return reservaEstudanteRa;
+    public Estudante getEstudante() {
+        return estudante;
     }
 
-    public void setReservaEstudanteRa(String reservaEstudanteRa) {
-        this.reservaEstudanteRa = reservaEstudanteRa;
+    public void setEstudante(Estudante estudante) {
+        this.estudante = estudante;
     }
 
-    public Date getReservaDataInicial() {
-        return reservaDataInicial;
+    public Date getDataInicial() {
+        return dataInicial;
     }
 
-    public void setReservaDataInicial(Date reservaDataInicial) {
-        this.reservaDataInicial = reservaDataInicial;
+    public void setDataInicial(Date dataInicial) {
+        this.dataInicial = dataInicial;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (reservaEstudanteRa != null ? reservaEstudanteRa.hashCode() : 0);
-        hash += (reservaDataInicial != null ? reservaDataInicial.hashCode() : 0);
+        hash += (estudante != null ? estudante.hashCode() : 0);
+        hash += (dataInicial != null ? dataInicial.hashCode() : 0);
         return hash;
     }
 
@@ -72,10 +73,10 @@ public class ReservaAtivaPK implements Serializable {
             return false;
         }
         ReservaAtivaPK other = (ReservaAtivaPK) object;
-        if ((this.reservaEstudanteRa == null && other.reservaEstudanteRa != null) || (this.reservaEstudanteRa != null && !this.reservaEstudanteRa.equals(other.reservaEstudanteRa))) {
+        if ((this.estudante == null && other.estudante != null) || (this.estudante != null && !this.estudante.equals(other.estudante))) {
             return false;
         }
-        if ((this.reservaDataInicial == null && other.reservaDataInicial != null) || (this.reservaDataInicial != null && !this.reservaDataInicial.equals(other.reservaDataInicial))) {
+        if ((this.dataInicial == null && other.dataInicial != null) || (this.dataInicial != null && !this.dataInicial.equals(other.dataInicial))) {
             return false;
         }
         return true;
@@ -83,7 +84,7 @@ public class ReservaAtivaPK implements Serializable {
 
     @Override
     public String toString() {
-        return "br.edu.utfpr.biblioteca.salas.model.ReservasAtivasPK[ reservaEstudanteRa=" + reservaEstudanteRa + ", reservaDataInicial=" + reservaDataInicial + " ]";
+        return "br.edu.utfpr.biblioteca.salas.model.ReservasAtivasPK[ reservaEstudanteRa=" + estudante + ", reservaDataInicial=" + dataInicial + " ]";
     }
     
 }

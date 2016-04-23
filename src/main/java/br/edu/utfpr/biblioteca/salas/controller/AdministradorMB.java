@@ -20,7 +20,7 @@ import javax.faces.view.ViewScoped;
 @ManagedBean
 public class AdministradorMB {
 
-    private Administrador administrador = new Administrador();
+    private Administrador administrador;
 
     /**
      * Creates a new instance of AdministradorMB

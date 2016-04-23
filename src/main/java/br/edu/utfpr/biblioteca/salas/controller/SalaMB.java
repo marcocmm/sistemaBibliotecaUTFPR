@@ -18,7 +18,7 @@ import javax.faces.view.ViewScoped;
 @ViewScoped
 @ManagedBean
 public class SalaMB {
-    private Sala sala = new Sala();
+    private Sala sala;
     /**
      * Creates a new instance of SalaMB
      */

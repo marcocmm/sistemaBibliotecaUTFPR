@@ -27,21 +27,25 @@ import javax.validation.constraints.Size;
 public class Administrador implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
     @Id
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 15)
     @Column(name = "login")
     private String login;
+    
     @Size(max = 30)
+    @NotNull
     @Column(name = "senha")
     private String senha;
 
-    public Administrador() {
+    protected Administrador() {
     }
 
-    public Administrador(String login) {
+    public Administrador(String login, String senha) {
         this.login = login;
+        this.senha = senha;
     }
 
     public String getLogin() {

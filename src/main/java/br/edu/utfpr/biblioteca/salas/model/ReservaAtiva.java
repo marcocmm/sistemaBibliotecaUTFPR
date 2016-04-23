@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -26,65 +27,71 @@ import javax.persistence.Table;
 public class ReservaAtiva implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @EmbeddedId
-    protected ReservaAtivaPK reservasAtivasPK;
+    protected ReservaAtivaPK reservaAtivaPK;
+
     @JoinColumn(name = "reserva_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Reserva reservaId;
+    @OneToOne(optional = false)
+    private Reserva reserva;
+
     @JoinColumn(name = "reserva_estudante_ra", referencedColumnName = "estudante_ra", insertable = false, updatable = false)
     @ManyToOne(optional = false)
-    private Reserva reservas;
+    private Estudante estudante;
+
     @JoinColumn(name = "reserva_data_inicial", referencedColumnName = "data_inicial", insertable = false, updatable = false)
     @ManyToOne(optional = false)
-    private Reserva reservas1;
+    private Date data;
 
-    public ReservaAtiva() {
+    protected ReservaAtiva() {
     }
 
-    public ReservaAtiva(ReservaAtivaPK reservasAtivasPK) {
-        this.reservasAtivasPK = reservasAtivasPK;
+    public ReservaAtiva(ReservaAtivaPK reservasAtivasPK, Reserva reserva) {
+        this.reservaAtivaPK = reservasAtivasPK;
+        this.reserva = reserva;
     }
 
-    public ReservaAtiva(String reservaEstudanteRa, Date reservaDataInicial) {
-        this.reservasAtivasPK = new ReservaAtivaPK(reservaEstudanteRa, reservaDataInicial);
+    public ReservaAtiva(Estudante estudante, Date dataInicial, Reserva reserva) {
+        this.reservaAtivaPK = new ReservaAtivaPK(estudante, dataInicial);
+        this.reserva = reserva;
     }
 
-    public ReservaAtivaPK getReservasAtivasPK() {
-        return reservasAtivasPK;
+    public ReservaAtivaPK getReservaAtivaPK() {
+        return reservaAtivaPK;
     }
 
-    public void setReservasAtivasPK(ReservaAtivaPK reservasAtivasPK) {
-        this.reservasAtivasPK = reservasAtivasPK;
+    public void setReservaAtivaPK(ReservaAtivaPK reservaAtivaPK) {
+        this.reservaAtivaPK = reservaAtivaPK;
     }
 
-    public Reserva getReservaId() {
-        return reservaId;
+    public Reserva getReserva() {
+        return reserva;
     }
 
-    public void setReservaId(Reserva reservaId) {
-        this.reservaId = reservaId;
+    public void setReserva(Reserva reserva) {
+        this.reserva = reserva;
     }
 
-    public Reserva getReservas() {
-        return reservas;
+    public Estudante getEstudante() {
+        return estudante;
     }
 
-    public void setReservas(Reserva reservas) {
-        this.reservas = reservas;
+    public void setEstudante(Estudante estudante) {
+        this.estudante = estudante;
     }
 
-    public Reserva getReservas1() {
-        return reservas1;
+    public Date getData() {
+        return data;
     }
 
-    public void setReservas1(Reserva reservas1) {
-        this.reservas1 = reservas1;
+    public void setData(Date data) {
+        this.data = data;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (reservasAtivasPK != null ? reservasAtivasPK.hashCode() : 0);
+        hash += (reservaAtivaPK != null ? reservaAtivaPK.hashCode() : 0);
         return hash;
     }
 
@@ -95,7 +102,7 @@ public class ReservaAtiva implements Serializable {
             return false;
         }
         ReservaAtiva other = (ReservaAtiva) object;
-        if ((this.reservasAtivasPK == null && other.reservasAtivasPK != null) || (this.reservasAtivasPK != null && !this.reservasAtivasPK.equals(other.reservasAtivasPK))) {
+        if ((this.reservaAtivaPK == null && other.reservaAtivaPK != null) || (this.reservaAtivaPK != null && !this.reservaAtivaPK.equals(other.reservaAtivaPK))) {
             return false;
         }
         return true;
@@ -103,7 +110,7 @@ public class ReservaAtiva implements Serializable {
 
     @Override
     public String toString() {
-        return "br.edu.utfpr.biblioteca.salas.model.ReservasAtivas[ reservasAtivasPK=" + reservasAtivasPK + " ]";
+        return "br.edu.utfpr.biblioteca.salas.model.ReservasAtivas[ reservasAtivasPK=" + reservaAtivaPK + " ]";
     }
-    
+
 }

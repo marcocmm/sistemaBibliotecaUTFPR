@@ -30,36 +30,37 @@ import javax.validation.constraints.Size;
 public class Estudante implements Serializable {
 
     private static final long serialVersionUID = 1L;
+   
     @Id
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 10)
     @Column(name = "ra")
     private String ra;
+   
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
     @Column(name = "nome")
     private String nome;
+   
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 30)
     @Column(name = "senha")
     private String senha;
+  
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="E-mail inválido")//if the field contains email address consider using this annotation to enforce field validation
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
     @Column(name = "email")
     private String email;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "estudanteRa")
-    private List<Reserva> reservasList;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "estudante")
+    private List<Reserva> reservas;
 
-    public Estudante() {
-    }
-
-    public Estudante(String ra) {
-        this.ra = ra;
+    protected Estudante() {
     }
 
     public Estudante(String ra, String nome, String senha, String email) {
@@ -101,12 +102,12 @@ public class Estudante implements Serializable {
         this.email = email;
     }
 
-    public List<Reserva> getReservasList() {
-        return reservasList;
+    public List<Reserva> getReservas() {
+        return reservas;
     }
 
-    public void setReservasList(List<Reserva> reservasList) {
-        this.reservasList = reservasList;
+    public void setReservas(List<Reserva> reservas) {
+        this.reservas = reservas;
     }
 
     @Override

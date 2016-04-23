@@ -19,7 +19,7 @@ import javax.faces.view.ViewScoped;
 @ManagedBean
 public class ReservaMB {
 
-    private Reserva reserva = new Reserva();
+    private Reserva reserva;
 
     /**
      * Creates a new instance of ReservaMB

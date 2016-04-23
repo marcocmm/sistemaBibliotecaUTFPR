@@ -29,21 +29,25 @@ import javax.validation.constraints.NotNull;
 public class Sala implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @Basic(optional = false)
     @NotNull
     @Column(name = "id")
     private Integer id;
+
+    @NotNull
     @Column(name = "ar")
     private Boolean ar;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "salaId")
-    private List<Reserva> reservasList;
 
-    public Sala() {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sala")
+    private List<Reserva> reservas;
+
+    protected Sala() {
     }
 
-    public Sala(Integer id) {
-        this.id = id;
+    public Sala(boolean ar) {
+        this.ar = ar;
     }
 
     public Integer getId() {
@@ -62,12 +66,12 @@ public class Sala implements Serializable {
         this.ar = ar;
     }
 
-    public List<Reserva> getReservasList() {
-        return reservasList;
+    public List<Reserva> getReservas() {
+        return reservas;
     }
 
-    public void setReservasList(List<Reserva> reservasList) {
-        this.reservasList = reservasList;
+    public void setReservas(List<Reserva> reservas) {
+        this.reservas = reservas;
     }
 
     @Override
@@ -94,5 +98,5 @@ public class Sala implements Serializable {
     public String toString() {
         return "br.edu.utfpr.biblioteca.salas.model.Salas[ id=" + id + " ]";
     }
-    
+
 }

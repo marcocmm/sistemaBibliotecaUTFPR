@@ -6,6 +6,19 @@ DROP SCHEMA IF EXISTS `bdBiblioteca` ;
 CREATE SCHEMA IF NOT EXISTS `bdBiblioteca` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
 USE `bdBiblioteca` ;
 
+
+-- -----------------------------------------------------
+-- Table `bdBiblioteca`.`Administradores`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `bdBiblioteca`.`Administradores` ;
+
+CREATE TABLE IF NOT EXISTS `bdBiblioteca`.`Administradores` (
+  `login` VARCHAR(15) NOT NULL,
+  `senha` VARCHAR(30) NOT NULL,
+  PRIMARY KEY (`login`))
+ENGINE = InnoDB;
+
+
 -- -----------------------------------------------------
 -- Table `bdBiblioteca`.`Estudantes`
 -- -----------------------------------------------------
@@ -29,7 +42,7 @@ DROP TABLE IF EXISTS `bdBiblioteca`.`Salas` ;
 
 CREATE TABLE IF NOT EXISTS `bdBiblioteca`.`Salas` (
   `id` INT NOT NULL,
-  `ar` TINYINT(1) NULL COMMENT '							\n\n						',
+  `ar` TINYINT(1) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -82,18 +95,6 @@ CREATE INDEX `fk_reservas_salas_id_idx` ON `bdBiblioteca`.`Reservas` (`sala_id` 
 CREATE INDEX `data_inicial_idx` ON `bdBiblioteca`.`Reservas` (`data_inicial` ASC);
 
 CREATE INDEX `fk_reservas_estudantes_ra_idx` ON `bdBiblioteca`.`Reservas` (`estudante_ra` ASC);
-
-
--- -----------------------------------------------------
--- Table `bdBiblioteca`.`Administradores`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `bdBiblioteca`.`Administradores` ;
-
-CREATE TABLE IF NOT EXISTS `bdBiblioteca`.`Administradores` (
-  `login` VARCHAR(15) NOT NULL,
-  `senha` VARCHAR(30) NULL,
-  PRIMARY KEY (`login`))
-ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
