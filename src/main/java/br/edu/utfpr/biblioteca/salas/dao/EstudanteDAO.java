@@ -11,12 +11,15 @@ import br.edu.utfpr.biblioteca.salas.model.Estudante;
  *
  * @author mateus
  */
-
-
 public class EstudanteDAO extends GenericDAO<Estudante> {
 
     public EstudanteDAO() {
         super(Estudante.class);
+    }
+
+    public Estudante obter(String ra) {
+        entityManager.clear();
+        return (Estudante) entityManager.find(Estudante.class, ra);
     }
 
 }

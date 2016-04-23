@@ -47,6 +47,11 @@ public abstract class GenericDAO<T> {
         entityManager.clear();
         return (T) entityManager.find(clazz, id);
     }
+    
+    public T obter(T entity) {
+        entityManager.clear();
+        return (T) entityManager.find(clazz, entity);
+    }
 
     public List<T> list() {
         return entityManager.createQuery("SELECT e FROM " + clazz.getSimpleName() + " e").getResultList();

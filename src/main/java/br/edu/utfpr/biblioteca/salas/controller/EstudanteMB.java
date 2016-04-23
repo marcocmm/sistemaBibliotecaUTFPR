@@ -6,8 +6,9 @@
 package br.edu.utfpr.biblioteca.salas.controller;
 
 import br.edu.utfpr.biblioteca.salas.model.Estudante;
-import javax.inject.Named;
+import br.edu.utfpr.biblioteca.salas.dao.EstudanteDAO;
 import javax.faces.bean.ManagedBean;
+import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 
 /**
@@ -18,12 +19,9 @@ import javax.faces.view.ViewScoped;
 @ViewScoped
 @ManagedBean
 public class EstudanteMB {
+
     private Estudante estudante = new Estudante();
-    /**
-     * Creates a new instance of EstudanteMB
-     */
-    public EstudanteMB() {
-    }
+    private EstudanteDAO dao = new EstudanteDAO();
 
     public Estudante getEstudante() {
         return estudante;
@@ -32,10 +30,26 @@ public class EstudanteMB {
     public void setEstudante(Estudante estudante) {
         this.estudante = estudante;
     }
-    
-    public void salvarEstudante(){
-        //validar
-        //Persistir Estudante
+
+    private void cadastrarEstudante() {
+        if (alreadyCadastrado()) {
+            return;
+        }
+        if (estudante.getSenha().isEmpty()) {
+            return;
+        }
+        dao.insert(estudante);
     }
-    
+
+    private boolean alreadyCadastrado() {
+        return dao.obter(estudante) != null;
+    }
+
+    public boolean autenticar(String login, String senha) {
+        if (!alreadyCadastrado()) {
+            return false;
+        }
+        return dao.obter(login).getSenha().equals(senha);
+    }
+
 }
