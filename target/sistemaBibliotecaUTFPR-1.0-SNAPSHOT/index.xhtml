@@ -2,19 +2,61 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
-        <title>Facelet Title</title>
+        <title>Sislib</title>
+
+        <f:metadata name="description" content="Este site tem como objetivo informar sobre os serviços prestados pela empresa Eleve."></f:metadata>
+
+        <!--<h:outputStylesheet library="css" name="bootstrap.css"/>-->
+        <!--<h:outputStylesheet library="css" name="bootstrap-responsive.css"/>-->
+
+        <ui:include src="header.xhtml"/>
+
     </h:head>
     <h:body>
-        Hello from Facelets
-        <br />
-        <p:panel header="Testando JSF + Primefaces + Maven" footer="Testando PrimeFaces"
-            toggleable="true" toggleOrientation="vertical">
-            <h:outputLabel>#{helloBean.message}</h:outputLabel> <br />
-            <p:button value="Enviar" outcome="testeInput.xhtml" />
-        </p:panel>
-        <h:link outcome="welcomePrimefaces" value="Página de boas-vindas do Primefaces" />
+
+        <h:form id="form">
+            <p:growl id="msgs" showDetail="true" />
+
+            <h:panelGrid columns="3" cellpadding="5">
+                <p:calendar id="inline" value="#{calendarView.date1}" mode="inline">
+                    <p:ajax event="dateSelect" listener="#{calendarView.onDateSelect}" update="msgs" />
+                </p:calendar>
+                
+                
+                
+                <h3>Horários disponíveis</h3>
+                <div class="nav-tabs">
+                    <div class="btn-group-vertical">
+                        <!--<p:button class="btn btn-danger" value="8h às 9h"></p:button>-->
+                        <a href="#" class="btn btn-success">9h às 10h </a>
+                        <a href="#" class="btn btn-success">10h às 11h</a>
+                        <a href="#" class="btn btn-danger">11h às 12h </a>
+                    </div>
+                    <div class="btn-group-vertical">
+                        <a href="#"  class="btn btn-danger">12h às 13h</a>
+                        <a href="#"  class="btn btn-success">13h às 14h</a>
+                        <a href="#"  class="btn btn-danger">14h às 15h</a>
+                        <a href="#"  class="btn btn-danger">15h às 16h</a>
+                        <a class="btn btn-success">16h às 17h</a>
+                    </div>
+                    <div class="btn-group-vertical">
+                        <a href="#" class="btn btn-success">17h às 18h</a>
+                        <a href="#" class="btn btn-danger">18h às 19h</a>
+                        <a href="#" class="btn btn-success">19h às 20h</a>
+                        <a href="#" class="btn btn-danger">20h às 21h</a>
+                        <a href="#" class="btn btn-danger">21h às 22h</a>
+                    </div>
+                </div>
+            </h:panelGrid>
+        </h:form>
+
+
+        <ui:include src="footer.xhtml"/>
+
     </h:body>
 </html>
 
