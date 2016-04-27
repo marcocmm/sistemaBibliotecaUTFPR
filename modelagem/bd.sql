@@ -53,9 +53,8 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `bdBiblioteca`.`Status` ;
 
 CREATE TABLE IF NOT EXISTS `bdBiblioteca`.`Status` (
-  `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(15) NOT NULL,
-  PRIMARY KEY (`id`))
+  PRIMARY KEY (`name`))
 ENGINE = InnoDB;
 
 
@@ -71,7 +70,7 @@ CREATE TABLE IF NOT EXISTS `bdBiblioteca`.`Reservas` (
   `data_final` DATETIME NOT NULL,
   `estudante_ra` CHAR(10) NOT NULL,
   `sala_id` INT NOT NULL,
-  `status_id` INT NOT NULL,
+  `status_name` VARCHAR(15) NOT NULL,
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_reservas_estudantes_ra`
     FOREIGN KEY (`estudante_ra`)
@@ -83,9 +82,9 @@ CREATE TABLE IF NOT EXISTS `bdBiblioteca`.`Reservas` (
     REFERENCES `bdBiblioteca`.`Salas` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_reservas_status_id`
-    FOREIGN KEY (`status_id`)
-    REFERENCES `bdBiblioteca`.`Status` (`id`)
+  CONSTRAINT `fk_reservas_status_name`
+    FOREIGN KEY (`status_name`)
+    REFERENCES `bdBiblioteca`.`Status` (`name`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -95,6 +94,8 @@ CREATE INDEX `fk_reservas_salas_id_idx` ON `bdBiblioteca`.`Reservas` (`sala_id` 
 CREATE INDEX `data_inicial_idx` ON `bdBiblioteca`.`Reservas` (`data_inicial` ASC);
 
 CREATE INDEX `fk_reservas_estudantes_ra_idx` ON `bdBiblioteca`.`Reservas` (`estudante_ra` ASC);
+
+CREATE INDEX `fk_reservas_status_name_idx` ON `bdBiblioteca`.`Reservas` (`status_name` ASC);
 
 
 -- -----------------------------------------------------

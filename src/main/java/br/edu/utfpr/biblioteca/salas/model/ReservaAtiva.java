@@ -15,15 +15,17 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
  * @author mateus
  */
-@Entity
+@Entity(name = "ReservaAtiva")
 @Table(name = "Reservas_Ativas")
 @NamedQueries({
-    @NamedQuery(name = "ReservasAtivas.findAll", query = "SELECT r FROM ReservasAtivas r")})
+    @NamedQuery(name = "ReservaAtiva.findAll", query = "SELECT r FROM ReservaAtiva r")})
 public class ReservaAtiva implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -41,6 +43,7 @@ public class ReservaAtiva implements Serializable {
 
     @JoinColumn(name = "reserva_data_inicial", referencedColumnName = "data_inicial", insertable = false, updatable = false)
     @ManyToOne(optional = false)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date data;
 
     protected ReservaAtiva() {
@@ -110,7 +113,7 @@ public class ReservaAtiva implements Serializable {
 
     @Override
     public String toString() {
-        return "br.edu.utfpr.biblioteca.salas.model.ReservasAtivas[ reservasAtivasPK=" + reservaAtivaPK + " ]";
+        return "br.edu.utfpr.biblioteca.salas.model.ReservaAtiva[ ReservaAtivaPK=" + reservaAtivaPK + " ]";
     }
 
 }

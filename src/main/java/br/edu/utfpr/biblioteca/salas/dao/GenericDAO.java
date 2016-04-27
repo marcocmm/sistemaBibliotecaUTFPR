@@ -54,6 +54,7 @@ public abstract class GenericDAO<T> {
     }
 
     public List<T> list() {
+        System.out.println("SELECT e FROM " + clazz.getSimpleName() + " e");
         return entityManager.createQuery("SELECT e FROM " + clazz.getSimpleName() + " e").getResultList();
     }
 

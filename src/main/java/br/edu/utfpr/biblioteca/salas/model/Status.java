@@ -17,53 +17,46 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author mateus
+ * @author romulo
  */
-@Entity(name = "Sala")
-@Table(name = "Salas")
+@Entity(name = "Status")
+@Table(name = "Status")
+@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Sala.findAll", query = "SELECT s FROM Sala s")})
-public class Sala implements Serializable {
+    @NamedQuery(name = "Status.findAll", query = "SELECT s FROM Status s"),
+    @NamedQuery(name = "Status.findByName", query = "SELECT s FROM Status s WHERE s.name = :name")})
+public class Status implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @Basic(optional = false)
-    @Column(name = "id")
-    private Integer id;
-
     @NotNull
-    @Column(name = "ar")
-    private Boolean ar;
+    @Size(min = 1, max = 15)
+    @Column(name = "name")
+    private String name;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sala")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "status")
     private List<Reserva> reservas;
 
-    protected Sala() {
+    protected Status() {
     }
 
-    public Sala(int id, boolean ar) {
-        this.id = id;
-        this.ar = ar;
+    public Status(String name) {
+        this.name = name;
     }
 
-    public Integer getId() {
-        return id;
+    public String getName() {
+        return name;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Boolean getAr() {
-        return ar;
-    }
-
-    public void setAr(Boolean ar) {
-        this.ar = ar;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public List<Reserva> getReservas() {
@@ -73,22 +66,22 @@ public class Sala implements Serializable {
     public void setReservas(List<Reserva> reservas) {
         this.reservas = reservas;
     }
-
+    
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        hash += (name != null ? name.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Sala)) {
+        if (!(object instanceof Status)) {
             return false;
         }
-        Sala other = (Sala) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        Status other = (Status) object;
+        if ((this.name == null && other.name != null) || (this.name != null && !this.name.equals(other.name))) {
             return false;
         }
         return true;
@@ -96,7 +89,7 @@ public class Sala implements Serializable {
 
     @Override
     public String toString() {
-        return "br.edu.utfpr.biblioteca.salas.model.Sala[ id=" + id + " ]";
+        return "br.edu.utfpr.biblioteca.salas.controller.Status[ name=" + name + " ]";
     }
 
 }

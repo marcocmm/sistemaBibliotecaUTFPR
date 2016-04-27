@@ -23,10 +23,10 @@ import javax.validation.constraints.Size;
  *
  * @author mateus
  */
-@Entity
+@Entity(name = "Estudante")
 @Table(name = "Estudantes")
 @NamedQueries({
-    @NamedQuery(name = "Estudantes.findAll", query = "SELECT e FROM Estudantes e")})
+    @NamedQuery(name = "Estudante.findAll", query = "SELECT e FROM Estudante e")})
 public class Estudante implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -132,7 +132,7 @@ public class Estudante implements Serializable {
 
     @Override
     public String toString() {
-        return "br.edu.utfpr.biblioteca.salas.model.Estudantes[ ra=" + ra + " ]";
+        return "br.edu.utfpr.biblioteca.salas.model.Estudante[ ra=" + ra + " ]";
     }
     
 }

@@ -20,10 +20,10 @@ import javax.validation.constraints.Size;
  *
  * @author mateus
  */
-@Entity
+@Entity(name = "Administrador")
 @Table(name = "Administradores")
 @NamedQueries({
-    @NamedQuery(name = "Adminstradores.findAll", query = "SELECT a FROM Adminstradores a")})
+    @NamedQuery(name = "Administrador.findAll", query = "SELECT a FROM Administrador a")})
 public class Administrador implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -86,7 +86,7 @@ public class Administrador implements Serializable {
 
     @Override
     public String toString() {
-        return "br.edu.utfpr.biblioteca.salas.model.Adminstradores[ login=" + login + " ]";
+        return "br.edu.utfpr.biblioteca.salas.model.Administrador[ login=" + login + " ]";
     }
     
 }

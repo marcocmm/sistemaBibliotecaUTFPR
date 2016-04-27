@@ -7,7 +7,6 @@ package br.edu.utfpr.biblioteca.salas.model;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -19,7 +18,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -30,10 +28,10 @@ import javax.validation.constraints.NotNull;
  *
  * @author mateus
  */
-@Entity
+@Entity(name = "Reserva")
 @Table(name = "Reservas")
 @NamedQueries({
-    @NamedQuery(name = "Reservas.findAll", query = "SELECT r FROM Reservas r")})
+    @NamedQuery(name = "Reserva.findAll", query = "SELECT r FROM Reserva r")})
 public class Reserva implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -61,15 +59,6 @@ public class Reserva implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataFinal;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "reserva")
-    private ReservaAtiva reservaAtiva;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "estudante")
-    private List<Estudante> estudantesReservasAtivas;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "data")
-    private List<Date> datasReservasAtivas;
-
     @JoinColumn(name = "estudante_ra", referencedColumnName = "ra")
     @ManyToOne(optional = false)
     private Estudante estudante;
@@ -77,16 +66,24 @@ public class Reserva implements Serializable {
     @JoinColumn(name = "sala_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Sala sala;
+    
+    @JoinColumn(name = "status_name", referencedColumnName = "name")
+    @ManyToOne(optional = false)
+    private Status status;
+    
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "reserva")
+    private ReservaAtiva reservaAtiva;
 
     protected Reserva() {
     }
 
     public Reserva(Estudante estudante, Sala sala, Date dataInicial, int quantidadeAlunos) {
-        this.quantidadeAlunos = quantidadeAlunos;
-        this.dataInicial = dataInicial;
-        this.dataFinal = dataInicial;//+1h
         this.estudante = estudante;
         this.sala = sala;
+        this.dataInicial = dataInicial;
+        this.dataFinal = dataInicial;//+1h
+        this.quantidadeAlunos = quantidadeAlunos;
+        this.status = new Status("Inativa");
     }
 
     public Integer getId() {
@@ -129,22 +126,6 @@ public class Reserva implements Serializable {
         this.reservaAtiva = reservaAtiva;
     }
 
-    public List<Estudante> getEstudantesReservasAtivas() {
-        return estudantesReservasAtivas;
-    }
-
-    public void setEstudantesReservasAtivas(List<Estudante> estudantesReservasAtivas) {
-        this.estudantesReservasAtivas = estudantesReservasAtivas;
-    }
-
-    public List<Date> getDatasReservasAtivas() {
-        return datasReservasAtivas;
-    }
-
-    public void setDatasReservasAtivas(List<Date> datasReservasAtivas) {
-        this.datasReservasAtivas = datasReservasAtivas;
-    }
-
     public Estudante getEstudante() {
         return estudante;
     }
@@ -161,6 +142,14 @@ public class Reserva implements Serializable {
         this.sala = sala;
     }
 
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -183,7 +172,7 @@ public class Reserva implements Serializable {
 
     @Override
     public String toString() {
-        return "br.edu.utfpr.biblioteca.salas.model.Reservas[ id=" + id + " ]";
+        return "br.edu.utfpr.biblioteca.salas.model.Reserva[ id=" + id + " ]";
     }
 
 }
