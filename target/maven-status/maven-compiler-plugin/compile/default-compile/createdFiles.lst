@@ -1,6 +1,6 @@
 br/edu/utfpr/biblioteca/salas/model/ReservaAtiva_.class
-br/edu/utfpr/biblioteca/salas/model/Sala.class
 br/edu/utfpr/biblioteca/salas/model/Estudante_.class
+br/edu/utfpr/biblioteca/salas/model/Sala.class
 br/edu/utfpr/biblioteca/salas/model/ReservaAtivaPK.class
 br/edu/utfpr/biblioteca/salas/dao/ReservaDAO.class
 br/edu/utfpr/biblioteca/salas/model/ReservaAtiva.class

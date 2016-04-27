@@ -32,6 +32,19 @@
     
     <dependencies>
         
+       <!-- Não sei o que é -->
+        <dependency>
+            <groupId>net.bootsfaces</groupId>
+            <artifactId>bootsfaces</artifactId>
+            <version>0.7.0</version>
+            <scope>compile</scope>
+        </dependency>
+        <!-- Jar do Theme do Bootstrap -->
+        <dependency>
+            <groupId>org.primefaces.themes</groupId>
+            <artifactId>bootstrap</artifactId>
+            <version>1.0.10</version>
+        </dependency>
                
         <dependency>
             <groupId>junit</groupId>
@@ -66,6 +79,7 @@
             <groupId>org.primefaces</groupId>
             <artifactId>primefaces</artifactId>
             <version>5.0</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>javax</groupId>
@@ -135,12 +149,12 @@
                                     <type>jar</type>
                                 </artifactItem>
                             </artifactItems>
-                                <resources>          
-                                    <resource>
-                                        <directory>src/main/resources</directory>
-                                        <filtering>true</filtering>
-                                    </resource>
-                                </resources> 
+                            <resources>          
+                                <resource>
+                                    <directory>src/main/resources</directory>
+                                    <filtering>true</filtering>
+                                </resource>
+                            </resources> 
                         </configuration>
                     </execution>
                 </executions>
