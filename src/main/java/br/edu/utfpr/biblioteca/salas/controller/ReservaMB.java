@@ -75,7 +75,9 @@ public class ReservaMB {
         facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected", formatoEmDia.format(event.getObject())));
 
         //teste
-        System.out.println("data: " + getDate1());
+//        System.out.println("data: " + getDate1());
+        parametrosBotoes = getParametrosBotoes(getHorasAtivasPorDia(date), parametroUmAtivo, parametroUmDesativado, parametroDoisAtivo, parametroDoisDesativado);
+
     }
 
     public List<String> getHorasAtivasPorDia(Date date) {

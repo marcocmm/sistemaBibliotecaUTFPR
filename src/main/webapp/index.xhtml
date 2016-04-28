@@ -15,11 +15,13 @@
         <!--<h:outputStylesheet library="css" name="bootstrap-responsive.css"/>-->
 
         <ui:include src="header.xhtml"/>
+        
 
     </h:head>
     <h:body>
 
         <h:form id="form">
+<!--        <h:outputScript name="jsf.js" library="javax.faces" target="head"></h:outputScript>-->
             <p:growl id="msgs" showDetail="true" />
 
             <h:panelGrid columns="3" cellpadding="5">
@@ -33,7 +35,8 @@
                 <div class="nav-tabs">
                     <b:buttonGroup > 
                         <b:buttonGroup orientation="vertical" > 
-                            <b:button class="btn btn-small" disabled="true" value="       ."/>
+                            <b:button class="btn btn-small" disabled="true" value="       .">
+                            </b:button>
                             <b:button class="#{reservaMB.parametrosBotoes[0][0]}" value="8h às 9h"/>
                             <b:button class="#{reservaMB.parametrosBotoes[1][0]}" value="9h às 10h"/>
                             <b:button class="#{reservaMB.parametrosBotoes[2][0]}" value="10h às 11h"/>
