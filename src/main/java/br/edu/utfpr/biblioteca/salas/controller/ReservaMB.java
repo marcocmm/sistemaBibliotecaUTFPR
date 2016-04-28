@@ -39,6 +39,7 @@ public class ReservaMB {
     String parametroUmDesativado;
     String parametroDoisAtivo;
     String parametroDoisDesativado;
+
     /**
      * Creates a new instance of ReservaMB
      */
@@ -73,6 +74,8 @@ public class ReservaMB {
 
         FacesContext facesContext = FacesContext.getCurrentInstance();
         facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected", formatoEmDia.format(event.getObject())));
+
+        parametrosBotoes = getParametrosBotoes(getHorasAtivasPorDia(date), parametroUmAtivo, parametroUmDesativado, parametroDoisAtivo, parametroDoisDesativado);
 
         //teste
         System.out.println("data: " + getDate1());
@@ -121,7 +124,7 @@ public class ReservaMB {
                 hora = "0";
             }
             hora += i;
-            if (horasAtivas.contains(hora)) {
+            if (horasAtivas.contains(hora) || date.after(new Date())) {
                 parametrosBotoes[(i - 8)][0] = parametroUmDesativado;
                 parametrosBotoes[(i - 8)][1] = parametroDoisDesativado;
             } else {
