@@ -17,4 +17,9 @@ public class StatusDAO extends GenericDAO<Status>{
         super(Status.class);
     }
     
+    public Status obter(String status) {
+        entityManager.clear();
+        return (Status) entityManager.find(Status.class, status);
+    }
+    
 }

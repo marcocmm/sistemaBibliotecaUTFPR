@@ -41,10 +41,10 @@ public class ReservaAtiva implements Serializable {
     @ManyToOne(optional = false)
     private Estudante estudante;
 
-    @JoinColumn(name = "reserva_data_inicial", referencedColumnName = "data_inicial", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date data;
+//    @JoinColumn(name = "reserva_data_inicial", referencedColumnName = "data_inicial", insertable = false, updatable = false)
+//    @ManyToOne(optional = false)
+//    @Temporal(TemporalType.TIMESTAMP)
+//    private Date data;
 
     protected ReservaAtiva() {
     }
@@ -82,14 +82,14 @@ public class ReservaAtiva implements Serializable {
     public void setEstudante(Estudante estudante) {
         this.estudante = estudante;
     }
-
-    public Date getData() {
-        return data;
-    }
-
-    public void setData(Date data) {
-        this.data = data;
-    }
+//
+//    public Date getData() {
+//        return data;
+//    }
+//
+//    public void setData(Date data) {
+//        this.data = data;
+//    }
 
     @Override
     public int hashCode() {

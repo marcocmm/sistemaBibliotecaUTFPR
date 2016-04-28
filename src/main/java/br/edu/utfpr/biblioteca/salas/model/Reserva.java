@@ -5,6 +5,7 @@
  */
 package br.edu.utfpr.biblioteca.salas.model;
 
+import br.edu.utfpr.biblioteca.salas.dao.StatusDAO;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -66,11 +67,11 @@ public class Reserva implements Serializable {
     @JoinColumn(name = "sala_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Sala sala;
-    
+
     @JoinColumn(name = "status_name", referencedColumnName = "name")
     @ManyToOne(optional = false)
     private Status status;
-    
+
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "reserva")
     private ReservaAtiva reservaAtiva;
 
@@ -83,7 +84,12 @@ public class Reserva implements Serializable {
         this.dataInicial = dataInicial;
         this.dataFinal = dataInicial;//+1h
         this.quantidadeAlunos = quantidadeAlunos;
-        this.status = new Status("Inativa");
+        StatusDAO statusDAO = new StatusDAO();
+        Status inativa = statusDAO.obter("Inativa");
+        if (inativa == null) {
+            inativa = new Status("Inativa");
+        }
+        this.status = inativa;
     }
 
     public Integer getId() {
@@ -149,7 +155,7 @@ public class Reserva implements Serializable {
     public void setStatus(Status status) {
         this.status = status;
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 0;
