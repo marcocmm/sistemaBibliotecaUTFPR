@@ -71,10 +71,8 @@ public class Reserva implements Serializable {
     @JoinColumn(name = "status_name", referencedColumnName = "name")
     @ManyToOne(optional = false)
     private Status status;
-
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "reserva")
-    private ReservaAtiva reservaAtiva;
-
+    
+    
     protected Reserva() {
     }
 
@@ -122,14 +120,6 @@ public class Reserva implements Serializable {
 
     public void setDataFinal(Date dataFinal) {
         this.dataFinal = dataFinal;
-    }
-
-    public ReservaAtiva getReservaAtiva() {
-        return reservaAtiva;
-    }
-
-    public void setReservaAtiva(ReservaAtiva reservaAtiva) {
-        this.reservaAtiva = reservaAtiva;
     }
 
     public Estudante getEstudante() {
