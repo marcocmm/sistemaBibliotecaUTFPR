@@ -98,40 +98,6 @@ CREATE INDEX `fk_reservas_estudantes_ra_idx` ON `bdBiblioteca`.`Reservas` (`estu
 CREATE INDEX `fk_reservas_status_name_idx` ON `bdBiblioteca`.`Reservas` (`status_name` ASC);
 
 
--- -----------------------------------------------------
--- Table `bdBiblioteca`.`Reservas_Ativas`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `bdBiblioteca`.`Reservas_Ativas` ;
-
-CREATE TABLE IF NOT EXISTS `bdBiblioteca`.`Reservas_Ativas` (
-  `reserva_id` INT NOT NULL,
-  `reserva_estudante_ra` CHAR(10) NOT NULL,
-  `reserva_data_inicial` DATETIME NOT NULL,
-  PRIMARY KEY (`reserva_data_inicial`, `reserva_estudante_ra`),
-  CONSTRAINT `fk_reservas_ativas_reservas_id`
-    FOREIGN KEY (`reserva_id`)
-    REFERENCES `bdBiblioteca`.`Reservas` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_reservas_ativas_reservas_estudante_ra`
-    FOREIGN KEY (`reserva_estudante_ra`)
-    REFERENCES `bdBiblioteca`.`Reservas` (`estudante_ra`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_reservas_ativas_reservas_data_inicial`
-    FOREIGN KEY (`reserva_data_inicial`)
-    REFERENCES `bdBiblioteca`.`Reservas` (`data_inicial`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-CREATE UNIQUE INDEX `reserva_data_inicial_UNIQUE` ON `bdBiblioteca`.`Reservas_Ativas` (`reserva_data_inicial` ASC);
-
-CREATE INDEX `fk_reservas_ativas_reservas_id_idx` ON `bdBiblioteca`.`Reservas_Ativas` (`reserva_id` ASC);
-
-CREATE INDEX `fk_reservas_ativas_reservas_estudante_ra_idx` ON `bdBiblioteca`.`Reservas_Ativas` (`reserva_estudante_ra` ASC);
-
-
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
