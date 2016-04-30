@@ -16,13 +16,11 @@ import javax.inject.Named;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 
-/**
- *
- * @author marco
- */
+
 @Named(value = "reservaMB")
 @ViewScoped
 @ManagedBean
@@ -40,10 +38,17 @@ public class ReservaMB {
     String parametroDoisAtivo;
     String parametroDoisDesativado;
 
+    private int contHora = 0;
+    private List<Integer> horariosReserva;
+
+    private static ReservaMB instancia;
+    
     /**
      * Creates a new instance of ReservaMB
      */
+    
     public ReservaMB() {
+//    private ReservaMB() {
         formartoEmHoras = new SimpleDateFormat("HH:mm:ss");
         formatoEmDia = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -54,6 +59,8 @@ public class ReservaMB {
         date = new Date();
         parametrosBotoes = new String[14][2];
         parametrosBotoes = getParametrosBotoes(getHorasAtivasPorDia(date), parametroUmAtivo, parametroUmDesativado, parametroDoisAtivo, parametroDoisDesativado);
+
+        horariosReserva = new ArrayList<>();
     }
 
     public Reserva getReserva() {
@@ -156,4 +163,22 @@ public class ReservaMB {
     public String[][] getParametrosBotoes() {
         return parametrosBotoes;
     }
+
+    public void setHoraInicial(int hora) {
+        if (horariosReserva.size() <= 2) {
+            this.horariosReserva.add(hora);
+            System.out.println("Setou hora: " + hora);
+        } else {
+            FacesContext facesContext = FacesContext.getCurrentInstance();
+            facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Limite de reserva de duas horas atingido", null));
+        }
+    }
+    
+//    public static synchronized ReservaMB getInstance(){
+//        if (instancia == null){
+//            instancia = new ReservaMB();
+//        }
+//        return instancia;
+//    }
+
 }
