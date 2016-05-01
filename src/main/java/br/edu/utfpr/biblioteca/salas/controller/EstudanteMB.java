@@ -54,6 +54,11 @@ public class EstudanteMB {
         return dao.obter(estudante) != null;
     }
 
+    public static boolean isAutentico(String login, String senha){
+        EstudanteDAO dao = new EstudanteDAO();
+        return dao.obter(login).getSenha().equals(senha);
+    }
+    
     public void autenticar(ActionEvent event) {
         FacesMessage message = null;
         boolean loggedIn = false;

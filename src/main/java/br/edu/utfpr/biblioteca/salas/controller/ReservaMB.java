@@ -37,7 +37,6 @@ public class ReservaMB {
     String parametroDoisAtivo;
     String parametroDoisDesativado;
 
-    
     @ViewScoped
     private List<Integer> horariosReserva;
 
@@ -71,6 +70,9 @@ public class ReservaMB {
     }
 
     public boolean salvarReserva(Reserva reserva) {
+        if (!EstudanteMB.isAutentico(reserva.getEstudante().getRa(), reserva.getEstudante().getSenha())) {
+            return false;
+        }
         if (reserva.getDataFinal().equals(reserva.getDataInicial())) {
             return false;
         }
