@@ -22,7 +22,7 @@ public class ReservaDAOTest {
     public ReservaDAOTest() {
     }
 
-    @Test
+    
     public void reservar() {
         SalaDAO salaDao = new SalaDAO();
         Sala sala = salaDao.obter(2);
@@ -36,7 +36,7 @@ public class ReservaDAOTest {
         }
     }
 
-    @Test
+    
     public void listar() {
         ReservaDAO dao = new ReservaDAO();
         List<Reserva> reservas = dao.list();
