@@ -58,10 +58,47 @@
                             <b:commandButton  value="21h às 22h" class="#{reservaMB.parametrosBotoes[12][0]}" disabled="#{reservaMB.parametrosBotoes[13][1]}" actionListener="#{reservaMB.setHoraInicial(16)}" ></b:commandButton>
                         </b:buttonGroup>
                     </b:buttonGroup>
-                    <p:link href="faces/loginEstudante.xhtml" class="btn btn-warning" value="Login"/>
+                    <!--<p:link href="faces/loginEstudante.xhtml" class="btn btn-warning" value="Login"/>-->
                 </div>
             </h:panelGrid>
         </h:form>
+
+        <h:form>            
+            <h:outputLink class="btn btn-warning" value="javascript:void(0)" onclick="PF('dlg').show();" title="login">
+                <!--<p:graphicImage class="btn btn-warning" value="Login" alt="Login"/>-->
+                <h:outputLabel value="Login"/>
+                <!--<p:button class="btn btn-warning" value="Login"/>-->
+                <!--<p:link class="btn btn-warning" value="Login"/>-->
+            </h:outputLink>
+
+            <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
+
+            <p:dialog header="Login" widgetVar="dlg" resizable="false">
+                <h:panelGrid columns="2" cellpadding="5">
+                    <h:outputLabel for="username" value="Username:" />
+                    <p:inputText id="username" value="#{estudanteMB.login}" required="true" label="username" />
+
+                    <h:outputLabel for="password" value="Password:" />
+                    <p:password id="password" value="#{estudanteMB.senha}" required="true" label="password" />
+
+                    <f:facet name="footer">
+                        <p:commandButton value="Login" update="growl" actionListener="#{estudanteMB.autenticar}"
+                                         oncomplete="handleLoginRequest(xhr, status, args)" />
+                    </f:facet>  
+                </h:panelGrid>
+            </p:dialog>
+        </h:form>
+
+        <script type="text/javascript">
+            function handleLoginRequest(xhr, status, args) {
+                if (args.validationFailed || !args.loggedIn) {
+                    PF('dlg').jq.effect("shake", {times: 5}, 100);
+                } else {
+                    PF('dlg').hide();
+                    $('#loginLink').fadeOut();
+                }
+            }
+        </script>
 
 
         <ui:include src="footer.xhtml"/>

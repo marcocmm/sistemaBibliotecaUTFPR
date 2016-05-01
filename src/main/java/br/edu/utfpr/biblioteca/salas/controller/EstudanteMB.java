@@ -7,8 +7,11 @@ package br.edu.utfpr.biblioteca.salas.controller;
 
 import br.edu.utfpr.biblioteca.salas.model.Estudante;
 import br.edu.utfpr.biblioteca.salas.dao.EstudanteDAO;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.ws.rs.core.Request;
@@ -51,25 +54,27 @@ public class EstudanteMB {
         return dao.obter(estudante) != null;
     }
 
-    
-    public boolean autenticar(String login, String senha) {
-        RequestContext context = RequestContext.getCurrentInstance();
-        FacesMessage menssage = null;
+    public void autenticar(ActionEvent event) {
+        FacesMessage message = null;
         boolean loggedIn = false;
 
         setEstudante(login, senha);
 
-        if (!alreadyCadastrado()) {
-            menssage = new FacesMessage(FacesMessage.SEVERITY_WARN, "Estudante não cadastrado!", null);
-            return false;
-        } else {
-            loggedIn = dao.obter(login).getSenha().equals(senha);
-            if (loggedIn) {
-                menssage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bem-Vindo!", getLogin());
+//        if (!alreadyCadastrado()) {
+//            menssage = new FacesMessage(FacesMessage.SEVERITY_WARN, "Estudante não cadastrado!", null);
+////            return false;
+//        } else {
+        loggedIn = dao.obter(login).getSenha().equals(senha);
+        if (loggedIn) {
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bem-Vindo!", getLogin());
 
-            }
-            return true;
         }
+
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        facesContext.addMessage(null, message);
+
+//            return true;
+//        }
     }
 
     public String getLogin() {
