@@ -20,7 +20,6 @@ import javax.inject.Inject;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 
-
 @Named(value = "reservaMB")
 @ViewScoped
 @ManagedBean
@@ -42,11 +41,10 @@ public class ReservaMB {
     private List<Integer> horariosReserva;
 
     private static ReservaMB instancia;
-    
+
     /**
      * Creates a new instance of ReservaMB
      */
-    
     public ReservaMB() {
 //    private ReservaMB() {
         formartoEmHoras = new SimpleDateFormat("HH:mm:ss");
@@ -71,10 +69,15 @@ public class ReservaMB {
         this.reserva = reserva;
     }
 
-    public void salvarReserva() {
-        //Validar
-        //Persistir Reserva
-
+    public boolean salvarReserva(Reserva reserva) {
+        if (reserva.getDataFinal().equals(reserva.getDataInicial())) {
+            return false;
+        }
+        if (reserva.getDataFinal().before(reserva.getDataInicial())) {
+            return false;
+        }
+        ReservaDAO dao = new ReservaDAO();
+        return dao.insert(reserva);
     }
 
     public void onDateSelect(SelectEvent event) {
@@ -173,12 +176,11 @@ public class ReservaMB {
             facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Limite de reserva de duas horas atingido", null));
         }
     }
-    
+
 //    public static synchronized ReservaMB getInstance(){
 //        if (instancia == null){
 //            instancia = new ReservaMB();
 //        }
 //        return instancia;
 //    }
-
 }

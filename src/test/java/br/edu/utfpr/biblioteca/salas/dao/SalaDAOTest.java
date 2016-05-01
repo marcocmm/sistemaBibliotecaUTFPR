@@ -18,7 +18,7 @@ public class SalaDAOTest {
     public SalaDAOTest() {
     }
 
-    @Test
+    
     public void cadastrarSala() {
         SalaDAO dao = new SalaDAO();
         if (dao.list().isEmpty()) {

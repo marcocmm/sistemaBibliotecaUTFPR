@@ -18,7 +18,7 @@ public class EstudanteDAOTest {
     public EstudanteDAOTest() {
     }
 
-    @Test
+    
     public void cadastrar() {
         EstudanteDAO dao = new EstudanteDAO();
         if (dao.list().isEmpty()) {

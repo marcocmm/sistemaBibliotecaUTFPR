@@ -17,7 +17,7 @@ public class AdministradorDAOTest {
     public AdministradorDAOTest() {
     }
 
-    @Test
+    
     public void cadastrar() {
         AdministradorDAO dao = new AdministradorDAO();
         Administrador administrador = new Administrador("rmeloca", "senha");
