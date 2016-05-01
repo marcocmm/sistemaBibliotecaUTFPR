@@ -38,7 +38,8 @@ public class ReservaMB {
     String parametroDoisAtivo;
     String parametroDoisDesativado;
 
-    private int contHora = 0;
+    
+    @ViewScoped
     private List<Integer> horariosReserva;
 
     private static ReservaMB instancia;
