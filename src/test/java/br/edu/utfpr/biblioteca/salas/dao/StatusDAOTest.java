@@ -18,7 +18,7 @@ public class StatusDAOTest {
     public StatusDAOTest() {
     }
 
-    @Test
+    
     public void criar() {
         StatusDAO dao = new StatusDAO();
         if (dao.list().isEmpty()) {

@@ -16,13 +16,10 @@ import javax.inject.Named;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 
-/**
- *
- * @author marco
- */
 @Named(value = "reservaMB")
 @ViewScoped
 @ManagedBean
@@ -43,10 +40,16 @@ public class ReservaMB {
     private final String parametroDoisAtivo;
     private final String parametroDoisDesativado;
 
+    @ViewScoped
+    private List<Integer> horariosReserva;
+
+    private static ReservaMB instancia;
+
     /**
      * Creates a new instance of ReservaMB
      */
     public ReservaMB() {
+//    private ReservaMB() {
         formartoEmHoras = new SimpleDateFormat("HH:mm:ss");
         formatoEmDia = new SimpleDateFormat("dd/MM/yyyy");
         parametroUmAtivo = "btn btn-success";
@@ -56,6 +59,8 @@ public class ReservaMB {
         date = new Date();
         parametrosBotoes = new String[14][2];
         parametrosBotoes = getParametrosBotoes(getHorasAtivasPorDia(date), parametroUmAtivo, parametroUmDesativado, parametroDoisAtivo, parametroDoisDesativado);
+
+        horariosReserva = new ArrayList<>();
     }
 
     public Reserva getReserva() {
@@ -66,10 +71,18 @@ public class ReservaMB {
         this.reserva = reserva;
     }
 
-    public void salvarReserva() {
-        //Validar
-        //Persistir Reserva
-
+    public boolean salvarReserva(Reserva reserva) {
+        if (!EstudanteMB.isAutentico(reserva.getEstudante().getRa(), reserva.getEstudante().getSenha())) {
+            return false;
+        }
+        if (reserva.getDataFinal().equals(reserva.getDataInicial())) {
+            return false;
+        }
+        if (reserva.getDataFinal().before(reserva.getDataInicial())) {
+            return false;
+        }
+        ReservaDAO dao = new ReservaDAO();
+        return dao.insert(reserva);
     }
 
     public void onDateSelect(SelectEvent event) {
@@ -80,7 +93,9 @@ public class ReservaMB {
         parametrosBotoes = getParametrosBotoes(getHorasAtivasPorDia(date), parametroUmAtivo, parametroUmDesativado, parametroDoisAtivo, parametroDoisDesativado);
 
         //teste
-        System.out.println("data: " + getDate1());
+//        System.out.println("data: " + getDate1());
+        parametrosBotoes = getParametrosBotoes(getHorasAtivasPorDia(date), parametroUmAtivo, parametroUmDesativado, parametroDoisAtivo, parametroDoisDesativado);
+
     }
 
     public List<String> getHorasAtivasPorDia(Date date) {
@@ -175,5 +190,20 @@ public class ReservaMB {
 //
 //    public String getParametroUmAtivo() {
 //        return parametroUmAtivo;
+    public void setHoraInicial(int hora) {
+        if (horariosReserva.size() <= 2) {
+            this.horariosReserva.add(hora);
+            System.out.println("Setou hora: " + hora);
+        } else {
+            FacesContext facesContext = FacesContext.getCurrentInstance();
+            facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Limite de reserva de duas horas atingido", null));
+        }
+    }
+
+//    public static synchronized ReservaMB getInstance(){
+//        if (instancia == null){
+//            instancia = new ReservaMB();
+//        }
+//        return instancia;
 //    }
 }

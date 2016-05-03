@@ -23,10 +23,11 @@ public abstract class GenericDAO<T> {
         this.clazz = clazz;
     }
 
-    public void insert(T entity) {
+    public boolean insert(T entity) {
         entityManager.getTransaction().begin();
         entityManager.persist(entity);
         entityManager.getTransaction().commit();
+        return true;
     }
 
     public void update(T entity) {
@@ -54,7 +55,6 @@ public abstract class GenericDAO<T> {
     }
 
     public List<T> list() {
-        System.out.println("SELECT e FROM " + clazz.getSimpleName() + " e");
         return entityManager.createQuery("SELECT e FROM " + clazz.getSimpleName() + " e").getResultList();
     }
 
