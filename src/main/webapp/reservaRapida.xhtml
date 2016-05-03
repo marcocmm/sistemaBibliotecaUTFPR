@@ -14,7 +14,7 @@
     <h:body>
         <h:form>
             <p:growl id="growl" sticky="true" showDetail="true"/>
-            <p:wizard>
+            <p:wizard flowListener="#{userWizard.onFlowProcess}">
             <!--<p:wizard flowListener="#{userWizard.onFlowProcess}">-->
                 <p:tab id="personal" title="Escolha um horario">
 
@@ -23,10 +23,10 @@
                         <p:growl id="msgs" showDetail="true" />
                         <h:panelGrid columns="3" cellpadding="5">
                             <p:calendar id="inline" value="#{reservaMB.date1}" mode="inline">
-                                <p:ajax event="dateSelect" listener="#{reservaMB.onDateSelect}" update="msgs" />
+                                <p:ajax event="dateSelect" listener="#{reservaMB.onDateSelect}" update="msgs,horariosReservas"  />
                             </p:calendar>
                             <div class="nav-tabs">
-                                <b:buttonGroup > 
+                                <b:buttonGroup id="horariosReservas"> 
                                     <b:buttonGroup orientation="vertical" > 
 
                                         <b:button class="btn btn-small" disabled="true" value="       ."/>
@@ -64,10 +64,9 @@
                 <p:tab id="address" title="Escolha uma sala">
                     <p:panel header="Escolha uma das salas vazias para o horaio selecionado">
                         <p:messages />
-                        <!--<p:dataTable var="sala" value="#{reservaMB.salasDisponiveis}">-->
-                        <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
-                            <p:outputLabel for="sala" value="Salas:" />
-                            <p:selectOneRadio id="sala" value="#{reservaMB.salasDisponiveis}"  layout="grid" columns="3">
+                        <h:panelGrid columns="2" style="margin-bottom:10px">
+                            <p:outputLabel for="sala" value="Salas:"/>
+                            <p:selectOneRadio id="sala" value="#{reservaMB.salasDisponiveis}"  layout="grid" columns="10">
                                 <f:selectItems value="#{reservaMB.salasDisponiveis}" var="s" itemLabel="#{sala}" itemValue="#{sala}"/>
                             </p:selectOneRadio>
                         </h:panelGrid>
@@ -89,8 +88,8 @@
                     </p:panel>
                 </p:tab>
 
-                <p:tab id="confirm" title="Confirmation">
-                    <p:panel header="Confirmation">
+                <p:tab id="confirm" title="Confirmação">
+                    <p:panel header="Confirme seus dados">
                         <h:panelGrid id="confirmation" columns="3" columnClasses="grid,grid,grid">
                             <h:panelGrid columns="2" columnClasses="label, value">
                                 <h:outputText value="Nome " />

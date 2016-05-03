@@ -24,7 +24,7 @@ import org.primefaces.event.SelectEvent;
 @ViewScoped
 @ManagedBean
 public class ReservaMB {
-
+    private int sala;
     private Reserva reserva;
     private List<Integer> salasOcupadas;
     private Date date;
@@ -191,4 +191,8 @@ public class ReservaMB {
 //        }
 //        return instancia;
 //    }
+
+    public void setSala(int sala) {
+        this.sala = sala;
+    }
 }
