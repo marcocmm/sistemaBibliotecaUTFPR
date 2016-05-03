@@ -28,12 +28,13 @@ public class ReservaMB {
     private Reserva reserva;
     private List<Integer> salasOcupadas;
     private Date date;
-    private String[][] parametrosBotoes;
     //Hora do botão selecionado
     private String horaSelecionada;
     //Formatadores de data
     private final SimpleDateFormat formartoEmHoras;
     private final SimpleDateFormat formatoEmDia;
+    //Parametro de todos botoes
+    private String[][] parametrosBotoes;
     //Tipos dos botoes
     private String parametroUmAtivo;
     private final String parametroUmDesativado;
@@ -110,35 +111,19 @@ public class ReservaMB {
         for (Reserva reserva : listaTodasReservas) {
             diaAtivo = formatoEmDia.format(reserva.getDataInicial());
             if (diaProcurado.equals(diaAtivo)) {
-                if(reserva.getStatus().equals("Ativa"))
-                listaReservasAtivasPorDia.add(formartoEmHoras.format(reserva.getDataInicial()).substring(0, 2));
+                if (reserva.getStatus().equals("Inativa")) {
+                    listaReservasAtivasPorDia.add(formartoEmHoras.format(reserva.getDataInicial()).substring(0, 2));
+                }
                 salasOcupadas.add(reserva.getId());
             }
         }
         return listaReservasAtivasPorDia;
     }
 
-//    public List<ReservaAtiva> getReservasPorDia(Date date) {
-//
-//        ReservaAtivaDAO reservaAtivaDAO = new ReservaAtivaDAO();
-//        List<ReservaAtiva> listaTodasReservasAtivas = reservaAtivaDAO.list();
-//        List<ReservaAtiva> listaReservasAtivasPorDia = new ArrayList<>();
-//        String diaProcurado = formatoEmDia.format(date);
-//        String diaAtivo;
-//        for (ReservaAtiva reservaAtiva : listaTodasReservasAtivas) {
-//            diaAtivo = formatoEmDia.format(reservaAtiva.getData());
-//            if (diaProcurado.equals(diaAtivo)) {
-//                listaReservasAtivasPorDia.add(reservaAtiva);
-//            }
-//        }
-//        return listaReservasAtivasPorDia;
-//    }
-//
     public String[][] getParametrosBotoes(List<String> horasAtivas, String parametroUmAtivo,
             String parametroUmDesativado, String parametroDoisAtivo, String parametroDoisDesativado) {
 
         String hora;
-        String[][] parametrosBotoes = new String[14][2];
         for (int i = 8; i < 22; i++) {
             hora = "";
             if (i < 10) {
@@ -180,16 +165,6 @@ public class ReservaMB {
         this.horaSelecionada = horaSelecionada;
     }
 
-//    public void alteraEstilo() {
-//        if (parametroUmAtivo.equals("btn btn-success")) {
-//            parametroUmAtivo = "ui-priority-primary";
-//        } else {
-//            parametroUmAtivo = "btn btn-success";
-//        }
-//    }
-//
-//    public String getParametroUmAtivo() {
-//        return parametroUmAtivo;
     public void setHoraInicial(int hora) {
         if (horariosReserva.size() <= 2) {
             this.horariosReserva.add(hora);
@@ -198,6 +173,16 @@ public class ReservaMB {
             FacesContext facesContext = FacesContext.getCurrentInstance();
             facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Limite de reserva de duas horas atingido", null));
         }
+    }
+
+    public List<Integer> getSalasDisponiveis() {
+        List<Integer> listaSalasDisponiveis = new ArrayList<>();
+        for (int i = 1; i < 9; i++) {
+            if (!(salasOcupadas.contains(i))) {
+                listaSalasDisponiveis.add(i);
+            }
+        }
+        return listaSalasDisponiveis;
     }
 
 //    public static synchronized ReservaMB getInstance(){
