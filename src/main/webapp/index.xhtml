@@ -20,6 +20,7 @@
 
     </h:head>
     <h:body>
+<<<<<<< HEAD
         <h:form>
 
             <p:growl id="growl" sticky="true" showDetail="true"/>
@@ -72,10 +73,7 @@
         
         <h:form>            
             <h:outputLink class="btn btn-warning" value="javascript:void(0)" onclick="PF('dlg').show();" title="login">
-                <!--<p:graphicImage class="btn btn-warning" value="Login" alt="Login"/>-->
                 <h:outputLabel value="Login"/>
-                <!--<p:button class="btn btn-warning" value="Login"/>-->
-                <!--<p:link class="btn btn-warning" value="Login"/>-->
             </h:outputLink>
 
             <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
@@ -106,6 +104,13 @@
                 }
             }
         </script>
+
+        <script type="text/javascript">
+            function changeButton{
+                document.form.button.value = "mudou"
+                document.form.button.className =#{reservaMB.parametrosBotoes[0][0]}
+            }
+        </script>   
 
 
         <ui:include src="footer.xhtml"/>
