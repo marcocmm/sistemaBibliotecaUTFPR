@@ -24,7 +24,7 @@ import org.primefaces.event.SelectEvent;
 @ViewScoped
 @ManagedBean
 public class ReservaMB {
-    private int sala;
+    private String sala;
     private Reserva reserva;
     private List<Integer> salasOcupadas;
     private Date date;
@@ -40,11 +40,10 @@ public class ReservaMB {
     private final String parametroUmDesativado;
     private final String parametroDoisAtivo;
     private final String parametroDoisDesativado;
+    
 
-    @ViewScoped
     private List<Integer> horariosReserva;
 
-    private static ReservaMB instancia;
 
     /**
      * Creates a new instance of ReservaMB
@@ -185,14 +184,12 @@ public class ReservaMB {
         return listaSalasDisponiveis;
     }
 
-//    public static synchronized ReservaMB getInstance(){
-//        if (instancia == null){
-//            instancia = new ReservaMB();
-//        }
-//        return instancia;
-//    }
 
-    public void setSala(int sala) {
+    public void setSala(String sala) {
         this.sala = sala;
     }
+    
+    
+    
+
 }
