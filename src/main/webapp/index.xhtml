@@ -29,7 +29,7 @@
 
                 <p:growl id="msgs" showDetail="true" />
                 <h:panelGrid columns="3" cellpadding="5">
-                    <p:calendar id="inline" value="#{reservaMB.date1}" mode="inline">
+                    <p:calendar id="inline" value="#{reservaMB.date}" mode="inline">
                         <p:ajax event="dateSelect" listener="#{reservaMB.onDateSelect}" update="msgs" />
                     </p:calendar>
 

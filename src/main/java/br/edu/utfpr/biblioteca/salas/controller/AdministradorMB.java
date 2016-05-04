@@ -5,8 +5,10 @@
  */
 package br.edu.utfpr.biblioteca.salas.controller;
 
+import tools.CalendarioController;
 import br.edu.utfpr.biblioteca.salas.model.Administrador;
-import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
 import javax.inject.Named;
 import javax.faces.bean.ManagedBean;
 import javax.faces.view.ViewScoped;
@@ -21,6 +23,7 @@ import javax.faces.view.ViewScoped;
 public class AdministradorMB {
 
     private Administrador administrador;
+    private List<Date> calendario;
 
     /**
      * Creates a new instance of AdministradorMB
@@ -34,6 +37,14 @@ public class AdministradorMB {
 
     public void setAdministrador(Administrador administrador) {
         this.administrador = administrador;
+    }
+
+    public List<Date> getCalendario() {
+        return CalendarioController.getCalendario(2016, 04);
+    }
+
+    public void setCalendario(List<Date> calendario) {
+        this.calendario = calendario;
     }
 
 }
