@@ -18,14 +18,17 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.FlowEvent;
 import org.primefaces.event.SelectEvent;
 
 @Named(value = "reservaMB")
 @ViewScoped
 @ManagedBean
 public class ReservaMB {
-    private int sala;
-    private Reserva reserva;
+
+    private Reserva reserva = new Reserva(null, null, null, 0);
+    
+    private Integer sala;
     private List<Integer> salasOcupadas;
     private Date date;
     //Hora do botão selecionado
@@ -41,10 +44,9 @@ public class ReservaMB {
     private final String parametroDoisAtivo;
     private final String parametroDoisDesativado;
 
-    @ViewScoped
-    private List<Integer> horariosReserva;
+    private boolean skip;
 
-    private static ReservaMB instancia;
+    private List<Integer> horariosReserva;
 
     /**
      * Creates a new instance of ReservaMB
@@ -191,8 +193,16 @@ public class ReservaMB {
 //        }
 //        return instancia;
 //    }
+    public String onFlowProcess(FlowEvent event) {
+        if (skip) {
+            skip = false;   //reset in case user goes back
+            return "confirm";
+        } else {
+            return event.getNewStep();
+        }
+    }
 
-    public void setSala(int sala) {
+    public void setSala(Integer sala) {
         this.sala = sala;
     }
 }

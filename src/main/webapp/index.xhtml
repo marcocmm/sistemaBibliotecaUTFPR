@@ -23,11 +23,11 @@
         <h:form>
 
             <p:growl id="growl" sticky="true" showDetail="true"/>
-            
+
             <h:form id="form">
                 <!--        <h:outputScript name="jsf.js" library="javax.faces" target="head"></h:outputScript>-->
-                <p:growl id="msgs" showDetail="true" />
 
+                <p:growl id="msgs" showDetail="true" />
                 <h:panelGrid columns="3" cellpadding="5">
                     <p:calendar id="inline" value="#{reservaMB.date1}" mode="inline">
                         <p:ajax event="dateSelect" listener="#{reservaMB.onDateSelect}" update="msgs" />
@@ -69,7 +69,7 @@
                 </h:panelGrid>
             </h:form>
         </h:form>
-        
+
         <h:form>            
             <h:outputLink class="btn btn-warning" value="javascript:void(0)" onclick="PF('dlg').show();" title="login">
                 <h:outputLabel value="Login"/>
