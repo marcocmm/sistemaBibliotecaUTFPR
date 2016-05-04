@@ -30,15 +30,17 @@ import org.primefaces.event.SelectEvent;
 @ManagedBean
 public class ReservaMB {
 
+    private int sala;
     private Reserva reserva;
     private List<Integer> salasOcupadas;
     private Date date;
-    private String[][] parametrosBotoes;
     //Hora do botão selecionado
     private String horaSelecionada;
     //Formatadores de data
     private final SimpleDateFormat formartoEmHoras;
     private final SimpleDateFormat formatoEmDia;
+    //Parametro de todos botoes
+    private String[][] parametrosBotoes;
     //Tipos dos botoes
     private String parametroUmAtivo;
     private final String parametroUmDesativado;
@@ -124,27 +126,10 @@ public class ReservaMB {
         return listaReservasAtivasPorDia;
     }
 
-//    public List<ReservaAtiva> getReservasPorDia(Date date) {
-//
-//        ReservaAtivaDAO reservaAtivaDAO = new ReservaAtivaDAO();
-//        List<ReservaAtiva> listaTodasReservasAtivas = reservaAtivaDAO.list();
-//        List<ReservaAtiva> listaReservasAtivasPorDia = new ArrayList<>();
-//        String diaProcurado = formatoEmDia.format(date);
-//        String diaAtivo;
-//        for (ReservaAtiva reservaAtiva : listaTodasReservasAtivas) {
-//            diaAtivo = formatoEmDia.format(reservaAtiva.getData());
-//            if (diaProcurado.equals(diaAtivo)) {
-//                listaReservasAtivasPorDia.add(reservaAtiva);
-//            }
-//        }
-//        return listaReservasAtivasPorDia;
-//    }
-//
     public String[][] getParametrosBotoes(List<String> horasAtivas, String parametroUmAtivo,
             String parametroUmDesativado, String parametroDoisAtivo, String parametroDoisDesativado) {
 
         String hora;
-        String[][] parametrosBotoes = new String[14][2];
         for (int i = 8; i < 22; i++) {
             hora = "";
             if (i < 10) {
@@ -207,7 +192,7 @@ public class ReservaMB {
 
         HashMap<Sala, Reserva> salaTemReservas = new HashMap();
         HashMap<Date, HashMap<Sala, Reserva>> dataTemReservas = new HashMap();
-        
+
         for (Sala sala : salas) {
             salaTemReservas.put(sala, null);
         }
@@ -242,10 +227,23 @@ public class ReservaMB {
         }
     }
 
+    public List<Integer> getSalasDisponiveis() {
+        List<Integer> listaSalasDisponiveis = new ArrayList<>();
+        for (int i = 1; i < 9; i++) {
+            if (!(salasOcupadas.contains(i))) {
+                listaSalasDisponiveis.add(i);
+            }
+        }
+        return listaSalasDisponiveis;
+    }
+
 //    public static synchronized ReservaMB getInstance(){
 //        if (instancia == null){
 //            instancia = new ReservaMB();
 //        }
 //        return instancia;
 //    }
+    public void setSala(int sala) {
+        this.sala = sala;
+    }
 }

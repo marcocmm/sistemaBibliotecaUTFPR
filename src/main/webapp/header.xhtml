@@ -11,13 +11,22 @@
         <f:metadata name="description" content="Este site tem como objetivo informar sobre os serviços prestados pela empresa Eleve."></f:metadata>
 
         <h:outputStylesheet library="css" name="bootstrap.css"/> <!--css padrão para todas as páginas-->
+        <h:outputStylesheet library="css" name="csspage.css"/> <!--css padrão para todas as páginas-->
         <h:outputStylesheet library="css" name="bootstrap-responsive.css"/> <!--css padrão para todas as páginas-->
     </h:head>
     
+    
     <h:body>
-        
-        <div>Código Html para o Header</div>
-        
+      <div class="corpo">
+            <div class="topo">
+                <div class="logo"></div>
+                <div class="login">
+                    <input id="inputEmail" type="text" placeholder="E-mail" />
+                    <input id="inputPassword" type="password" placeholder="Senha" />
+                    <button type="submit" class="botaoLogin">Acessar</button>
+                </div>
+            </div>
+        </div>
     </h:body>
     
 </html>

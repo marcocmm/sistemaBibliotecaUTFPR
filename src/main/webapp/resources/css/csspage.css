@@ -1,0 +1,55 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 01/05/2016, 23:18:54
+    Author     : elivelton
+*/
+.corpo{
+    width: 100%;
+    margin: 0px auto;
+}
+.corpo .topo{
+    width: 96%;
+    float: left;
+    background: #EDF3F3;
+    margin: 1%;
+    padding: 1%;
+}
+.corpo .topo .logo{
+    width: 50px;
+    height: 110px;
+    float: left;
+    background-image:url(images/logo.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: auto;
+}
+.corpo .topo .login{
+    width: 220px;
+    float: right;
+}
+.corpo .topo .login .botaoLogin{
+    float: right;
+}
+.corpo .conteudo{
+    width: 96%;
+    float: left;
+    background: #EDF3F3;
+    margin: 1%;
+    padding: 1%;
+}
+.corpo .rodape{
+    width: 96%;
+    float: left;
+    background: #EDF3F3;
+    margin: 1%;
+    padding: 1%;
+}
+.corpo .rodape .infoRodape{
+    width: 100%;
+    float: left;
+    text-align: center;
+}
