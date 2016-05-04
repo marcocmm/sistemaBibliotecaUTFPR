@@ -67,10 +67,9 @@
                         <h:panelGrid columns="2" style="margin-bottom:10px">
                             <p:outputLabel for="sala" value="Salas:"/>
                             <p:selectOneRadio id="sala" value="#{reservaMB.salasDisponiveis}"  layout="grid" columns="10">
-                                <f:selectItems value="#{reservaMB.salasDisponiveis}" var="s" itemLabel="#{sala}" itemValue="#{sala}"/>
+                                <f:selectItems  value="#{reservaMB.salasDisponiveis}" var="s" itemLabel="#{sala}" itemValue="#{sala}" />
                             </p:selectOneRadio>
                         </h:panelGrid>
-                        <!--</p:dataTable>-->
 
                     </p:panel>
                 </p:tab>
