@@ -9,7 +9,6 @@ import br.edu.utfpr.biblioteca.salas.dao.StatusDAO;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,7 +18,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -71,8 +69,7 @@ public class Reserva implements Serializable {
     @JoinColumn(name = "status_name", referencedColumnName = "name")
     @ManyToOne(optional = false)
     private Status status;
-    
-    
+
     protected Reserva() {
     }
 
@@ -169,6 +166,19 @@ public class Reserva implements Serializable {
     @Override
     public String toString() {
         return "br.edu.utfpr.biblioteca.salas.model.Reserva[ id=" + id + " ]";
+    }
+
+    @Override
+    public Object clone() {
+        Reserva reserva = new Reserva();
+        reserva.setId(this.id);
+        reserva.setEstudante(this.estudante);
+        reserva.setSala(this.sala);
+        reserva.setDataInicial(this.dataInicial);
+        reserva.setDataFinal(this.dataFinal);
+        reserva.setQuantidadeAlunos(this.quantidadeAlunos);
+        reserva.setStatus(this.status);
+        return reserva;
     }
 
 }

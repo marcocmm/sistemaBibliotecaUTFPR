@@ -5,18 +5,23 @@
  */
 package br.edu.utfpr.biblioteca.salas.controller;
 
+import tools.CalendarioController;
 import br.edu.utfpr.biblioteca.salas.dao.ReservaDAO;
+import br.edu.utfpr.biblioteca.salas.dao.SalaDAO;
 import br.edu.utfpr.biblioteca.salas.model.Reserva;
+import br.edu.utfpr.biblioteca.salas.model.Sala;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map.Entry;
 import javax.faces.application.FacesMessage;
 import javax.inject.Named;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
-import javax.inject.Inject;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 
@@ -93,7 +98,7 @@ public class ReservaMB {
         parametrosBotoes = getParametrosBotoes(getHorasAtivasPorDia(date), parametroUmAtivo, parametroUmDesativado, parametroDoisAtivo, parametroDoisDesativado);
 
         //teste
-//        System.out.println("data: " + getDate1());
+//        System.out.println("data: " + getDate());
         parametrosBotoes = getParametrosBotoes(getHorasAtivasPorDia(date), parametroUmAtivo, parametroUmDesativado, parametroDoisAtivo, parametroDoisDesativado);
 
     }
@@ -110,8 +115,9 @@ public class ReservaMB {
         for (Reserva reserva : listaTodasReservas) {
             diaAtivo = formatoEmDia.format(reserva.getDataInicial());
             if (diaProcurado.equals(diaAtivo)) {
-                if(reserva.getStatus().equals("Ativa"))
-                listaReservasAtivasPorDia.add(formartoEmHoras.format(reserva.getDataInicial()).substring(0, 2));
+                if (reserva.getStatus().equals("Ativa")) {
+                    listaReservasAtivasPorDia.add(formartoEmHoras.format(reserva.getDataInicial()).substring(0, 2));
+                }
                 salasOcupadas.add(reserva.getId());
             }
         }
@@ -164,11 +170,11 @@ public class ReservaMB {
 
     }
 
-    public Date getDate1() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate1(Date date1) {
+    public void setDate(Date date1) {
         this.date = date1;
     }
 
@@ -178,6 +184,42 @@ public class ReservaMB {
 
     public void setHoraSelecionada(String horaSelecionada) {
         this.horaSelecionada = horaSelecionada;
+    }
+
+    private HashMap<Sala, Reserva> clone(HashMap<Sala, Reserva> map) {
+        HashMap<Sala, Reserva> copy = new HashMap();
+        Iterator<Entry<Sala, Reserva>> iterator = map.entrySet().iterator();
+        Entry<Sala, Reserva> entry;
+        while (iterator.hasNext()) {
+            entry = iterator.next();
+            copy.put((Sala) entry.getKey().clone(), (Reserva) entry.getValue().clone());
+        }
+        return copy;
+    }
+
+    private HashMap<Date, HashMap<Sala, Reserva>> descreverDia(Date date) {
+        ReservaDAO dao = new ReservaDAO();
+        SalaDAO salaDAO = new SalaDAO();
+
+        List<Sala> salas = salaDAO.list();
+        List<Date> horarios = CalendarioController.getHorarios(date);
+        List<Reserva> reservas = dao.listByDate(date);
+
+        HashMap<Sala, Reserva> salaTemReservas = new HashMap();
+        HashMap<Date, HashMap<Sala, Reserva>> dataTemReservas = new HashMap();
+        
+        for (Sala sala : salas) {
+            salaTemReservas.put(sala, null);
+        }
+
+        for (Date horario : horarios) {
+            dataTemReservas.put(horario, clone(salaTemReservas));
+        }
+
+        for (Reserva reserva : reservas) {
+            dataTemReservas.get(reserva.getDataInicial()).put(reserva.getSala(), reserva);
+        }
+        return dataTemReservas;
     }
 
 //    public void alteraEstilo() {
