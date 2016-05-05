@@ -10,22 +10,23 @@ import br.edu.utfpr.biblioteca.salas.dao.EstudanteDAO;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
-import javax.ws.rs.core.Request;
-import org.primefaces.context.RequestContext;
 
 /**
  *
  * @author marco
  */
 @Named(value = "estudanteMB")
-@ViewScoped
+@SessionScoped
 @ManagedBean
 public class EstudanteMB {
-
+    
+    
+    private String nome;
     private String login;
     private String senha;
 
@@ -40,8 +41,8 @@ public class EstudanteMB {
         this.estudante = new Estudante(login, null, senha, null);
     }
 
-    private void cadastrarEstudante() {
-        if (alreadyCadastrado()) {
+    private void cadastrarEstudante(Estudante estudante) {
+        if (alreadyCadastrado(estudante)) {
             return;
         }
         if (estudante.getSenha().isEmpty()) {
@@ -50,15 +51,19 @@ public class EstudanteMB {
         dao.insert(estudante);
     }
 
-    private boolean alreadyCadastrado() {
+    private boolean alreadyCadastrado(Estudante estudante) {
         return dao.obter(estudante) != null;
     }
 
-    public static boolean isAutentico(String login, String senha){
+    public static boolean isAutentico(String login, String senha) {
         EstudanteDAO dao = new EstudanteDAO();
-        return dao.obter(login).getSenha().equals(senha);
+        Estudante estudante = dao.obter(login);
+        if (estudante == null) {
+            return false;
+        }
+        return estudante.getSenha().equals(senha);
     }
-    
+
     public void autenticar(ActionEvent event) {
         FacesMessage message = null;
         boolean loggedIn = false;
@@ -70,8 +75,9 @@ public class EstudanteMB {
 ////            return false;
 //        } else {
         loggedIn = dao.obter(login).getSenha().equals(senha);
+        
         if (loggedIn) {
-            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bem-Vindo!", getLogin());
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bem-Vindo!", getNome());
 
         }
 
@@ -84,6 +90,9 @@ public class EstudanteMB {
 
     public String getLogin() {
         return login;
+    }
+     public String getNome() {         
+        return dao.obter(login).getNome();
     }
 
     public void setLogin(String login) {

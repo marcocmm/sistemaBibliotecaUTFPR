@@ -22,10 +22,11 @@ public class EstudanteDAOTest {
     public void cadastrar() {
         EstudanteDAO dao = new EstudanteDAO();
         if (dao.list().isEmpty()) {
-            dao.insert(new Estudante("1137212", "Rômulo", "senha", "email@email.com"));
-            dao.insert(new Estudante("1137112", "Rômulo", "senha", "emailemail.com"));
+            dao.insert(new Estudante("1137212", "Rômulo", "112131", "email@email.com"));
+            dao.insert(new Estudante("1602063", "Mateus", "teste", "asd.com"));
             dao.insert(new Estudante("113722", "Rômulo", "senha", "email@mail.com"));
             dao.insert(new Estudante("1137612", "Rômulo", "senha", "emil@email.com"));
+            
         }
     }
 
