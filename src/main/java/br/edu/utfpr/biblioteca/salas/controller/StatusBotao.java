@@ -53,7 +53,7 @@ public class StatusBotao {
         
         
         parametrosBotoes = new String[14][2];
-        parametrosBotoes = getParametrosBotoes(reservaMB.getHorasAtivasPorDia(reservaMB.getDate1()), parametroUmAtivo, parametroUmDesativado, parametroDoisAtivo, parametroDoisDesativado);
+        parametrosBotoes = getParametrosBotoes(reservaMB.getHorasAtivasPorDia(reservaMB.getDate()), parametroUmAtivo, parametroUmDesativado, parametroDoisAtivo, parametroDoisDesativado);
         
     }
 
@@ -69,7 +69,7 @@ public class StatusBotao {
                 hora = "0";
             }
             hora += i;
-            if (horasAtivas.contains(hora) || reservaMB.getDate1().after(new Date())) {
+            if (horasAtivas.contains(hora) || reservaMB.getDate().after(new Date())) {
                 parametrosBotoes[(i - 8)][0] = parametroUmDesativado;
                 parametrosBotoes[(i - 8)][1] = parametroDoisDesativado;
             } else {

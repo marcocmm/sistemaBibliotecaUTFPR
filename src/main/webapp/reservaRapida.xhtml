@@ -12,14 +12,15 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </h:head>
     <h:body>
-        <h:form>
-            <p:growl id="growl" sticky="true" showDetail="true"/>
-            <p:wizard>
-            <!--<p:wizard flowListener="#{userWizard.onFlowProcess}">-->
-                <p:tab id="personal" title="Escolha um horario">
 
-                    <p:panel header="Horários disponíveis em verde  ">
+        <h:form>
+
+            <p:growl id="growl" sticky="true" showDetail="true"/>
+            <p:wizard flowListener="#{reservaMB.onFlowProcess}">
+                <p:tab id="personal" title="Data e Horário">
+                    <p:panel header="Personal Details">
                         <p:messages />
+<<<<<<< HEAD
                         <p:growl id="msgs" showDetail="true" />
                         <h:panelGrid columns="3" cellpadding="5">
                             <p:calendar id="inline" value="#{reservaMB.date1}" mode="inline">
@@ -55,67 +56,69 @@
                                 </b:buttonGroup>
                                 <!--<p:link href="faces/loginEstudante.xhtml" class="btn btn-warning" value="Login"/>-->
                             </div>
+=======
+                        <h:panelGrid columns="2" columnClasses="label, value">
+                            <h:outputText value="Data Inicial: *" />
+                            <p:inputText value="#{reservaMB.strDataInicial}" type="date" required="true" label="DataInicial"/>
+                            <h:outputText value="Horário: *" />
+                            <p:inputText value="#{reservaMB.strHorario}" type="time" required="true" label="Horário"/>
+>>>>>>> 6f7b094b7193d052f85b036eea28bda94cee9259
                         </h:panelGrid>
-
                     </p:panel>
-
                 </p:tab>
 
-                <p:tab id="address" title="Escolha uma sala">
-                    <p:panel header="Escolha uma das salas vazias para o horaio selecionado">
+                <p:tab id="address" title="Sala">
+                    <p:panel header="Address Details">
                         <p:messages />
-                        <!--<p:dataTable var="sala" value="#{reservaMB.salasDisponiveis}">-->
-                        <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
-                            <p:outputLabel for="sala" value="Salas:" />
-                            <p:selectOneRadio id="sala" value="#{reservaMB.salasDisponiveis}"  layout="grid" columns="3">
-                                <f:selectItems value="#{reservaMB.salasDisponiveis}" var="s" itemLabel="#{sala}" itemValue="#{sala}"/>
-                            </p:selectOneRadio>
+                        <h:panelGrid columns="2" columnClasses="label, value">
+                            <h:outputText value="Sala: *" />
+                            <p:inputText value="#{reservaMB.reserva.sala.id}" required="true" label="ID"/>
+                            <h:outputText value="Quantidade de alunos: *" />
+                            <p:inputText value="#{reservaMB.reserva.quantidadeAlunos}" required="true" label="QuantidadeAlunos"/>
                         </h:panelGrid>
-                        <!--</p:dataTable>-->
-
                     </p:panel>
                 </p:tab>
 
-                <p:tab id="contact" title="Login">
-                    <p:panel header="Informações do usuario">
+                <p:tab id="contact" title="Autenticação">
+                    <p:panel header="Contact Information">
                         <p:messages />
                         <h:panelGrid columns="2" columnClasses="label, value">
                             <h:outputText value="RA: *" />
-                            <p:inputText value="#{reservaMB.reserva.estudante.ra}" required="true" label="Email"/>
-
-                            <h:outputText value="Senha: " />
-                            <p:inputText value="#{reservaMB.reserva.estudante.senha}" style="-webkit-text-security: password"/>
+                            <p:inputText value="#{reservaMB.reserva.estudante.ra}" required="true" label="RA"/>
+                            <h:outputText value="Senha: *" />
+                            <p:inputText value="#{reservaMB.reserva.estudante.senha}" required="true" label="Senha"/>
                         </h:panelGrid>
                     </p:panel>
                 </p:tab>
 
-                <p:tab id="confirm" title="Confirmation">
+                <p:tab id="confirm" title="Confirmação">
                     <p:panel header="Confirmation">
-                        <h:panelGrid id="confirmation" columns="3" columnClasses="grid,grid,grid">
+                        <h:panelGrid id="confirmation" columns="1" columnClasses="grid,grid,grid">
                             <h:panelGrid columns="2" columnClasses="label, value">
-                                <h:outputText value="Nome " />
-                                <h:outputText value="#{reservaMB.reserva.estudante.nome}" styleClass="outputLabel"/>
+                                <h:outputText value="Data: " />
+                                <h:outputText value="#{reservaMB.strDataInicial}" styleClass="outputLabel"/>
 
-                                <h:outputText value="RA: " />
-                                <h:outputText value="#{reservaMB.reserva.estudante.RA}" styleClass="outputLabel"/>
-
+                                <h:outputText value="Horário: " />
+                                <h:outputText value="#{reservaMB.strHorario}" styleClass="outputLabel"/>
                             </h:panelGrid>
 
                             <h:panelGrid columns="2" columnClasses="label, value">
-
                                 <h:outputText value="Sala: " />
                                 <h:outputText value="#{reservaMB.reserva.sala.id}" styleClass="outputLabel"/>
-                                
-                                <h:outputText value="Hora Inicial: " />
-                                <h:outputText value="#{reservaMB.reserva.dataInicial}" styleClass="outputLabel"/>
+                                <h:outputText value="Quantidade de alunos: " />
+                                <h:outputText value="#{reservaMB.reserva.quantidadeAlunos}" styleClass="outputLabel"/>
+                            </h:panelGrid>
 
-                                <h:outputText value="Hora Final: " />
-                                <h:outputText value="#{reservaMB.reserva.dataFinal}" styleClass="outputLabel"/>
+                            <h:panelGrid columns="2" columnClasses="label, value">
+                                <h:outputText value="RA: " />
+                                <h:outputText value="#{reservaMB.reserva.estudante.ra}" styleClass="outputLabel"/>
 
+                                <h:outputText value="Senha: " />
+                                <h:outputText value="#{reservaMB.reserva.estudante.senha}" styleClass="outputLabel"/>
                             </h:panelGrid>
                         </h:panelGrid>
 
-                        <p:commandButton value="Submit" actionListener="#{userWizard.save}" update="growl" process="@this"/>
+                        <p:commandButton value="Submit" actionListener="#{reservaMB.save}" update="growl" process="@this"/>
                     </p:panel>
                 </p:tab>
             </p:wizard>

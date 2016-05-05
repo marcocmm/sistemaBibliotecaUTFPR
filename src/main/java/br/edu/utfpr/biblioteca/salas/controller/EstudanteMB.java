@@ -14,8 +14,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
-import javax.ws.rs.core.Request;
-import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -40,8 +38,8 @@ public class EstudanteMB {
         this.estudante = new Estudante(login, null, senha, null);
     }
 
-    private void cadastrarEstudante() {
-        if (alreadyCadastrado()) {
+    private void cadastrarEstudante(Estudante estudante) {
+        if (alreadyCadastrado(estudante)) {
             return;
         }
         if (estudante.getSenha().isEmpty()) {
@@ -50,15 +48,19 @@ public class EstudanteMB {
         dao.insert(estudante);
     }
 
-    private boolean alreadyCadastrado() {
+    private boolean alreadyCadastrado(Estudante estudante) {
         return dao.obter(estudante) != null;
     }
 
-    public static boolean isAutentico(String login, String senha){
+    public static boolean isAutentico(String login, String senha) {
         EstudanteDAO dao = new EstudanteDAO();
-        return dao.obter(login).getSenha().equals(senha);
+        Estudante estudante = dao.obter(login);
+        if (estudante == null) {
+            return false;
+        }
+        return estudante.getSenha().equals(senha);
     }
-    
+
     public void autenticar(ActionEvent event) {
         FacesMessage message = null;
         boolean loggedIn = false;
