@@ -5,26 +5,28 @@
  */
 package br.edu.utfpr.biblioteca.salas.controller;
 
-
 import br.edu.utfpr.biblioteca.salas.dao.ReservaDAO;
-import br.edu.utfpr.biblioteca.salas.model.Administrador;
+import br.edu.utfpr.biblioteca.salas.dao.SalaDAO;
 import br.edu.utfpr.biblioteca.salas.model.Reserva;
 
 import tools.CalendarioController;
 import br.edu.utfpr.biblioteca.salas.model.Administrador;
+import br.edu.utfpr.biblioteca.salas.model.Sala;
+import java.util.ArrayList;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import javax.inject.Named;
 import javax.faces.bean.ManagedBean;
+import javax.faces.event.ActionEvent;
 import javax.faces.view.ViewScoped;
+import tools.ReservasHorario;
 
 /**
  *
  * @author marco
  */
-
-
 @Named(value = "administradorMB")
 @ViewScoped
 @ManagedBean
@@ -33,18 +35,22 @@ public class AdministradorMB {
     private Administrador administrador;
 
     private ReservaDAO reservaDAO = new ReservaDAO();
+    private SalaDAO salaDAO = new SalaDAO();
 
     private Date data;
     private int idSala;
 
     private List<Date> calendario;
+    
+    private String horario;
+    private String status;
 
     /**
      * Creates a new instance of AdministradorMB
      */
     public AdministradorMB() {
-        this.idSala = 2;
-        this.data = new Date(2016, 04, 29, 18, 0, 0);
+//        this.idSala = 2;
+//        this.data = new Date(2016, 04, 29, 18, 0, 0);
     }
 
     public Administrador getAdministrador() {
@@ -71,6 +77,32 @@ public class AdministradorMB {
         this.idSala = idSala;
     }
 
+    public List<Date> getCalendario() {
+        return CalendarioController.getCalendario(2016, 04);
+    }
+
+    public void setCalendario(List<Date> calendario) {
+        this.calendario = calendario;
+    }
+
+    public String getHorario() {
+        return horario;
+    }
+
+    public void setHorario(String horario) {
+        this.horario = horario;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    
+    
+
     /**
      * Método que faz uma consulta no BD com uma data e um id da sala, retorna
      * uma lista de reservas correspondente.
@@ -81,26 +113,44 @@ public class AdministradorMB {
      */
     public List<Reserva> getReservas() {
         List<Reserva> allReservas = reservaDAO.list();
-        List<Reserva> reservas = null;
+        List<Reserva> reservas = new ArrayList<>();
 
         if (allReservas != null) {
             for (Reserva r : allReservas) {
-                if (r.getDataInicial().equals(this.data) && r.getId() == this.idSala) {
+                if (r.getDataInicial().equals(this.data) && r.getId() == this.idSala) {;
                     reservas.add(r);
-                }
+                }   
             }
         }
 
         return reservas;
     }
-
     
-    public List<Date> getCalendario() {
-        return CalendarioController.getCalendario(2016, 04);
+    public HashMap<String, String> getSalas(){
+//        List<Sala> salas = salaDAO.list();
+        HashMap<String, String> salas = new HashMap<>();
+        for (Sala sala : salaDAO.list()) {
+            System.out.println("Sala: " + sala.getId());
+            salas.put(String.valueOf(sala.getId()), "Sala " + String.valueOf(sala.getId()));
+        }
+        if (salas == null){
+            System.out.println("é NULO ------");
+        }
+        return salas;
     }
-
-    public void setCalendario(List<Date> calendario) {
-        this.calendario = calendario;
+    
+    public List<ReservasHorario> getReservasHorario(){
+        List<ReservasHorario> reservasHorario = new ArrayList<>();
+        for (Reserva reserva : getReservas()) {
+            ReservasHorario rH = new ReservasHorario();
+            rH.setHorario(String.valueOf(reserva.getDataInicial()));
+            rH.setStatus(String.valueOf(reserva.getStatus()));
+        }
+        return reservasHorario;
+    }
+    
+    public void consultarSala(ActionEvent event){
+//        getReservasHorario();
     }
 
 }
