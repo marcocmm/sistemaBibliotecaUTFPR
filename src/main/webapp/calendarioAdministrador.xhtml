@@ -23,33 +23,85 @@
     <h:body>
 
         <h:panelGroup>
-        <h:form>
-            <p:messages autoUpdate="true" />
+            <h:form>
+                <p:messages autoUpdate="true" />
 
-            <p:outputLabel for="popup" value="Data:" />
-            <p:calendar id="popup" value="#{administradorMB.data}" />
+                <p:outputLabel for="popup" value="Data:" />
+                <p:calendar id="popup" value="#{administradorMB.data}" />
 
-            <h:outputLabel value="Sala"/>
-            <p:selectOneMenu id="sala" value="Salas" effect="fold" editable="true">
-                <f:selectItem itemLabel="Selecione uma sala" itemValue="#{administradorMB.sala}" />
-                <f:selectItems value="#{administradorMB.salas}" />
-            </p:selectOneMenu>
+                <h:outputLabel value="Sala"/>
+                <p:selectOneMenu id="sala" value="Salas" effect="fold" editable="true">
+                    <f:selectItem itemLabel="Selecione uma sala" itemValue="#{administradorMB.sala}" />
+                    <f:selectItems value="#{administradorMB.salas}" />
+                </p:selectOneMenu>
 
-            <p:commandButton value="Consultar" update="tabelaHorarios"/>
+                <p:commandButton value="Consultar" update="tabelaHorarios"/>
 
-            <h:outputText value="#{administradorMB.sala}"/>
-            <p:dataTable id="tabelaHorarios" var="reservasHorario" value="#{administradorMB.reservasHorario}">
-                <p:column headerText="Horário">
-                    <h:outputText value="#{reservasHorario.horario}" />
-                </p:column>
+                <h:outputText value="#{administradorMB.sala}"/>
 
-                <p:column headerText="Status">
-                    <h:outputText value="#{reservasHorario.status}" />
-                </p:column>
+                <p:dataTable id="tabelaHorarios" var="reservasHorario" value="#{administradorMB.reservasHorario}">
+                    <p:column headerText="Horário">
+                        <h:outputText value="#{reservasHorario.horario}" />
+                    </p:column>
 
-            </p:dataTable>
-        </h:form>
+                    <p:column headerText="Status">
+                        <h:outputText value="#{reservasHorario.status}" />
+                    </p:column>
+
+                </p:dataTable>
+            </h:form>
         </h:panelGroup>
+
+        <h:panelGroup>
+            <h:form id="form">
+                <p:dataGrid var="date" value="#{administradorMB.calendario}" columns="7"
+                            rows="42" paginator="false" id="calendario">
+
+                    <f:facet name="header">
+                        Calendário de Reservas
+                    </f:facet>
+
+                    <p:panel header="#{date.date}" style="text-align:center">
+                        <h:panelGrid columns="1" style="width:100%">
+                            <h:outputText value="#{date.date}" />
+
+                            <!--                          
+                            <p:commandLink update=":form:carDetail" oncomplete="PF('carDialog').show()" title="View Detail">
+                            <h:outputText styleClass="ui-icon ui-icon-search" style="margin:0 auto;" />
+                            <f:setPropertyActionListener value="#{car}" target="#{dataGridView.selectedCar}" />
+                            </p:commandLink>
+                            -->
+                        </h:panelGrid>
+                    </p:panel>
+
+                </p:dataGrid>
+
+                <!--                
+                <p:dialog header="Car Info" widgetVar="carDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                <p:outputPanel id="carDetail" style="text-align:center;">
+                <p:panelGrid  columns="2" rendered="#{not empty dataGridView.selectedCar}" columnClasses="label,value">
+                <f:facet name="header">
+                <p:graphicImage name="demo/images/car/#{dataGridView.selectedCar.brand}-big.gif"/> 
+                </f:facet>
+
+                <h:outputText value="Id:" />
+                <h:outputText value="#{dataGridView.selectedCar.id}" />
+
+                <h:outputText value="Year" />
+                <h:outputText value="#{dataGridView.selectedCar.year}" />
+
+                <h:outputText value="Color:" />
+                <h:outputText value="#{dataGridView.selectedCar.color}" style="color:#{dataGridView.selectedCar.color}"/>
+
+                <h:outputText value="Price" />
+                <h:outputText value="$#{dataGridView.selectedCar.price}" />
+                </p:panelGrid>
+                </p:outputPanel>
+                </p:dialog>
+                -->
+            </h:form>
+        </h:panelGroup>
+
         <ui:include src="footer.xhtml"/>
     </h:body>
 </html>
