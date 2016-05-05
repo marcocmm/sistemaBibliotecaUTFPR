@@ -5,9 +5,11 @@
  */
 package br.edu.utfpr.biblioteca.salas.controller;
 
+import br.edu.utfpr.biblioteca.salas.dao.EstudanteDAO;
 import tools.CalendarioController;
 import br.edu.utfpr.biblioteca.salas.dao.ReservaDAO;
 import br.edu.utfpr.biblioteca.salas.dao.SalaDAO;
+import br.edu.utfpr.biblioteca.salas.model.Estudante;
 import br.edu.utfpr.biblioteca.salas.model.Reserva;
 import br.edu.utfpr.biblioteca.salas.model.Sala;
 import java.text.SimpleDateFormat;
@@ -21,8 +23,9 @@ import javax.faces.application.FacesMessage;
 import javax.inject.Named;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
+import javax.faces.bean.ViewScoped;
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.FlowEvent;
 import org.primefaces.event.SelectEvent;
 
 @Named(value = "reservaMB")
@@ -30,8 +33,11 @@ import org.primefaces.event.SelectEvent;
 @ManagedBean
 public class ReservaMB {
 
-    private int sala;
     private Reserva reserva;
+    private String strDataInicial;
+    private String strHorario;
+
+    private int sala;
     private List<Integer> salasOcupadas;
     private Date date;
     //Hora do botão selecionado
@@ -46,17 +52,15 @@ public class ReservaMB {
     private final String parametroUmDesativado;
     private final String parametroDoisAtivo;
     private final String parametroDoisDesativado;
-
-    @ViewScoped
     private List<Integer> horariosReserva;
-
-    private static ReservaMB instancia;
 
     /**
      * Creates a new instance of ReservaMB
      */
     public ReservaMB() {
-//    private ReservaMB() {
+        Estudante estudante = new Estudante(null, null, null, null);
+        reserva = new Reserva(estudante, new Sala(1, true), new Date(), 0);
+
         formartoEmHoras = new SimpleDateFormat("HH:mm:ss");
         formatoEmDia = new SimpleDateFormat("dd/MM/yyyy");
         parametroUmAtivo = "btn btn-success";
@@ -66,7 +70,6 @@ public class ReservaMB {
         date = new Date();
         parametrosBotoes = new String[14][2];
         parametrosBotoes = getParametrosBotoes(getHorasAtivasPorDia(date), parametroUmAtivo, parametroUmDesativado, parametroDoisAtivo, parametroDoisDesativado);
-
         horariosReserva = new ArrayList<>();
     }
 
@@ -76,6 +79,35 @@ public class ReservaMB {
 
     public void setReserva(Reserva reserva) {
         this.reserva = reserva;
+    }
+
+    public void save() {
+        if (!EstudanteMB.isAutentico(this.reserva.getEstudante().getRa(), this.reserva.getEstudante().getSenha())) {
+            FacesMessage msg = new FacesMessage("Credenciais inválidas", "Welcome :" + getReserva().getEstudante().getRa());
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+            return;
+        }
+
+        EstudanteDAO estudanteDAO = new EstudanteDAO();
+        ReservaDAO reservaDAO = new ReservaDAO();
+        SalaDAO salaDAO = new SalaDAO();
+
+        Date dataInicial = CalendarioController.parseDateTime(this.strDataInicial, this.strHorario);
+        this.reserva.setDataInicial(dataInicial);
+
+        Estudante estudante = estudanteDAO.obter(this.reserva.getEstudante().getRa());
+        this.reserva.setEstudante(estudante);
+
+        Sala sala = salaDAO.obter(this.reserva.getSala().getId());
+        this.reserva.setSala(sala);
+        
+        if (reservaDAO.insert(reserva)) {
+            FacesMessage msg = new FacesMessage("Successful", "Welcome :" + getReserva().getEstudante().getRa());
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+            return;
+        }
+        FacesMessage msg = new FacesMessage("Fail", "Welcome :" + getReserva().getEstudante().getRa());
+        FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 
     public boolean salvarReserva(Reserva reserva) {
@@ -227,6 +259,22 @@ public class ReservaMB {
         }
     }
 
+    public String getStrHorario() {
+        return strHorario;
+    }
+
+    public void setStrHorario(String strHorario) {
+        this.strHorario = strHorario;
+    }
+
+    public String getStrDataInicial() {
+        return strDataInicial;
+    }
+
+    public void setStrDataInicial(String strDataInicial) {
+        this.strDataInicial = strDataInicial;
+    }
+
     public List<Integer> getSalasDisponiveis() {
         List<Integer> listaSalasDisponiveis = new ArrayList<>();
         for (int i = 1; i < 9; i++) {
@@ -237,13 +285,12 @@ public class ReservaMB {
         return listaSalasDisponiveis;
     }
 
-//    public static synchronized ReservaMB getInstance(){
-//        if (instancia == null){
-//            instancia = new ReservaMB();
-//        }
-//        return instancia;
-//    }
     public void setSala(int sala) {
         this.sala = sala;
     }
+
+    public String onFlowProcess(FlowEvent event) {
+        return event.getNewStep();
+    }
+
 }

@@ -10,8 +10,6 @@ import br.edu.utfpr.biblioteca.salas.model.Reserva;
 import br.edu.utfpr.biblioteca.salas.model.Sala;
 import java.util.Date;
 import java.util.List;
-import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
@@ -22,7 +20,6 @@ public class ReservaDAOTest {
     public ReservaDAOTest() {
     }
 
-    
     public void reservar() {
         SalaDAO salaDao = new SalaDAO();
         Sala sala = salaDao.obter(2);
@@ -36,7 +33,6 @@ public class ReservaDAOTest {
         }
     }
 
-    
     public void listar() {
         ReservaDAO dao = new ReservaDAO();
         List<Reserva> reservas = dao.list();

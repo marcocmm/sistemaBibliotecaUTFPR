@@ -14,8 +14,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
-import javax.ws.rs.core.Request;
-import org.primefaces.context.RequestContext;
 
 /**
  *
