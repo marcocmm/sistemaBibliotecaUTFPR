@@ -32,7 +32,7 @@ public class SalaMB {
     public void setSala(Sala sala) {
         this.sala = sala;
     }
-    
+      
     
     
 }

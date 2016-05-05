@@ -126,4 +126,48 @@ public class CalendarioController {
 
         return horarios;
     }
+
+    public static Date parseDate(String date) {
+        String dateParsed[] = date.split("-");
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.clear(Calendar.MINUTE);
+        calendar.clear(Calendar.SECOND);
+        calendar.clear(Calendar.MILLISECOND);
+
+        calendar.set(Calendar.DAY_OF_MONTH, Integer.valueOf(dateParsed[0]));
+        calendar.set(Calendar.MONTH, Integer.valueOf(dateParsed[1]));
+        calendar.set(Calendar.YEAR, Integer.valueOf(dateParsed[2]));
+        return calendar.getTime();
+    }
+
+    public static Date parseDateTime(String date, String time) {
+        String timeParsed[] = time.split(":");
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(parseDate(date));
+        calendar.set(Calendar.HOUR_OF_DAY, Integer.valueOf(timeParsed[0]));
+        calendar.set(Calendar.MINUTE, Integer.valueOf(timeParsed[1]));
+        return calendar.getTime();
+    }
+
+    public static String getDatabaseDateFormat(Date date) {
+        String databaseDateFormat = "";
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+
+        databaseDateFormat += calendar.get(Calendar.YEAR);
+        databaseDateFormat += "-";
+        databaseDateFormat += calendar.get(Calendar.MONTH);
+        databaseDateFormat += "-";
+        databaseDateFormat += calendar.get(Calendar.DAY_OF_MONTH);
+        databaseDateFormat += " ";
+        databaseDateFormat += calendar.get(Calendar.HOUR_OF_DAY);
+        databaseDateFormat += ":";
+        databaseDateFormat += "00";
+        databaseDateFormat += ":";
+        databaseDateFormat += "00";
+        return databaseDateFormat;
+    }
+
 }

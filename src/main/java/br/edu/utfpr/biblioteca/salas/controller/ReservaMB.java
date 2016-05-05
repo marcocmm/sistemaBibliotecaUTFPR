@@ -5,9 +5,11 @@
  */
 package br.edu.utfpr.biblioteca.salas.controller;
 
+import br.edu.utfpr.biblioteca.salas.dao.EstudanteDAO;
 import tools.CalendarioController;
 import br.edu.utfpr.biblioteca.salas.dao.ReservaDAO;
 import br.edu.utfpr.biblioteca.salas.dao.SalaDAO;
+import br.edu.utfpr.biblioteca.salas.model.Estudante;
 import br.edu.utfpr.biblioteca.salas.model.Reserva;
 import br.edu.utfpr.biblioteca.salas.model.Sala;
 import java.text.SimpleDateFormat;
@@ -21,25 +23,35 @@ import javax.faces.application.FacesMessage;
 import javax.inject.Named;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
+import javax.faces.bean.ViewScoped;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.FlowEvent;
 import org.primefaces.event.SelectEvent;
+import br.edu.utfpr.biblioteca.salas.controller.StatusBotao;
+import java.io.Serializable;
 
 @Named(value = "reservaMB")
 @ViewScoped
 @ManagedBean
-public class ReservaMB {
+public class ReservaMB implements Serializable {
+
+
+    StatusBotao statusBotao;
+    private Reserva reserva;
+    private String strDataInicial;
+    private String strHorario;
 
     private Integer sala;
-    private Reserva reserva;
     private List<Integer> salasOcupadas;
     private Date date;
+    
+   
     //Hora do botão selecionado
     private String horaSelecionada;
     //Formatadores de data
     private final SimpleDateFormat formartoEmHoras;
     private final SimpleDateFormat formatoEmDia;
+
     //Parametro de todos botoes
     private String[][] parametrosBotoes;
     //Tipos dos botoes
@@ -48,17 +60,19 @@ public class ReservaMB {
     private final String parametroDoisAtivo;
     private final String parametroDoisDesativado;
 
-    private boolean skip;
-
     private List<Integer> horariosReserva;
 
-    /**
-     * Creates a new instance of ReservaMB
-     */
     public ReservaMB() {
-//    private ReservaMB() {
+        Estudante estudante = new Estudante(null, null, null, null);
+        reserva = new Reserva(estudante, new Sala(1, true), new Date(), 0);
+
         formartoEmHoras = new SimpleDateFormat("HH:mm:ss");
         formatoEmDia = new SimpleDateFormat("dd/MM/yyyy");
+         date = new Date();
+      
+//        parametrosBotoes = new String[14][2];
+//        parametrosBotoes = getParametrosBotoes(getHorasAtivasPorDia(date), parametroUmAtivo, parametroUmDesativado, parametroDoisAtivo, parametroDoisDesativado);
+
         parametroUmAtivo = "btn btn-success";
         parametroUmDesativado = "btn btn-danger";
         parametroDoisAtivo = "false";
@@ -66,16 +80,67 @@ public class ReservaMB {
         date = new Date();
         parametrosBotoes = new String[14][2];
         parametrosBotoes = getParametrosBotoes(getHorasAtivasPorDia(date), parametroUmAtivo, parametroUmDesativado, parametroDoisAtivo, parametroDoisDesativado);
-
         horariosReserva = new ArrayList<>();
     }
+    
+     public List<String> getHorasAtivasPorDia(Date date) {
 
+        ReservaDAO reservaDAO = new ReservaDAO();
+        List<Reserva> listaTodasReservas = reservaDAO.list();
+        List<String> listaReservasAtivasPorDia = new ArrayList<>();
+        String diaProcurado = formatoEmDia.format(date);
+        String diaAtivo;
+        salasOcupadas = new ArrayList<>();
+
+        for (Reserva reserva : listaTodasReservas) {
+            diaAtivo = formatoEmDia.format(reserva.getDataInicial());
+            if (diaProcurado.equals(diaAtivo)) {
+                if (reserva.getStatus().equals("Inativa")) {
+                    listaReservasAtivasPorDia.add(formartoEmHoras.format(reserva.getDataInicial()).substring(0, 2));
+                }
+                salasOcupadas.add(reserva.getId());
+            }
+        }
+      
+        return listaReservasAtivasPorDia;
+    }
+    
+     
     public Reserva getReserva() {
         return reserva;
     }
 
     public void setReserva(Reserva reserva) {
         this.reserva = reserva;
+    }
+
+    public void save() {
+        if (!EstudanteMB.isAutentico(this.reserva.getEstudante().getRa(), this.reserva.getEstudante().getSenha())) {
+            FacesMessage msg = new FacesMessage("Credenciais inválidas", "Welcome :" + getReserva().getEstudante().getRa());
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+            return;
+        }
+
+        EstudanteDAO estudanteDAO = new EstudanteDAO();
+        ReservaDAO reservaDAO = new ReservaDAO();
+        SalaDAO salaDAO = new SalaDAO();
+
+        Date dataInicial = CalendarioController.parseDateTime(this.strDataInicial, this.strHorario);
+        this.reserva.setDataInicial(dataInicial);
+
+        Estudante estudante = estudanteDAO.obter(this.reserva.getEstudante().getRa());
+        this.reserva.setEstudante(estudante);
+
+        Sala sala = salaDAO.obter(this.reserva.getSala().getId());
+        this.reserva.setSala(sala);
+
+        if (reservaDAO.insert(reserva)) {
+            FacesMessage msg = new FacesMessage("Successful", "Welcome :" + getReserva().getEstudante().getRa());
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+            return;
+        }
+        FacesMessage msg = new FacesMessage("Fail", "Welcome :" + getReserva().getEstudante().getRa());
+        FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 
     public boolean salvarReserva(Reserva reserva) {
@@ -91,40 +156,35 @@ public class ReservaMB {
         ReservaDAO dao = new ReservaDAO();
         return dao.insert(reserva);
     }
-
+  
+ 
     public void onDateSelect(SelectEvent event) {
 
         FacesContext facesContext = FacesContext.getCurrentInstance();
         facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected", formatoEmDia.format(event.getObject())));
 
-        parametrosBotoes = getParametrosBotoes(getHorasAtivasPorDia(date), parametroUmAtivo, parametroUmDesativado, parametroDoisAtivo, parametroDoisDesativado);
+        
+//        parametrosBotoes = getParametrosBotoes(getHorasAtivasPorDia(statusBotao.getDate1()), parametroUmAtivo, parametroUmDesativado, parametroDoisAtivo, parametroDoisDesativado);
 
         //teste
+      System.out.println("data: " + date);
+      
+        EstudanteDAO dao = new EstudanteDAO();
+        if (dao.list().isEmpty()) {
+            dao.insert(new Estudante("1137212", "Rômulo", "112131", "email@email.com"));
+            dao.insert(new Estudante("1602063", "Mateus", "teste", "asd.com"));
+            dao.insert(new Estudante("113722", "Rômulo", "senha", "email@mail.com"));
+            dao.insert(new Estudante("1137612", "Rômulo", "senha", "emil@email.com"));
+            
+        }
+    
+
+
 //        System.out.println("data: " + getDate());
         parametrosBotoes = getParametrosBotoes(getHorasAtivasPorDia(date), parametroUmAtivo, parametroUmDesativado, parametroDoisAtivo, parametroDoisDesativado);
 
-    }
-
-    public List<String> getHorasAtivasPorDia(Date date) {
-
-        ReservaDAO reservaDAO = new ReservaDAO();
-        List<Reserva> listaTodasReservas = reservaDAO.list();
-        List<String> listaReservasAtivasPorDia = new ArrayList<>();
-        String diaProcurado = formatoEmDia.format(date);
-        String diaAtivo;
-        salasOcupadas = new ArrayList<>();
-
-        for (Reserva reserva : listaTodasReservas) {
-            diaAtivo = formatoEmDia.format(reserva.getDataInicial());
-            if (diaProcurado.equals(diaAtivo)) {
-                if (reserva.getStatus().equals("Ativa")) {
-                    listaReservasAtivasPorDia.add(formartoEmHoras.format(reserva.getDataInicial()).substring(0, 2));
-                }
-                salasOcupadas.add(reserva.getId());
-            }
-        }
-        return listaReservasAtivasPorDia;
-    }
+    } 
+        
 
     public String[][] getParametrosBotoes(List<String> horasAtivas, String parametroUmAtivo,
             String parametroUmDesativado, String parametroDoisAtivo, String parametroDoisDesativado) {
@@ -145,8 +205,9 @@ public class ReservaMB {
             }
         }
         return parametrosBotoes;
-    }
 
+    }
+   
     public void click() {
         RequestContext requestContext = RequestContext.getCurrentInstance();
 
@@ -155,7 +216,11 @@ public class ReservaMB {
 
     }
 
+ 
+
+
     public Date getDate() {
+
         return date;
     }
 
@@ -163,11 +228,14 @@ public class ReservaMB {
         this.date = date1;
     }
 
-    public String[][] getParametrosBotoes() {
-        return parametrosBotoes;
-    }
 
-    public void setHoraSelecionada(String horaSelecionada) {
+    
+    public SimpleDateFormat getFormatoEmDia(){
+          return formatoEmDia;  
+            }
+    
+
+       public void setHoraSelecionada(String horaSelecionada) {
         this.horaSelecionada = horaSelecionada;
     }
 
@@ -227,8 +295,21 @@ public class ReservaMB {
         }
     }
 
-    public List<Integer> getHorariosReserva() {
-        return horariosReserva;
+
+    public String getStrHorario() {
+        return strHorario;
+    }
+
+    public void setStrHorario(String strHorario) {
+        this.strHorario = strHorario;
+    }
+
+    public String getStrDataInicial() {
+        return strDataInicial;
+    }
+
+    public void setStrDataInicial(String strDataInicial) {
+        this.strDataInicial = strDataInicial;
     }
 
     public List<Integer> getSalasDisponiveis() {
@@ -241,22 +322,24 @@ public class ReservaMB {
         return listaSalasDisponiveis;
     }
 
+// public List<String> getHorasAtivasPorDia(){
+//       return listaReservasAtivasPorDia; 
+//    }  
 //    public static synchronized ReservaMB getInstance(){
 //        if (instancia == null){
 //            instancia = new ReservaMB();
 //        }
 //        return instancia;
 //    }
-    public String onFlowProcess(FlowEvent event) {
-        if (skip) {
-            skip = false;   //reset in case user goes back
-            return "confirm";
-        } else {
-            return event.getNewStep();
-        }
-    }
 
-    public void setSala(Integer sala) {
+
+    public void setSala(int sala) {
         this.sala = sala;
     }
+
+    public String onFlowProcess(FlowEvent event) {
+        return event.getNewStep();
+    }
+
+
 }

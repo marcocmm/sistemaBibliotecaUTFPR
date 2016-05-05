@@ -16,8 +16,6 @@
         <h:outputStylesheet library="css" name="calendar.css"/>
 
         <ui:include src="header.xhtml"/>
-        
-
 
 
     </h:head>
@@ -28,15 +26,13 @@
             <p:growl id="msgs" showDetail="true" />
 
             <h:panelGrid columns="3" cellpadding="5">
-                <p:calendar class="ui-widget" id="inline" value="#{reservaMB.date1}" mode="inline">
-                    <p:ajax event="dateSelect" listener="#{reservaMB.onDateSelect}" update="msgs" />
+                <p:calendar class="ui-widget" id="inline" value="#{reservaMB.date}" mode="inline">
+                    <p:ajax event="dateSelect" listener="#{statusBotoes.onDateSelect}" update="msgs" />
                 </p:calendar>
             </h:panelGrid>
         </h:form>
 
-
-
-            <ui:include src="footer.xhtml"/>
+        <ui:include src="footer.xhtml"/>
 
     </h:body>
 </html>

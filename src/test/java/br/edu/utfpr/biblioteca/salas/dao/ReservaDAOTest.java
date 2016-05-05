@@ -10,8 +10,7 @@ import br.edu.utfpr.biblioteca.salas.model.Reserva;
 import br.edu.utfpr.biblioteca.salas.model.Sala;
 import java.util.Date;
 import java.util.List;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 /**
  *
@@ -22,7 +21,6 @@ public class ReservaDAOTest {
     public ReservaDAOTest() {
     }
 
-    
     public void reservar() {
         SalaDAO salaDao = new SalaDAO();
         Sala sala = salaDao.obter(2);
@@ -30,13 +28,10 @@ public class ReservaDAOTest {
         EstudanteDAO estudanteDAO = new EstudanteDAO();
         Estudante estudante = estudanteDAO.obter("1137112");
         ReservaDAO dao = new ReservaDAO();
-        if (dao.list().isEmpty()) {
-            Reserva reserva = new Reserva(estudante, sala, new Date(), 5);
-            dao.insert(reserva);
-        }
+        Reserva reserva = new Reserva(estudante, sala, new Date(), 5);
+        dao.insert(reserva);
     }
 
-    
     public void listar() {
         ReservaDAO dao = new ReservaDAO();
         List<Reserva> reservas = dao.list();
@@ -46,6 +41,7 @@ public class ReservaDAOTest {
             System.out.println(reserva);
             date = reserva.getDataInicial();
         }
+        assertTrue(reservas != null);
     }
 
 }
