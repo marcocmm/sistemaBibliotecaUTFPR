@@ -2,9 +2,9 @@ package br.edu.utfpr.biblioteca.salas.dao;
 
 import br.edu.utfpr.biblioteca.salas.model.Reserva;
 import br.edu.utfpr.biblioteca.salas.model.Status;
-import com.mysql.jdbc.PreparedStatement;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.Query;
 import tools.CalendarioController;
 
 /**
@@ -24,9 +24,21 @@ public class ReservaDAO extends GenericDAO<Reserva> {
         StatusDAO statusDAO;
 
         statusDAO = new StatusDAO();
+        
         try {
             entityManager.getTransaction().begin();
             alreadyReservado = null;
+            
+            Query q = entityManager.createQuery("SELECT e FROM Reserva e WHERE e.dataInicial = :dataInicial AND e.sala = :sala AND e.status = 'ativa'");
+            q.setParameter("dataInicial", CalendarioController.getDatabaseDateFormat(reserva.getDataInicial()));
+            q.setParameter("sala", reserva.getSala().getId());
+            
+            try{
+                alreadyReservado = (Reserva) q.getSingleResult();
+            }catch (Exception ex){
+                System.err.println(ex.getMessage());
+            }
+            
 //        alreadyReservado = (Reserva) entityManager.createQuery(
 //                "SELECT e FROM "
 //                + Reserva.class.getSimpleName()
@@ -39,7 +51,7 @@ public class ReservaDAO extends GenericDAO<Reserva> {
                 entityManager.getTransaction().commit();
                 return false;
             }
-            status = statusDAO.obter("Ativa");
+            status = statusDAO.obter("ativa");
             reserva.setStatus(status);
             entityManager.persist(reserva);
             entityManager.getTransaction().commit();
