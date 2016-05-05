@@ -10,6 +10,7 @@ import br.edu.utfpr.biblioteca.salas.model.Reserva;
 import br.edu.utfpr.biblioteca.salas.model.Sala;
 import java.util.Date;
 import java.util.List;
+import static org.junit.Assert.assertTrue;
 
 /**
  *
@@ -42,6 +43,7 @@ public class ReservaDAOTest {
             System.out.println(reserva);
             date = reserva.getDataInicial();
         }
+        assertTrue(reservas != null);
     }
 
 }

@@ -32,12 +32,12 @@ import org.primefaces.event.SelectEvent;
 @ViewScoped
 @ManagedBean
 public class ReservaMB {
-
+ 
     private Reserva reserva;
     private String strDataInicial;
     private String strHorario;
 
-    private int sala;
+    private Integer sala;
     private List<Integer> salasOcupadas;
     private Date date;
     //Hora do botão selecionado
@@ -54,9 +54,6 @@ public class ReservaMB {
     private final String parametroDoisDesativado;
     private List<Integer> horariosReserva;
 
-    /**
-     * Creates a new instance of ReservaMB
-     */
     public ReservaMB() {
         Estudante estudante = new Estudante(null, null, null, null);
         reserva = new Reserva(estudante, new Sala(1, true), new Date(), 0);
@@ -100,7 +97,7 @@ public class ReservaMB {
 
         Sala sala = salaDAO.obter(this.reserva.getSala().getId());
         this.reserva.setSala(sala);
-        
+
         if (reservaDAO.insert(reserva)) {
             FacesMessage msg = new FacesMessage("Successful", "Welcome :" + getReserva().getEstudante().getRa());
             FacesContext.getCurrentInstance().addMessage(null, msg);
