@@ -170,6 +170,16 @@ public class ReservaMB {
 
         //teste
       System.out.println("data: " + date);
+      
+        EstudanteDAO dao = new EstudanteDAO();
+        if (dao.list().isEmpty()) {
+            dao.insert(new Estudante("1137212", "Rômulo", "112131", "email@email.com"));
+            dao.insert(new Estudante("1602063", "Mateus", "teste", "asd.com"));
+            dao.insert(new Estudante("113722", "Rômulo", "senha", "email@mail.com"));
+            dao.insert(new Estudante("1137612", "Rômulo", "senha", "emil@email.com"));
+            
+        }
+    
 
 
 //        System.out.println("data: " + getDate());

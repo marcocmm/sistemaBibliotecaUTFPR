@@ -10,6 +10,7 @@ import br.edu.utfpr.biblioteca.salas.dao.EstudanteDAO;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.inject.Named;
@@ -20,10 +21,12 @@ import javax.faces.view.ViewScoped;
  * @author marco
  */
 @Named(value = "estudanteMB")
-@ViewScoped
+@SessionScoped
 @ManagedBean
 public class EstudanteMB {
-
+    
+    
+    private String nome;
     private String login;
     private String senha;
 
@@ -72,8 +75,9 @@ public class EstudanteMB {
 ////            return false;
 //        } else {
         loggedIn = dao.obter(login).getSenha().equals(senha);
+        
         if (loggedIn) {
-            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bem-Vindo!", getLogin());
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bem-Vindo!", getNome());
 
         }
 
@@ -86,6 +90,9 @@ public class EstudanteMB {
 
     public String getLogin() {
         return login;
+    }
+     public String getNome() {         
+        return dao.obter(login).getNome();
     }
 
     public void setLogin(String login) {

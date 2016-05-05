@@ -35,12 +35,14 @@
 
 
 
-                    <h3>Horários disponíveis</h3>
+                    
                     <div class="nav-tabs">
+                        
                         <b:buttonGroup > 
+                            <h3><b><center>Horários disponíveis</center></b></h3>
                             <b:buttonGroup orientation="vertical" > 
-
-                                <b:button class="btn btn-small" disabled="true" value="       -"/>
+                                
+                                <b:button class="btn btn-small" disabled="true" value="     -"/>
                                 <b:commandButton  value="08h às 09h" class="#{statusBotoes.parametrosBotoes[0][0]}" disabled="#{statusBotoes.parametrosBotoes[0][1]}" actionListener="#{reservaMB.setHoraInicial(8)}" ></b:commandButton>
                                 <b:commandButton  value="09h às 10h" class="#{statusBotoes.parametrosBotoes[1][0]}" disabled="#{statusBotoes.parametrosBotoes[1][1]}" actionListener="#{reservaMB.setHoraInicial(9)}" ></b:commandButton>
                                 <b:commandButton  value="10h às 11h" class="#{statusBotoes.parametrosBotoes[2][0]}" disabled="#{statusBotoes.parametrosBotoes[2][1]}" actionListener="#{reservaMB.setHoraInicial(10)}" ></b:commandButton>
@@ -70,30 +72,7 @@
             </h:form>
         </h:form>
 
-        <h:form>            
-            <h:outputLink class="btn btn-warning" value="javascript:void(0)" onclick="PF('dlg').show();" title="login">
-                <h:outputLabel value="Login"/>
-            </h:outputLink>
-
-            <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
-
-            <p:dialog header="Login" widgetVar="dlg" resizable="false">
-                <h:panelGrid columns="2" cellpadding="5">
-                    <h:outputLabel for="username" value="Username:" />
-                    <p:inputText id="username" value="#{estudanteMB.login}" required="true" label="username" />
-
-                    <h:outputLabel for="password" value="Password:" />
-                    <p:password id="password" value="#{estudanteMB.senha}" required="true" label="password" />
-
-                    <f:facet name="footer">
-                        <p:commandButton value="Login" update="growl" actionListener="#{estudanteMB.autenticar}"
-                                         oncomplete="handleLoginRequest(xhr, status, args)" />
-                    </f:facet>  
-                </h:panelGrid>
-            </p:dialog>
-        </h:form>
-
-        <script type="text/javascript">
+               <script type="text/javascript">
             function handleLoginRequest(xhr, status, args) {
                 if (args.validationFailed || !args.loggedIn) {
                     PF('dlg').jq.effect("shake", {times: 5}, 100);
@@ -113,7 +92,7 @@
 
 
         <ui:include src="footer.xhtml"/>
-        <a href="faces/reservaRapida.xhtml">Reserva Zica</a>
+        <a href="faces/reservaRapida.xhtml">Reserva Rápida</a>
     </h:body>
 </html>
 
