@@ -16,13 +16,13 @@
             <p:growl id="growl" sticky="true" showDetail="true"/>
             <p:wizard flowListener="#{userWizard.onFlowProcess}">
             <!--<p:wizard flowListener="#{userWizard.onFlowProcess}">-->
-                <p:tab id="personal" title="Escolha um horario">
+                <p:tab id="horario" title="Escolha um horario">
 
                     <p:panel header="Horários disponíveis em verde  ">
                         <p:messages />
                         <p:growl id="msgs" showDetail="true" />
                         <h:panelGrid columns="3" cellpadding="5">
-                            <p:calendar id="inline" value="#{reservaMB.date1}" mode="inline">
+                            <p:calendar id="inline" value="#{reservaMB.date}" mode="inline">
                                 <p:ajax event="dateSelect" listener="#{reservaMB.onDateSelect}" update="msgs,horariosReservas"  />
                             </p:calendar>
                             <div class="nav-tabs">
@@ -53,7 +53,6 @@
                                     </b:buttonGroup>
 
                                 </b:buttonGroup>
-                                <!--<p:link href="faces/loginEstudante.xhtml" class="btn btn-warning" value="Login"/>-->
                             </div>
                         </h:panelGrid>
 
@@ -61,20 +60,8 @@
 
                 </p:tab>
 
-                <p:tab id="address" title="Escolha uma sala">
-                    <p:panel header="Escolha uma das salas vazias para o horaio selecionado">
-                        <p:messages />
-                        <h:panelGrid columns="2" style="margin-bottom:10px">
-                            <p:outputLabel for="sala" value="Salas:"/>
-                            <p:selectOneRadio id="sala" value="#{reservaMB.salasDisponiveis}"  layout="grid" columns="10">
-                                <f:selectItems  value="#{reservaMB.salasDisponiveis}" var="s" itemLabel="#{sala}" itemValue="#{sala}" />
-                            </p:selectOneRadio>
-                        </h:panelGrid>
 
-                    </p:panel>
-                </p:tab>
-
-                <p:tab id="contact" title="Login">
+                <p:tab id="login" title="Login">
                     <p:panel header="Informações do usuario">
                         <p:messages />
                         <h:panelGrid columns="2" columnClasses="label, value">
@@ -82,7 +69,19 @@
                             <p:inputText value="#{reservaMB.reserva.estudante.ra}" required="true" label="Email"/>
 
                             <h:outputText value="Senha: " />
-                            <p:inputText value="#{reservaMB.reserva.estudante.senha}" style="-webkit-text-security: password"/>
+                            <p:inputText value="#{reservaMB.reserva.estudante.senha}" required="true" />
+                        </h:panelGrid>
+                    </p:panel>
+                </p:tab>
+
+                <p:tab id="escolha" title="Escolha">
+                    <p:panel header="Escolha uma das salas vazias para o horaio selecionado">
+                        <p:messages />
+                        <h:panelGrid columns="2" style="margin-bottom:10px">
+                            <p:outputLabel for="sala" value="Salas:"/>
+                            <p:selectOneRadio id="sala" value="#{reservaMB.salasDisponiveis}"  layout="grid" columns="10">
+                                <f:selectItems value="#{reservaMB.salasDisponiveis}" var="s" itemLabel="#{sala}" itemValue="#{sala}"/>
+                            </p:selectOneRadio>
                         </h:panelGrid>
                     </p:panel>
                 </p:tab>
@@ -103,7 +102,7 @@
 
                                 <h:outputText value="Sala: " />
                                 <h:outputText value="#{reservaMB.reserva.sala.id}" styleClass="outputLabel"/>
-                                
+
                                 <h:outputText value="Hora Inicial: " />
                                 <h:outputText value="#{reservaMB.reserva.dataInicial}" styleClass="outputLabel"/>
 
@@ -113,7 +112,7 @@
                             </h:panelGrid>
                         </h:panelGrid>
 
-                        <p:commandButton value="Submit" actionListener="#{userWizard.save}" update="growl" process="@this"/>
+                        <p:commandButton value="Submit" actionListener="#{reservaMB.salvarReserva(reserva)}" update="growl" process="@this"/>
                     </p:panel>
                 </p:tab>
             </p:wizard>

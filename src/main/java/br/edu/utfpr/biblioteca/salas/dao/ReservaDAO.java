@@ -2,6 +2,8 @@ package br.edu.utfpr.biblioteca.salas.dao;
 
 import br.edu.utfpr.biblioteca.salas.model.Reserva;
 import br.edu.utfpr.biblioteca.salas.model.Status;
+import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -45,4 +47,9 @@ public class ReservaDAO extends GenericDAO<Reserva> {
         }
     }
 
+    public List<Reserva> listByDate(Date date) {
+        return entityManager.createQuery("SELECT e FROM " + Reserva.class.getSimpleName() + " e"
+                + "WHERE e.data_inicial="
+                + date).getResultList();
+    }
 }

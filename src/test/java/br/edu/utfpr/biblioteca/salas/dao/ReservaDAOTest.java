@@ -36,7 +36,7 @@ public class ReservaDAOTest {
         }
     }
 
-    
+//    @Test
     public void listar() {
         ReservaDAO dao = new ReservaDAO();
         List<Reserva> reservas = dao.list();
@@ -46,6 +46,7 @@ public class ReservaDAOTest {
             System.out.println(reserva);
             date = reserva.getDataInicial();
         }
+//        assertTrue(reservas != null);
     }
 
 }

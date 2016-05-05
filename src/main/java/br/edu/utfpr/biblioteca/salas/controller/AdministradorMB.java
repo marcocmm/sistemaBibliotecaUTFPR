@@ -5,9 +5,14 @@
  */
 package br.edu.utfpr.biblioteca.salas.controller;
 
+
 import br.edu.utfpr.biblioteca.salas.dao.ReservaDAO;
 import br.edu.utfpr.biblioteca.salas.model.Administrador;
 import br.edu.utfpr.biblioteca.salas.model.Reserva;
+
+import tools.CalendarioController;
+import br.edu.utfpr.biblioteca.salas.model.Administrador;
+
 import java.util.Date;
 import java.util.List;
 import javax.inject.Named;
@@ -18,17 +23,21 @@ import javax.faces.view.ViewScoped;
  *
  * @author marco
  */
+
+
 @Named(value = "administradorMB")
 @ViewScoped
 @ManagedBean
 public class AdministradorMB {
 
     private Administrador administrador;
-    
+
     private ReservaDAO reservaDAO = new ReservaDAO();
 
     private Date data;
     private int idSala;
+
+    private List<Date> calendario;
 
     /**
      * Creates a new instance of AdministradorMB
@@ -81,8 +90,17 @@ public class AdministradorMB {
                 }
             }
         }
-        
+
         return reservas;
+    }
+
+    
+    public List<Date> getCalendario() {
+        return CalendarioController.getCalendario(2016, 04);
+    }
+
+    public void setCalendario(List<Date> calendario) {
+        this.calendario = calendario;
     }
 
 }
