@@ -28,10 +28,8 @@ public class ReservaDAOTest {
         EstudanteDAO estudanteDAO = new EstudanteDAO();
         Estudante estudante = estudanteDAO.obter("1137112");
         ReservaDAO dao = new ReservaDAO();
-        if (dao.list().isEmpty()) {
-            Reserva reserva = new Reserva(estudante, sala, new Date(), 5);
-            dao.insert(reserva);
-        }
+        Reserva reserva = new Reserva(estudante, sala, new Date(), 5);
+        dao.insert(reserva);
     }
 
     public void listar() {

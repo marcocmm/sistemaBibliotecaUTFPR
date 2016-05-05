@@ -4,6 +4,7 @@ import br.edu.utfpr.biblioteca.salas.model.Reserva;
 import br.edu.utfpr.biblioteca.salas.model.Status;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import tools.CalendarioController;
 
@@ -24,41 +25,24 @@ public class ReservaDAO extends GenericDAO<Reserva> {
         StatusDAO statusDAO;
 
         statusDAO = new StatusDAO();
-        
+
         try {
             entityManager.getTransaction().begin();
-            alreadyReservado = null;
-            
-            Query q = entityManager.createQuery("SELECT e FROM Reserva e WHERE e.dataInicial = :dataInicial AND e.sala = :sala AND e.status = 'ativa'");
-            q.setParameter("dataInicial", CalendarioController.getDatabaseDateFormat(reserva.getDataInicial()));
-            q.setParameter("sala", reserva.getSala().getId());
-            
-            try{
-                alreadyReservado = (Reserva) q.getSingleResult();
-            }catch (Exception ex){
-                System.err.println(ex.getMessage());
-            }
-            
-//        alreadyReservado = (Reserva) entityManager.createQuery(
-//                "SELECT e FROM "
-//                + Reserva.class.getSimpleName()
-//                + " e WHERE e.dataInicial='"
-//                + CalendarioController.getDatabaseDateFormat(reserva.getDataInicial())
-//                + "' AND e.sala="
-//                + reserva.getSala().getId()
-//                + " AND e.status='Ativa'").getSingleResult();
-            if (alreadyReservado != null) {
-                entityManager.getTransaction().commit();
-                return false;
-            }
-            status = statusDAO.obter("ativa");
+            Query q = entityManager.createQuery("SELECT e FROM Reserva e WHERE e.dataInicial = :dataInicial AND e.sala = :sala AND e.status = :status");
+            q.setParameter("dataInicial", reserva.getDataInicial());
+            q.setParameter("sala", reserva.getSala());
+            q.setParameter("status", new Status("Ativa"));
+            alreadyReservado = (Reserva) q.getSingleResult();
+            entityManager.getTransaction().rollback();
+            System.out.println("Usuário já cadastrado");
+            return false;
+        } catch (NoResultException ex) {
+            status = statusDAO.obter("Ativa");
             reserva.setStatus(status);
             entityManager.persist(reserva);
             entityManager.getTransaction().commit();
+            System.out.println("Sucesso");
             return true;
-        } catch (Exception ex) {
-            entityManager.getTransaction().commit();
-            return false;
         }
     }
 

@@ -28,11 +28,12 @@ import org.primefaces.context.RequestContext;
 import org.primefaces.event.FlowEvent;
 import org.primefaces.event.SelectEvent;
 import br.edu.utfpr.biblioteca.salas.controller.StatusBotao;
+import java.io.Serializable;
 
 @Named(value = "reservaMB")
 @ViewScoped
 @ManagedBean
-public class ReservaMB {
+public class ReservaMB implements Serializable {
 
     
     StatusBotao statusBotao;
