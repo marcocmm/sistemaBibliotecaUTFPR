@@ -22,6 +22,7 @@
 
     <h:body>
 
+        <h:panelGroup>
         <h:form>
             <p:messages autoUpdate="true" />
 
@@ -30,16 +31,14 @@
 
             <h:outputLabel value="Sala"/>
             <p:selectOneMenu id="sala" value="Salas" effect="fold" editable="true">
-                <!--<f:selectItem itemLabel="Select One" itemValue="" />-->
+                <f:selectItem itemLabel="Selecione uma sala" itemValue="#{administradorMB.sala}" />
                 <f:selectItems value="#{administradorMB.salas}" />
             </p:selectOneMenu>
 
-            <p:commandButton value="Consultar" actionListener="#{administradorMB.consultarSala(event)}" update="@all" process="@all "/>
+            <p:commandButton value="Consultar" update="tabelaHorarios"/>
 
-        </h:form>
-
-        <h:panelGroup>
-            <p:dataTable id="table" var="reservasHorario" value="#{administradorMB.reservasHorario}">
+            <h:outputText value="#{administradorMB.sala}"/>
+            <p:dataTable id="tabelaHorarios" var="reservasHorario" value="#{administradorMB.reservasHorario}">
                 <p:column headerText="Horário">
                     <h:outputText value="#{reservasHorario.horario}" />
                 </p:column>
@@ -49,6 +48,7 @@
                 </p:column>
 
             </p:dataTable>
+        </h:form>
         </h:panelGroup>
         <ui:include src="footer.xhtml"/>
     </h:body>

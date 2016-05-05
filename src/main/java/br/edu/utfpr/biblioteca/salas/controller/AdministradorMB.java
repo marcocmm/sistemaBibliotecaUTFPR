@@ -39,6 +39,7 @@ public class AdministradorMB {
 
     private Date data;
     private int idSala;
+    private String sala = "Sala";
 
     private List<Date> calendario;
     
@@ -100,6 +101,16 @@ public class AdministradorMB {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    public String getSala() {
+        return sala;
+    }
+
+    public void setSala(String sala) {
+        this.sala = sala;
+        System.out.println("SETOU A SALA: " + sala);
+    }
+    
     
     
 
@@ -145,8 +156,12 @@ public class AdministradorMB {
             ReservasHorario rH = new ReservasHorario();
             rH.setHorario(String.valueOf(reserva.getDataInicial()));
             rH.setStatus(String.valueOf(reserva.getStatus()));
+            reservasHorario.add(rH);
         }
+     
+        
         return reservasHorario;
+        
     }
     
     public void consultarSala(ActionEvent event){

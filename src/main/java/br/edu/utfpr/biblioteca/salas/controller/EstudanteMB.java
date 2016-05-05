@@ -15,6 +15,10 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
+import javax.servlet.http.HttpSession;
+import org.eclipse.persistence.sessions.Session;
+import org.eclipse.persistence.sessions.factories.SessionManager;
+import org.eclipse.persistence.sessions.server.Server;
 
 /**
  *
@@ -24,8 +28,7 @@ import javax.faces.view.ViewScoped;
 @SessionScoped
 @ManagedBean
 public class EstudanteMB {
-    
-    
+
     private String nome;
     private String login;
     private String senha;
@@ -67,6 +70,9 @@ public class EstudanteMB {
     public void autenticar(ActionEvent event) {
         FacesMessage message = null;
         boolean loggedIn = false;
+//        FacesContext fc = FacesContext.getCurrentInstance();
+//        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+//        session.setAttribute("estudanteLogado", this.idUsuario);
 
         setEstudante(login, senha);
 
@@ -75,7 +81,7 @@ public class EstudanteMB {
 ////            return false;
 //        } else {
         loggedIn = dao.obter(login).getSenha().equals(senha);
-        
+
         if (loggedIn) {
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bem-Vindo!", getNome());
 
@@ -91,7 +97,8 @@ public class EstudanteMB {
     public String getLogin() {
         return login;
     }
-     public String getNome() {         
+
+    public String getNome() {
         return dao.obter(login).getNome();
     }
 
