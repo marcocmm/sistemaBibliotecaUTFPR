@@ -31,7 +31,6 @@ import org.primefaces.event.SelectEvent;
 @ManagedBean
 public class ReservaMB {
 
-    
     private Integer sala;
     private Reserva reserva;
     private List<Integer> salasOcupadas;
@@ -226,6 +225,10 @@ public class ReservaMB {
             FacesContext facesContext = FacesContext.getCurrentInstance();
             facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Limite de reserva de duas horas atingido", null));
         }
+    }
+
+    public List<Integer> getHorariosReserva() {
+        return horariosReserva;
     }
 
     public List<Integer> getSalasDisponiveis() {
