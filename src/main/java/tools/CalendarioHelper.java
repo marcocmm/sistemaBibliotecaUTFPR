@@ -14,7 +14,7 @@ import java.util.List;
  *
  * @author romulo
  */
-public class CalendarioController {
+public class CalendarioHelper {
 
     public static List<Date> getCalendario(Integer ano, Integer mes) {
         int primeiroDia, ultimoDia, diaPrimeiraSemana, i;

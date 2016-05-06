@@ -8,10 +8,7 @@ package br.edu.utfpr.biblioteca.salas.controller;
 import br.edu.utfpr.biblioteca.salas.model.Reserva;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.ForeignKey;
-import javax.validation.constraints.AssertTrue;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 /**
  *
@@ -32,14 +29,12 @@ public class AdministradorMBTest {
 
     }
 
-//    @Test
     public void teste() {
         reservas = adminstradorMB.getReservas();
         if (reservas == null) {
             System.out.println("Reservas é null");
         }
-//        assertTrue(reservas != null);
+        assertTrue(reservas != null);
     }
-
 
 }

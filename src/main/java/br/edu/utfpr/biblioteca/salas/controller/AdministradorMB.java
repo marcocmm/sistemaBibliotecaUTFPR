@@ -9,7 +9,7 @@ import br.edu.utfpr.biblioteca.salas.dao.ReservaDAO;
 import br.edu.utfpr.biblioteca.salas.dao.SalaDAO;
 import br.edu.utfpr.biblioteca.salas.model.Reserva;
 
-import tools.CalendarioController;
+import tools.CalendarioHelper;
 import br.edu.utfpr.biblioteca.salas.model.Administrador;
 import br.edu.utfpr.biblioteca.salas.model.Sala;
 import java.util.ArrayList;
@@ -17,16 +17,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.inject.Named;
 import javax.faces.bean.ManagedBean;
 import javax.faces.event.ActionEvent;
 import javax.faces.view.ViewScoped;
 import tools.ReservasHorario;
 
-/**
- *
- * @author marco
- */
 @Named(value = "administradorMB")
 @ViewScoped
 @ManagedBean
@@ -34,15 +31,15 @@ public class AdministradorMB {
 
     private Administrador administrador;
 
-    private ReservaDAO reservaDAO = new ReservaDAO();
-    private SalaDAO salaDAO = new SalaDAO();
+    private ReservaDAO reservaDAO;
+    private SalaDAO salaDAO;
 
     private Date data;
     private int idSala;
-    private String sala = "Sala";
+    private String sala;
 
     private List<Date> calendario;
-    
+
     private String horario;
     private String status;
 
@@ -50,6 +47,9 @@ public class AdministradorMB {
      * Creates a new instance of AdministradorMB
      */
     public AdministradorMB() {
+        this.sala = "Sala";
+        this.reservaDAO = new ReservaDAO();
+        this.salaDAO = new SalaDAO();
 //        this.idSala = 2;
 //        this.data = new Date(2016, 04, 29, 18, 0, 0);
     }
@@ -79,7 +79,7 @@ public class AdministradorMB {
     }
 
     public List<Date> getCalendario() {
-        return CalendarioController.getCalendario(2016, 04);
+        return CalendarioHelper.getCalendario(2016, 04);
     }
 
     public void setCalendario(List<Date> calendario) {
@@ -108,11 +108,7 @@ public class AdministradorMB {
 
     public void setSala(String sala) {
         this.sala = sala;
-        System.out.println("SETOU A SALA: " + sala);
     }
-    
-    
-    
 
     /**
      * Método que faz uma consulta no BD com uma data e um id da sala, retorna
@@ -130,42 +126,64 @@ public class AdministradorMB {
             for (Reserva r : allReservas) {
                 if (r.getDataInicial().equals(this.data) && r.getId() == this.idSala) {;
                     reservas.add(r);
-                }   
+                }
             }
+        }
+
+        if (reservas.isEmpty()) {
+            return allReservas;
         }
 
         return reservas;
     }
-    
-    public HashMap<String, String> getSalas(){
-//        List<Sala> salas = salaDAO.list();
+
+    public HashMap<String, String> getSalas() {
         HashMap<String, String> salas = new HashMap<>();
         for (Sala sala : salaDAO.list()) {
             System.out.println("Sala: " + sala.getId());
             salas.put(String.valueOf(sala.getId()), "Sala " + String.valueOf(sala.getId()));
         }
-        if (salas == null){
-            System.out.println("é NULO ------");
-        }
+
         return salas;
     }
-    
-    public List<ReservasHorario> getReservasHorario(){
+
+    public List<ReservasHorario> getReservasHorario() {
         List<ReservasHorario> reservasHorario = new ArrayList<>();
         for (Reserva reserva : getReservas()) {
             ReservasHorario rH = new ReservasHorario();
-            rH.setHorario(String.valueOf(reserva.getDataInicial()));
-            rH.setStatus(String.valueOf(reserva.getStatus()));
+            rH.setHorario(String.valueOf(CalendarioHelper.getDatabaseDateFormat(reserva.getDataInicial())));
+            rH.setStatus(String.valueOf(reserva.getStatus().getName()));
             reservasHorario.add(rH);
         }
-     
-        
+
         return reservasHorario;
-        
-    }
-    
-    public void consultarSala(ActionEvent event){
-//        getReservasHorario();
     }
 
+    public Dia descreverDia(Date date) {
+        ReservaMB.descreverDia(date);
+
+        HashMap<Date, HashMap<Sala, Reserva>> dataTemReservas = new HashMap();
+        dataTemReservas.keySet().iterator();
+
+        Dia dia;
+        Hora horario;
+
+        dia = new Dia();
+        dia.setData(date);
+
+        for (Map.Entry<Date, HashMap<Sala, Reserva>> hora : dataTemReservas.entrySet()) {
+            Date key = hora.getKey();
+            HashMap<Sala, Reserva> value = hora.getValue();
+
+            horario = new Hora();
+            horario.setHora(key);
+            dia.addHora(horario);
+            for (Map.Entry<Sala, Reserva> salaTemReserva : value.entrySet()) {
+                Sala sala = salaTemReserva.getKey();
+                Reserva reserva = salaTemReserva.getValue();
+
+            }
+        }
+        return dia;
+    }
 }

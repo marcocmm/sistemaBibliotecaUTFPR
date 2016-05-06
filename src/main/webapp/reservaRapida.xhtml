@@ -87,7 +87,7 @@
                             <h:outputText value="RA: *" />
                             <p:inputText value="#{reservaMB.reserva.estudante.ra}" required="true" label="RA"/>
                             <h:outputText value="Senha: *" />
-                            <p:inputText value="#{reservaMB.reserva.estudante.senha}" required="true" label="Senha"/>
+                            <p:password id="password" value="#{reservaMB.reserva.estudante.senha}" required="true" label="Senha" />
                         </h:panelGrid>
                     </p:panel>
                 </p:tab>
@@ -113,9 +113,7 @@
                             <h:panelGrid columns="2" columnClasses="label, value">
                                 <h:outputText value="RA: " />
                                 <h:outputText value="#{reservaMB.reserva.estudante.ra}" styleClass="outputLabel"/>
-
-                                <h:outputText value="Senha: " />
-                                <h:outputText value="#{reservaMB.reserva.estudante.senha}" styleClass="outputLabel"/>
+                            
                             </h:panelGrid>
                         </h:panelGrid>
 

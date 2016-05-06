@@ -4,64 +4,36 @@
  * and open the template in the editor.
  */
 package br.edu.utfpr.biblioteca.salas.controller;
+
 import br.edu.utfpr.biblioteca.salas.controller.ReservaMB;
-import java.util.Date;
-import java.util.List;
-import java.util.ArrayList;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
-import org.primefaces.event.SelectEvent;
-import br.edu.utfpr.biblioteca.salas.dao.ReservaDAO;
-import br.edu.utfpr.biblioteca.salas.model.Reserva;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.faces.application.FacesMessage;
-import javax.inject.Named;
-import javax.faces.bean.ManagedBean;
-import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
-import javax.inject.Inject;
-import org.primefaces.context.RequestContext;
-import org.primefaces.event.SelectEvent;
-import br.edu.utfpr.biblioteca.salas.controller.StatusBotao;
-import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
-
-
-@Named(value = "statusBotoes")
-@ViewScoped
-@ManagedBean
 
 public class StatusBotao {
-    ReservaMB reservaMB;
-    
+
     private final String parametroUmAtivo;
     private final String parametroUmDesativado;
+    private final String parametroUmSelecionado;
     private final String parametroDoisAtivo;
     private final String parametroDoisDesativado;
-    private final String parametroUmSelecionado;    
-    private String[][] parametrosBotoes;
-    
-    public StatusBotao(){
-    
+    private List<String> parametrosBotoes;
+    private int numeroBotao;
+
+    public StatusBotao() {
+
         parametroUmAtivo = "btn btn-success";
         parametroUmDesativado = "btn btn-danger";
+        parametroUmSelecionado = "btn btn";
         parametroDoisAtivo = "false";
         parametroDoisDesativado = "true";
-        parametroUmSelecionado = "btn btn";
-        
-        
-        parametrosBotoes = new String[14][2];
-        parametrosBotoes = getParametrosBotoes(reservaMB.getHorasAtivasPorDia(reservaMB.getDate()), parametroUmAtivo, parametroUmDesativado, parametroDoisAtivo, parametroDoisDesativado);
-        
+
+        numeroBotao = 0;
+        parametrosBotoes = new ArrayList<>();
+
     }
 
-    
-    
-    public String[][] getParametrosBotoes(List<String> horasAtivas, String parametroUmAtivo,
-            String parametroUmDesativado, String parametroDoisAtivo, String parametroDoisDesativado) {
-
+    public void setParametrosBotoes(List<String> horasAtivas, Date date) {
         String hora;
         for (int i = 8; i < 22; i++) {
             hora = "";
@@ -69,31 +41,23 @@ public class StatusBotao {
                 hora = "0";
             }
             hora += i;
-            if (horasAtivas.contains(hora) || reservaMB.getDate().after(new Date())) {
-                parametrosBotoes[(i - 8)][0] = parametroUmDesativado;
-                parametrosBotoes[(i - 8)][1] = parametroDoisDesativado;
+            if (horasAtivas.contains(hora) || (new Date()).before(date)) {
+                parametrosBotoes.add(parametroUmDesativado);
+                parametrosBotoes.add(parametroDoisDesativado);
             } else {
-                parametrosBotoes[(i - 8)][0] = parametroUmAtivo;
-                parametrosBotoes[(i - 8)][1] = parametroDoisAtivo;
+                parametrosBotoes.add(parametroUmAtivo);
+                parametrosBotoes.add(parametroDoisAtivo);
             }
         }
-        return parametrosBotoes;
-    }      
-          
-        
-    
-  
-    public String[][] getParametrosBotoes(){
-       return parametrosBotoes; 
-    }  
-          
-          
-        
-        
-        
-}
-    
-    
-    
-    
+    }
 
+    public String getParametro(int numeroBotao, int tipo) {
+        String parametro;
+        if (tipo == 0) {
+            parametro = parametrosBotoes.get(numeroBotao * 2);
+        } else {
+            parametro = parametrosBotoes.get(numeroBotao * 2 + tipo);
+        }
+        return parametro;
+    }
+}
