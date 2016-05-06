@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
-import tools.CalendarioController;
+import tools.CalendarioHelper;
 
 /**
  *
@@ -31,13 +31,13 @@ public class ReservaDAO extends GenericDAO<Reserva> {
             Query q = entityManager.createQuery("SELECT e FROM Reserva e WHERE e.dataInicial = :dataInicial AND e.sala = :sala AND e.status = :status");
             q.setParameter("dataInicial", reserva.getDataInicial());
             q.setParameter("sala", reserva.getSala());
-            q.setParameter("status", new Status("Ativa"));
+            q.setParameter("status", new Status("ativa"));
             alreadyReservado = (Reserva) q.getSingleResult();
             entityManager.getTransaction().rollback();
-            System.out.println("Usuário já cadastrado");
+            System.out.println("Horário e sala já reservadas");
             return false;
         } catch (NoResultException ex) {
-            status = statusDAO.obter("Ativa");
+            status = statusDAO.obter("ativa");
             reserva.setStatus(status);
             entityManager.persist(reserva);
             entityManager.getTransaction().commit();
@@ -50,5 +50,9 @@ public class ReservaDAO extends GenericDAO<Reserva> {
         return entityManager.createQuery("SELECT e FROM " + Reserva.class.getSimpleName() + " e"
                 + "WHERE e.data_inicial="
                 + date).getResultList();
+    }
+    
+    public List<Reserva> listByDate(Date date, Date hour){
+        return null;
     }
 }

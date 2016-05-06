@@ -6,7 +6,7 @@
 package br.edu.utfpr.biblioteca.salas.controller;
 
 import br.edu.utfpr.biblioteca.salas.dao.EstudanteDAO;
-import tools.CalendarioController;
+import tools.CalendarioHelper;
 import br.edu.utfpr.biblioteca.salas.dao.ReservaDAO;
 import br.edu.utfpr.biblioteca.salas.dao.SalaDAO;
 import br.edu.utfpr.biblioteca.salas.model.Estudante;
@@ -35,10 +35,7 @@ import java.io.Serializable;
 @ManagedBean
 public class ReservaMB implements Serializable {
 
-    
     StatusBotao statusBotao;
-
- 
 
     private Reserva reserva;
     private String strDataInicial;
@@ -47,8 +44,7 @@ public class ReservaMB implements Serializable {
     private Integer sala;
     private List<Integer> salasOcupadas;
     private Date date;
-    
-   
+
     //Hora do botão selecionado
     private String horaSelecionada;
     //Formatadores de data
@@ -71,11 +67,10 @@ public class ReservaMB implements Serializable {
 
         formartoEmHoras = new SimpleDateFormat("HH:mm:ss");
         formatoEmDia = new SimpleDateFormat("dd/MM/yyyy");
-         date = new Date();
-      
+        date = new Date();
+
 //        parametrosBotoes = new String[14][2];
 //        parametrosBotoes = getParametrosBotoes(getHorasAtivasPorDia(date), parametroUmAtivo, parametroUmDesativado, parametroDoisAtivo, parametroDoisDesativado);
-
         parametroUmAtivo = "btn btn-success";
         parametroUmDesativado = "btn btn-danger";
         parametroDoisAtivo = "false";
@@ -85,8 +80,8 @@ public class ReservaMB implements Serializable {
         parametrosBotoes = getParametrosBotoes(getHorasAtivasPorDia(date), parametroUmAtivo, parametroUmDesativado, parametroDoisAtivo, parametroDoisDesativado);
         horariosReserva = new ArrayList<>();
     }
-    
-     public List<String> getHorasAtivasPorDia(Date date) {
+
+    public List<String> getHorasAtivasPorDia(Date date) {
 
         ReservaDAO reservaDAO = new ReservaDAO();
         List<Reserva> listaTodasReservas = reservaDAO.list();
@@ -98,17 +93,16 @@ public class ReservaMB implements Serializable {
         for (Reserva reserva : listaTodasReservas) {
             diaAtivo = formatoEmDia.format(reserva.getDataInicial());
             if (diaProcurado.equals(diaAtivo)) {
-                if (reserva.getStatus().equals("Inativa")) {
+                if (reserva.getStatus().equals("inativa")) {
                     listaReservasAtivasPorDia.add(formartoEmHoras.format(reserva.getDataInicial()).substring(0, 2));
                 }
                 salasOcupadas.add(reserva.getId());
             }
         }
-      
+
         return listaReservasAtivasPorDia;
     }
-    
-     
+
     public Reserva getReserva() {
         return reserva;
     }
@@ -128,7 +122,7 @@ public class ReservaMB implements Serializable {
         ReservaDAO reservaDAO = new ReservaDAO();
         SalaDAO salaDAO = new SalaDAO();
 
-        Date dataInicial = CalendarioController.parseDateTime(this.strDataInicial, this.strHorario);
+        Date dataInicial = CalendarioHelper.parseDateTime(this.strDataInicial, this.strHorario);
         this.reserva.setDataInicial(dataInicial);
 
         Estudante estudante = estudanteDAO.obter(this.reserva.getEstudante().getRa());
@@ -159,35 +153,29 @@ public class ReservaMB implements Serializable {
         ReservaDAO dao = new ReservaDAO();
         return dao.insert(reserva);
     }
-  
- 
+
     public void onDateSelect(SelectEvent event) {
 
         FacesContext facesContext = FacesContext.getCurrentInstance();
         facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected", formatoEmDia.format(event.getObject())));
 
-        
 //        parametrosBotoes = getParametrosBotoes(getHorasAtivasPorDia(statusBotao.getDate1()), parametroUmAtivo, parametroUmDesativado, parametroDoisAtivo, parametroDoisDesativado);
-
         //teste
-      System.out.println("data: " + date);
-      
+        System.out.println("data: " + date);
+
         EstudanteDAO dao = new EstudanteDAO();
         if (dao.list().isEmpty()) {
             dao.insert(new Estudante("1137212", "Rômulo", "112131", "email@email.com"));
             dao.insert(new Estudante("1602063", "Mateus", "teste", "asd.com"));
             dao.insert(new Estudante("113722", "Rômulo", "senha", "email@mail.com"));
             dao.insert(new Estudante("1137612", "Rômulo", "senha", "emil@email.com"));
-            
-        }
-    
 
+        }
 
 //        System.out.println("data: " + getDate());
         parametrosBotoes = getParametrosBotoes(getHorasAtivasPorDia(date), parametroUmAtivo, parametroUmDesativado, parametroDoisAtivo, parametroDoisDesativado);
 
-    } 
-        
+    }
 
     public String[][] getParametrosBotoes(List<String> horasAtivas, String parametroUmAtivo,
             String parametroUmDesativado, String parametroDoisAtivo, String parametroDoisDesativado) {
@@ -210,7 +198,7 @@ public class ReservaMB implements Serializable {
         return parametrosBotoes;
 
     }
-   
+
     public void click() {
         RequestContext requestContext = RequestContext.getCurrentInstance();
 
@@ -218,9 +206,6 @@ public class ReservaMB implements Serializable {
         requestContext.execute("PF('dlg').show()");
 
     }
-
- 
-
 
     public Date getDate() {
 
@@ -231,18 +216,15 @@ public class ReservaMB implements Serializable {
         this.date = date1;
     }
 
+    public SimpleDateFormat getFormatoEmDia() {
+        return formatoEmDia;
+    }
 
-    
-    public SimpleDateFormat getFormatoEmDia(){
-          return formatoEmDia;  
-            }
-    
-
-       public void setHoraSelecionada(String horaSelecionada) {
+    public void setHoraSelecionada(String horaSelecionada) {
         this.horaSelecionada = horaSelecionada;
     }
 
-    private HashMap<Sala, Reserva> clone(HashMap<Sala, Reserva> map) {
+    private static HashMap<Sala, Reserva> clone(HashMap<Sala, Reserva> map) {
         HashMap<Sala, Reserva> copy = new HashMap();
         Iterator<Entry<Sala, Reserva>> iterator = map.entrySet().iterator();
         Entry<Sala, Reserva> entry;
@@ -253,12 +235,17 @@ public class ReservaMB implements Serializable {
         return copy;
     }
 
-    private HashMap<Date, HashMap<Sala, Reserva>> descreverDia(Date date) {
+    /**
+     * Método descreve um dia
+     * @param date uma data válida
+     * @return um hashmap que associa data ao conjunto de salas, cada qual com sua reserva
+     */
+    public static HashMap<Date, HashMap<Sala, Reserva>> descreverDia(Date date) {
         ReservaDAO dao = new ReservaDAO();
         SalaDAO salaDAO = new SalaDAO();
 
         List<Sala> salas = salaDAO.list();
-        List<Date> horarios = CalendarioController.getHorarios(date);
+        List<Date> horarios = CalendarioHelper.getHorarios(date);
         List<Reserva> reservas = dao.listByDate(date);
 
         HashMap<Sala, Reserva> salaTemReservas = new HashMap();
@@ -333,8 +320,6 @@ public class ReservaMB implements Serializable {
 //        }
 //        return instancia;
 //    }
-
-
     public void setSala(int sala) {
         this.sala = sala;
     }
@@ -342,6 +327,5 @@ public class ReservaMB implements Serializable {
     public String onFlowProcess(FlowEvent event) {
         return event.getNewStep();
     }
-
 
 }

@@ -8,10 +8,6 @@ package br.edu.utfpr.biblioteca.salas.controller;
 import br.edu.utfpr.biblioteca.salas.model.Reserva;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.ForeignKey;
-import javax.validation.constraints.AssertTrue;
-import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *

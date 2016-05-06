@@ -80,9 +80,9 @@ public class Reserva implements Serializable {
         this.dataFinal = dataInicial;//+1h
         this.quantidadeAlunos = quantidadeAlunos;
         StatusDAO statusDAO = new StatusDAO();
-        Status inativa = statusDAO.obter("Inativa");
+        Status inativa = statusDAO.obter("inativa");
         if (inativa == null) {
-            inativa = new Status("Inativa");
+            inativa = new Status("inativa");
         }
         this.status = inativa;
     }
