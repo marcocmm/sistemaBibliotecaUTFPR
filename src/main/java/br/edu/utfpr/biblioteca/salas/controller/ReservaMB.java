@@ -289,7 +289,7 @@ public class ReservaMB implements Serializable {
 //    public String getParametroUmAtivo() {
 //        return parametroUmAtivo;
     public void setHoraInicial(int hora) {
-        if (horariosReserva.size() <= 2) {
+        if (horariosReserva.size() < 2) {
             this.horariosReserva.add(hora);
             System.out.println("Setou hora: " + hora);
         } else {

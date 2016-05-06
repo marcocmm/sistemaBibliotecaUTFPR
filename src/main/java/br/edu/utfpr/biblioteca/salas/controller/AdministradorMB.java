@@ -17,16 +17,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import javax.faces.application.FacesMessage;
 import javax.inject.Named;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.view.ViewScoped;
 import tools.ReservasHorario;
 
-/**
- *
- * @author marco
- */
 @Named(value = "administradorMB")
 @ViewScoped
 @ManagedBean
@@ -42,7 +40,7 @@ public class AdministradorMB {
     private String sala = "Sala";
 
     private List<Date> calendario;
-    
+
     private String horario;
     private String status;
 
@@ -108,11 +106,7 @@ public class AdministradorMB {
 
     public void setSala(String sala) {
         this.sala = sala;
-        System.out.println("SETOU A SALA: " + sala);
     }
-    
-    
-    
 
     /**
      * Método que faz uma consulta no BD com uma data e um id da sala, retorna
@@ -130,41 +124,39 @@ public class AdministradorMB {
             for (Reserva r : allReservas) {
                 if (r.getDataInicial().equals(this.data) && r.getId() == this.idSala) {;
                     reservas.add(r);
-                }   
+                }
             }
+        }
+
+        if (reservas.isEmpty()) {
+            return allReservas;
         }
 
         return reservas;
     }
-    
-    public HashMap<String, String> getSalas(){
-//        List<Sala> salas = salaDAO.list();
+
+    public HashMap<String, String> getSalas() {
         HashMap<String, String> salas = new HashMap<>();
         for (Sala sala : salaDAO.list()) {
             System.out.println("Sala: " + sala.getId());
             salas.put(String.valueOf(sala.getId()), "Sala " + String.valueOf(sala.getId()));
         }
-        if (salas == null){
-            System.out.println("é NULO ------");
-        }
         return salas;
     }
-    
-    public List<ReservasHorario> getReservasHorario(){
+
+    public List<ReservasHorario> getReservasHorario() {
         List<ReservasHorario> reservasHorario = new ArrayList<>();
         for (Reserva reserva : getReservas()) {
             ReservasHorario rH = new ReservasHorario();
-            rH.setHorario(String.valueOf(reserva.getDataInicial()));
-            rH.setStatus(String.valueOf(reserva.getStatus()));
+            rH.setHorario(String.valueOf(CalendarioController.getDatabaseDateFormat(reserva.getDataInicial())));
+            rH.setStatus(String.valueOf(reserva.getStatus().getName()));
             reservasHorario.add(rH);
         }
-     
-        
+
         return reservasHorario;
-        
     }
-    
-    public void consultarSala(ActionEvent event){
+
+    public void consultarSala(ActionEvent event) {
 //        getReservasHorario();
     }
 

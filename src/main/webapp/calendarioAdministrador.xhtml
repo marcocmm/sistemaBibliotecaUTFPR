@@ -23,7 +23,7 @@
     <h:body>
 
         <h:panelGroup>
-            <h:form>
+            <h:form id="formCal">
                 <p:messages autoUpdate="true" />
 
                 <p:outputLabel for="popup" value="Data:" />
@@ -34,8 +34,11 @@
                     <f:selectItem itemLabel="Selecione uma sala" itemValue="#{administradorMB.sala}" />
                     <f:selectItems value="#{administradorMB.salas}" />
                 </p:selectOneMenu>
+<!--
+                <p:commandButton value="Consultar">
+                    <p:ajax event="formCal:tabelaHorarios"/>
+                </p:commandButton>-->
 
-                <p:commandButton value="Consultar" update="tabelaHorarios"/>
 
                 <h:outputText value="#{administradorMB.sala}"/>
 
@@ -47,8 +50,33 @@
                     <p:column headerText="Status">
                         <h:outputText value="#{reservasHorario.status}" />
                     </p:column>
-
                 </p:dataTable>
+
+
+                <p:dialog header="reservasH" widgetVar="reservasH" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                    <p:outputPanel id="reservaDetail" style="text-align:center;">
+<!--                        <p:panelGrid  columns="2" rendered="#{not empty dataGridView.selectedCar}" columnClasses="label,value">
+                            <f:facet name="header">
+                                <p:graphicImage name="demo/images/car/#{dataGridView.selectedCar.brand}-big.gif"/> 
+                            </f:facet>
+
+                            <h:outputText value="Id:" />
+                            <h:outputText value="#{dataGridView.selectedCar.id}" />
+
+                            <h:outputText value="Year" />
+                            <h:outputText value="#{dataGridView.selectedCar.year}" />
+
+                            <h:outputText value="Color:" />
+                            <h:outputText value="#{dataGridView.selectedCar.color}" style="color:#{dataGridView.selectedCar.color}"/>
+
+                            <h:outputText value="Price" />
+                            <h:outputText value="$#{dataGridView.selectedCar.price}" />
+                        </p:panelGrid>-->
+                    </p:outputPanel>
+                </p:dialog>
+
+
+
             </h:form>
         </h:panelGroup>
 
