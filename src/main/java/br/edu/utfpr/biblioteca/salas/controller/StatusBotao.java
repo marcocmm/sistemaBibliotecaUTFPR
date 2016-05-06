@@ -5,7 +5,6 @@
  */
 package br.edu.utfpr.biblioteca.salas.controller;
 
-import br.edu.utfpr.biblioteca.salas.controller.ReservaMB;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

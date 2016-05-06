@@ -7,7 +7,6 @@ package br.edu.utfpr.biblioteca.salas.controller;
 
 import br.edu.utfpr.biblioteca.salas.model.Estudante;
 import br.edu.utfpr.biblioteca.salas.dao.EstudanteDAO;
-
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -44,22 +43,6 @@ public class EstudanteMB {
         this.estudante = new Estudante(login, null, senha, null);
     }
 
-/**
- * verifica se o estudante já está cadastrado e se a senha é vazia, caso ele nao 
- * seja cadastrado e sua senha exista, o estudante é inserido.
- * @param estudante 
- */
-    private void cadastrarEstudante(Estudante estudante) {
-        if (alreadyCadastrado(estudante)) {
-            return;
-        }
-        if (estudante.getSenha().isEmpty()) {
-            return;
-        }
-        estudanteDAO.insert(estudante);
-    }
-
-
     public String getLogin() {
         return login;
     }
@@ -86,19 +69,36 @@ public class EstudanteMB {
         System.out.println("Senha:" + senha);
     }
 
+    /**
+     * verifica se o estudante já está cadastrado e se a senha é vazia, caso ele
+     * nao seja cadastrado e sua senha exista, o estudante é inserido.
+     *
+     * @param estudante
+     */
+    private void cadastrarEstudante(Estudante estudante) {
+        if (alreadyCadastrado(estudante)) {
+            return;
+        }
+        if (estudante.getSenha().isEmpty()) {
+            return;
+        }
+        estudanteDAO.insert(estudante);
+    }
 
-/**
- * verifica se o estudante está cadastrado
- * @param estudante
- * @return boolean
- */
+    /**
+     * verifica se o estudante está cadastrado
+     *
+     * @param estudante
+     * @return boolean
+     */
     private boolean alreadyCadastrado(Estudante estudante) {
         return estudanteDAO.obter(estudante) != null;
     }
 
     /**
-     *  Método que verifica a validade dos dados inseridos pelo úsuario através
+     * Método que verifica a validade dos dados inseridos pelo úsuario através
      * de uma consulta ao banco de dados, retornando true ou false.
+     *
      * @param login
      * @param senha
      * @return boolean (false caso não exista no banco e true caso exista)
@@ -107,16 +107,18 @@ public class EstudanteMB {
         EstudanteDAO dao = new EstudanteDAO();
         Estudante estudante = dao.obter(login);
         if (estudante == null) {
-            
+
             return false;
         }
         return estudante.getSenha().equals(senha);
     }
-/**
- * obtém o login e senha do estudante e, caso esteja autenticado, joga mensagem
- * na tela
- * @param event 
- */
+
+    /**
+     * obtém o login e senha do estudante e, caso esteja autenticado, joga
+     * mensagem na tela
+     *
+     * @param event
+     */
     public void autenticar(ActionEvent event) {
         FacesMessage message = null;
         boolean loggedIn = false;

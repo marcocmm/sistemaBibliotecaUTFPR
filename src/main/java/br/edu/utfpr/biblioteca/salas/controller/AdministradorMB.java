@@ -8,19 +8,16 @@ package br.edu.utfpr.biblioteca.salas.controller;
 import br.edu.utfpr.biblioteca.salas.dao.ReservaDAO;
 import br.edu.utfpr.biblioteca.salas.dao.SalaDAO;
 import br.edu.utfpr.biblioteca.salas.model.Reserva;
-
 import tools.CalendarioHelper;
 import br.edu.utfpr.biblioteca.salas.model.Administrador;
 import br.edu.utfpr.biblioteca.salas.model.Sala;
 import java.util.ArrayList;
-
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.inject.Named;
 import javax.faces.bean.ManagedBean;
-import javax.faces.event.ActionEvent;
 import javax.faces.view.ViewScoped;
 import tools.ReservasHorario;
 

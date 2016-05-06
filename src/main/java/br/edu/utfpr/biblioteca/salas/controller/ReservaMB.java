@@ -29,7 +29,6 @@ import org.primefaces.context.RequestContext;
 import org.primefaces.event.FlowEvent;
 import org.primefaces.event.SelectEvent;
 import java.io.Serializable;
-import javax.persistence.NoResultException;
 
 @Named(value = "reservaMB")
 @ViewScoped
@@ -73,11 +72,6 @@ public class ReservaMB implements Serializable {
         statusBotao.setParametrosBotoes(getHorasAtivasPorDia(date), date);
         horariosReserva = new ArrayList<>();
     }
-
-    
-    
-    
-    
 
     public Reserva getReserva() {
         return reserva;
@@ -134,14 +128,13 @@ public class ReservaMB implements Serializable {
     public Integer getSala() {
         return sala;
     }
-    
+
     /**
-     * 
+     *
      * @param date
      * @return List<String> listaReservasAtivasPorDia
      */
     public List<String> getHorasAtivasPorDia(Date date) {
-
 
         ReservaDAO reservaDAO = new ReservaDAO();
         List<Reserva> listaTodasReservas = reservaDAO.list();
@@ -173,11 +166,11 @@ public class ReservaMB implements Serializable {
         }
     }
 
-
-/**
- * verifica as salas disponiveis
- * @return List<Integer> listaSalasDisponiveis
- */
+    /**
+     * verifica as salas disponiveis
+     *
+     * @return List<Integer> listaSalasDisponiveis
+     */
     public List<Integer> getSalasDisponiveis() {
         List<Integer> listaSalasDisponiveis = new ArrayList<>();
         for (int i = 1; i < 9; i++) {
@@ -198,10 +191,7 @@ public class ReservaMB implements Serializable {
         System.out.println("data: " + getDate());
 //        parametrosBotoes = getParametrosBotoes(getHorasAtivasPorDia(date), parametroUmAtivo, parametroUmDesativado, parametroDoisAtivo, parametroDoisDesativado);
 
-
-    } 
-
-
+    }
 
     public String onFlowProcess(FlowEvent event) {
         return event.getNewStep();
@@ -215,10 +205,10 @@ public class ReservaMB implements Serializable {
 
     }
 
-/**
- * 
- * @return 
- */
+    /**
+     *
+     * @return
+     */
     public boolean save() {
 
         if (!EstudanteMB.isAutentico(this.reserva.getEstudante().getRa(), this.reserva.getEstudante().getSenha())) {
@@ -308,26 +298,5 @@ public class ReservaMB implements Serializable {
         }
         return dataTemReservas;
     }
-
-
-
-
-
-
-
-// public List<String> getHorasAtivasPorDia(){
-//       return listaReservasAtivasPorDia; 
-//    }  
-//    public static synchronized ReservaMB getInstance(){
-//        if (instancia == null){
-//            instancia = new ReservaMB();
-//        }
-//        return instancia;
-//    }
-
-
-
-
-
 
 }
