@@ -14,11 +14,6 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.inject.Named;
-import javax.faces.view.ViewScoped;
-import javax.servlet.http.HttpSession;
-import org.eclipse.persistence.sessions.Session;
-import org.eclipse.persistence.sessions.factories.SessionManager;
-import org.eclipse.persistence.sessions.server.Server;
 
 /**
  *
@@ -29,12 +24,17 @@ import org.eclipse.persistence.sessions.server.Server;
 @ManagedBean
 public class EstudanteMB {
 
+    private Estudante estudante;
+
+    private EstudanteDAO estudanteDAO;
+
     private String nome;
     private String login;
     private String senha;
 
-    private Estudante estudante;
-    private EstudanteDAO dao = new EstudanteDAO();
+    public EstudanteMB() {
+        this.estudanteDAO = new EstudanteDAO();
+    }
 
     public Estudante getEstudante() {
         return estudante;
@@ -44,6 +44,32 @@ public class EstudanteMB {
         this.estudante = new Estudante(login, null, senha, null);
     }
 
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+        System.out.println("Login:" + login);
+    }
+
+    public String getNome() {
+        return estudanteDAO.obter(login).getNome();
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+        System.out.println("Senha:" + senha);
+    }
+
     private void cadastrarEstudante(Estudante estudante) {
         if (alreadyCadastrado(estudante)) {
             return;
@@ -51,11 +77,11 @@ public class EstudanteMB {
         if (estudante.getSenha().isEmpty()) {
             return;
         }
-        dao.insert(estudante);
+        estudanteDAO.insert(estudante);
     }
 
     private boolean alreadyCadastrado(Estudante estudante) {
-        return dao.obter(estudante) != null;
+        return estudanteDAO.obter(estudante) != null;
     }
 
     public static boolean isAutentico(String login, String senha) {
@@ -80,7 +106,7 @@ public class EstudanteMB {
 //            menssage = new FacesMessage(FacesMessage.SEVERITY_WARN, "Estudante não cadastrado!", null);
 ////            return false;
 //        } else {
-        loggedIn = dao.obter(login).getSenha().equals(senha);
+        loggedIn = estudanteDAO.obter(login).getSenha().equals(senha);
 
         if (loggedIn) {
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bem-Vindo!", getNome());
@@ -93,27 +119,4 @@ public class EstudanteMB {
 //            return true;
 //        }
     }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public String getNome() {
-        return dao.obter(login).getNome();
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-        System.out.println("Login:" + login);
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
-        System.out.println("Senha:" + senha);
-    }
-
 }

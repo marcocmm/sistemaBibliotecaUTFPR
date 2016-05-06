@@ -5,6 +5,8 @@
  */
 package br.edu.utfpr.biblioteca.salas.controller;
 
+import tools.Hora;
+import tools.Dia;
 import br.edu.utfpr.biblioteca.salas.dao.ReservaDAO;
 import br.edu.utfpr.biblioteca.salas.dao.SalaDAO;
 import br.edu.utfpr.biblioteca.salas.model.Reserva;
@@ -24,8 +26,6 @@ import javax.faces.event.ActionEvent;
 import javax.faces.view.ViewScoped;
 import tools.ReservasHorario;
 
-
-
 @Named(value = "administradorMB")
 @ViewScoped
 @ManagedBean
@@ -33,12 +33,12 @@ public class AdministradorMB {
 
     private Administrador administrador;
 
-    private ReservaDAO reservaDAO = new ReservaDAO();
-    private SalaDAO salaDAO = new SalaDAO();
+    private ReservaDAO reservaDAO;
+    private SalaDAO salaDAO;
 
     private Date data;
     private int idSala;
-    private String sala = "Sala";
+    private String sala;
 
     private List<Date> calendario;
 
@@ -49,36 +49,11 @@ public class AdministradorMB {
      * Creates a new instance of AdministradorMB
      */
     public AdministradorMB() {
+        this.sala = "Sala";
+        this.reservaDAO = new ReservaDAO();
+        this.salaDAO = new SalaDAO();
 //        this.idSala = 2;
 //        this.data = new Date(2016, 04, 29, 18, 0, 0);
-    }
-
-    public Dia descreverDia(Date date) {
-        ReservaMB.descreverDia(date);
-
-        HashMap<Date, HashMap<Sala, Reserva>> dataTemReservas = new HashMap();
-        dataTemReservas.keySet().iterator();
-
-        Dia dia;
-        Hora horario;
-
-        dia = new Dia();
-        dia.setData(date);
-
-        for (Map.Entry<Date, HashMap<Sala, Reserva>> hora : dataTemReservas.entrySet()) {
-            Date key = hora.getKey();
-            HashMap<Sala, Reserva> value = hora.getValue();
-
-            horario = new Hora();
-            horario.setHora(key);
-            dia.addHora(horario);
-            for (Map.Entry<Sala, Reserva> salaTemReserva : value.entrySet()) {
-                Sala sala = salaTemReserva.getKey();
-                Reserva reserva = salaTemReserva.getValue();
-
-            }
-        }
-        return dia;
     }
 
     public Administrador getAdministrador() {
@@ -186,8 +161,31 @@ public class AdministradorMB {
         return reservasHorario;
     }
 
-    public void consultarSala(ActionEvent event) {
-//        getReservasHorario();
-    }
+    public Dia descreverDia(Date date) {
+        ReservaMB.descreverDia(date);
 
+        HashMap<Date, HashMap<Sala, Reserva>> dataTemReservas = new HashMap();
+        dataTemReservas.keySet().iterator();
+
+        Dia dia;
+        Hora horario;
+
+        dia = new Dia();
+        dia.setData(date);
+
+        for (Map.Entry<Date, HashMap<Sala, Reserva>> hora : dataTemReservas.entrySet()) {
+            Date key = hora.getKey();
+            HashMap<Sala, Reserva> value = hora.getValue();
+
+            horario = new Hora();
+            horario.setHora(key);
+            dia.addHora(horario);
+            for (Map.Entry<Sala, Reserva> salaTemReserva : value.entrySet()) {
+                Sala sala = salaTemReserva.getKey();
+                Reserva reserva = salaTemReserva.getValue();
+
+            }
+        }
+        return dia;
+    }
 }

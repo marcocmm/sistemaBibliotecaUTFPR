@@ -18,11 +18,14 @@ import javax.faces.view.ViewScoped;
 @ViewScoped
 @ManagedBean
 public class SalaMB {
+
     private Sala sala;
+
     /**
      * Creates a new instance of SalaMB
      */
     public SalaMB() {
+        this.sala = new Sala(1, true);
     }
 
     public Sala getSala() {
@@ -32,7 +35,5 @@ public class SalaMB {
     public void setSala(Sala sala) {
         this.sala = sala;
     }
-      
-    
-    
+
 }

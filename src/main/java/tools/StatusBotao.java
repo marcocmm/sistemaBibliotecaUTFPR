@@ -3,15 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.edu.utfpr.biblioteca.salas.controller;
+package tools;
 
+import br.edu.utfpr.biblioteca.salas.controller.ReservaMB;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class StatusBotao {
-
-    ReservaMB reservaMB;
 
     private final String parametroUmAtivo;
     private final String parametroUmDesativado;

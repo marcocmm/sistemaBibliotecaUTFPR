@@ -5,6 +5,7 @@
  */
 package br.edu.utfpr.biblioteca.salas.controller;
 
+import tools.StatusBotao;
 import br.edu.utfpr.biblioteca.salas.dao.EstudanteDAO;
 import tools.CalendarioHelper;
 import br.edu.utfpr.biblioteca.salas.dao.ReservaDAO;
@@ -35,11 +36,14 @@ import java.io.Serializable;
 @ManagedBean
 public class ReservaMB implements Serializable {
 
-    private StatusBotao statusBotao;
     private Reserva reserva;
+
+    ReservaDAO reservaDAO;
+
+    private StatusBotao statusBotao;
+
     private String strDataInicial;
     private String strHorario;
-
     private Integer sala;
     private List<Integer> salasOcupadas;
     private Date date;
@@ -53,6 +57,8 @@ public class ReservaMB implements Serializable {
     private List<Integer> horariosReserva;
 
     public ReservaMB() {
+        this.reservaDAO = new ReservaDAO();
+
         Estudante estudante = new Estudante(null, null, null, null);
         reserva = new Reserva(estudante, new Sala(1, true), new Date(), 0);
 
@@ -62,54 +68,108 @@ public class ReservaMB implements Serializable {
 
 //        parametrosBotoes = new String[14][2];
 //        parametrosBotoes = getParametrosBotoes(getHorasAtivasPorDia(date), parametroUmAtivo, parametroUmDesativado, parametroDoisAtivo, parametroDoisDesativado);
-
         date = new Date();
         statusBotao = new StatusBotao();
         statusBotao.setParametrosBotoes(getHorasAtivasPorDia(date), date);
         horariosReserva = new ArrayList<>();
     }
 
-    public void save() {
-        if (!EstudanteMB.isAutentico(this.reserva.getEstudante().getRa(), this.reserva.getEstudante().getSenha())) {
-            FacesMessage msg = new FacesMessage("Credenciais inválidas", "Welcome :" + getReserva().getEstudante().getRa());
-            FacesContext.getCurrentInstance().addMessage(null, msg);
-            return;
-        }
-
-        EstudanteDAO estudanteDAO = new EstudanteDAO();
-        ReservaDAO reservaDAO = new ReservaDAO();
-        SalaDAO salaDAO = new SalaDAO();
-
-        Date dataInicial = CalendarioHelper.parseDateTime(this.strDataInicial, this.strHorario);
-        this.reserva.setDataInicial(dataInicial);
-
-        Estudante estudante = estudanteDAO.obter(this.reserva.getEstudante().getRa());
-        this.reserva.setEstudante(estudante);
-
-        Sala sala = salaDAO.obter(this.reserva.getSala().getId());
-        this.reserva.setSala(sala);
-
-        if (reservaDAO.insert(reserva)) {
-            FacesMessage msg = new FacesMessage("Successful", "Welcome :" + getReserva().getEstudante().getRa());
-            FacesContext.getCurrentInstance().addMessage(null, msg);
-            return;
-        }
-        FacesMessage msg = new FacesMessage("Fail", "Welcome :" + getReserva().getEstudante().getRa());
-        FacesContext.getCurrentInstance().addMessage(null, msg);
+    public Reserva getReserva() {
+        return reserva;
     }
 
-    public boolean salvarReserva(Reserva reserva) {
-        if (!EstudanteMB.isAutentico(reserva.getEstudante().getRa(), reserva.getEstudante().getSenha())) {
-            return false;
+    public void setReserva(Reserva reserva) {
+        this.reserva = reserva;
+    }
+
+    public StatusBotao getStatusBotao() {
+        return statusBotao;
+    }
+
+    public void setStatusBotao(StatusBotao statusBotao) {
+        this.statusBotao = statusBotao;
+    }
+
+    public String getStrDataInicial() {
+        return strDataInicial;
+    }
+
+    public void setStrDataInicial(String strDataInicial) {
+        this.strDataInicial = strDataInicial;
+    }
+
+    public String getStrHorario() {
+        return strHorario;
+    }
+
+    public void setStrHorario(String strHorario) {
+        this.strHorario = strHorario;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date1) {
+        this.date = date1;
+    }
+
+    public String getHoraSelecionada() {
+        return horaSelecionada;
+    }
+
+    public void setHoraSelecionada(String horaSelecionada) {
+        this.horaSelecionada = horaSelecionada;
+    }
+
+    public void setSala(int sala) {
+        this.sala = sala;
+    }
+
+    public Integer getSala() {
+        return sala;
+    }
+
+    public List<String> getHorasAtivasPorDia(Date date) {
+
+        ReservaDAO reservaDAO = new ReservaDAO();
+        List<Reserva> listaTodasReservas = reservaDAO.list();
+        List<String> listaReservasAtivasPorDia = new ArrayList<>();
+        String diaProcurado = formatoEmDia.format(date);
+        String diaAtivo;
+        salasOcupadas = new ArrayList<>();
+
+        for (Reserva reserva : listaTodasReservas) {
+            diaAtivo = formatoEmDia.format(reserva.getDataInicial());
+            if (diaProcurado.equals(diaAtivo)) {
+                if (reserva.getStatus().equals(new Status("ativa"))) {
+                    listaReservasAtivasPorDia.add(formartoEmHoras.format(reserva.getDataInicial()).substring(0, 2));
+                }
+                salasOcupadas.add(reserva.getId());
+            }
         }
-        if (reserva.getDataFinal().equals(reserva.getDataInicial())) {
-            return false;
+
+        return listaReservasAtivasPorDia;
+    }
+
+    public void setHoraInicial(int hora) {
+        if (horariosReserva.size() < 2) {
+            this.horariosReserva.add(hora);
+            System.out.println("Setou hora: " + hora);
+        } else {
+            FacesContext facesContext = FacesContext.getCurrentInstance();
+            facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Limite de reserva de duas horas atingido", null));
         }
-        if (reserva.getDataFinal().before(reserva.getDataInicial())) {
-            return false;
+    }
+
+    public List<Integer> getSalasDisponiveis() {
+        List<Integer> listaSalasDisponiveis = new ArrayList<>();
+        for (int i = 1; i < 9; i++) {
+            if (!(salasOcupadas.contains(i))) {
+                listaSalasDisponiveis.add(i);
+            }
         }
-        ReservaDAO dao = new ReservaDAO();
-        return dao.insert(reserva);
+        return listaSalasDisponiveis;
     }
 
     public void onDateSelect(SelectEvent event) {
@@ -123,6 +183,10 @@ public class ReservaMB implements Serializable {
 
     }
 
+    public String onFlowProcess(FlowEvent event) {
+        return event.getNewStep();
+    }
+
     public void click() {
         RequestContext requestContext = RequestContext.getCurrentInstance();
 
@@ -130,6 +194,54 @@ public class ReservaMB implements Serializable {
         requestContext.execute("PF('dlg').show()");
 
     }
+
+    public boolean save() {
+
+        if (!EstudanteMB.isAutentico(this.reserva.getEstudante().getRa(), this.reserva.getEstudante().getSenha())) {
+            FacesMessage msg = new FacesMessage("Credenciais inválidas", "Welcome :" + getReserva().getEstudante().getRa());
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+            return false;
+        }
+
+        if (reserva.getDataFinal().equals(reserva.getDataInicial())) {
+            return false;
+        }
+        if (reserva.getDataFinal().before(reserva.getDataInicial())) {
+            return false;
+        }
+
+        EstudanteDAO estudanteDAO = new EstudanteDAO();
+        SalaDAO salaDAO = new SalaDAO();
+
+        Date dataInicial = CalendarioHelper.parseDateTime(this.strDataInicial, this.strHorario);
+        this.reserva.setDataInicial(dataInicial);
+
+        Estudante estudante = estudanteDAO.obter(this.reserva.getEstudante().getRa());
+        this.reserva.setEstudante(estudante);
+
+        Sala sala = salaDAO.obter(this.reserva.getSala().getId());
+        this.reserva.setSala(sala);
+
+        if (!reservaDAO.insert(reserva)) {
+            FacesMessage msg = new FacesMessage("Fail", "Welcome :" + getReserva().getEstudante().getRa());
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+            return false;
+        }
+
+        FacesMessage msg = new FacesMessage("Successful", "Welcome :" + getReserva().getEstudante().getRa());
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+        return true;
+    }
+
+    public void alterarEstilo() {
+        String parametroUmAtivo = "";
+        if (parametroUmAtivo.equals("btn btn-success")) {
+            parametroUmAtivo = "ui-priority-primary";
+        } else {
+            parametroUmAtivo = "btn btn-success";
+        }
+    }
+
     private static HashMap<Sala, Reserva> clone(HashMap<Sala, Reserva> map) {
         HashMap<Sala, Reserva> copy = new HashMap();
         Iterator<Entry<Sala, Reserva>> iterator = map.entrySet().iterator();
@@ -143,8 +255,10 @@ public class ReservaMB implements Serializable {
 
     /**
      * Método descreve um dia
+     *
      * @param date uma data válida
-     * @return um hashmap que associa data ao conjunto de salas, cada qual com sua reserva
+     * @return um hashmap que associa data ao conjunto de salas, cada qual com
+     * sua reserva
      */
     public static HashMap<Date, HashMap<Sala, Reserva>> descreverDia(Date date) {
         ReservaDAO dao = new ReservaDAO();
@@ -171,125 +285,4 @@ public class ReservaMB implements Serializable {
         return dataTemReservas;
     }
 
-    public String onFlowProcess(FlowEvent event) {
-        return event.getNewStep();
-    }
-
-//    public void alteraEstilo() {
-//        if (parametroUmAtivo.equals("btn btn-success")) {
-//            parametroUmAtivo = "ui-priority-primary";
-//        } else {
-//            parametroUmAtivo = "btn btn-success";
-//        }
-//    }
-//
-//    public String getParametroUmAtivo() {
-//        return parametroUmAtivo;
-// public List<String> getHorasAtivasPorDia(){
-//       return listaReservasAtivasPorDia; 
-//    }  
-//    public static synchronized ReservaMB getInstance(){
-//        if (instancia == null){
-//            instancia = new ReservaMB();
-//        }
-//        return instancia;
-//    }
-    public List<String> getHorasAtivasPorDia(Date date) {
-
-        ReservaDAO reservaDAO = new ReservaDAO();
-        List<Reserva> listaTodasReservas = reservaDAO.list();
-        List<String> listaReservasAtivasPorDia = new ArrayList<>();
-        String diaProcurado = formatoEmDia.format(date);
-        String diaAtivo;
-        salasOcupadas = new ArrayList<>();
-
-        for (Reserva reserva : listaTodasReservas) {
-            diaAtivo = formatoEmDia.format(reserva.getDataInicial());
-            if (diaProcurado.equals(diaAtivo)) {
-                if (reserva.getStatus().equals(new Status("ativa"))) {
-                    listaReservasAtivasPorDia.add(formartoEmHoras.format(reserva.getDataInicial()).substring(0, 2));
-                }
-                salasOcupadas.add(reserva.getId());
-            }
-        }
-
-        return listaReservasAtivasPorDia;
-    }
-
-    public Reserva getReserva() {
-        return reserva;
-    }
-
-    public void setReserva(Reserva reserva) {
-        this.reserva = reserva;
-    }
-
-    public void setHoraInicial(int hora) {
-        if (horariosReserva.size() < 2) {
-            this.horariosReserva.add(hora);
-            System.out.println("Setou hora: " + hora);
-        } else {
-            FacesContext facesContext = FacesContext.getCurrentInstance();
-            facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Limite de reserva de duas horas atingido", null));
-        }
-    }
-
-    public String getStrHorario() {
-        return strHorario;
-    }
-
-    public void setStrHorario(String strHorario) {
-        this.strHorario = strHorario;
-    }
-
-    public String getStrDataInicial() {
-        return strDataInicial;
-    }
-
-    public void setStrDataInicial(String strDataInicial) {
-        this.strDataInicial = strDataInicial;
-    }
-
-    public List<Integer> getSalasDisponiveis() {
-        List<Integer> listaSalasDisponiveis = new ArrayList<>();
-        for (int i = 1; i < 9; i++) {
-            if (!(salasOcupadas.contains(i))) {
-                listaSalasDisponiveis.add(i);
-            }
-        }
-        return listaSalasDisponiveis;
-    }
-
-// public List<String> getHorasAtivasPorDia(){
-//       return listaReservasAtivasPorDia; 
-//    }  
-//    public static synchronized ReservaMB getInstance(){
-//        if (instancia == null){
-//            instancia = new ReservaMB();
-//        }
-//        return instancia;
-//    }
-    public void setSala(int sala) {
-        this.sala = sala;
-    }
-    
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date1) {
-        this.date = date1;
-    }
-
-    public SimpleDateFormat getFormatoEmDia() {
-        return formatoEmDia;
-    }
-
-    public void setHoraSelecionada(String horaSelecionada) {
-        this.horaSelecionada = horaSelecionada;
-    }
-
-    public StatusBotao getStatusBotao() {
-        return statusBotao;
-    }
 }
