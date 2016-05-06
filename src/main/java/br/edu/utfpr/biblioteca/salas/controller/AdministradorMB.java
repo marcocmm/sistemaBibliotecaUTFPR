@@ -24,10 +24,8 @@ import javax.faces.event.ActionEvent;
 import javax.faces.view.ViewScoped;
 import tools.ReservasHorario;
 
-/**
- *
- * @author marco
- */
+
+
 @Named(value = "administradorMB")
 @ViewScoped
 @ManagedBean
@@ -137,7 +135,6 @@ public class AdministradorMB {
 
     public void setSala(String sala) {
         this.sala = sala;
-        System.out.println("SETOU A SALA: " + sala);
     }
 
     /**
@@ -160,19 +157,20 @@ public class AdministradorMB {
             }
         }
 
+        if (reservas.isEmpty()) {
+            return allReservas;
+        }
+
         return reservas;
     }
 
     public HashMap<String, String> getSalas() {
-//        List<Sala> salas = salaDAO.list();
         HashMap<String, String> salas = new HashMap<>();
         for (Sala sala : salaDAO.list()) {
             System.out.println("Sala: " + sala.getId());
             salas.put(String.valueOf(sala.getId()), "Sala " + String.valueOf(sala.getId()));
         }
-        if (salas == null) {
-            System.out.println("é NULO ------");
-        }
+
         return salas;
     }
 
@@ -180,13 +178,12 @@ public class AdministradorMB {
         List<ReservasHorario> reservasHorario = new ArrayList<>();
         for (Reserva reserva : getReservas()) {
             ReservasHorario rH = new ReservasHorario();
-            rH.setHorario(String.valueOf(reserva.getDataInicial()));
-            rH.setStatus(String.valueOf(reserva.getStatus()));
+            rH.setHorario(String.valueOf(CalendarioHelper.getDatabaseDateFormat(reserva.getDataInicial())));
+            rH.setStatus(String.valueOf(reserva.getStatus().getName()));
             reservasHorario.add(rH);
         }
 
         return reservasHorario;
-
     }
 
     public void consultarSala(ActionEvent event) {

@@ -1,4 +1,4 @@
--- Insert de Estudantes -- 
+Reservas-- Insert de Estudantes -- 
 INSERT INTO bdBiblioteca.Estudantes (ra, nome, senha, email)
 VALUES ('1136631', 'Leonardo', 'baiser', 'lpbaiser@gmail.com'),
        ('1137112', 'Rômulo', 'meloca', 'rmmeloca@gmail.com'),
@@ -29,8 +29,8 @@ VALUES ('inativa'),
 
 -- Insert Reservas --
 INSERT INTO bdBiblioteca.Reservas(quantidade_alunos, data_inicial, data_final, estudante_ra, sala_id, status_name)
-VALUES (5, '2016-05-05 08:00:00', '2016-05-05 09:00:00', '1136631', 1,  'inativa'),
-	   (4, '2016-05-10 09:00:00', '2016-05-10 10:00:00', '1602063', 5,  'inativa'),
+VALUES (5, '2016-05-05 08:00:00', '2016-05-05 09:00:00', '1136631', 1,  'ativa'),
+	   (4, '2016-05-10 09:00:00', '2016-05-10 10:00:00', '1602063', 5,  'ativa'),
 	   (5, '2016-05-10 09:00:00', '2016-05-10 10:00:00', '1136632', 3,  'inativa'),
 	   (4, '2016-05-10 09:00:00', '2016-05-10 10:00:00', '1137112', 2,  'inativa'),
 	   (5, '2016-05-06 10:00:00', '2016-05-06 11:00:00', '1137085', 3,  'inativa'),
