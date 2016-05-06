@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tools;
+package br.edu.utfpr.biblioteca.salas.controller;
 
 import br.edu.utfpr.biblioteca.salas.model.Reserva;
 import java.util.Date;

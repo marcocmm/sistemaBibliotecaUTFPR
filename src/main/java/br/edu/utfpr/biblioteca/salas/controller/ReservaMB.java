@@ -5,7 +5,6 @@
  */
 package br.edu.utfpr.biblioteca.salas.controller;
 
-import tools.StatusBotao;
 import br.edu.utfpr.biblioteca.salas.dao.EstudanteDAO;
 import tools.CalendarioHelper;
 import br.edu.utfpr.biblioteca.salas.dao.ReservaDAO;
@@ -30,6 +29,7 @@ import org.primefaces.context.RequestContext;
 import org.primefaces.event.FlowEvent;
 import org.primefaces.event.SelectEvent;
 import java.io.Serializable;
+import javax.persistence.NoResultException;
 
 @Named(value = "reservaMB")
 @ViewScoped

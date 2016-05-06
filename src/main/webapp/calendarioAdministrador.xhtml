@@ -82,16 +82,16 @@
 
         <h:panelGroup>
             <h:form id="form">
-                <p:dataGrid var="date" value="#{reservaMB.descreverDia(reservaMB.date)}" columns="7"
+                <p:dataGrid var="date" value="#{administradorMB.calendario}" columns="7"
                             rows="42" paginator="false" id="calendario">
 
                     <f:facet name="header">
                         Calendário de Reservas
                     </f:facet>
 
-                    <p:panel header="#{date}" style="text-align:center">
+                    <p:panel header="#{date.date}" style="text-align:center">
                         <h:panelGrid columns="1" style="width:100%">
-                            <h:outputText value="#{date.date}" />
+                            <h:outputText value="#{date}" />
 
                             <!--
                             <p:commandLink update=":form:carDetail" oncomplete="PF('carDialog').show()" title="View Detail">

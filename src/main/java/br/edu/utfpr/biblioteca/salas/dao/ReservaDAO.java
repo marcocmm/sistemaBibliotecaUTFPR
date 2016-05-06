@@ -2,11 +2,11 @@ package br.edu.utfpr.biblioteca.salas.dao;
 
 import br.edu.utfpr.biblioteca.salas.model.Reserva;
 import br.edu.utfpr.biblioteca.salas.model.Status;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
-import tools.CalendarioHelper;
 
 /**
  *
@@ -47,12 +47,13 @@ public class ReservaDAO extends GenericDAO<Reserva> {
     }
 
     public List<Reserva> listByDate(Date date) {
-        return entityManager.createQuery("SELECT e FROM " + Reserva.class.getSimpleName() + " e"
-                + "WHERE e.data_inicial="
-                + date).getResultList();
+        Query q = entityManager.createQuery("SELECT e FROM " + Reserva.class.getSimpleName() + " e "
+                + "WHERE e.dataInicial=:dataInicial");
+        q.setParameter("dataInicial", date);
+        return q.getResultList();
     }
-    
-    public List<Reserva> listByDate(Date date, Date hour){
+
+    public List<Reserva> listByDate(Date date, Date hour) {
         return null;
     }
 }

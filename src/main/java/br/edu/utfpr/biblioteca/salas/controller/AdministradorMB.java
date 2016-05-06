@@ -5,8 +5,6 @@
  */
 package br.edu.utfpr.biblioteca.salas.controller;
 
-import tools.Hora;
-import tools.Dia;
 import br.edu.utfpr.biblioteca.salas.dao.ReservaDAO;
 import br.edu.utfpr.biblioteca.salas.dao.SalaDAO;
 import br.edu.utfpr.biblioteca.salas.model.Reserva;
