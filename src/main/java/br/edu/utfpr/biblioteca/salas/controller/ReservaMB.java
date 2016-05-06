@@ -86,6 +86,12 @@ public class ReservaMB implements Serializable {
         horariosReserva = new ArrayList<>();
     }
     
+    /**
+     * 
+     * @param date
+     * @return List<String> listaReservasAtivasPorDia
+     */
+    
      public List<String> getHorasAtivasPorDia(Date date) {
 
         ReservaDAO reservaDAO = new ReservaDAO();
@@ -145,7 +151,12 @@ public class ReservaMB implements Serializable {
         FacesMessage msg = new FacesMessage("Fail", "Welcome :" + getReserva().getEstudante().getRa());
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
-
+/**
+ * se o estudante já está autenticado, a data final for diferente da data incial
+ * e a data incial vier antes da data final, a reserva é salva.
+ * @param reserva
+ * @return dao.insert(reserva) - inserção da reserva.
+ */
     public boolean salvarReserva(Reserva reserva) {
         if (!EstudanteMB.isAutentico(reserva.getEstudante().getRa(), reserva.getEstudante().getSenha())) {
             return false;
@@ -171,7 +182,7 @@ public class ReservaMB implements Serializable {
 
         //teste
       System.out.println("data: " + date);
-      
+        System.out.println(formatoEmDia.format(event.getObject()));
         EstudanteDAO dao = new EstudanteDAO();
         if (dao.list().isEmpty()) {
             dao.insert(new Estudante("1137212", "Rômulo", "112131", "email@email.com"));
@@ -188,7 +199,15 @@ public class ReservaMB implements Serializable {
 
     } 
         
-
+/**
+ * 
+ * @param horasAtivas List<String>
+ * @param parametroUmAtivo String
+ * @param parametroUmDesativado String
+ * @param parametroDoisAtivo String
+ * @param parametroDoisDesativado String
+ * @return String[][] parametrosBotoes
+ */
     public String[][] getParametrosBotoes(List<String> horasAtivas, String parametroUmAtivo,
             String parametroUmDesativado, String parametroDoisAtivo, String parametroDoisDesativado) {
 
@@ -289,7 +308,7 @@ public class ReservaMB implements Serializable {
 //    public String getParametroUmAtivo() {
 //        return parametroUmAtivo;
     public void setHoraInicial(int hora) {
-        if (horariosReserva.size() <= 2) {
+        if (horariosReserva.size() < 2) {
             this.horariosReserva.add(hora);
             System.out.println("Setou hora: " + hora);
         } else {
@@ -313,7 +332,10 @@ public class ReservaMB implements Serializable {
     public void setStrDataInicial(String strDataInicial) {
         this.strDataInicial = strDataInicial;
     }
-
+/**
+ * verifica as salas disponiveis
+ * @return List<Integer> listaSalasDisponiveis
+ */
     public List<Integer> getSalasDisponiveis() {
         List<Integer> listaSalasDisponiveis = new ArrayList<>();
         for (int i = 1; i < 9; i++) {
