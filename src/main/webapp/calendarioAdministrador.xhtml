@@ -31,8 +31,8 @@
 
                 <h:outputLabel value="Sala"/>
                 <p:selectOneMenu id="sala" value="Salas" effect="fold" editable="true">
-                    <f:selectItem itemLabel="Selecione uma sala" itemValue="#{administradorMB.sala}" />
-                    <f:selectItems value="#{administradorMB.salas}" />
+                    <f:selectItem itemLabel="Selecione uma sala" itemValue="#{administradorMB.idSala}" />
+                    <f:selectItems value="#{salaMB.salas}" />
                 </p:selectOneMenu>
 <!--
                 <p:commandButton value="Consultar">
@@ -40,7 +40,7 @@
                 </p:commandButton>-->
 
 
-                <h:outputText value="#{administradorMB.sala}"/>
+                <h:outputText value="#{administradorMB.strSala}"/>
 
                 <p:dataTable id="tabelaHorarios" var="reservasHorario" value="#{administradorMB.reservasHorario}">
                     <p:column headerText="Horário">

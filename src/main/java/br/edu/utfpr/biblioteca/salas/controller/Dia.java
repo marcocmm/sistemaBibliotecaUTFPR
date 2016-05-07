@@ -5,16 +5,8 @@
  */
 package br.edu.utfpr.biblioteca.salas.controller;
 
-import br.edu.utfpr.biblioteca.salas.dao.ReservaDAO;
-import br.edu.utfpr.biblioteca.salas.dao.SalaDAO;
-import br.edu.utfpr.biblioteca.salas.model.Reserva;
-import br.edu.utfpr.biblioteca.salas.model.Sala;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import tools.CalendarioHelper;
 
 /**
  *
@@ -37,12 +29,11 @@ public class Dia {
         return horario;
     }
 
-    public void addHora(Hora horas) {
-        this.horario.add(horas);
-    }
-
     public void setHorario(List<Hora> horario) {
         this.horario = horario;
     }
 
+    public void addHora(Hora hora) {
+        this.horario.add(hora);
+    }
 }

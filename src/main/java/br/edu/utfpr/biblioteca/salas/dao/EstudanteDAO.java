@@ -21,7 +21,5 @@ public class EstudanteDAO extends GenericDAO<Estudante> {
         entityManager.clear();
         return (Estudante) entityManager.find(Estudante.class, ra);
     }
-    
-   
 
 }

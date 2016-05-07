@@ -10,9 +10,9 @@ package tools;
  * @author leonardo
  */
 public class ReservasHorario {
-    
-    String horario;
-    String status;
+
+    private String horario;
+    private String status;
 
     public String getHorario() {
         return horario;
@@ -29,7 +29,5 @@ public class ReservasHorario {
     public void setStatus(String status) {
         this.status = status;
     }
-    
-    
-    
+
 }

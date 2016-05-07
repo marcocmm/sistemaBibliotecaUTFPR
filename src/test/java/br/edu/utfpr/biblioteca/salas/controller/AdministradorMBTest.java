@@ -6,8 +6,12 @@
 package br.edu.utfpr.biblioteca.salas.controller;
 
 import br.edu.utfpr.biblioteca.salas.model.Reserva;
+import br.edu.utfpr.biblioteca.salas.model.Sala;
 import java.util.Date;
 import java.util.List;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -30,11 +34,10 @@ public class AdministradorMBTest {
     }
 
     public void teste() {
-        reservas = adminstradorMB.getReservas();
+        reservas = ReservaMB.getReservas(new Date(), new Sala(1, true));
         if (reservas == null) {
             System.out.println("Reservas é null");
         }
         assertTrue(reservas != null);
     }
-
 }

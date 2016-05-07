@@ -36,24 +36,19 @@ import java.io.Serializable;
 public class ReservaMB implements Serializable {
 
     private Reserva reserva;
-
-    ReservaDAO reservaDAO;
+    private final ReservaDAO reservaDAO;
 
     private StatusBotao statusBotao;
 
     private String strDataInicial;
     private String strHorario;
-    private Integer sala;
-    private List<Integer> salasOcupadas;
+    private List<Integer> idSalasOcupadas;
+    private List<Integer> horariosReserva;
     private Date date;
 
-    //Hora do botão selecionado
-    private String horaSelecionada;
     //Formatadores de data
-    private final SimpleDateFormat formartoEmHoras;
+    private final SimpleDateFormat formatoEmHoras;
     private final SimpleDateFormat formatoEmDia;
-
-    private List<Integer> horariosReserva;
 
     public ReservaMB() {
         this.reservaDAO = new ReservaDAO();
@@ -61,12 +56,10 @@ public class ReservaMB implements Serializable {
         Estudante estudante = new Estudante(null, null, null, null);
         reserva = new Reserva(estudante, new Sala(1, true), new Date(), 0);
 
-        formartoEmHoras = new SimpleDateFormat("HH");
+        formatoEmHoras = new SimpleDateFormat("HH");
         formatoEmDia = new SimpleDateFormat("dd/MM/yyyy");
         date = new Date();
 
-//        parametrosBotoes = new String[14][2];
-//        parametrosBotoes = getParametrosBotoes(getHorasAtivasPorDia(date), parametroUmAtivo, parametroUmDesativado, parametroDoisAtivo, parametroDoisDesativado);
         date = new Date();
         statusBotao = new StatusBotao();
         statusBotao.setParametrosBotoes(getHorasAtivasPorDia(date), date);
@@ -109,77 +102,8 @@ public class ReservaMB implements Serializable {
         return date;
     }
 
-    public void setDate(Date date1) {
-        this.date = date1;
-    }
-
-    public String getHoraSelecionada() {
-        return horaSelecionada;
-    }
-
-    public void setHoraSelecionada(String horaSelecionada) {
-        this.horaSelecionada = horaSelecionada;
-    }
-
-    public void setSala(int sala) {
-        this.sala = sala;
-    }
-
-    public Integer getSala() {
-        return sala;
-    }
-
-    /**
-     *
-     * @param date
-     * @return List<String> listaReservasAtivasPorDia
-     */
-    public List<String> getHorasAtivasPorDia(Date date) {
-
-        ReservaDAO reservaDAO = new ReservaDAO();
-        List<Reserva> listaTodasReservas = reservaDAO.list();
-        List<String> listaReservasAtivasPorDia = new ArrayList<>();
-        String diaProcurado = formatoEmDia.format(date);
-        String diaAtivo;
-        salasOcupadas = new ArrayList<>();
-
-        for (Reserva reserva : listaTodasReservas) {
-            diaAtivo = formatoEmDia.format(reserva.getDataInicial());
-            if (diaProcurado.equals(diaAtivo)) {
-                if (reserva.getStatus().equals(new Status("ativa"))) {
-                    listaReservasAtivasPorDia.add(formartoEmHoras.format(reserva.getDataInicial()).substring(0, 2));
-                }
-                salasOcupadas.add(reserva.getId());
-            }
-        }
-
-        return listaReservasAtivasPorDia;
-    }
-
-    public void setHoraInicial(int hora) {
-        if (horariosReserva.size() < 2) {
-            this.horariosReserva.add(hora);
-            System.out.println("Setou hora: " + hora);
-        } else {
-            FacesContext facesContext = FacesContext.getCurrentInstance();
-            facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Limite de reserva de duas horas atingido", null));
-        }
-    }
-
-    /**
-     * verifica as salas disponiveis
-     *
-     * @return List<Integer> listaSalasDisponiveis
-     */
-    public List<Integer> getSalasDisponiveis() {
-        List<Integer> listaSalasDisponiveis = new ArrayList<>();
-        for (int i = 1; i < 9; i++) {
-            if (!(salasOcupadas.contains(i))) {
-                listaSalasDisponiveis.add(i);
-            }
-
-        }
-        return listaSalasDisponiveis;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public void onDateSelect(SelectEvent event) {
@@ -256,6 +180,56 @@ public class ReservaMB implements Serializable {
         }
     }
 
+    public void setHoraInicial(int hora) {
+        if (horariosReserva.size() < 2) {
+            this.horariosReserva.add(hora);
+            System.out.println("Setou hora: " + hora);
+        } else {
+            FacesContext facesContext = FacesContext.getCurrentInstance();
+            facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Limite de reserva de duas horas atingido", null));
+        }
+    }
+
+    /**
+     * verifica as salas disponiveis
+     *
+     * @return List<Integer> listaSalasDisponiveis
+     */
+    public List<Integer> getSalasDisponiveis() {
+        List<Integer> listaSalasDisponiveis = new ArrayList<>();
+        for (int i = 1; i < 9; i++) {
+            if (!(idSalasOcupadas.contains(i))) {
+                listaSalasDisponiveis.add(i);
+            }
+
+        }
+        return listaSalasDisponiveis;
+    }
+
+    /**
+     *
+     * @param date
+     * @return List<String> listaReservasAtivasPorDia
+     */
+    public List<String> getHorasAtivasPorDia(Date date) {
+        List<Reserva> listaTodasReservas = reservaDAO.list();
+        List<String> listaReservasAtivasPorDia = new ArrayList<>();
+        String diaProcurado = formatoEmDia.format(date);
+        String diaAtivo;
+        idSalasOcupadas = new ArrayList<>();
+
+        for (Reserva reserva : listaTodasReservas) {
+            diaAtivo = formatoEmDia.format(reserva.getDataInicial());
+            if (diaProcurado.equals(diaAtivo)) {
+                if (reserva.getStatus().equals(new Status("ativa"))) {
+                    listaReservasAtivasPorDia.add(formatoEmHoras.format(reserva.getDataInicial()).substring(0, 2));
+                }
+                idSalasOcupadas.add(reserva.getId());
+            }
+        }
+        return listaReservasAtivasPorDia;
+    }
+
     private static HashMap<Sala, Reserva> clone(HashMap<Sala, Reserva> map) {
         HashMap<Sala, Reserva> copy = new HashMap();
         Iterator<Entry<Sala, Reserva>> iterator = map.entrySet().iterator();
@@ -297,6 +271,47 @@ public class ReservaMB implements Serializable {
             dataTemReservas.get(reserva.getDataInicial()).put(reserva.getSala(), reserva);
         }
         return dataTemReservas;
+    }
+
+    /**
+     * Método que faz uma consulta no BD com uma data e um id da strSala,
+     * retorna uma lista de reservas correspondente.
+     *
+     * @param data Date
+     * @param sala
+     * @param idSala int
+     * @return List<Reserva> reservas
+     */
+    public static List<Reserva> getReservas(Date data, Sala sala) {
+        ReservaDAO reservaDAO = new ReservaDAO();
+        List<Reserva> allReservas = reservaDAO.list();
+        List<Reserva> reservas = new ArrayList<>();
+
+        if (allReservas != null) {
+            for (Reserva r : allReservas) {
+                if (r.getDataInicial().equals(data) && r.getSala().equals(sala)) {;
+                    reservas.add(r);
+                }
+            }
+        }
+
+        if (reservas.isEmpty()) {
+            return allReservas;
+        }
+
+        return reservas;
+    }
+
+    public boolean cancelarReserva(Reserva reserva) {
+        throw new UnsupportedOperationException();
+    }
+
+    public boolean ativarReserva(Reserva reserva) {
+        throw new UnsupportedOperationException();
+    }
+
+    public List<Reserva> listarReservas(Estudante estudante) {
+        throw new UnsupportedOperationException();
     }
 
 }

@@ -13,6 +13,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.inject.Named;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -24,10 +25,8 @@ import javax.inject.Named;
 public class EstudanteMB {
 
     private Estudante estudante;
+    private final EstudanteDAO estudanteDAO;
 
-    private EstudanteDAO estudanteDAO;
-
-    private String nome;
     private String login;
     private String senha;
 
@@ -50,14 +49,6 @@ public class EstudanteMB {
     public void setLogin(String login) {
         this.login = login;
         System.out.println("Login:" + login);
-    }
-
-    public String getNome() {
-        return estudanteDAO.obter(login).getNome();
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
     }
 
     public String getSenha() {
@@ -122,27 +113,24 @@ public class EstudanteMB {
     public void autenticar(ActionEvent event) {
         FacesMessage message = null;
         boolean loggedIn = false;
-//        FacesContext fc = FacesContext.getCurrentInstance();
-//        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
-//        session.setAttribute("estudanteLogado", this.idUsuario);
+        FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        session.setAttribute("estudanteLogado", this.estudante);
 
         setEstudante(login, senha);
 
-//        if (!alreadyCadastrado()) {
-//            menssage = new FacesMessage(FacesMessage.SEVERITY_WARN, "Estudante não cadastrado!", null);
-////            return false;
-//        } else {
-        loggedIn = estudanteDAO.obter(login).getSenha().equals(senha);
+        if (!alreadyCadastrado(this.estudante)) {
+            message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Estudante não cadastrado!", null);
+        }
+        loggedIn = isAutentico(login, senha);
 
         if (loggedIn) {
-            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bem-Vindo!", getNome());
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bem-Vindo!", estudante.getNome());
 
         }
 
         FacesContext facesContext = FacesContext.getCurrentInstance();
         facesContext.addMessage(null, message);
 
-//            return true;
-//        }
     }
 }

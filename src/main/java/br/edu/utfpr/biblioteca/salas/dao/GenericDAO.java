@@ -16,7 +16,6 @@ import javax.persistence.Persistence;
 public abstract class GenericDAO<T> {
 
     public static EntityManager entityManager = Persistence.createEntityManagerFactory("UP").createEntityManager();
-
     private Class clazz;
 
     public GenericDAO(Class clazz) {
@@ -48,7 +47,7 @@ public abstract class GenericDAO<T> {
         entityManager.clear();
         return (T) entityManager.find(clazz, id);
     }
-    
+
     public T obter(T entity) {
         entityManager.clear();
         return (T) entityManager.find(clazz, entity);

@@ -16,6 +16,7 @@ import java.util.List;
  */
 public class CalendarioHelper {
 
+    @Deprecated
     public static List<Date> getCalendario(Integer ano, Integer mes) {
         int primeiroDia, ultimoDia, diaPrimeiraSemana, i;
         List<Date> calendario = new ArrayList<>();
@@ -60,6 +61,58 @@ public class CalendarioHelper {
         return calendario;
     }
 
+    public static List<Date> getCalendario(Date date) {
+        int primeiroDia, ultimoDia, diaPrimeiraSemana, i, ano, mes;
+        List<Date> calendario;
+        Calendar calendar;
+
+        calendario = new ArrayList<>();
+        calendar = Calendar.getInstance();
+
+        calendar.setTime(date);
+        ano = calendar.get(Calendar.YEAR);
+        mes = calendar.get(Calendar.MONTH);
+
+        calendar.set(Calendar.HOUR_OF_DAY, 0); // ! clear would not reset the hour of day !
+        calendar.clear(Calendar.MINUTE);
+        calendar.clear(Calendar.SECOND);
+        calendar.clear(Calendar.MILLISECOND);
+        calendar.set(Calendar.YEAR, ano);
+
+        calendar.set(Calendar.MONTH, mes - 1);
+        ultimoDia = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+
+        calendar.set(Calendar.MONTH, mes);
+        primeiroDia = calendar.getActualMinimum(Calendar.DAY_OF_MONTH);
+        calendar.set(Calendar.DAY_OF_MONTH, primeiroDia);
+        diaPrimeiraSemana = calendar.get(Calendar.DAY_OF_WEEK);
+        if (diaPrimeiraSemana == 1) {
+            diaPrimeiraSemana = 8;
+        }
+
+        calendar.set(Calendar.MONTH, mes - 1);
+        for (i = ultimoDia; i > (ultimoDia - diaPrimeiraSemana) + 1; i--) {
+            calendar.set(Calendar.DAY_OF_MONTH, i);
+            calendario.add(0, calendar.getTime());
+        }
+
+        calendar.set(Calendar.MONTH, mes);
+        ultimoDia = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+        for (i = primeiroDia; i <= ultimoDia; i++) {
+            calendar.set(Calendar.DAY_OF_MONTH, i);
+            calendario.add(calendar.getTime());
+        }
+
+        calendar.set(Calendar.MONTH, mes + 1);
+        for (i = primeiroDia; calendario.size() < 42; i++) {
+            calendar.set(Calendar.DAY_OF_MONTH, i);
+            calendario.add(calendar.getTime());
+        }
+
+        return calendario;
+    }
+
+    @Deprecated
     public static Date[][] getCalendarioMatriz(Integer ano, Integer mes) {
         int primeiroDia, ultimoDia, diaPrimeiraSemana, i;
         Date[][] calendario = new Date[5][7];
@@ -150,6 +203,7 @@ public class CalendarioHelper {
         return calendar.getTime();
     }
 
+    @Deprecated
     public static String getDatabaseDateFormat(Date date) {
         String databaseDateFormat = "";
 

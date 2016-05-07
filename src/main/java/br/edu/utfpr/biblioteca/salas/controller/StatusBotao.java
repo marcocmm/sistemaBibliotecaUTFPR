@@ -16,11 +16,10 @@ public class StatusBotao {
     private final String parametroUmSelecionado;
     private final String parametroDoisAtivo;
     private final String parametroDoisDesativado;
-    private List<String> parametrosBotoes;
-    private int numeroBotao;
+    private final List<String> parametrosBotoes;
+    private final int numeroBotao;
 
     public StatusBotao() {
-
         parametroUmAtivo = "btn btn-success";
         parametroUmDesativado = "btn btn-danger";
         parametroUmSelecionado = "btn btn";
@@ -29,7 +28,6 @@ public class StatusBotao {
 
         numeroBotao = 0;
         parametrosBotoes = new ArrayList<>();
-
     }
 
     public void setParametrosBotoes(List<String> horasAtivas, Date date) {

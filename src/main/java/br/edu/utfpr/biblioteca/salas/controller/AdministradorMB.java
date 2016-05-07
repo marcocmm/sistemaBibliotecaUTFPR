@@ -5,7 +5,7 @@
  */
 package br.edu.utfpr.biblioteca.salas.controller;
 
-import br.edu.utfpr.biblioteca.salas.dao.ReservaDAO;
+import br.edu.utfpr.biblioteca.salas.dao.AdministradorDAO;
 import br.edu.utfpr.biblioteca.salas.dao.SalaDAO;
 import br.edu.utfpr.biblioteca.salas.model.Reserva;
 import tools.CalendarioHelper;
@@ -27,28 +27,21 @@ import tools.ReservasHorario;
 public class AdministradorMB {
 
     private Administrador administrador;
-
-    private ReservaDAO reservaDAO;
-    private SalaDAO salaDAO;
+    private final AdministradorDAO administradorDAO;
 
     private Date data;
     private int idSala;
-    private String sala;
+    private String strSala;
 
-    private List<Date> calendario;
-
-    private String horario;
-    private String status;
+    private String strHorario;
+    private String strStatus;
 
     /**
      * Creates a new instance of AdministradorMB
      */
     public AdministradorMB() {
-        this.sala = "Sala";
-        this.reservaDAO = new ReservaDAO();
-        this.salaDAO = new SalaDAO();
-//        this.idSala = 2;
-//        this.data = new Date(2016, 04, 29, 18, 0, 0);
+        this.strSala = "Sala";
+        this.administradorDAO = new AdministradorDAO();
     }
 
     public Administrador getAdministrador() {
@@ -75,78 +68,39 @@ public class AdministradorMB {
         this.idSala = idSala;
     }
 
+    public String getStrHorario() {
+        return strHorario;
+    }
+
+    public void setStrHorario(String strHorario) {
+        this.strHorario = strHorario;
+    }
+
+    public String getStrStatus() {
+        return strStatus;
+    }
+
+    public void setStrStatus(String strStatus) {
+        this.strStatus = strStatus;
+    }
+
+    public String getStrSala() {
+        return strSala;
+    }
+
+    public void setStrSala(String strSala) {
+        this.strSala = strSala;
+    }
+
     public List<Date> getCalendario() {
-        return CalendarioHelper.getCalendario(2016, 04);
-    }
-
-    public void setCalendario(List<Date> calendario) {
-        this.calendario = calendario;
-    }
-
-    public String getHorario() {
-        return horario;
-    }
-
-    public void setHorario(String horario) {
-        this.horario = horario;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getSala() {
-        return sala;
-    }
-
-    public void setSala(String sala) {
-        this.sala = sala;
-    }
-
-    /**
-     * Método que faz uma consulta no BD com uma data e um id da sala, retorna
-     * uma lista de reservas correspondente.
-     *
-     * @param data Date
-     * @param idSala int
-     * @return List<Reserva> reservas
-     */
-    public List<Reserva> getReservas() {
-        List<Reserva> allReservas = reservaDAO.list();
-        List<Reserva> reservas = new ArrayList<>();
-
-        if (allReservas != null) {
-            for (Reserva r : allReservas) {
-                if (r.getDataInicial().equals(this.data) && r.getId() == this.idSala) {;
-                    reservas.add(r);
-                }
-            }
-        }
-
-        if (reservas.isEmpty()) {
-            return allReservas;
-        }
-
-        return reservas;
-    }
-
-    public HashMap<String, String> getSalas() {
-        HashMap<String, String> salas = new HashMap<>();
-        for (Sala sala : salaDAO.list()) {
-            System.out.println("Sala: " + sala.getId());
-            salas.put(String.valueOf(sala.getId()), "Sala " + String.valueOf(sala.getId()));
-        }
-
-        return salas;
+        return CalendarioHelper.getCalendario(new Date());
     }
 
     public List<ReservasHorario> getReservasHorario() {
-        List<ReservasHorario> reservasHorario = new ArrayList<>();
-        for (Reserva reserva : getReservas()) {
+        SalaDAO salaDAO = new SalaDAO();
+        Sala sala = salaDAO.obter(this.idSala);
+        List<ReservasHorario> reservasHorario = new ArrayList();
+        for (Reserva reserva : ReservaMB.getReservas(this.data, sala)) {
             ReservasHorario rH = new ReservasHorario();
             rH.setHorario(String.valueOf(CalendarioHelper.getDatabaseDateFormat(reserva.getDataInicial())));
             rH.setStatus(String.valueOf(reserva.getStatus().getName()));
@@ -182,5 +136,13 @@ public class AdministradorMB {
             }
         }
         return dia;
+    }
+
+    public void gerarGraficos() {
+        throw new UnsupportedOperationException();
+    }
+
+    public List<Reserva> obterRelatorio(Date dataInicial, Date dataFinal) {
+        throw new UnsupportedOperationException();
     }
 }

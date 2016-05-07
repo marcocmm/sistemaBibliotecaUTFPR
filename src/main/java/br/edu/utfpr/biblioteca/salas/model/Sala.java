@@ -58,11 +58,11 @@ public class Sala implements Serializable {
         this.id = id;
     }
 
-    public Boolean getAr() {
+    public Boolean hasAr() {
         return ar;
     }
 
-    public void setAr(Boolean ar) {
+    public void hasAr(Boolean ar) {
         this.ar = ar;
     }
 

@@ -2,7 +2,6 @@ package br.edu.utfpr.biblioteca.salas.dao;
 
 import br.edu.utfpr.biblioteca.salas.model.Reserva;
 import br.edu.utfpr.biblioteca.salas.model.Status;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.NoResultException;
@@ -20,7 +19,6 @@ public class ReservaDAO extends GenericDAO<Reserva> {
 
     @Override
     public boolean insert(Reserva reserva) {
-        Reserva alreadyReservado;
         Status status;
         StatusDAO statusDAO;
 
@@ -32,7 +30,7 @@ public class ReservaDAO extends GenericDAO<Reserva> {
             q.setParameter("dataInicial", reserva.getDataInicial());
             q.setParameter("sala", reserva.getSala());
             q.setParameter("status", new Status("ativa"));
-            alreadyReservado = (Reserva) q.getSingleResult();
+            q.getSingleResult();
             entityManager.getTransaction().rollback();
             System.out.println("Horário e sala já reservadas");
             return false;
@@ -51,9 +49,5 @@ public class ReservaDAO extends GenericDAO<Reserva> {
                 + "WHERE e.dataInicial=:dataInicial");
         q.setParameter("dataInicial", date);
         return q.getResultList();
-    }
-
-    public List<Reserva> listByDate(Date date, Date hour) {
-        return null;
     }
 }
