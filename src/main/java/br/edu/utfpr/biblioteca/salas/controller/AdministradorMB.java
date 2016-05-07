@@ -30,9 +30,9 @@ public class AdministradorMB {
     private final AdministradorDAO administradorDAO;
 
     private Date data;
+    private Dia diaSelecionado;
     private int idSala;
     private String strSala;
-
     private String strHorario;
     private String strStatus;
 
@@ -58,6 +58,14 @@ public class AdministradorMB {
 
     public void setData(Date data) {
         this.data = data;
+    }
+
+    public Dia getDiaSelecionado() {
+        return diaSelecionado;
+    }
+
+    public void setDiaSelecionado(Dia diaSelecionado) {
+        this.diaSelecionado = diaSelecionado;
     }
 
     public int getIdSala() {
@@ -96,6 +104,19 @@ public class AdministradorMB {
         return CalendarioHelper.getCalendario(new Date());
     }
 
+    public List<Dia> getMes(Date date) {
+        List<Date> dias = CalendarioHelper.getCalendario(date);
+        List<Dia> mes = new ArrayList<>();
+        for (Date dia : dias) {
+            mes.add(descreverDia(dia));
+        }
+        return mes;
+    }
+
+    public List<Dia> getMes() {
+        return getMes(new Date());
+    }
+
     public List<ReservasHorario> getReservasHorario() {
         SalaDAO salaDAO = new SalaDAO();
         Sala sala = salaDAO.obter(this.idSala);
@@ -111,10 +132,7 @@ public class AdministradorMB {
     }
 
     public Dia descreverDia(Date date) {
-        ReservaMB.descreverDia(date);
-
-        HashMap<Date, HashMap<Sala, Reserva>> dataTemReservas = new HashMap();
-        dataTemReservas.keySet().iterator();
+        HashMap<Date, HashMap<Sala, Reserva>> dataTemReservas = ReservaMB.descreverDia(date);
 
         Dia dia;
         Hora horario;
@@ -122,18 +140,18 @@ public class AdministradorMB {
         dia = new Dia();
         dia.setData(date);
 
-        for (Map.Entry<Date, HashMap<Sala, Reserva>> hora : dataTemReservas.entrySet()) {
-            Date key = hora.getKey();
-            HashMap<Sala, Reserva> value = hora.getValue();
+        for (Map.Entry<Date, HashMap<Sala, Reserva>> horaTemReserva : dataTemReservas.entrySet()) {
+            Date hora = horaTemReserva.getKey();
+            HashMap<Sala, Reserva> salaTemReservas = horaTemReserva.getValue();
 
             horario = new Hora();
-            horario.setHora(key);
-            dia.addHora(horario);
-            for (Map.Entry<Sala, Reserva> salaTemReserva : value.entrySet()) {
-                Sala sala = salaTemReserva.getKey();
+            horario.setHora(hora);
+            for (Map.Entry<Sala, Reserva> salaTemReserva : salaTemReservas.entrySet()) {
                 Reserva reserva = salaTemReserva.getValue();
 
+                horario.addReserva(reserva);
             }
+            dia.addHora(horario);
         }
         return dia;
     }

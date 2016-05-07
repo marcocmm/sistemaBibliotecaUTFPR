@@ -6,6 +6,7 @@
 package br.edu.utfpr.biblioteca.salas.controller;
 
 import br.edu.utfpr.biblioteca.salas.model.Reserva;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -17,6 +18,10 @@ public class Hora {
 
     private Date hora;
     private List<Reserva> reservas;
+
+    public Hora() {
+        this.reservas = new ArrayList<>();
+    }
 
     public Date getHora() {
         return hora;
@@ -32,6 +37,12 @@ public class Hora {
 
     public void setReservas(List<Reserva> reservas) {
         this.reservas = reservas;
+    }
+
+    public void addReserva(Reserva reserva) {
+        if (reserva != null) {
+            reservas.add(reserva);
+        }
     }
 
     @Override

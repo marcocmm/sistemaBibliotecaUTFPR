@@ -5,11 +5,12 @@
  */
 package br.edu.utfpr.biblioteca.salas.controller;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class StatusBotao {
+public class StatusBotao implements Serializable {
 
     private final String parametroUmAtivo;
     private final String parametroUmDesativado;

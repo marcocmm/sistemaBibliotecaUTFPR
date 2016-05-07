@@ -5,6 +5,7 @@
  */
 package br.edu.utfpr.biblioteca.salas.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -16,6 +17,10 @@ public class Dia {
 
     private Date data;
     private List<Hora> horario;
+
+    public Dia() {
+        this.horario = new ArrayList<>();
+    }
 
     public Date getData() {
         return data;
@@ -34,6 +39,8 @@ public class Dia {
     }
 
     public void addHora(Hora hora) {
-        this.horario.add(hora);
+        if (hora != null) {
+            this.horario.add(hora);
+        }
     }
 }

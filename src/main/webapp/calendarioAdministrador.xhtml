@@ -34,10 +34,10 @@
                     <f:selectItem itemLabel="Selecione uma sala" itemValue="#{administradorMB.idSala}" />
                     <f:selectItems value="#{salaMB.salas}" />
                 </p:selectOneMenu>
-<!--
-                <p:commandButton value="Consultar">
-                    <p:ajax event="formCal:tabelaHorarios"/>
-                </p:commandButton>-->
+                <!--
+                                <p:commandButton value="Consultar">
+                                    <p:ajax event="formCal:tabelaHorarios"/>
+                                </p:commandButton>-->
 
 
                 <h:outputText value="#{administradorMB.strSala}"/>
@@ -82,51 +82,41 @@
 
         <h:panelGroup>
             <h:form id="form">
-                <p:dataGrid var="date" value="#{administradorMB.calendario}" columns="7"
+                <p:dataGrid var="dia" value="#{administradorMB.mes}" columns="7"
                             rows="42" paginator="false" id="calendario">
 
                     <f:facet name="header">
                         Calendário de Reservas
                     </f:facet>
 
-                    <p:panel header="#{date.date}" style="text-align:center">
+                    <p:panel header="#{dia.data.date}" style="text-align:center">
                         <h:panelGrid columns="1" style="width:100%">
-                            <h:outputText value="#{date}" />
+                            <h:outputText value="#{dia.data}" />
 
-                            <!--
-                            <p:commandLink update=":form:carDetail" oncomplete="PF('carDialog').show()" title="View Detail">
-                            <h:outputText styleClass="ui-icon ui-icon-search" style="margin:0 auto;" />
-                            <f:setPropertyActionListener value="#{car}" target="#{dataGridView.selectedCar}" />
+                            <p:commandLink update=":form:descricaoDia" oncomplete="PF('diaDialog').show()" title="View Detail">
+                                <h:outputText styleClass="ui-icon ui-icon-search" style="margin:0 auto;" />
+                                <f:setPropertyActionListener value="#{dia}" target="#{administradorMB.diaSelecionado}" />
                             </p:commandLink>
-                            -->
                         </h:panelGrid>
                     </p:panel>
 
                 </p:dataGrid>
 
-                <!--                
-                <p:dialog header="Car Info" widgetVar="carDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-                <p:outputPanel id="carDetail" style="text-align:center;">
-                <p:panelGrid  columns="2" rendered="#{not empty dataGridView.selectedCar}" columnClasses="label,value">
-                <f:facet name="header">
-                <p:graphicImage name="demo/images/car/#{dataGridView.selectedCar.brand}-big.gif"/> 
-                </f:facet>
+                <p:dialog header="Car Info" widgetVar="diaDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                    <p:outputPanel id="descricaoDia" style="text-align:center;">
+                        <p:panelGrid  columns="2" rendered="#{not empty administradorMB.diaSelecionado}" columnClasses="label,value">
 
-                <h:outputText value="Id:" />
-                <h:outputText value="#{dataGridView.selectedCar.id}" />
+                            <h:outputText value="Id:" />
+                            <h:outputText value="#{administradorMB.diaSelecionado.data.date}" />
 
-                <h:outputText value="Year" />
-                <h:outputText value="#{dataGridView.selectedCar.year}" />
+                            <h:outputText value="Year" />
 
-                <h:outputText value="Color:" />
-                <h:outputText value="#{dataGridView.selectedCar.color}" style="color:#{dataGridView.selectedCar.color}"/>
+                            <h:outputText value="Color:" />
 
-                <h:outputText value="Price" />
-                <h:outputText value="$#{dataGridView.selectedCar.price}" />
-                </p:panelGrid>
-                </p:outputPanel>
+                            <h:outputText value="Price" />
+                        </p:panelGrid>
+                    </p:outputPanel>
                 </p:dialog>
-                -->
             </h:form>
         </h:panelGroup>
 

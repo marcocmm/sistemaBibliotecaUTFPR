@@ -2,6 +2,7 @@ package br.edu.utfpr.biblioteca.salas.dao;
 
 import br.edu.utfpr.biblioteca.salas.model.Reserva;
 import br.edu.utfpr.biblioteca.salas.model.Status;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.NoResultException;
@@ -11,7 +12,7 @@ import javax.persistence.Query;
  *
  * @author leonardo
  */
-public class ReservaDAO extends GenericDAO<Reserva> {
+public class ReservaDAO extends GenericDAO<Reserva> implements Serializable {
 
     public ReservaDAO() {
         super(Reserva.class);

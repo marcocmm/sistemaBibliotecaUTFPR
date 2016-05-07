@@ -232,11 +232,13 @@ public class ReservaMB implements Serializable {
 
     private static HashMap<Sala, Reserva> clone(HashMap<Sala, Reserva> map) {
         HashMap<Sala, Reserva> copy = new HashMap();
-        Iterator<Entry<Sala, Reserva>> iterator = map.entrySet().iterator();
-        Entry<Sala, Reserva> entry;
-        while (iterator.hasNext()) {
-            entry = iterator.next();
-            copy.put((Sala) entry.getKey().clone(), (Reserva) entry.getValue().clone());
+
+        for (Entry<Sala, Reserva> entry : map.entrySet()) {
+            try {
+                copy.put((Sala) entry.getKey().clone(), (Reserva) entry.getValue().clone());
+            } catch (NullPointerException ex) {
+                copy.put((Sala) entry.getKey().clone(), null);
+            }
         }
         return copy;
     }
