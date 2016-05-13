@@ -5,8 +5,8 @@
  */
 package br.edu.utfpr.biblioteca.salas.controller;
 
-import br.edu.utfpr.biblioteca.salas.dao.SalaDAO;
-import br.edu.utfpr.biblioteca.salas.model.Sala;
+import br.edu.utfpr.biblioteca.salas.model.dao.SalaDAO;
+import br.edu.utfpr.biblioteca.salas.model.entity.Sala;
 import java.util.HashMap;
 import javax.inject.Named;
 import javax.faces.bean.ManagedBean;

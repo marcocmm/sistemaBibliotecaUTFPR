@@ -5,8 +5,8 @@
  */
 package br.edu.utfpr.biblioteca.salas.dao;
 
-import br.edu.utfpr.biblioteca.salas.model.Administrador;
-import org.junit.Test;
+import br.edu.utfpr.biblioteca.salas.model.dao.AdministradorDAO;
+import br.edu.utfpr.biblioteca.salas.model.entity.Administrador;
 
 /**
  *

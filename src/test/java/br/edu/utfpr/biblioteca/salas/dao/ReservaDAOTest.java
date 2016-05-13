@@ -5,9 +5,12 @@
  */
 package br.edu.utfpr.biblioteca.salas.dao;
 
-import br.edu.utfpr.biblioteca.salas.model.Estudante;
-import br.edu.utfpr.biblioteca.salas.model.Reserva;
-import br.edu.utfpr.biblioteca.salas.model.Sala;
+import br.edu.utfpr.biblioteca.salas.model.dao.ReservaDAO;
+import br.edu.utfpr.biblioteca.salas.model.dao.EstudanteDAO;
+import br.edu.utfpr.biblioteca.salas.model.dao.SalaDAO;
+import br.edu.utfpr.biblioteca.salas.model.entity.Estudante;
+import br.edu.utfpr.biblioteca.salas.model.entity.Reserva;
+import br.edu.utfpr.biblioteca.salas.model.entity.Sala;
 import java.util.Date;
 import java.util.List;
 import static org.junit.Assert.assertTrue;

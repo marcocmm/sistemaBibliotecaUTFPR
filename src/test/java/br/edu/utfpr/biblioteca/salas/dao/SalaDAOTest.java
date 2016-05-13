@@ -5,9 +5,8 @@
  */
 package br.edu.utfpr.biblioteca.salas.dao;
 
-import br.edu.utfpr.biblioteca.salas.model.Sala;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import br.edu.utfpr.biblioteca.salas.model.dao.SalaDAO;
+import br.edu.utfpr.biblioteca.salas.model.entity.Sala;
 
 /**
  *

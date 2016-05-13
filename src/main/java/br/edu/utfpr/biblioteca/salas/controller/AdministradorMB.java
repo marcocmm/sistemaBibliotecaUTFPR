@@ -5,12 +5,12 @@
  */
 package br.edu.utfpr.biblioteca.salas.controller;
 
-import br.edu.utfpr.biblioteca.salas.dao.AdministradorDAO;
-import br.edu.utfpr.biblioteca.salas.dao.SalaDAO;
-import br.edu.utfpr.biblioteca.salas.model.Reserva;
+import br.edu.utfpr.biblioteca.salas.model.dao.AdministradorDAO;
+import br.edu.utfpr.biblioteca.salas.model.dao.SalaDAO;
 import tools.CalendarioHelper;
-import br.edu.utfpr.biblioteca.salas.model.Administrador;
-import br.edu.utfpr.biblioteca.salas.model.Sala;
+import br.edu.utfpr.biblioteca.salas.model.entity.Administrador;
+import br.edu.utfpr.biblioteca.salas.model.entity.Reserva;
+import br.edu.utfpr.biblioteca.salas.model.entity.Sala;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;

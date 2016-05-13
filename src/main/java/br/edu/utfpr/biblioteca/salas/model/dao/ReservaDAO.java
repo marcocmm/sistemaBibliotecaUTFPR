@@ -1,7 +1,7 @@
-package br.edu.utfpr.biblioteca.salas.dao;
+package br.edu.utfpr.biblioteca.salas.model.dao;
 
-import br.edu.utfpr.biblioteca.salas.model.Reserva;
-import br.edu.utfpr.biblioteca.salas.model.Status;
+import br.edu.utfpr.biblioteca.salas.model.entity.Reserva;
+import br.edu.utfpr.biblioteca.salas.model.entity.Status;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;

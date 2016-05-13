@@ -5,8 +5,8 @@
  */
 package br.edu.utfpr.biblioteca.salas.controller;
 
-import br.edu.utfpr.biblioteca.salas.model.Estudante;
-import br.edu.utfpr.biblioteca.salas.dao.EstudanteDAO;
+import br.edu.utfpr.biblioteca.salas.model.dao.EstudanteDAO;
+import br.edu.utfpr.biblioteca.salas.model.entity.Estudante;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;

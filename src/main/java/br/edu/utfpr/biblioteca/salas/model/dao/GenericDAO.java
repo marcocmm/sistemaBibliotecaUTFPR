@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.edu.utfpr.biblioteca.salas.dao;
+package br.edu.utfpr.biblioteca.salas.model.dao;
 
 import java.util.List;
 import javax.persistence.EntityManager;
