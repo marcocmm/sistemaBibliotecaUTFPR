@@ -5,21 +5,21 @@
  */
 package br.edu.utfpr.biblioteca.salas.model.dao;
 
-import br.edu.utfpr.biblioteca.salas.model.entity.Estudante;
+import br.edu.utfpr.biblioteca.salas.model.entity.EstudantePO;
 
 /**
  *
  * @author mateus
  */
-public class EstudanteDAO extends GenericDAO<Estudante> {
+public class EstudanteDAO extends GenericDAO<EstudantePO> {
 
     public EstudanteDAO() {
-        super(Estudante.class);
+        super(EstudantePO.class);
     }
 
-    public Estudante obter(String ra) {
+    public EstudantePO obter(String ra) {
         entityManager.clear();
-        return (Estudante) entityManager.find(Estudante.class, ra);
+        return (EstudantePO) entityManager.find(EstudantePO.class, ra);
     }
 
 }

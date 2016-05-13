@@ -6,7 +6,7 @@
 package br.edu.utfpr.biblioteca.salas.controller;
 
 import br.edu.utfpr.biblioteca.salas.model.dao.EstudanteDAO;
-import br.edu.utfpr.biblioteca.salas.model.entity.Estudante;
+import br.edu.utfpr.biblioteca.salas.model.entity.EstudantePO;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -24,7 +24,7 @@ import javax.servlet.http.HttpSession;
 @ManagedBean
 public class EstudanteMB {
 
-    private Estudante estudante;
+    private EstudantePO estudante;
     private final EstudanteDAO estudanteDAO;
 
     private String login;
@@ -34,12 +34,12 @@ public class EstudanteMB {
         this.estudanteDAO = new EstudanteDAO();
     }
 
-    public Estudante getEstudante() {
+    public EstudantePO getEstudante() {
         return estudante;
     }
 
     public void setEstudante(String login, String senha) {
-        this.estudante = new Estudante(login, null, senha, null);
+        this.estudante = new EstudantePO(login, null, senha, null);
     }
 
     public String getLogin() {
@@ -66,7 +66,7 @@ public class EstudanteMB {
      *
      * @param estudante
      */
-    private void cadastrarEstudante(Estudante estudante) {
+    private void cadastrarEstudante(EstudantePO estudante) {
         if (alreadyCadastrado(estudante)) {
             return;
         }
@@ -82,7 +82,7 @@ public class EstudanteMB {
      * @param estudante
      * @return boolean
      */
-    private boolean alreadyCadastrado(Estudante estudante) {
+    private boolean alreadyCadastrado(EstudantePO estudante) {
         return estudanteDAO.obter(estudante) != null;
     }
 
@@ -96,7 +96,7 @@ public class EstudanteMB {
      */
     public static boolean isAutentico(String login, String senha) {
         EstudanteDAO dao = new EstudanteDAO();
-        Estudante estudante = dao.obter(login);
+        EstudantePO estudante = dao.obter(login);
         if (estudante == null) {
 
             return false;

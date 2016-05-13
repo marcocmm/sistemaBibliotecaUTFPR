@@ -31,7 +31,7 @@ import javax.validation.constraints.NotNull;
 @Table(name = "Reservas")
 @NamedQueries({
     @NamedQuery(name = "Reserva.findAll", query = "SELECT r FROM Reserva r")})
-public class Reserva implements Serializable {
+public class ReservaPO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -60,29 +60,29 @@ public class Reserva implements Serializable {
 
     @JoinColumn(name = "estudante_ra", referencedColumnName = "ra")
     @ManyToOne(optional = false)
-    private Estudante estudante;
+    private EstudantePO estudante;
 
     @JoinColumn(name = "sala_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Sala sala;
+    private SalaPO sala;
 
     @JoinColumn(name = "status_name", referencedColumnName = "name")
     @ManyToOne(optional = false)
-    private Status status;
+    private StatusPO status;
 
-    protected Reserva() {
+    protected ReservaPO() {
     }
 
-    public Reserva(Estudante estudante, Sala sala, Date dataInicial, int quantidadeAlunos) {
+    public ReservaPO(EstudantePO estudante, SalaPO sala, Date dataInicial, int quantidadeAlunos) {
         this.estudante = estudante;
         this.sala = sala;
         this.dataInicial = dataInicial;
         this.dataFinal = dataInicial;//+1h
         this.quantidadeAlunos = quantidadeAlunos;
         StatusDAO statusDAO = new StatusDAO();
-        Status inativa = statusDAO.obter("inativa");
+        StatusPO inativa = statusDAO.obter("inativa");
         if (inativa == null) {
-            inativa = new Status("inativa");
+            inativa = new StatusPO("inativa");
         }
         this.status = inativa;
     }
@@ -119,27 +119,27 @@ public class Reserva implements Serializable {
         this.dataFinal = dataFinal;
     }
 
-    public Estudante getEstudante() {
+    public EstudantePO getEstudante() {
         return estudante;
     }
 
-    public void setEstudante(Estudante estudante) {
+    public void setEstudante(EstudantePO estudante) {
         this.estudante = estudante;
     }
 
-    public Sala getSala() {
+    public SalaPO getSala() {
         return sala;
     }
 
-    public void setSala(Sala sala) {
+    public void setSala(SalaPO sala) {
         this.sala = sala;
     }
 
-    public Status getStatus() {
+    public StatusPO getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(StatusPO status) {
         this.status = status;
     }
 
@@ -153,10 +153,10 @@ public class Reserva implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Reserva)) {
+        if (!(object instanceof ReservaPO)) {
             return false;
         }
-        Reserva other = (Reserva) object;
+        ReservaPO other = (ReservaPO) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -170,7 +170,7 @@ public class Reserva implements Serializable {
 
     @Override
     public Object clone() {
-        Reserva reserva = new Reserva();
+        ReservaPO reserva = new ReservaPO();
         reserva.setId(this.id);
         reserva.setEstudante(this.estudante);
         reserva.setSala(this.sala);

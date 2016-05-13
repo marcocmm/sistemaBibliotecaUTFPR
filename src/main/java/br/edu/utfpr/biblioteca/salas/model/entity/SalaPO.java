@@ -26,7 +26,7 @@ import javax.validation.constraints.NotNull;
 @Table(name = "Salas")
 @NamedQueries({
     @NamedQuery(name = "Sala.findAll", query = "SELECT s FROM Sala s")})
-public class Sala implements Serializable {
+public class SalaPO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -40,12 +40,12 @@ public class Sala implements Serializable {
     private Boolean ar;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "sala")
-    private List<Reserva> reservas;
+    private List<ReservaPO> reservas;
 
-    protected Sala() {
+    protected SalaPO() {
     }
 
-    public Sala(int id, boolean ar) {
+    public SalaPO(int id, boolean ar) {
         this.id = id;
         this.ar = ar;
     }
@@ -66,11 +66,11 @@ public class Sala implements Serializable {
         this.ar = ar;
     }
 
-    public List<Reserva> getReservas() {
+    public List<ReservaPO> getReservas() {
         return reservas;
     }
 
-    public void setReservas(List<Reserva> reservas) {
+    public void setReservas(List<ReservaPO> reservas) {
         this.reservas = reservas;
     }
 
@@ -84,10 +84,10 @@ public class Sala implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Sala)) {
+        if (!(object instanceof SalaPO)) {
             return false;
         }
-        Sala other = (Sala) object;
+        SalaPO other = (SalaPO) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -101,6 +101,6 @@ public class Sala implements Serializable {
 
     @Override
     public Object clone() {
-        return new Sala(this.id, this.ar);
+        return new SalaPO(this.id, this.ar);
     }
 }

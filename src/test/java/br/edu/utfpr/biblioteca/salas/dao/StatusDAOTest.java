@@ -6,7 +6,7 @@
 package br.edu.utfpr.biblioteca.salas.dao;
 
 import br.edu.utfpr.biblioteca.salas.model.dao.StatusDAO;
-import br.edu.utfpr.biblioteca.salas.model.entity.Status;
+import br.edu.utfpr.biblioteca.salas.model.entity.StatusPO;
 
 /**
  *
@@ -21,7 +21,7 @@ public class StatusDAOTest {
     public void criar() {
         StatusDAO dao = new StatusDAO();
         if (dao.list().isEmpty()) {
-            dao.insert(new Status("Inativa"));
+            dao.insert(new StatusPO("Inativa"));
         }
     }
     

@@ -6,7 +6,7 @@
 package br.edu.utfpr.biblioteca.salas.dao;
 
 import br.edu.utfpr.biblioteca.salas.model.dao.SalaDAO;
-import br.edu.utfpr.biblioteca.salas.model.entity.Sala;
+import br.edu.utfpr.biblioteca.salas.model.entity.SalaPO;
 
 /**
  *
@@ -21,11 +21,11 @@ public class SalaDAOTest {
     public void cadastrarSala() {
         SalaDAO dao = new SalaDAO();
         if (dao.list().isEmpty()) {
-            dao.insert(new Sala(1, true));
-            dao.insert(new Sala(2, true));
-            dao.insert(new Sala(3, true));
-            dao.insert(new Sala(4, true));
-            dao.insert(new Sala(5, false));
+            dao.insert(new SalaPO(1, true));
+            dao.insert(new SalaPO(2, true));
+            dao.insert(new SalaPO(3, true));
+            dao.insert(new SalaPO(4, true));
+            dao.insert(new SalaPO(5, false));
         }
     }
 

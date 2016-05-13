@@ -5,7 +5,7 @@
  */
 package br.edu.utfpr.biblioteca.salas.controller;
 
-import br.edu.utfpr.biblioteca.salas.model.entity.Reserva;
+import br.edu.utfpr.biblioteca.salas.model.entity.ReservaPO;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -17,7 +17,7 @@ import java.util.List;
 public class Hora {
 
     private Date hora;
-    private List<Reserva> reservas;
+    private List<ReservaPO> reservas;
 
     public Hora() {
         this.reservas = new ArrayList<>();
@@ -31,15 +31,15 @@ public class Hora {
         this.hora = hora;
     }
 
-    public List<Reserva> getReservas() {
+    public List<ReservaPO> getReservas() {
         return reservas;
     }
 
-    public void setReservas(List<Reserva> reservas) {
+    public void setReservas(List<ReservaPO> reservas) {
         this.reservas = reservas;
     }
 
-    public void addReserva(Reserva reserva) {
+    public void addReserva(ReservaPO reserva) {
         if (reserva != null) {
             reservas.add(reserva);
         }

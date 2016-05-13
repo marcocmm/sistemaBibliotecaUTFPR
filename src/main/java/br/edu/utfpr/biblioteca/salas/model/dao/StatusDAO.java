@@ -5,21 +5,21 @@
  */
 package br.edu.utfpr.biblioteca.salas.model.dao;
 
-import br.edu.utfpr.biblioteca.salas.model.entity.Status;
+import br.edu.utfpr.biblioteca.salas.model.entity.StatusPO;
 
 /**
  *
  * @author romulo
  */
-public class StatusDAO extends GenericDAO<Status>{
+public class StatusDAO extends GenericDAO<StatusPO>{
 
     public StatusDAO() {
-        super(Status.class);
+        super(StatusPO.class);
     }
     
-    public Status obter(String status) {
+    public StatusPO obter(String status) {
         entityManager.clear();
-        return (Status) entityManager.find(Status.class, status);
+        return (StatusPO) entityManager.find(StatusPO.class, status);
     }
     
 }

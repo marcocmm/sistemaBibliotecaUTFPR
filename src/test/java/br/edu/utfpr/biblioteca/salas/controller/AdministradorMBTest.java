@@ -5,10 +5,13 @@
  */
 package br.edu.utfpr.biblioteca.salas.controller;
 
-import br.edu.utfpr.biblioteca.salas.model.entity.Reserva;
-import br.edu.utfpr.biblioteca.salas.model.entity.Sala;
+import br.edu.utfpr.biblioteca.salas.model.entity.ReservaPO;
+import br.edu.utfpr.biblioteca.salas.model.entity.SalaPO;
 import java.util.Date;
 import java.util.List;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -17,7 +20,7 @@ import static org.junit.Assert.assertTrue;
  */
 public class AdministradorMBTest {
 
-    List<Reserva> reservas = null;
+    List<ReservaPO> reservas = null;
     AdministradorMB adminstradorMB;
 
     public AdministradorMBTest() {
@@ -31,7 +34,7 @@ public class AdministradorMBTest {
     }
 
     public void teste() {
-        reservas = ReservaMB.getReservas(new Date(), new Sala(1, true));
+        reservas = ReservaMB.getReservas(new Date(), new SalaPO(1, true));
         if (reservas == null) {
             System.out.println("Reservas é null");
         }

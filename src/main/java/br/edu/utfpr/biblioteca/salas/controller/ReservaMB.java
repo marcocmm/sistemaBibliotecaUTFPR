@@ -9,10 +9,10 @@ import tools.CalendarioHelper;
 import br.edu.utfpr.biblioteca.salas.model.dao.EstudanteDAO;
 import br.edu.utfpr.biblioteca.salas.model.dao.ReservaDAO;
 import br.edu.utfpr.biblioteca.salas.model.dao.SalaDAO;
-import br.edu.utfpr.biblioteca.salas.model.entity.Estudante;
-import br.edu.utfpr.biblioteca.salas.model.entity.Reserva;
-import br.edu.utfpr.biblioteca.salas.model.entity.Sala;
-import br.edu.utfpr.biblioteca.salas.model.entity.Status;
+import br.edu.utfpr.biblioteca.salas.model.entity.EstudantePO;
+import br.edu.utfpr.biblioteca.salas.model.entity.ReservaPO;
+import br.edu.utfpr.biblioteca.salas.model.entity.SalaPO;
+import br.edu.utfpr.biblioteca.salas.model.entity.StatusPO;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -34,7 +34,7 @@ import java.io.Serializable;
 @ManagedBean
 public class ReservaMB implements Serializable {
 
-    private Reserva reserva;
+    private ReservaPO reserva;
     private final ReservaDAO reservaDAO;
 
     private StatusBotao statusBotao;
@@ -52,8 +52,8 @@ public class ReservaMB implements Serializable {
     public ReservaMB() {
         this.reservaDAO = new ReservaDAO();
 
-        Estudante estudante = new Estudante(null, null, null, null);
-        reserva = new Reserva(estudante, new Sala(1, true), new Date(), 0);
+        EstudantePO estudante = new EstudantePO(null, null, null, null);
+        reserva = new ReservaPO(estudante, new SalaPO(1, true), new Date(), 0);
 
         formatoEmHoras = new SimpleDateFormat("HH");
         formatoEmDia = new SimpleDateFormat("dd/MM/yyyy");
@@ -65,11 +65,11 @@ public class ReservaMB implements Serializable {
         horariosReserva = new ArrayList<>();
     }
 
-    public Reserva getReserva() {
+    public ReservaPO getReserva() {
         return reserva;
     }
 
-    public void setReserva(Reserva reserva) {
+    public void setReserva(ReservaPO reserva) {
         this.reserva = reserva;
     }
 
@@ -153,10 +153,10 @@ public class ReservaMB implements Serializable {
         Date dataInicial = CalendarioHelper.parseDateTime(this.strDataInicial, this.strHorario);
         this.reserva.setDataInicial(dataInicial);
 
-        Estudante estudante = estudanteDAO.obter(this.reserva.getEstudante().getRa());
+        EstudantePO estudante = estudanteDAO.obter(this.reserva.getEstudante().getRa());
         this.reserva.setEstudante(estudante);
 
-        Sala sala = salaDAO.obter(this.reserva.getSala().getId());
+        SalaPO sala = salaDAO.obter(this.reserva.getSala().getId());
         this.reserva.setSala(sala);
 
         if (!reservaDAO.insert(reserva)) {
@@ -211,16 +211,16 @@ public class ReservaMB implements Serializable {
      * @return List<String> listaReservasAtivasPorDia
      */
     public List<String> getHorasAtivasPorDia(Date date) {
-        List<Reserva> listaTodasReservas = reservaDAO.list();
+        List<ReservaPO> listaTodasReservas = reservaDAO.list();
         List<String> listaReservasAtivasPorDia = new ArrayList<>();
         String diaProcurado = formatoEmDia.format(date);
         String diaAtivo;
         idSalasOcupadas = new ArrayList<>();
 
-        for (Reserva reserva : listaTodasReservas) {
+        for (ReservaPO reserva : listaTodasReservas) {
             diaAtivo = formatoEmDia.format(reserva.getDataInicial());
             if (diaProcurado.equals(diaAtivo)) {
-                if (reserva.getStatus().equals(new Status("ativa"))) {
+                if (reserva.getStatus().equals(new StatusPO("ativa"))) {
                     listaReservasAtivasPorDia.add(formatoEmHoras.format(reserva.getDataInicial()).substring(0, 2));
                 }
                 idSalasOcupadas.add(reserva.getId());
@@ -229,14 +229,14 @@ public class ReservaMB implements Serializable {
         return listaReservasAtivasPorDia;
     }
 
-    private static HashMap<Sala, Reserva> clone(HashMap<Sala, Reserva> map) {
-        HashMap<Sala, Reserva> copy = new HashMap();
+    private static HashMap<SalaPO, ReservaPO> clone(HashMap<SalaPO, ReservaPO> map) {
+        HashMap<SalaPO, ReservaPO> copy = new HashMap();
 
-        for (Entry<Sala, Reserva> entry : map.entrySet()) {
+        for (Entry<SalaPO, ReservaPO> entry : map.entrySet()) {
             try {
-                copy.put((Sala) entry.getKey().clone(), (Reserva) entry.getValue().clone());
+                copy.put((SalaPO) entry.getKey().clone(), (ReservaPO) entry.getValue().clone());
             } catch (NullPointerException ex) {
-                copy.put((Sala) entry.getKey().clone(), null);
+                copy.put((SalaPO) entry.getKey().clone(), null);
             }
         }
         return copy;
@@ -249,18 +249,18 @@ public class ReservaMB implements Serializable {
      * @return um hashmap que associa data ao conjunto de salas, cada qual com
      * sua reserva
      */
-    public static HashMap<Date, HashMap<Sala, Reserva>> descreverDia(Date date) {
+    public static HashMap<Date, HashMap<SalaPO, ReservaPO>> descreverDia(Date date) {
         ReservaDAO dao = new ReservaDAO();
         SalaDAO salaDAO = new SalaDAO();
 
-        List<Sala> salas = salaDAO.list();
+        List<SalaPO> salas = salaDAO.list();
         List<Date> horarios = CalendarioHelper.getHorarios(date);
-        List<Reserva> reservas = dao.listByDate(date);
+        List<ReservaPO> reservas = dao.listByDate(date);
 
-        HashMap<Sala, Reserva> salaTemReservas = new HashMap();
-        HashMap<Date, HashMap<Sala, Reserva>> dataTemReservas = new HashMap();
+        HashMap<SalaPO, ReservaPO> salaTemReservas = new HashMap();
+        HashMap<Date, HashMap<SalaPO, ReservaPO>> dataTemReservas = new HashMap();
 
-        for (Sala sala : salas) {
+        for (SalaPO sala : salas) {
             salaTemReservas.put(sala, null);
         }
 
@@ -268,7 +268,7 @@ public class ReservaMB implements Serializable {
             dataTemReservas.put(horario, clone(salaTemReservas));
         }
 
-        for (Reserva reserva : reservas) {
+        for (ReservaPO reserva : reservas) {
             dataTemReservas.get(reserva.getDataInicial()).put(reserva.getSala(), reserva);
         }
         return dataTemReservas;
@@ -283,13 +283,13 @@ public class ReservaMB implements Serializable {
      * @param idSala int
      * @return List<Reserva> reservas
      */
-    public static List<Reserva> getReservas(Date data, Sala sala) {
+    public static List<ReservaPO> getReservas(Date data, SalaPO sala) {
         ReservaDAO reservaDAO = new ReservaDAO();
-        List<Reserva> allReservas = reservaDAO.list();
-        List<Reserva> reservas = new ArrayList<>();
+        List<ReservaPO> allReservas = reservaDAO.list();
+        List<ReservaPO> reservas = new ArrayList<>();
 
         if (allReservas != null) {
-            for (Reserva r : allReservas) {
+            for (ReservaPO r : allReservas) {
                 if (r.getDataInicial().equals(data) && r.getSala().equals(sala)) {;
                     reservas.add(r);
                 }
@@ -303,15 +303,15 @@ public class ReservaMB implements Serializable {
         return reservas;
     }
 
-    public boolean cancelarReserva(Reserva reserva) {
+    public boolean cancelarReserva(ReservaPO reserva) {
         throw new UnsupportedOperationException();
     }
 
-    public boolean ativarReserva(Reserva reserva) {
+    public boolean ativarReserva(ReservaPO reserva) {
         throw new UnsupportedOperationException();
     }
 
-    public List<Reserva> listarReservas(Estudante estudante) {
+    public List<ReservaPO> listarReservas(EstudantePO estudante) {
         throw new UnsupportedOperationException();
     }
 

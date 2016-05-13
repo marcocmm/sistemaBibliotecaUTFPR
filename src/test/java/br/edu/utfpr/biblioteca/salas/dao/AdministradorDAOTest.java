@@ -6,7 +6,7 @@
 package br.edu.utfpr.biblioteca.salas.dao;
 
 import br.edu.utfpr.biblioteca.salas.model.dao.AdministradorDAO;
-import br.edu.utfpr.biblioteca.salas.model.entity.Administrador;
+import br.edu.utfpr.biblioteca.salas.model.entity.AdministradorPO;
 
 /**
  *
@@ -20,7 +20,7 @@ public class AdministradorDAOTest {
     
     public void cadastrar() {
         AdministradorDAO dao = new AdministradorDAO();
-        Administrador administrador = new Administrador("rmeloca", "senha");
+        AdministradorPO administrador = new AdministradorPO("rmeloca", "senha");
         if (dao.list().isEmpty()) {
             dao.insert(administrador);
         }

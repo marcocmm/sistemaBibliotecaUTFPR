@@ -1,7 +1,7 @@
 package br.edu.utfpr.biblioteca.salas.model.dao;
 
-import br.edu.utfpr.biblioteca.salas.model.entity.Reserva;
-import br.edu.utfpr.biblioteca.salas.model.entity.Status;
+import br.edu.utfpr.biblioteca.salas.model.entity.ReservaPO;
+import br.edu.utfpr.biblioteca.salas.model.entity.StatusPO;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -12,15 +12,15 @@ import javax.persistence.Query;
  *
  * @author leonardo
  */
-public class ReservaDAO extends GenericDAO<Reserva> implements Serializable {
+public class ReservaDAO extends GenericDAO<ReservaPO> implements Serializable {
 
     public ReservaDAO() {
-        super(Reserva.class);
+        super(ReservaPO.class);
     }
 
     @Override
-    public boolean insert(Reserva reserva) {
-        Status status;
+    public boolean insert(ReservaPO reserva) {
+        StatusPO status;
         StatusDAO statusDAO;
 
         statusDAO = new StatusDAO();
@@ -30,7 +30,7 @@ public class ReservaDAO extends GenericDAO<Reserva> implements Serializable {
             Query q = entityManager.createQuery("SELECT e FROM Reserva e WHERE e.dataInicial = :dataInicial AND e.sala = :sala AND e.status = :status");
             q.setParameter("dataInicial", reserva.getDataInicial());
             q.setParameter("sala", reserva.getSala());
-            q.setParameter("status", new Status("ativa"));
+            q.setParameter("status", new StatusPO("ativa"));
             q.getSingleResult();
             entityManager.getTransaction().rollback();
             System.out.println("Horário e sala já reservadas");
@@ -45,8 +45,8 @@ public class ReservaDAO extends GenericDAO<Reserva> implements Serializable {
         }
     }
 
-    public List<Reserva> listByDate(Date date) {
-        Query q = entityManager.createQuery("SELECT e FROM " + Reserva.class.getSimpleName() + " e "
+    public List<ReservaPO> listByDate(Date date) {
+        Query q = entityManager.createQuery("SELECT e FROM " + ReservaPO.class.getSimpleName() + " e "
                 + "WHERE e.dataInicial=:dataInicial");
         q.setParameter("dataInicial", date);
         return q.getResultList();

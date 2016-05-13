@@ -24,7 +24,7 @@ import javax.validation.constraints.Size;
 @Table(name = "Administradores")
 @NamedQueries({
     @NamedQuery(name = "Administrador.findAll", query = "SELECT a FROM Administrador a")})
-public class Administrador implements Serializable {
+public class AdministradorPO implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
@@ -40,10 +40,10 @@ public class Administrador implements Serializable {
     @Column(name = "senha")
     private String senha;
 
-    protected Administrador() {
+    protected AdministradorPO() {
     }
 
-    public Administrador(String login, String senha) {
+    public AdministradorPO(String login, String senha) {
         this.login = login;
         this.senha = senha;
     }
@@ -74,10 +74,10 @@ public class Administrador implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Administrador)) {
+        if (!(object instanceof AdministradorPO)) {
             return false;
         }
-        Administrador other = (Administrador) object;
+        AdministradorPO other = (AdministradorPO) object;
         if ((this.login == null && other.login != null) || (this.login != null && !this.login.equals(other.login))) {
             return false;
         }

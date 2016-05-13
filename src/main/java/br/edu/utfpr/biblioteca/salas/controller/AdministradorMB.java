@@ -8,9 +8,9 @@ package br.edu.utfpr.biblioteca.salas.controller;
 import br.edu.utfpr.biblioteca.salas.model.dao.AdministradorDAO;
 import br.edu.utfpr.biblioteca.salas.model.dao.SalaDAO;
 import tools.CalendarioHelper;
-import br.edu.utfpr.biblioteca.salas.model.entity.Administrador;
-import br.edu.utfpr.biblioteca.salas.model.entity.Reserva;
-import br.edu.utfpr.biblioteca.salas.model.entity.Sala;
+import br.edu.utfpr.biblioteca.salas.model.entity.AdministradorPO;
+import br.edu.utfpr.biblioteca.salas.model.entity.ReservaPO;
+import br.edu.utfpr.biblioteca.salas.model.entity.SalaPO;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -26,7 +26,7 @@ import tools.ReservasHorario;
 @ManagedBean
 public class AdministradorMB {
 
-    private Administrador administrador;
+    private AdministradorPO administrador;
     private final AdministradorDAO administradorDAO;
 
     private Date data;
@@ -44,11 +44,11 @@ public class AdministradorMB {
         this.administradorDAO = new AdministradorDAO();
     }
 
-    public Administrador getAdministrador() {
+    public AdministradorPO getAdministrador() {
         return administrador;
     }
 
-    public void setAdministrador(Administrador administrador) {
+    public void setAdministrador(AdministradorPO administrador) {
         this.administrador = administrador;
     }
 
@@ -119,9 +119,9 @@ public class AdministradorMB {
 
     public List<ReservasHorario> getReservasHorario() {
         SalaDAO salaDAO = new SalaDAO();
-        Sala sala = salaDAO.obter(this.idSala);
+        SalaPO sala = salaDAO.obter(this.idSala);
         List<ReservasHorario> reservasHorario = new ArrayList();
-        for (Reserva reserva : ReservaMB.getReservas(this.data, sala)) {
+        for (ReservaPO reserva : ReservaMB.getReservas(this.data, sala)) {
             ReservasHorario rH = new ReservasHorario();
             rH.setHorario(String.valueOf(CalendarioHelper.getDatabaseDateFormat(reserva.getDataInicial())));
             rH.setStatus(String.valueOf(reserva.getStatus().getName()));
@@ -132,7 +132,7 @@ public class AdministradorMB {
     }
 
     public Dia descreverDia(Date date) {
-        HashMap<Date, HashMap<Sala, Reserva>> dataTemReservas = ReservaMB.descreverDia(date);
+        HashMap<Date, HashMap<SalaPO, ReservaPO>> dataTemReservas = ReservaMB.descreverDia(date);
 
         Dia dia;
         Hora horario;
@@ -140,14 +140,14 @@ public class AdministradorMB {
         dia = new Dia();
         dia.setData(date);
 
-        for (Map.Entry<Date, HashMap<Sala, Reserva>> horaTemReserva : dataTemReservas.entrySet()) {
+        for (Map.Entry<Date, HashMap<SalaPO, ReservaPO>> horaTemReserva : dataTemReservas.entrySet()) {
             Date hora = horaTemReserva.getKey();
-            HashMap<Sala, Reserva> salaTemReservas = horaTemReserva.getValue();
+            HashMap<SalaPO, ReservaPO> salaTemReservas = horaTemReserva.getValue();
 
             horario = new Hora();
             horario.setHora(hora);
-            for (Map.Entry<Sala, Reserva> salaTemReserva : salaTemReservas.entrySet()) {
-                Reserva reserva = salaTemReserva.getValue();
+            for (Map.Entry<SalaPO, ReservaPO> salaTemReserva : salaTemReservas.entrySet()) {
+                ReservaPO reserva = salaTemReserva.getValue();
 
                 horario.addReserva(reserva);
             }
@@ -160,7 +160,7 @@ public class AdministradorMB {
         throw new UnsupportedOperationException();
     }
 
-    public List<Reserva> obterRelatorio(Date dataInicial, Date dataFinal) {
+    public List<ReservaPO> obterRelatorio(Date dataInicial, Date dataFinal) {
         throw new UnsupportedOperationException();
     }
 }

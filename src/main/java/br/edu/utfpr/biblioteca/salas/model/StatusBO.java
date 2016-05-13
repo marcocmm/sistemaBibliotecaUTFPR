@@ -9,6 +9,6 @@ package br.edu.utfpr.biblioteca.salas.model;
  *
  * @author marco
  */
-public class AdministradorRN {
+public class StatusBO {
     
 }

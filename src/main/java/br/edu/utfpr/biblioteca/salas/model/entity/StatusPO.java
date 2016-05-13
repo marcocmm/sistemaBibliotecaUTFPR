@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Status.findAll", query = "SELECT s FROM Status s"),
     @NamedQuery(name = "Status.findByName", query = "SELECT s FROM Status s WHERE s.name = :name")})
-public class Status implements Serializable {
+public class StatusPO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -42,12 +42,12 @@ public class Status implements Serializable {
     private String name;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "status")
-    private List<Reserva> reservas;
+    private List<ReservaPO> reservas;
 
-    protected Status() {
+    protected StatusPO() {
     }
 
-    public Status(String name) {
+    public StatusPO(String name) {
         this.name = name;
     }
 
@@ -59,11 +59,11 @@ public class Status implements Serializable {
         this.name = name;
     }
 
-    public List<Reserva> getReservas() {
+    public List<ReservaPO> getReservas() {
         return reservas;
     }
 
-    public void setReservas(List<Reserva> reservas) {
+    public void setReservas(List<ReservaPO> reservas) {
         this.reservas = reservas;
     }
     
@@ -77,10 +77,10 @@ public class Status implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Status)) {
+        if (!(object instanceof StatusPO)) {
             return false;
         }
-        Status other = (Status) object;
+        StatusPO other = (StatusPO) object;
         if ((this.name == null && other.name != null) || (this.name != null && !this.name.equals(other.name))) {
             return false;
         }

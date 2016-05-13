@@ -5,16 +5,16 @@
  */
 package br.edu.utfpr.biblioteca.salas.model.dao;
 
-import br.edu.utfpr.biblioteca.salas.model.entity.Sala;
+import br.edu.utfpr.biblioteca.salas.model.entity.SalaPO;
 
 /**
  *
  * @author mateus
  */
-public class SalaDAO extends GenericDAO<Sala> {
+public class SalaDAO extends GenericDAO<SalaPO> {
 
     public SalaDAO() {
-        super(Sala.class);
+        super(SalaPO.class);
     }
 
 }

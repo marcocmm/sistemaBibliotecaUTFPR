@@ -6,7 +6,7 @@
 package br.edu.utfpr.biblioteca.salas.controller;
 
 import br.edu.utfpr.biblioteca.salas.model.dao.SalaDAO;
-import br.edu.utfpr.biblioteca.salas.model.entity.Sala;
+import br.edu.utfpr.biblioteca.salas.model.entity.SalaPO;
 import java.util.HashMap;
 import javax.inject.Named;
 import javax.faces.bean.ManagedBean;
@@ -21,28 +21,28 @@ import javax.faces.view.ViewScoped;
 @ManagedBean
 public class SalaMB {
 
-    private Sala sala;
+    private SalaPO sala;
     private final SalaDAO salaDAO;
 
     /**
      * Creates a new instance of SalaMB
      */
     public SalaMB() {
-        this.sala = new Sala(1, true);
+        this.sala = new SalaPO(1, true);
         salaDAO = new SalaDAO();
     }
 
-    public Sala getSala() {
+    public SalaPO getSala() {
         return sala;
     }
 
-    public void setSala(Sala sala) {
+    public void setSala(SalaPO sala) {
         this.sala = sala;
     }
 
     public HashMap<String, String> getSalas() {
         HashMap<String, String> salas = new HashMap<>();
-        for (Sala sala : salaDAO.list()) {
+        for (SalaPO sala : salaDAO.list()) {
             System.out.println("Sala: " + sala.getId());
             salas.put(String.valueOf(sala.getId()), "Sala " + String.valueOf(sala.getId()));
         }

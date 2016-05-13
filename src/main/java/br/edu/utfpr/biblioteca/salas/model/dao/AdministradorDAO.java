@@ -5,16 +5,16 @@
  */
 package br.edu.utfpr.biblioteca.salas.model.dao;
 
-import br.edu.utfpr.biblioteca.salas.model.entity.Administrador;
+import br.edu.utfpr.biblioteca.salas.model.entity.AdministradorPO;
 
 /**
  *
  * @author mateus
  */
-public class AdministradorDAO extends GenericDAO<Administrador> {
+public class AdministradorDAO extends GenericDAO<AdministradorPO> {
 
     public AdministradorDAO() {
-        super(Administrador.class);
+        super(AdministradorPO.class);
     }
 
 }
