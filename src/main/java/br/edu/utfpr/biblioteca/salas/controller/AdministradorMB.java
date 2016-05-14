@@ -1,10 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.edu.utfpr.biblioteca.salas.controller;
 
+import br.edu.utfpr.biblioteca.salas.model.ReservaBO;
 import br.edu.utfpr.biblioteca.salas.model.dao.AdministradorDAO;
 import br.edu.utfpr.biblioteca.salas.model.dao.SalaDAO;
 import tools.CalendarioHelper;
@@ -121,7 +117,7 @@ public class AdministradorMB {
         SalaDAO salaDAO = new SalaDAO();
         SalaPO sala = salaDAO.obter(this.idSala);
         List<ReservasHorario> reservasHorario = new ArrayList();
-        for (ReservaPO reserva : ReservaMB.getReservas(this.data, sala)) {
+        for (ReservaPO reserva : ReservaBO.getReservas(this.data, this.idSala)) {
             ReservasHorario rH = new ReservasHorario();
             rH.setHorario(String.valueOf(CalendarioHelper.getDatabaseDateFormat(reserva.getDataInicial())));
             rH.setStatus(String.valueOf(reserva.getStatus().getName()));

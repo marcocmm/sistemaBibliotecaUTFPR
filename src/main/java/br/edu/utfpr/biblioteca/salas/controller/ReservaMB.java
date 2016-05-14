@@ -1,18 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.edu.utfpr.biblioteca.salas.controller;
 
+import br.edu.utfpr.biblioteca.salas.model.SalaBO;
 import tools.CalendarioHelper;
-import br.edu.utfpr.biblioteca.salas.model.dao.EstudanteDAO;
 import br.edu.utfpr.biblioteca.salas.model.dao.ReservaDAO;
 import br.edu.utfpr.biblioteca.salas.model.dao.SalaDAO;
 import br.edu.utfpr.biblioteca.salas.model.entity.EstudantePO;
 import br.edu.utfpr.biblioteca.salas.model.entity.ReservaPO;
 import br.edu.utfpr.biblioteca.salas.model.entity.SalaPO;
-import br.edu.utfpr.biblioteca.salas.model.entity.StatusPO;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -34,43 +28,29 @@ import java.io.Serializable;
 @ManagedBean
 public class ReservaMB implements Serializable {
 
-    private ReservaPO reserva;
-    private final ReservaDAO reservaDAO;
-
     private StatusBotao statusBotao;
 
-    private String strDataInicial;
-    private String strHorario;
+    private String dataInicial;
+    private String hora;
+    private String qtdeAlunos;
     private List<Integer> idSalasOcupadas;
     private List<Integer> horariosReserva;
-    private Date date;
 
     //Formatadores de data
     private final SimpleDateFormat formatoEmHoras;
     private final SimpleDateFormat formatoEmDia;
 
     public ReservaMB() {
-        this.reservaDAO = new ReservaDAO();
 
-        EstudantePO estudante = new EstudantePO(null, null, null, null);
-        reserva = new ReservaPO(estudante, new SalaPO(1, true), new Date(), 0);
 
         formatoEmHoras = new SimpleDateFormat("HH");
         formatoEmDia = new SimpleDateFormat("dd/MM/yyyy");
-        date = new Date();
-
-        date = new Date();
         statusBotao = new StatusBotao();
-        statusBotao.setParametrosBotoes(getHorasAtivasPorDia(date), date);
+//        Aqui ficou com bug pq o método updateBotoesAtivosPorDia não retorna mais uma lista
+//        Ver se é necessário retornar uma lista ou implematar o set do css dos botões no próprio método updateBotoesAtivosPorDia  
+//        statusBotao.setParametrosBotoes(updateBotoesAtivosPorDia(dataInicial), date);
+        
         horariosReserva = new ArrayList<>();
-    }
-
-    public ReservaPO getReserva() {
-        return reserva;
-    }
-
-    public void setReserva(ReservaPO reserva) {
-        this.reserva = reserva;
     }
 
     public StatusBotao getStatusBotao() {
@@ -81,28 +61,28 @@ public class ReservaMB implements Serializable {
         this.statusBotao = statusBotao;
     }
 
-    public String getStrDataInicial() {
-        return strDataInicial;
+    public String getDataInicial() {
+        return dataInicial;
     }
 
-    public void setStrDataInicial(String strDataInicial) {
-        this.strDataInicial = strDataInicial;
+    public void setDataInicial(String dataInicial) {
+        this.dataInicial = dataInicial;
     }
 
-    public String getStrHorario() {
-        return strHorario;
+    public String getHora() {
+        return hora;
     }
 
-    public void setStrHorario(String strHorario) {
-        this.strHorario = strHorario;
+    public void setHora(String hora) {
+        this.hora = hora;
     }
 
-    public Date getDate() {
-        return date;
+    public String getQtdeAlunos() {
+        return qtdeAlunos;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setQtdeAlunos(String qtdeAlunos) {
+        this.qtdeAlunos = qtdeAlunos;
     }
 
     public void onDateSelect(SelectEvent event) {
@@ -110,12 +90,12 @@ public class ReservaMB implements Serializable {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected", formatoEmDia.format(event.getObject())));
 
-//        parametrosBotoes = getParametrosBotoes(getHorasAtivasPorDia(statusBotao.getDate1()), parametroUmAtivo, parametroUmDesativado, parametroDoisAtivo, parametroDoisDesativado);
-        System.out.println("data: " + getDate());
-//        parametrosBotoes = getParametrosBotoes(getHorasAtivasPorDia(date), parametroUmAtivo, parametroUmDesativado, parametroDoisAtivo, parametroDoisDesativado);
+//        parametrosBotoes = getParametrosBotoes(updateBotoesAtivosPorDia(statusBotao.getDate1()), parametroUmAtivo, parametroUmDesativado, parametroDoisAtivo, parametroDoisDesativado);
+//        parametrosBotoes = getParametrosBotoes(updateBotoesAtivosPorDia(date), parametroUmAtivo, parametroUmDesativado, parametroDoisAtivo, parametroDoisDesativado);
 
     }
-
+    
+    //O que isto faz?? @author comentar pls
     public String onFlowProcess(FlowEvent event) {
         return event.getNewStep();
     }
@@ -132,42 +112,71 @@ public class ReservaMB implements Serializable {
      *
      * @return
      */
-    public boolean save() {
+    public void reservarSala() {
+        
+        //Alterar este método para chamar SalaBO.reservarSala passando os parâmentros corretos já realizado as verificações necessárias.
 
-        if (!EstudanteMB.isAutentico(this.reserva.getEstudante().getRa(), this.reserva.getEstudante().getSenha())) {
-            FacesMessage msg = new FacesMessage("Credenciais inválidas", "Welcome :" + getReserva().getEstudante().getRa());
-            FacesContext.getCurrentInstance().addMessage(null, msg);
-            return false;
-        }
+//        if (!EstudanteMB.isAutentico(this.reserva.getEstudante().getRa(), this.reserva.getEstudante().getSenha())) {
+//            FacesMessage msg = new FacesMessage("Credenciais inválidas", "Welcome :" + getReserva().getEstudante().getRa());
+//            FacesContext.getCurrentInstance().addMessage(null, msg);
+//            return false;
+//        }
+//
+//        if (reserva.getDataFinal().equals(reserva.getDataInicial())) {
+//            return false;
+//        }
+//        if (reserva.getDataFinal().before(reserva.getDataInicial())) {
+//            return false;
+//        }
+//
+//        EstudanteDAO estudanteDAO = new EstudanteDAO();
+//        SalaDAO salaDAO = new SalaDAO();
+//
+//        Date dataInicial = CalendarioHelper.parseDateTime(this.dataInicial, this.hora);
+//        this.reserva.setDataInicial(dataInicial);
+//
+//        EstudantePO estudante = estudanteDAO.obter(this.reserva.getEstudante().getRa());
+//        this.reserva.setEstudante(estudante);
+//
+//        SalaPO sala = salaDAO.obter(this.reserva.getSala().getId());
+//        this.reserva.setSala(sala);
+//
+//        if (!reservaDAO.insert(reserva)) {
+//            FacesMessage msg = new FacesMessage("Fail", "Welcome :" + getReserva().getEstudante().getRa());
+//            FacesContext.getCurrentInstance().addMessage(null, msg);
+//            return false;
+//        }
+//
+//        FacesMessage msg = new FacesMessage("Successful", "Welcome :" + getReserva().getEstudante().getRa());
+//        FacesContext.getCurrentInstance().addMessage(null, msg);
+//        return true;
+    }
 
-        if (reserva.getDataFinal().equals(reserva.getDataInicial())) {
-            return false;
-        }
-        if (reserva.getDataFinal().before(reserva.getDataInicial())) {
-            return false;
-        }
 
-        EstudanteDAO estudanteDAO = new EstudanteDAO();
-        SalaDAO salaDAO = new SalaDAO();
+    /**
+     * Este método solicita para a classe SalaBO uma lista de salas
+     * disponíveis dado um dia e uma hora.
+     * Exibe em um Select<html> as salas
+     * @return List<Integer> listaSalasDisponiveis
+     */
+    public List<Integer> viewSalasDisponiveis() {
+        List<Integer> listaSalasDisponiveis = new ArrayList<>();
+        //implement the code here!
+        return listaSalasDisponiveis;
+    }
 
-        Date dataInicial = CalendarioHelper.parseDateTime(this.strDataInicial, this.strHorario);
-        this.reserva.setDataInicial(dataInicial);
-
-        EstudantePO estudante = estudanteDAO.obter(this.reserva.getEstudante().getRa());
-        this.reserva.setEstudante(estudante);
-
-        SalaPO sala = salaDAO.obter(this.reserva.getSala().getId());
-        this.reserva.setSala(sala);
-
-        if (!reservaDAO.insert(reserva)) {
-            FacesMessage msg = new FacesMessage("Fail", "Welcome :" + getReserva().getEstudante().getRa());
-            FacesContext.getCurrentInstance().addMessage(null, msg);
-            return false;
-        }
-
-        FacesMessage msg = new FacesMessage("Successful", "Welcome :" + getReserva().getEstudante().getRa());
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-        return true;
+    /**
+     * Este método deve solicitar para a classe SalaBO um hash contendo 
+     * as salas que possuem horários disponíveis dado um dia. 
+     * Ele é quem deve setar o css dos botões.
+     */
+    public void updateBotoesAtivosPorDia() {
+        
+        //hash com key inteiro (hora -> 8, 9, 10...) e boolean se existe alguma sala disponível ou todas estão reservas.
+        HashMap<Integer, Boolean> salasDisponiveis = SalaBO.getStatusDaSala(this.dataInicial);
+        
+        //chamar método alteraEstilo ou implementar o método aqui
+        
     }
 
     public void alterarEstilo() {
@@ -178,57 +187,7 @@ public class ReservaMB implements Serializable {
             parametroUmAtivo = "btn btn-success";
         }
     }
-
-    public void setHoraInicial(int hora) {
-        if (horariosReserva.size() < 2) {
-            this.horariosReserva.add(hora);
-            System.out.println("Setou hora: " + hora);
-        } else {
-            FacesContext facesContext = FacesContext.getCurrentInstance();
-            facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Limite de reserva de duas horas atingido", null));
-        }
-    }
-
-    /**
-     * verifica as salas disponiveis
-     *
-     * @return List<Integer> listaSalasDisponiveis
-     */
-    public List<Integer> getSalasDisponiveis() {
-        List<Integer> listaSalasDisponiveis = new ArrayList<>();
-        for (int i = 1; i < 9; i++) {
-            if (!(idSalasOcupadas.contains(i))) {
-                listaSalasDisponiveis.add(i);
-            }
-
-        }
-        return listaSalasDisponiveis;
-    }
-
-    /**
-     *
-     * @param date
-     * @return List<String> listaReservasAtivasPorDia
-     */
-    public List<String> getHorasAtivasPorDia(Date date) {
-        List<ReservaPO> listaTodasReservas = reservaDAO.list();
-        List<String> listaReservasAtivasPorDia = new ArrayList<>();
-        String diaProcurado = formatoEmDia.format(date);
-        String diaAtivo;
-        idSalasOcupadas = new ArrayList<>();
-
-        for (ReservaPO reserva : listaTodasReservas) {
-            diaAtivo = formatoEmDia.format(reserva.getDataInicial());
-            if (diaProcurado.equals(diaAtivo)) {
-                if (reserva.getStatus().equals(new StatusPO("ativa"))) {
-                    listaReservasAtivasPorDia.add(formatoEmHoras.format(reserva.getDataInicial()).substring(0, 2));
-                }
-                idSalasOcupadas.add(reserva.getId());
-            }
-        }
-        return listaReservasAtivasPorDia;
-    }
-
+    //O que isto faz??? @author comenatar pls
     private static HashMap<SalaPO, ReservaPO> clone(HashMap<SalaPO, ReservaPO> map) {
         HashMap<SalaPO, ReservaPO> copy = new HashMap();
 
@@ -244,7 +203,6 @@ public class ReservaMB implements Serializable {
 
     /**
      * Método descreve um dia
-     *
      * @param date uma data válida
      * @return um hashmap que associa data ao conjunto de salas, cada qual com
      * sua reserva
@@ -272,35 +230,6 @@ public class ReservaMB implements Serializable {
             dataTemReservas.get(reserva.getDataInicial()).put(reserva.getSala(), reserva);
         }
         return dataTemReservas;
-    }
-
-    /**
-     * Método que faz uma consulta no BD com uma data e um id da strSala,
-     * retorna uma lista de reservas correspondente.
-     *
-     * @param data Date
-     * @param sala
-     * @param idSala int
-     * @return List<Reserva> reservas
-     */
-    public static List<ReservaPO> getReservas(Date data, SalaPO sala) {
-        ReservaDAO reservaDAO = new ReservaDAO();
-        List<ReservaPO> allReservas = reservaDAO.list();
-        List<ReservaPO> reservas = new ArrayList<>();
-
-        if (allReservas != null) {
-            for (ReservaPO r : allReservas) {
-                if (r.getDataInicial().equals(data) && r.getSala().equals(sala)) {;
-                    reservas.add(r);
-                }
-            }
-        }
-
-        if (reservas.isEmpty()) {
-            return allReservas;
-        }
-
-        return reservas;
     }
 
     public boolean cancelarReserva(ReservaPO reserva) {

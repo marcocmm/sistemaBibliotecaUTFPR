@@ -1,14 +1,24 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.edu.utfpr.biblioteca.salas.model;
 
-/**
- *
- * @author marco
- */
+import br.edu.utfpr.biblioteca.salas.model.dao.EstudanteDAO;
+
+
 public class EstudanteBO {
+
+    static EstudanteDAO daoEstudante = null;
+    
+    public EstudanteBO() {
+        daoEstudante = new EstudanteDAO();
+    }
+    
+    /**
+     * Este método chama o método autenticar do dao 
+     * @param ra
+     * @param senha
+     * @return boolean
+     */
+    public static boolean autenticar(String ra, String senha){
+        return daoEstudante.autenticar(ra, senha);
+    }
     
 }
