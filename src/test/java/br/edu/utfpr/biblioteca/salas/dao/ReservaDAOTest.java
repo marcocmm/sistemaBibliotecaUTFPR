@@ -14,21 +14,7 @@ import br.edu.utfpr.biblioteca.salas.model.entity.SalaPO;
 import java.util.Date;
 import java.util.List;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertTrue;
+import org.junit.Test;
 
 /**
  *
@@ -39,6 +25,7 @@ public class ReservaDAOTest {
     public ReservaDAOTest() {
     }
 
+    @Test
     public void reservar() {
         SalaDAO salaDao = new SalaDAO();
         SalaPO sala = salaDao.obter(2);

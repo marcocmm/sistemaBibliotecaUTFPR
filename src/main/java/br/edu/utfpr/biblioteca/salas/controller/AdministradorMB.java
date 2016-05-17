@@ -1,21 +1,15 @@
 package br.edu.utfpr.biblioteca.salas.controller;
 
-import br.edu.utfpr.biblioteca.salas.model.ReservaBO;
-import br.edu.utfpr.biblioteca.salas.model.dao.AdministradorDAO;
-import br.edu.utfpr.biblioteca.salas.model.dao.SalaDAO;
+import br.edu.utfpr.biblioteca.salas.model.Dia;
+import br.edu.utfpr.biblioteca.salas.model.bo.ReservaBO;
 import tools.CalendarioHelper;
 import br.edu.utfpr.biblioteca.salas.model.entity.AdministradorPO;
 import br.edu.utfpr.biblioteca.salas.model.entity.ReservaPO;
-import br.edu.utfpr.biblioteca.salas.model.entity.SalaPO;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import javax.inject.Named;
 import javax.faces.bean.ManagedBean;
 import javax.faces.view.ViewScoped;
-import tools.ReservasHorario;
 
 @Named(value = "administradorMB")
 @ViewScoped
@@ -23,10 +17,10 @@ import tools.ReservasHorario;
 public class AdministradorMB {
 
     private AdministradorPO administrador;
-    private final AdministradorDAO administradorDAO;
 
-    private Date data;
+    private Date dataSelecionada;
     private Dia diaSelecionado;
+
     private int idSala;
     private String strSala;
     private String strHorario;
@@ -37,7 +31,7 @@ public class AdministradorMB {
      */
     public AdministradorMB() {
         this.strSala = "Sala";
-        this.administradorDAO = new AdministradorDAO();
+        this.administrador = new AdministradorPO(null, null);
     }
 
     public AdministradorPO getAdministrador() {
@@ -48,12 +42,12 @@ public class AdministradorMB {
         this.administrador = administrador;
     }
 
-    public Date getData() {
-        return data;
+    public Date getDataSelecionada() {
+        return dataSelecionada;
     }
 
-    public void setData(Date data) {
-        this.data = data;
+    public void setDataSelecionada(Date dataSelecionada) {
+        this.dataSelecionada = dataSelecionada;
     }
 
     public Dia getDiaSelecionado() {
@@ -101,55 +95,11 @@ public class AdministradorMB {
     }
 
     public List<Dia> getMes(Date date) {
-        List<Date> dias = CalendarioHelper.getCalendario(date);
-        List<Dia> mes = new ArrayList<>();
-        for (Date dia : dias) {
-            mes.add(descreverDia(dia));
-        }
-        return mes;
+        return ReservaBO.getMes(date);
     }
 
     public List<Dia> getMes() {
         return getMes(new Date());
-    }
-
-    public List<ReservasHorario> getReservasHorario() {
-        SalaDAO salaDAO = new SalaDAO();
-        SalaPO sala = salaDAO.obter(this.idSala);
-        List<ReservasHorario> reservasHorario = new ArrayList();
-        for (ReservaPO reserva : ReservaBO.getReservas(this.data, this.idSala)) {
-            ReservasHorario rH = new ReservasHorario();
-            rH.setHorario(String.valueOf(CalendarioHelper.getDatabaseDateFormat(reserva.getDataInicial())));
-            rH.setStatus(String.valueOf(reserva.getStatus().getName()));
-            reservasHorario.add(rH);
-        }
-
-        return reservasHorario;
-    }
-
-    public Dia descreverDia(Date date) {
-        HashMap<Date, HashMap<SalaPO, ReservaPO>> dataTemReservas = ReservaMB.descreverDia(date);
-
-        Dia dia;
-        Hora horario;
-
-        dia = new Dia();
-        dia.setData(date);
-
-        for (Map.Entry<Date, HashMap<SalaPO, ReservaPO>> horaTemReserva : dataTemReservas.entrySet()) {
-            Date hora = horaTemReserva.getKey();
-            HashMap<SalaPO, ReservaPO> salaTemReservas = horaTemReserva.getValue();
-
-            horario = new Hora();
-            horario.setHora(hora);
-            for (Map.Entry<SalaPO, ReservaPO> salaTemReserva : salaTemReservas.entrySet()) {
-                ReservaPO reserva = salaTemReserva.getValue();
-
-                horario.addReserva(reserva);
-            }
-            dia.addHora(horario);
-        }
-        return dia;
     }
 
     public void gerarGraficos() {

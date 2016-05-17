@@ -18,7 +18,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
-
 @Entity(name = "Reserva")
 @Table(name = "Reservas")
 @NamedQueries({
@@ -43,12 +42,14 @@ public class ReservaPO implements Serializable {
     @Column(name = "data_inicial")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataInicial;
+    private transient String strDataInicial;
 
     @Basic(optional = false)
     @NotNull
     @Column(name = "data_final")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataFinal;
+    private transient String strDataFinal;
 
     @JoinColumn(name = "estudante_ra", referencedColumnName = "ra")
     @ManyToOne(optional = false)
@@ -133,6 +134,22 @@ public class ReservaPO implements Serializable {
 
     public void setStatus(StatusPO status) {
         this.status = status;
+    }
+
+    public void setStrDataFinal(String strDataFinal) {
+        this.strDataFinal = strDataFinal;
+    }
+
+    public void setStrDataInicial(String strDataInicial) {
+        this.strDataInicial = strDataInicial;
+    }
+
+    public String getStrDataFinal() {
+        return strDataFinal;
+    }
+
+    public String getStrDataInicial() {
+        return strDataInicial;
     }
 
     @Override
