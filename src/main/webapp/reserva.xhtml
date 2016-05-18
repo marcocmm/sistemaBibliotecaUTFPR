@@ -16,13 +16,13 @@
         <h:form>
 
             <p:growl id="growl" sticky="true" showDetail="true"/>
-            <p:wizard flowListener="#{reservaMB.onFlowProcess}">
+            <p:wizard flowListener="#{reservaRapidaMB.onFlowProcess}">
                 <p:tab id="personal" title="Data e Horário">
                     <p:panel header="Personal Details">
                         <p:messages />
                              <p:growl id="msgs" showDetail="true" />
                         <h:panelGrid columns="3" cellpadding="5">
-                            <p:calendar id="inline" value="#{reservaMB.date}" mode="inline">
+                            <p:calendar id="inline" value="#{reservaMB.reserva.dataInicial}" mode="inline">
                                 <p:ajax event="dateSelect" listener="#{statusBotoes.parametrosBotoes}" update="msgs" />
                             </p:calendar>
                             <div class="nav-tabs">
@@ -58,7 +58,7 @@
                         </h:panelGrid>
                         <h:panelGrid columns="2" columnClasses="label, value">
                             <h:outputText value="Data Inicial: *" />
-                            <p:inputText value="#{reservaMB.strDataInicial}" type="date" required="true" label="DataInicial"/>
+                            <p:inputText value="#{reservaMB.reserva.strDataInicial}" type="date" required="true" label="DataInicial"/>
                             <h:outputText value="Horário: *" />
                             <p:inputText value="#{reservaMB.strHorario}" type="time" required="true" label="Horário"/>
 

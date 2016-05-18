@@ -27,12 +27,12 @@
                 <p:messages autoUpdate="true" />
 
                 <p:outputLabel for="popup" value="Data:" />
-                <p:calendar id="popup" value="#{administradorMB.data}" />
+                <p:calendar id="popup" value="#{administradorMB.dataSelecionada}" />
 
                 <h:outputLabel value="Sala"/>
                 <p:selectOneMenu id="sala" value="Salas" effect="fold" editable="true">
                     <f:selectItem itemLabel="Selecione uma sala" itemValue="#{administradorMB.idSala}" />
-                    <f:selectItems value="#{salaMB.salas}" />
+                    <f:selectItems value="#{administradorMB.salas}" />
                 </p:selectOneMenu>
                 <!--
                                 <p:commandButton value="Consultar">

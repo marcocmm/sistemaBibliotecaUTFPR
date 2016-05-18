@@ -26,37 +26,13 @@
             <p:messages />
             <p:growl id="msgs" showDetail="true" />
             <h:panelGrid columns="3" cellpadding="5">
-                <p:calendar id="inline" value="#{reservaMB.dataInicial}" mode="inline">
-                    <p:ajax event="dateSelect" listener="#{reservaMB.onDateSelect}" update="msgs,horariosReservas"/>
+                <p:calendar id="inline" value="#{reservaRapidaMB.reserva.dataInicial}" mode="inline">
+                    <p:ajax event="dateSelect" listener="#{reservaRapidaMB.onDateSelect}" update="msgs,horariosReservas"/>
                 </p:calendar>
                 <h:panelGrid id="horariosReservas" columns="3">
-                    <b:buttonGroup> 
-                        <b:buttonGroup orientation="vertical" > 
-
-                            <b:button class="btn btn-small" disabled="true" value="       ."/>
-                            <b:commandButton value="08h às 09h" class="#{reservaMB.statusBotao.getParametro(0,0)}" disabled="#{reservaMB.statusBotao.getParametro(0,1)}" actionListener="#{reservaMB.hora(8)}"  ></b:commandButton>
-                            <b:commandButton value="09h às 10h" class="#{reservaMB.statusBotao.getParametro(1,0)}" disabled="#{reservaMB.statusBotao.getParametro(1,1)}" actionListener="#{reservaMB.hora(9)}"  ></b:commandButton>
-                            <b:commandButton value="10h às 11h" class="#{reservaMB.statusBotao.getParametro(2,0)}" disabled="#{reservaMB.statusBotao.getParametro(2,1)}" actionListener="#{reservaMB.hora(10)}" ></b:commandButton>
-                            <b:commandButton value="11h às 12h" class="#{reservaMB.statusBotao.getParametro(3,0)}" disabled="#{reservaMB.statusBotao.getParametro(3,1)}" actionListener="#{reservaMB.hora(11)}" ></b:commandButton>
-
-                        </b:buttonGroup>
-                        <b:buttonGroup orientation="vertical" >
-                            <b:commandButton  value="12h às 13h" class="#{reservaMB.statusBotao.getParametro(4,0)}" disabled="#{reservaMB.statusBotao.getParametro(4,1)}" actionListener="#{reservaMB.hora(12)}" ></b:commandButton>
-                            <b:commandButton  value="13h às 14h" class="#{reservaMB.statusBotao.getParametro(5,0)}" disabled="#{reservaMB.statusBotao.getParametro(5,1)}" actionListener="#{reservaMB.hora(13)}" ></b:commandButton>
-                            <b:commandButton  value="14h às 15h" class="#{reservaMB.statusBotao.getParametro(6,0)}" disabled="#{reservaMB.statusBotao.getParametro(6,1)}" actionListener="#{reservaMB.hora(14)}" ></b:commandButton>
-                            <b:commandButton  value="15h às 16h" class="#{reservaMB.statusBotao.getParametro(7,0)}" disabled="#{reservaMB.statusBotao.getParametro(7,1)}" actionListener="#{reservaMB.hora(15)}" ></b:commandButton>
-                            <b:commandButton  value="16h às 17h" class="#{reservaMB.statusBotao.getParametro(8,0)}" disabled="#{reservaMB.statusBotao.getParametro(8,1)}" actionListener="#{reservaMB.hora(16)}" ></b:commandButton>
-
-                        </b:buttonGroup>
-                        <b:buttonGroup orientation="vertical" > 
-                            <b:commandButton  value="17h às 18h" class="#{reservaMB.statusBotao.getParametro(9,0)}"  disabled="#{reservaMB.statusBotao.getParametro(9,1)}"  actionListener="#{reservaMB.hora(12)}" ></b:commandButton>
-                            <b:commandButton  value="18h às 19h" class="#{reservaMB.statusBotao.getParametro(10,0)}" disabled="#{reservaMB.statusBotao.getParametro(10,1)}" actionListener="#{reservaMB.hora(13)}" ></b:commandButton>
-                            <b:commandButton  value="19h às 20h" class="#{reservaMB.statusBotao.getParametro(11,0)}" disabled="#{reservaMB.statusBotao.getParametro(11,1)}" actionListener="#{reservaMB.hora(14)}" ></b:commandButton>
-                            <b:commandButton  value="20h às 21h" class="#{reservaMB.statusBotao.getParametro(12,0)}" disabled="#{reservaMB.statusBotao.getParametro(12,1)}" actionListener="#{reservaMB.hora(15)}" ></b:commandButton>
-                            <b:commandButton  value="21h às 22h" class="#{reservaMB.statusBotao.getParametro(13,0)}" disabled="#{reservaMB.statusBotao.getParametro(13,1)}" actionListener="#{reservaMB.hora(16)}" ></b:commandButton>
-                        </b:buttonGroup>
-
-                    </b:buttonGroup>
+                    <p:dataGrid var="botao" value="#{reservaRapidaMB.botoesHorario}" columns="2" rows="10" paginator="false" id="horarios">
+                        <h:commandButton value="#{botao.value}" class="#{botao.classe}" disabled="#{botao.disabled}" actionListener="#{reservaRapidaMB.setHora(botao.hora)}"/>
+                    </p:dataGrid>
                 </h:panelGrid>
             </h:panelGrid>
         </h:form>
@@ -82,8 +58,9 @@
 
         <ui:include src="footer.xhtml"/>
 
-        <a href="faces/reservaRapida.xhtml">Reserva Zica</a>
-        <a href="faces/calendarioAdministrador.xhtml">Calendário Adm</a>
+        <a href="faces/reserva.xhtml">Reserva Lenta</a>
+        <a href="faces/calendarioAdministrador.xhtml">Calendário Administrador</a>
+        <a href="faces/calendarioEstudante.xhtml">Calendário Estudante</a>
 
     </h:body>
 </html>

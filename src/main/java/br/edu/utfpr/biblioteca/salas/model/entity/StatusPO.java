@@ -24,12 +24,12 @@ import javax.xml.bind.annotation.XmlRootElement;
  *
  * @author romulo
  */
-@Entity(name = "Status")
+@Entity(name = "StatusPO")
 @Table(name = "Status")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Status.findAll", query = "SELECT s FROM Status s"),
-    @NamedQuery(name = "Status.findByName", query = "SELECT s FROM Status s WHERE s.name = :name")})
+    @NamedQuery(name = "StatusPO.findAll", query = "SELECT s FROM StatusPO s"),
+    @NamedQuery(name = "StatusPO.findByName", query = "SELECT s FROM StatusPO s WHERE s.name = :name")})
 public class StatusPO implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -89,7 +89,7 @@ public class StatusPO implements Serializable {
 
     @Override
     public String toString() {
-        return "br.edu.utfpr.biblioteca.salas.controller.Status[ name=" + name + " ]";
+        return "br.edu.utfpr.biblioteca.salas.controller.StatusPO[ name=" + name + " ]";
     }
 
 }

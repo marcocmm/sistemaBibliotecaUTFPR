@@ -24,10 +24,10 @@
                 <div class="login">
                     <h:form> 
                         <h:outputLabel for="username" value="Username:" />
-                        <p:inputText id="username" value="#{estudanteMB.login}" required="true" label="username" />
+                        <p:inputText id="username" value="#{estudanteMB.estudante.ra}" required="true" label="username" />
 
                         <h:outputLabel for="password" value="Password:" />
-                        <p:password id="password" value="#{estudanteMB.senha}" required="true" label="password" />
+                        <p:password id="password" value="#{estudanteMB.estudante.senha}" required="true" label="password" />
 
                         <p:growl id="growl" sticky="true" showDetail="true" life="3000" />                    
                         <p:commandButton value="Login" update="growl" actionListener="#{estudanteMB.autenticar}"

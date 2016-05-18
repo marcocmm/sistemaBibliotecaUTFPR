@@ -5,6 +5,7 @@
  */
 package br.edu.utfpr.biblioteca.salas.controller;
 
+import br.edu.utfpr.biblioteca.salas.model.bo.EstudanteBO;
 import br.edu.utfpr.biblioteca.salas.model.dao.EstudanteDAO;
 import br.edu.utfpr.biblioteca.salas.model.entity.EstudantePO;
 import javax.faces.application.FacesMessage;
@@ -25,39 +26,17 @@ import javax.servlet.http.HttpSession;
 public class EstudanteMB {
 
     private EstudantePO estudante;
-    private final EstudanteDAO estudanteDAO;
-
-    private String login;
-    private String senha;
 
     public EstudanteMB() {
-        this.estudanteDAO = new EstudanteDAO();
+        this.estudante = new EstudantePO(null, null, null, null);
     }
 
     public EstudantePO getEstudante() {
         return estudante;
     }
 
-    public void setEstudante(String login, String senha) {
-        this.estudante = new EstudantePO(login, null, senha, null);
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-        System.out.println("Login:" + login);
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
-        System.out.println("Senha:" + senha);
+    public void setEstudante(EstudantePO estudantePO) {
+        this.estudante = estudantePO;
     }
 
     /**
@@ -67,6 +46,7 @@ public class EstudanteMB {
      * @param estudante
      */
     private void cadastrarEstudante(EstudantePO estudante) {
+        EstudanteDAO estudanteDAO = new EstudanteDAO();
         if (alreadyCadastrado(estudante)) {
             return;
         }
@@ -83,25 +63,8 @@ public class EstudanteMB {
      * @return boolean
      */
     private boolean alreadyCadastrado(EstudantePO estudante) {
+        EstudanteDAO estudanteDAO = new EstudanteDAO();
         return estudanteDAO.obter(estudante) != null;
-    }
-
-    /**
-     * Método que verifica a validade dos dados inseridos pelo úsuario através
-     * de uma consulta ao banco de dados, retornando true ou false.
-     *
-     * @param login
-     * @param senha
-     * @return boolean (false caso não exista no banco e true caso exista)
-     */
-    public static boolean isAutentico(String login, String senha) {
-        EstudanteDAO dao = new EstudanteDAO();
-        EstudantePO estudante = dao.obter(login);
-        if (estudante == null) {
-
-            return false;
-        }
-        return estudante.getSenha().equals(senha);
     }
 
     /**
@@ -117,12 +80,10 @@ public class EstudanteMB {
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
         session.setAttribute("estudanteLogado", this.estudante);
 
-        setEstudante(login, senha);
-
         if (!alreadyCadastrado(this.estudante)) {
             message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Estudante não cadastrado!", null);
         }
-        loggedIn = isAutentico(login, senha);
+        loggedIn = EstudanteBO.autenticar(this.estudante.getRa(), this.estudante.getSenha());
 
         if (loggedIn) {
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bem-Vindo!", estudante.getNome());

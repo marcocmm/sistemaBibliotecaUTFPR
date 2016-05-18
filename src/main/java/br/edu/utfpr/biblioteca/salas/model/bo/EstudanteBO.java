@@ -1,11 +1,11 @@
-package br.edu.utfpr.biblioteca.salas.model;
+package br.edu.utfpr.biblioteca.salas.model.bo;
 
 import br.edu.utfpr.biblioteca.salas.model.dao.EstudanteDAO;
 
 
 public class EstudanteBO {
 
-    static EstudanteDAO daoEstudante = null;
+    static EstudanteDAO daoEstudante;
     
     public EstudanteBO() {
         daoEstudante = new EstudanteDAO();
@@ -20,5 +20,7 @@ public class EstudanteBO {
     public static boolean autenticar(String ra, String senha){
         return daoEstudante.autenticar(ra, senha);
     }
+    
+    
     
 }
