@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import br.edu.utfpr.biblioteca.salas.model.ReservasHorario;
+import java.util.Date;
 
 public class SalaBO {
 
@@ -18,7 +19,7 @@ public class SalaBO {
      * @param data
      * @return HashMap<Integer, Boolean>
      */
-    public static HashMap<Integer, Boolean> getStatusDaSala(String data) {
+    public static HashMap<Integer, Boolean> getStatusDaSala(Date date) {
         //implement the code here!
         return null;
     }
@@ -31,7 +32,7 @@ public class SalaBO {
      * @param hora
      * @return List<SalaPO>
      */
-    public static List<SalaPO> getSalasDisponiveis(String data, String hora) {
+    public static List<SalaPO> getSalasDisponiveis(Date date) {
         //implement the code here!
         return null;
     }
