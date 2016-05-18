@@ -5,6 +5,9 @@
  */
 package tools;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -224,4 +227,39 @@ public class CalendarioHelper {
         return databaseDateFormat;
     }
 
+    /**
+     * Este método recebe data, hora, minutos, segundos e converte para Date
+     * @param data
+     * @param hora
+     * @param minutos
+     * @param segundos
+     * @return Date
+     */
+    public static Date parseDate(String data, String hora, String minutos, String segundos) {
+        if (data == null || data.equals("")) {
+            return null;
+        }
+        Date date = null;
+        try {
+            DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+            String d = data + " " + hora + ":" + minutos + ":" + segundos;
+            date = (java.util.Date) formatter.parse(d);
+        } catch (ParseException e) {
+            System.err.println("Erro: " + e.getMessage());
+        }
+        return date;
+    }
+
+    /**
+     * Este método recebe uma data tipo Date e converte para string (dd/MM/yyyy HH:mm:ss)
+     * @param data
+     * @return String(dd/MM/yyyy HH:mm:ss) 
+     */
+    public static String getData(Date data) {
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+
+        String reportDate = df.format(data);
+
+        return reportDate;
+    }
 }
