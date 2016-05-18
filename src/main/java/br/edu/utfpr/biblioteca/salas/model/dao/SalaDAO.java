@@ -1,7 +1,9 @@
 package br.edu.utfpr.biblioteca.salas.model.dao;
 
 import br.edu.utfpr.biblioteca.salas.model.entity.SalaPO;
-import java.sql.Date;
+import br.edu.utfpr.biblioteca.salas.model.entity.ReservaPO;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -16,8 +18,10 @@ public class SalaDAO extends GenericDAO<SalaPO> {
      * @param date 
      * @return Definir o melhor!
      */
-    public void getStatusDaSala(Date date){
-       //implement the code here!
+    public List<ReservaPO> getStatusDaSala(Date date){
+       List<ReservaPO> list = new ArrayList();
+       
+   return list;
     }
     /**
      * SELECT que busca no bd as salas disponíveis dado uma data com horário.
