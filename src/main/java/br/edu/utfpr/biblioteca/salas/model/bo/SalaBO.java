@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import br.edu.utfpr.biblioteca.salas.model.ReservasHorario;
+import br.edu.utfpr.biblioteca.salas.model.entity.StatusPO;
 import java.util.Date;
 
 public class SalaBO {
@@ -14,27 +15,42 @@ public class SalaBO {
     /**
      * Este método recebe uma data e retorna um hash contendo uma chave horário,
      * set true se alguma sala possui reservas disponíves ou false se todas as
-     * salas estão reservasdas naquele horário.
+     * salas estão reservadas naquele horário.
      *
-     * @param data
+     * @param date
      * @return HashMap<Integer, Boolean>
      */
     public static HashMap<Integer, Boolean> getStatusDaSala(Date date) {
-        //implement the code here!
-        return null;
+        SalaDAO salaDAO = new SalaDAO();
+        List<ReservaPO> list = salaDAO.getStatusDaSala(date);
+        HashMap<Integer, Boolean> hashList = null;
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getStatus().equals(new StatusPO("inativa"))) {
+                hashList.put(list.get(i).getId(), false);
+
+            }
+            if (list.get(i).getStatus().equals(new StatusPO("ativa"))) {
+                hashList.put(list.get(i).getId(), true);
+
+            }
+
+        }
+        //O método não está fazendo oque deveria porque a documentação está confusa.
+        return hashList;
     }
 
     /**
      * Este método recebe uma data e uma hora, e deve retornar uma lista de
      * salas disponíveis.
      *
-     * @param data
-     * @param hora
+     * @param date
      * @return List<SalaPO>
      */
     public static List<SalaPO> getSalasDisponiveis(Date date) {
-        //implement the code here!
-        return null;
+        SalaDAO salaDAO = new SalaDAO();
+        List<SalaPO> list = salaDAO.getSalasDisponiveis(date);
+
+        return list;
     }
 
     @Deprecated
