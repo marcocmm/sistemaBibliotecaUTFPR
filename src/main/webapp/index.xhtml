@@ -11,10 +11,6 @@
         <title>Sislib</title>
 
         <f:metadata name="description" content="Este site tem como objetivo informar sobre os serviços prestados pela empresa Eleve."></f:metadata>
-
-        <!--<h:outputStylesheet library="css" name="bootstrap.css"/>-->
-        <!--<h:outputStylesheet library="css" name="bootstrap-responsive.css"/>-->
-
         <ui:include src="header.xhtml"/>
 
 
@@ -24,11 +20,13 @@
         <h:form>
 
             <p:messages />
-            <p:growl id="msgs" showDetail="true" />
             <h:panelGrid columns="3" cellpadding="5">
-                <p:calendar id="inline" value="#{reservaRapidaMB.reserva.dataInicial}" mode="inline">
-                    <p:ajax event="dateSelect" listener="#{reservaRapidaMB.onDateSelect}" update="msgs,horariosReservas"/>
-                </p:calendar>
+                <p:growl id="msgs" showDetail="true" />
+                <h:panelGrid columns="3" cellpadding="5">
+                    <p:calendar id="inline" value="#{reservaRapidaMB.reserva.dataInicial}" mode="inline">
+                        <p:ajax event="dateSelect" listener="#{reservaRapidaMB.onDateSelect}" update="msgs,horariosReservas"/>
+                    </p:calendar>
+                </h:panelGrid>
                 <h:panelGrid id="horariosReservas" columns="3">
                     <p:dataGrid var="botao" value="#{reservaRapidaMB.botoesHorario}" columns="2" rows="10" paginator="false" id="horarios">
                         <h:commandButton value="#{botao.value}" class="#{botao.classe}" disabled="#{botao.disabled}" actionListener="#{reservaRapidaMB.setHora(botao.hora)}"/>

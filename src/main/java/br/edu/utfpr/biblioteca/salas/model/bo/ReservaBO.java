@@ -79,7 +79,6 @@ public class ReservaBO {
         }
         return dataTemReservas;
     }
-
     public static Dia descreverDia(Date date) {
         HashMap<Date, HashMap<SalaPO, ReservaPO>> dataTemReservas = descreverDiaHash(date);
 

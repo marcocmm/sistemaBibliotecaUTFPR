@@ -71,6 +71,7 @@ public class ReservaRapidaMB implements Serializable {
 
     public void onDateSelect(SelectEvent event) {
         Date data = (Date) event.getObject();
+     //   this.botoesHorario = ReservaBO.
         FacesContext facesContext = FacesContext.getCurrentInstance();
         facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected", formatoEmDia.format(event.getObject())));
         
