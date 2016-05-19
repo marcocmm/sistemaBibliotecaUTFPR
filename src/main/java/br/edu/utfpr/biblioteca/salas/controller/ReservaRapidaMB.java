@@ -74,11 +74,16 @@ public class ReservaRapidaMB implements Serializable {
      //   this.botoesHorario = ReservaBO.
         FacesContext facesContext = FacesContext.getCurrentInstance();
         facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected", formatoEmDia.format(event.getObject())));
-        
     }
 
+    /**
+     * Este método solicita para a classe SalaBO uma lista de salas disponíveis
+     * dado um dia e uma hora. Exibe em um Select<html> as salas
+     *
+     * @return
+     */
     public List<SalaPO> getSalasDisponiveis() {
-        return SalaBO.getSalasDisponiveis(hora, hora);
+        return SalaBO.getSalasDisponiveis(this.reserva.getDataInicial());
     }
 
     public String onFlowProcess(FlowEvent event) {
@@ -137,18 +142,6 @@ public class ReservaRapidaMB implements Serializable {
     }
 
     /**
-     * Este método solicita para a classe SalaBO uma lista de salas disponíveis
-     * dado um dia e uma hora. Exibe em um Select<html> as salas
-     *
-     * @return List<Integer> listaSalasDisponiveis
-     */
-    public List<Integer> viewSalasDisponiveis() {
-        List<Integer> listaSalasDisponiveis = new ArrayList<>();
-        //implement the code here!
-        return listaSalasDisponiveis;
-    }
-
-    /**
      * Este método deve solicitar para a classe SalaBO um hash contendo as salas
      * que possuem horários disponíveis dado um dia. Ele é quem deve setar o css
      * dos botões.
@@ -156,7 +149,7 @@ public class ReservaRapidaMB implements Serializable {
     public void updateBotoesAtivosPorDia() {
 
         //hash com key inteiro (hora -> 8, 9, 10...) e boolean se existe alguma sala disponível ou todas estão reservas.
-        HashMap<Integer, Boolean> salasDisponiveis = SalaBO.getStatusDaSala(this.reserva.getDataInicial().toString());
+        HashMap<Integer, Boolean> salasDisponiveis = SalaBO.getStatusDaSala(this.reserva.getDataInicial());
 
         //chamar método alteraEstilo ou implementar o método aqui
     }

@@ -1,32 +1,61 @@
 package br.edu.utfpr.biblioteca.salas.model.dao;
 
+import br.edu.utfpr.biblioteca.salas.model.entity.ReservaPO;
 import br.edu.utfpr.biblioteca.salas.model.entity.SalaPO;
-import java.sql.Date;
-import java.util.List;
+import br.edu.utfpr.biblioteca.salas.model.entity.StatusPO;
+import java.util.Date;
 
+import java.util.List;
+import javax.persistence.Query;
 
 public class SalaDAO extends GenericDAO<SalaPO> {
 
     public SalaDAO() {
         super(SalaPO.class);
     }
-    
+
     /**
-     *  SELECT que busca no bd o status da sala dado uma data
-     * @param date 
-     * @return Definir o melhor!
+     * SELECT que busca no bd o status da sala dado uma data
+     *
+     * @param dataInicial
+     * @param dataFinal
+     * @return List<ReservaPO>
      */
-    public void getStatusDaSala(Date date){
-       //implement the code here!
+    public List<ReservaPO> getStatusDaSala(Date dataInicial, Date dataFinal) {
+        Query q = entityManager.createQuery("SELECT e.sala FROM Reserva e WHERE e.status = :status AND e.dataInicial > :dataInicial AND e.dataFinal < :dataFinal");
+        q.setParameter("status", new StatusPO("inativa"));
+        q.setParameter("dataInicial", dataInicial);
+        q.setParameter("dataFinal", dataFinal);
+        List<ReservaPO> reservas = null;
+        try {
+            reservas = (List<ReservaPO>) q.getResultList();
+        } catch (Exception ex) {
+            System.err.println("Erro SQL: " + ex.getMessage());
+            return null;
+        }
+        return reservas;
     }
+
     /**
      * SELECT que busca no bd as salas disponíveis dado uma data com horário.
-     * @param dataHora
+     *
+     * @param dataInicial
+     * @param dataFinal
      * @return List<SalaPO>
      */
-    public List<SalaPO> getSalasDisponiveis(Date dataHora){//Talvez teremos problemas em buscar com este tipo de data/hora
-        //implement the code here!
-        return null;
+    public List<SalaPO> getSalasDisponiveis(Date dataInicial, Date dataFinal) {
+        Query q = entityManager.createQuery("SELECT e.sala FROM Reserva e WHERE e.status = :status AND e.dataInicial > :dataInicial AND e.dataFinal < :dataFinal");
+        q.setParameter("status", new StatusPO("inativa"));
+        q.setParameter("dataInicial", dataInicial);
+        q.setParameter("dataFinal", dataFinal);
+        List<SalaPO> salas = null;
+        try {
+            salas = (List<SalaPO>) q.getResultList();
+        } catch (Exception ex) {
+            System.err.println("Erro SQL: " + ex.getMessage());
+            return null;
+        }
+        return salas;
     }
 
 }
@@ -59,4 +88,4 @@ public List<Notas> listaNotas(){
             return null;
         }
     }    
-*/
+ */
