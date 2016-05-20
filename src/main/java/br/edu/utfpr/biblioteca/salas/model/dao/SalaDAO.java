@@ -7,6 +7,7 @@ import java.util.Date;
 
 import java.util.List;
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaQuery;
 
 public class SalaDAO extends GenericDAO<SalaPO> {
 
@@ -58,6 +59,21 @@ public class SalaDAO extends GenericDAO<SalaPO> {
         return salas;
     }
 
+    /**
+     * SELECT que busca a quantidade de salas no bd
+     * @return int
+     */
+    public int getQuantidadeSalas() {
+        Query q = entityManager.createNativeQuery("SELECT count(*) FROM Salas");
+        long qtdeSalas = 0;
+
+        try{
+            qtdeSalas = (long) q.getSingleResult();
+        }catch (Exception ex){
+            return 0;
+        }
+        return (int) qtdeSalas;
+    }
 }
 
 /* EXEMPLO DE DAO 

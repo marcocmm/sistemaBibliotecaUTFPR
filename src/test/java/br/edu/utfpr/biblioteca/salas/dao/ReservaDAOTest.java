@@ -13,8 +13,10 @@ import br.edu.utfpr.biblioteca.salas.model.entity.ReservaPO;
 import br.edu.utfpr.biblioteca.salas.model.entity.SalaPO;
 import java.util.Date;
 import java.util.List;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
+import tools.CalendarioHelper;
 
 /**
  *
@@ -24,6 +26,7 @@ public class ReservaDAOTest {
 
     public ReservaDAOTest() {
     }
+        ReservaDAO dao = new ReservaDAO();
 
 //    @Test
     public void reservar() {
@@ -38,7 +41,6 @@ public class ReservaDAOTest {
     }
 
     public void listar() {
-        ReservaDAO dao = new ReservaDAO();
         List<ReservaPO> reservas = dao.list();
         Date date;
         for (ReservaPO reserva : reservas) {
@@ -47,6 +49,13 @@ public class ReservaDAOTest {
             date = reserva.getDataInicial();
         }
         assertTrue(reservas != null);
+    }
+//    @Test
+    public void test_getQuantidadeReservas(){
+        Date dataInicial = CalendarioHelper.parseDate("10-05-2016", "09", "00", "00");
+        int qtde = dao.getQuantidadeReservas(dataInicial);
+        System.out.println("QTDE:" + qtde);
+        assertEquals(qtde, 3);
     }
 
 }

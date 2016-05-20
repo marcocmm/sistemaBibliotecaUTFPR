@@ -44,12 +44,18 @@ public class SalaDAOTest {
         assertFalse(reservas.isEmpty());
     }
 
-//    @Test
+    @Test
     public void test_getSalaDisponiveis() {
-        Date dI = CalendarioHelper.parseDate("10-05-2016", "07", "00", "00");
+        Date dI = CalendarioHelper.parseDate("10-05-2016", 7, 0, 0);
         Date dF = CalendarioHelper.parseDate("10-05-2016", "23", "00", "00");
         List<SalaPO> salas = dao.getSalasDisponiveis(dI, dF);
         assertFalse(salas.isEmpty());
+    }
+    
+//    @Test
+    public void test_getQuantidadeSalas(){
+        int qtde = dao.getQuantidadeSalas();
+        assertEquals(qtde, 5);
     }
 
 }

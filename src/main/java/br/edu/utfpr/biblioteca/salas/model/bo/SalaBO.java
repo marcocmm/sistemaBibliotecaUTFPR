@@ -34,7 +34,6 @@ public class SalaBO {
             }
             if (list.get(i).getStatus().equals(new StatusPO("ativa"))) {
                 hashList.put(list.get(i).getId(), true);
-
             }
 
         }

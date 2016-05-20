@@ -249,6 +249,21 @@ public class CalendarioHelper {
         }
         return date;
     }
+    
+    public static Date parseDate(String data, int hora, int minutos, int segundos) {
+        if (data == null || data.equals("")) {
+            return null;
+        }
+        Date date = null;
+        try {
+            DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+            String d = data + " " + hora + ":" + minutos + ":" + segundos;
+            date = (java.util.Date) formatter.parse(d);
+        } catch (ParseException e) {
+            System.err.println("Erro: " + e.getMessage());
+        }
+        return date;
+    }
 
     /**
      * Este método recebe uma data tipo Date e converte para string (dd/MM/yyyy HH:mm:ss)
@@ -257,6 +272,19 @@ public class CalendarioHelper {
      */
     public static String getData(Date data) {
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+
+        String reportDate = df.format(data);
+
+        return reportDate;
+    }
+    
+    /**
+     * Este método recebe uma data tipo Date e converte para string (yyyy-MM-dd HH:mm:ss)
+     * @param data
+     * @return String(yyyy-MM-dd HH:mm:ss) 
+     */
+    public static String getDataToDataBase(Date data) {
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         String reportDate = df.format(data);
 

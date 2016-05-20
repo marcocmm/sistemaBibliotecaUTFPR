@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
-
+import tools.CalendarioHelper;
 
 public class ReservaDAO extends GenericDAO<ReservaPO> implements Serializable {
 
@@ -16,7 +16,9 @@ public class ReservaDAO extends GenericDAO<ReservaPO> implements Serializable {
     }
 
     /**
-     * Insere uma reserva no BD, retorna true se a reserva foi inserida e false se houver algum erro.
+     * Insere uma reserva no BD, retorna true se a reserva foi inserida e false
+     * se houver algum erro.
+     *
      * @param reserva
      * @return Boolean
      */
@@ -48,7 +50,9 @@ public class ReservaDAO extends GenericDAO<ReservaPO> implements Serializable {
     }
 
     /**
-     * Dado uma data, este método retorna um lista de reservas correspondente a data.
+     * Dado uma data, este método retorna um lista de reservas correspondente a
+     * data.
+     *
      * @param date
      * @return List<ReservaPO>
      */
@@ -58,16 +62,36 @@ public class ReservaDAO extends GenericDAO<ReservaPO> implements Serializable {
         q.setParameter("dataInicial", date);
         return q.getResultList();
     }
-    
+
     /**
-     * Dado uma data, este método retorna um lista de reservas correspondente a data e o id da sala.
+     * Dado uma data, este método retorna um lista de reservas correspondente a
+     * data e o id da sala.
+     *
      * @param date
      * @return List<ReservaPO>
      */
-    public List<ReservaPO> listByDateAndIdSala(Date date, int idSala){
+    public List<ReservaPO> listByDateAndIdSala(Date date, int idSala) {
         Query q = entityManager.createQuery("SELECT e FROM Reserva e WHERE e.dataInicial=:dataInicial AND e.id =:idSala");
         q.setParameter("dataInicial", date);
         q.setParameter("idSala", idSala);
         return q.getResultList();
     }
+
+    /**
+     * SELECT busca a quantidade de reservas exitentes dado dia, mes, ano, e hora inicial
+     * @param data
+     * @return int
+     */
+    public int getQuantidadeReservas(Date data) {
+        String strData = CalendarioHelper.getDataToDataBase(data);
+        Query q = entityManager.createNativeQuery("SELECT count(*) FROM Reservas r WHERE r.data_inicial = '" + strData + "'");
+        long qtdeReservas = 0;
+        try {
+            qtdeReservas = (long) q.getSingleResult();
+        } catch (Exception ex) {
+            return 0;
+        }
+        return (int) qtdeReservas;
+    }
+
 }

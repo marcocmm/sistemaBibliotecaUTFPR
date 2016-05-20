@@ -7,6 +7,8 @@ package br.edu.utfpr.biblioteca.salas.dao;
 
 import br.edu.utfpr.biblioteca.salas.model.dao.EstudanteDAO;
 import br.edu.utfpr.biblioteca.salas.model.entity.EstudantePO;
+import static org.junit.Assert.assertTrue;
+import org.junit.Test;
 
 /**
  *
@@ -27,6 +29,12 @@ public class EstudanteDAOTest {
             dao.insert(new EstudantePO("1137612", "Rômulo", "senha", "emil@email.com"));
             
         }
+    }
+//    @Test
+    public void test_autenticar(){
+        EstudanteDAO dao = new EstudanteDAO();
+        boolean d = dao.autenticar("1136631", "baiser");
+        assertTrue(d);
     }
 
 }
