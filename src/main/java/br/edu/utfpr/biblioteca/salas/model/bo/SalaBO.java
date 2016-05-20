@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import br.edu.utfpr.biblioteca.salas.model.ReservasHorario;
 import br.edu.utfpr.biblioteca.salas.model.entity.StatusPO;
+import br.edu.utfpr.biblioteca.salas.tools.CalendarioHelper;
 import java.util.Date;
 
 public class SalaBO {
@@ -23,7 +24,10 @@ public class SalaBO {
      * @return HashMap<Integer, Boolean>
      */
     public static HashMap<Integer, Boolean> getStatusDaSala(Date date) {
-        List<ReservaPO> list = salaDAO.getStatusDaSala(date);
+        Date dataInicial = CalendarioHelper.parseDate("10-05-2016", "07", "00", "00");
+        Date dataFinal = CalendarioHelper.parseDate("10-05-2016", "23", "00", "00");
+        SalaDAO salaDAO = new SalaDAO();
+        List<ReservaPO> list = salaDAO.getStatusDaSala(dataInicial, dataFinal);
         HashMap<Integer, Boolean> hashList = null;
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).getStatus().equals(new StatusPO("inativa"))) {
@@ -48,15 +52,18 @@ public class SalaBO {
      * @return List<SalaPO>
      */
     public static List<SalaPO> getSalasDisponiveis(Date date) {
-        List<SalaPO> list = salaDAO.getSalasDisponiveis(date);
-
+        Date dataInicial = CalendarioHelper.parseDate("10-05-2016", "07", "00", "00");
+        Date dataFinal = CalendarioHelper.parseDate("10-05-2016", "23", "00", "00");
+        SalaDAO salaDAO = new SalaDAO();
+        List<SalaPO> list = salaDAO.getSalasDisponiveis(dataInicial, dataFinal);
         return list;
     }
 
     /**
      * Contaca o dao para obter uma sala dado um id.
+     *
      * @param id
-     * @return 
+     * @return
      */
     public static SalaPO obter(int id) {
         return salaDAO.obter(id);
