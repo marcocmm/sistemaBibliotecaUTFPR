@@ -110,11 +110,4 @@ public class ReservaBO {
         return mes;
     }
 
-    public static boolean reservar(ReservaPO reserva) {
-        if (reservaDAO.isReservado(reserva)) {
-            return false;
-        }
-        return reservaDAO.insert(reserva);
-    }
-
 }

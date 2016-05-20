@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import br.edu.utfpr.biblioteca.salas.model.ReservasHorario;
+import static br.edu.utfpr.biblioteca.salas.model.bo.ReservaBO.reservaDAO;
 import br.edu.utfpr.biblioteca.salas.model.entity.StatusPO;
 import br.edu.utfpr.biblioteca.salas.tools.CalendarioHelper;
 import java.util.Date;
@@ -26,19 +27,15 @@ public class SalaBO {
     public static HashMap<Integer, Boolean> getStatusDaSala(Date date) {
         Date dataInicial = CalendarioHelper.parseDate("10-05-2016", "07", "00", "00");
         Date dataFinal = CalendarioHelper.parseDate("10-05-2016", "23", "00", "00");
-        SalaDAO salaDAO = new SalaDAO();
         List<ReservaPO> list = salaDAO.getStatusDaSala(dataInicial, dataFinal);
         HashMap<Integer, Boolean> hashList = null;
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).getStatus().equals(new StatusPO("inativa"))) {
                 hashList.put(list.get(i).getId(), false);
-
             }
             if (list.get(i).getStatus().equals(new StatusPO("ativa"))) {
                 hashList.put(list.get(i).getId(), true);
-
             }
-
         }
         //O método não está fazendo oque deveria porque a documentação está confusa.
         return hashList;
@@ -54,7 +51,6 @@ public class SalaBO {
     public static List<SalaPO> getSalasDisponiveis(Date date) {
         Date dataInicial = CalendarioHelper.parseDate("10-05-2016", "07", "00", "00");
         Date dataFinal = CalendarioHelper.parseDate("10-05-2016", "23", "00", "00");
-        SalaDAO salaDAO = new SalaDAO();
         List<SalaPO> list = salaDAO.getSalasDisponiveis(dataInicial, dataFinal);
         return list;
     }
@@ -93,13 +89,13 @@ public class SalaBO {
      * o erro (login, sala já reservada) para mandar a mensagem para o usuário.
      */
     public static boolean reservarSala(ReservaPO reserva) {
-        //implement the code here!
-        //Construir o Objeto ReservaPO com os parâmentros
-        //Chamar o insert do dao após as verificaçoes serem aprovasdas...
-        if (!EstudanteBO.autenticar(reserva.getEstudante().getRa(), reserva.getEstudante().getSenha())) {//verificando a autenticação do estudante
+        if (!EstudanteBO.autenticar(reserva.getEstudante().getRa(), reserva.getEstudante().getSenha())) {
             return false;
         }
-        return false;
+        if (reservaDAO.isReservado(reserva)) {
+            return false;
+        }
+        return reservaDAO.insert(reserva);
     }
 
     public HashMap<String, String> getSalas() {

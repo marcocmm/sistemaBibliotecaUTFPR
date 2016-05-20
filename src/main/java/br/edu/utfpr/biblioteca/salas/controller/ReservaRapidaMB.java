@@ -116,11 +116,6 @@ public class ReservaRapidaMB implements Serializable {
      * @return
      */
     public void reservarSala() {
-        if (EstudanteBO.autenticar(this.reserva.getEstudante().getRa(), this.reserva.getEstudante().getSenha())) {
-            FacesMessage msg = new FacesMessage("Credenciais inválidas");
-            FacesContext.getCurrentInstance().addMessage(null, msg);
-        }
-
         Date dataInicial = CalendarioHelper.parseDateTime(this.reserva.getStrDataInicial(), this.hora);
         this.reserva.setDataInicial(dataInicial);
 
@@ -140,7 +135,7 @@ public class ReservaRapidaMB implements Serializable {
         SalaPO sala = SalaBO.obter(this.reserva.getSala().getId());
         this.reserva.setSala(sala);
 
-        boolean canReservar = ReservaBO.reservar(reserva);
+        boolean canReservar = SalaBO.reservarSala(reserva);
 
         if (!canReservar) {
             FacesMessage msg = new FacesMessage("Fail", "Welcome :" + getReserva().getEstudante().getRa());

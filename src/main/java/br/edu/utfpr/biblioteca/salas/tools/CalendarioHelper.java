@@ -281,6 +281,7 @@ public class CalendarioHelper {
 
     /**
      * Este método recebe data, hora, minutos, segundos e converte para Date
+     *
      * @param data
      * @param hora
      * @param minutos
@@ -303,9 +304,11 @@ public class CalendarioHelper {
     }
 
     /**
-     * Este método recebe uma data tipo Date e converte para string (dd/MM/yyyy HH:mm:ss)
+     * Este método recebe uma data tipo Date e converte para string (dd/MM/yyyy
+     * HH:mm:ss)
+     *
      * @param data
-     * @return String(dd/MM/yyyy HH:mm:ss) 
+     * @return String(dd/MM/yyyy HH:mm:ss)
      */
     public static String getData(Date data) {
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -313,5 +316,18 @@ public class CalendarioHelper {
         String reportDate = df.format(data);
 
         return reportDate;
+    }
+
+    /**
+     * Incrementa a data em uma hora.
+     *
+     * @param date
+     * @return uma data com hora acrescida em uma unidade
+     */
+    public static Date addHora(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.HOUR_OF_DAY, 1);
+        return calendar.getTime();
     }
 }
