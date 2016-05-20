@@ -16,9 +16,10 @@ public class SalaBO {
     public static SalaDAO salaDAO = new SalaDAO();
 
     /**
-     * Este método recebe uma data e retorna um hash contendo uma chave horário,
-     * set true se alguma sala possui reservas disponíves ou false se todas as
-     * salas estão reservadas naquele horário.
+     * Este método recebe uma data(Composta de dia e hora) e retorna um hash
+     * contendo uma chave horário e valor boolean. O valor é true se alguma sala
+     * não possui reserva nesse horario ou false se todas as salas estão reservadas
+     * naquele horário.
      *
      * @param date
      * @return HashMap<Integer, Boolean>

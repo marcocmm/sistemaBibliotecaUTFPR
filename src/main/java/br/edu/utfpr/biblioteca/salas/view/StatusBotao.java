@@ -10,9 +10,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-<<<<<<< HEAD:src/main/java/br/edu/utfpr/biblioteca/salas/model/StatusBotao.java
-public  class StatusBotao implements Serializable {
-=======
+
 /**
  * Armazena os atributos css de todos os botões da interface
  * @author romulo
@@ -20,7 +18,6 @@ public  class StatusBotao implements Serializable {
  */
 @Deprecated
 public class StatusBotao implements Serializable {
->>>>>>> 44abbee6475b02075d1ac8351e18bb5ee718c092:src/main/java/br/edu/utfpr/biblioteca/salas/view/StatusBotao.java
 
     private final String parametroUmAtivo;
     private final String parametroUmDesativado;
