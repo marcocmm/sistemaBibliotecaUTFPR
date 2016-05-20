@@ -35,7 +35,7 @@ public class SalaDAO extends GenericDAO<SalaPO> {
         }
         return reservas;
     }
-
+    
     /**
      * SELECT que busca no bd as salas disponíveis dado uma data com horário.
      *
