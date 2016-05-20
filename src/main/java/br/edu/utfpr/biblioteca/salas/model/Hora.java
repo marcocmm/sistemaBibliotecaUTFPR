@@ -11,6 +11,8 @@ import java.util.Date;
 import java.util.List;
 
 /**
+ * Mapeia as tuplas hora das folhas da biblioteca. Cada tupla possui uma lista
+ * de reservas, de tamanho máximo uma para cada sala.
  *
  * @author romulo
  */

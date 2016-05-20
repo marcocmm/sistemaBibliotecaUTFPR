@@ -11,15 +11,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import tools.CalendarioHelper;
+import br.edu.utfpr.biblioteca.salas.tools.CalendarioHelper;
 
 public class ReservaBO {
 
-    public static ReservaDAO daoReservas;
-
-    public ReservaBO() {
-        daoReservas = new ReservaDAO();
-    }
+    public static ReservaDAO reservaDAO = new ReservaDAO();
 
     /**
      * Método que faz uma consulta no BD com uma data e um id da strSala,
@@ -31,7 +27,7 @@ public class ReservaBO {
      * @return List<Reserva> reservas
      */
     public static List<ReservaPO> getReservas(Date data, int idSala) {
-        return daoReservas.listByDateAndIdSala(data, idSala);
+        return reservaDAO.listByDateAndIdSala(data, idSala);
     }
 
     //O que isto faz??? @author comenatar pls
@@ -112,6 +108,13 @@ public class ReservaBO {
             mes.add(descreverDia(dia));
         }
         return mes;
+    }
+
+    public static boolean reservar(ReservaPO reserva) {
+        if (reservaDAO.isReservado(reserva)) {
+            return false;
+        }
+        return reservaDAO.insert(reserva);
     }
 
 }

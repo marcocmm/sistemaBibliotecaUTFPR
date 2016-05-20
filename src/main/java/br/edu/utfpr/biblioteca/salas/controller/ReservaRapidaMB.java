@@ -1,10 +1,13 @@
 package br.edu.utfpr.biblioteca.salas.controller;
 
-import br.edu.utfpr.biblioteca.salas.model.BotaoHorario;
+import br.edu.utfpr.biblioteca.salas.model.bo.EstudanteBO;
+import br.edu.utfpr.biblioteca.salas.model.bo.ReservaBO;
+import br.edu.utfpr.biblioteca.salas.view.BotaoHorario;
 import br.edu.utfpr.biblioteca.salas.model.bo.SalaBO;
 import br.edu.utfpr.biblioteca.salas.model.entity.EstudantePO;
 import br.edu.utfpr.biblioteca.salas.model.entity.ReservaPO;
 import br.edu.utfpr.biblioteca.salas.model.entity.SalaPO;
+import br.edu.utfpr.biblioteca.salas.tools.CalendarioHelper;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -69,6 +72,11 @@ public class ReservaRapidaMB implements Serializable {
         return this.reserva;
     }
 
+    /**
+     * Método executado ao ser escolhida uma data no calendário
+     *
+     * @param event
+     */
     public void onDateSelect(SelectEvent event) {
         Date data = (Date) event.getObject();
         FacesContext facesContext = FacesContext.getCurrentInstance();
@@ -85,6 +93,12 @@ public class ReservaRapidaMB implements Serializable {
         return SalaBO.getSalasDisponiveis(this.reserva.getDataInicial());
     }
 
+    /**
+     * Responsável pelo wizard. Cada clique em next executa este método.
+     *
+     * @param event
+     * @return
+     */
     public String onFlowProcess(FlowEvent event) {
         return event.getNewStep();
     }
@@ -102,42 +116,39 @@ public class ReservaRapidaMB implements Serializable {
      * @return
      */
     public void reservarSala() {
+        if (EstudanteBO.autenticar(this.reserva.getEstudante().getRa(), this.reserva.getEstudante().getSenha())) {
+            FacesMessage msg = new FacesMessage("Credenciais inválidas");
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+        }
 
-        //Alterar este método para chamar SalaBO.reservarSala passando os parâmentros corretos já realizado as verificações necessárias.
-//        if (!EstudanteMB.isAutentico(this.reserva.getEstudante().getRa(), this.reserva.getEstudante().getSenha())) {
-//            FacesMessage msg = new FacesMessage("Credenciais inválidas", "Welcome :" + getReserva().getEstudante().getRa());
-//            FacesContext.getCurrentInstance().addMessage(null, msg);
-//            return false;
-//        }
-//
-//        if (reserva.getDataFinal().equals(reserva.getDataInicial())) {
-//            return false;
-//        }
-//        if (reserva.getDataFinal().before(reserva.getDataInicial())) {
-//            return false;
-//        }
-//
-//        EstudanteDAO estudanteDAO = new EstudanteDAO();
-//        SalaDAO salaDAO = new SalaDAO();
-//
-//        Date dataInicial = CalendarioHelper.parseDateTime(this.dataInicial, this.hora);
-//        this.reserva.setDataInicial(dataInicial);
-//
-//        EstudantePO estudante = estudanteDAO.obter(this.reserva.getEstudante().getRa());
-//        this.reserva.setEstudante(estudante);
-//
-//        SalaPO sala = salaDAO.obter(this.reserva.getSala().getId());
-//        this.reserva.setSala(sala);
-//
-//        if (!reservaDAO.insert(reserva)) {
-//            FacesMessage msg = new FacesMessage("Fail", "Welcome :" + getReserva().getEstudante().getRa());
-//            FacesContext.getCurrentInstance().addMessage(null, msg);
-//            return false;
-//        }
-//
-//        FacesMessage msg = new FacesMessage("Successful", "Welcome :" + getReserva().getEstudante().getRa());
-//        FacesContext.getCurrentInstance().addMessage(null, msg);
-//        return true;
+        Date dataInicial = CalendarioHelper.parseDateTime(this.reserva.getStrDataInicial(), this.hora);
+        this.reserva.setDataInicial(dataInicial);
+
+        if (reserva.getDataFinal().equals(reserva.getDataInicial())) {
+            FacesMessage msg = new FacesMessage("Data Final igual data inicial");
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+        }
+        if (reserva.getDataFinal().before(reserva.getDataInicial())) {
+            FacesMessage msg = new FacesMessage("Data Final deve ser posterior à data inicial");
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+        }
+
+        EstudantePO estudante;
+        estudante = EstudanteBO.obterEstudante(this.reserva.getEstudante().getRa());
+        this.reserva.setEstudante(estudante);
+
+        SalaPO sala = SalaBO.obter(this.reserva.getSala().getId());
+        this.reserva.setSala(sala);
+
+        boolean canReservar = ReservaBO.reservar(reserva);
+
+        if (!canReservar) {
+            FacesMessage msg = new FacesMessage("Fail", "Welcome :" + getReserva().getEstudante().getRa());
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+        } else {
+            FacesMessage msg = new FacesMessage("Successful", "Welcome :" + getReserva().getEstudante().getRa());
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+        }
     }
 
     /**
