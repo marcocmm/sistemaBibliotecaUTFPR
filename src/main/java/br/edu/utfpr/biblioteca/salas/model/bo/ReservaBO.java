@@ -11,15 +11,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import tools.CalendarioHelper;
+import br.edu.utfpr.biblioteca.salas.tools.CalendarioHelper;
 
 public class ReservaBO {
 
-    public static ReservaDAO daoReservas;
-
-    public ReservaBO() {
-        daoReservas = new ReservaDAO();
-    }
+    public static ReservaDAO reservaDAO = new ReservaDAO();
 
     /**
      * Método que faz uma consulta no BD com uma data e um id da strSala,
@@ -31,7 +27,7 @@ public class ReservaBO {
      * @return List<Reserva> reservas
      */
     public static List<ReservaPO> getReservas(Date data, int idSala) {
-        return daoReservas.listByDateAndIdSala(data, idSala);
+        return reservaDAO.listByDateAndIdSala(data, idSala);
     }
 
     //O que isto faz??? @author comenatar pls
@@ -61,7 +57,7 @@ public class ReservaBO {
 
         List<SalaPO> salas = salaDAO.list();
         List<Date> horarios = CalendarioHelper.getHorarios(date);
-        List<ReservaPO> reservas = dao.listByDate(date);
+        List<ReservaPO> reservas = dao.listByDateTime(date);
 
         HashMap<SalaPO, ReservaPO> salaTemReservas = new HashMap();
         HashMap<Date, HashMap<SalaPO, ReservaPO>> dataTemReservas = new HashMap();
@@ -79,7 +75,6 @@ public class ReservaBO {
         }
         return dataTemReservas;
     }
-
     public static Dia descreverDia(Date date) {
         HashMap<Date, HashMap<SalaPO, ReservaPO>> dataTemReservas = descreverDiaHash(date);
 

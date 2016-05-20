@@ -20,7 +20,7 @@
                 <p:tab id="personal" title="Data e Horário">
                     <p:panel header="Personal Details">
                         <p:messages />
-                             <p:growl id="msgs" showDetail="true" />
+                        <p:growl id="msgs" showDetail="true" />
                         <h:panelGrid columns="3" cellpadding="5">
                             <p:calendar id="inline" value="#{reservaMB.reserva.dataInicial}" mode="inline">
                                 <p:ajax event="dateSelect" listener="#{statusBotoes.parametrosBotoes}" update="msgs" />
@@ -63,9 +63,9 @@
                             <p:inputText value="#{reservaMB.strHorario}" type="time" required="true" label="Horário"/>
 
                         </h:panelGrid>
-                      
+
                     </p:panel>
-                    
+
                 </p:tab>
 
                 <p:tab id="address" title="Sala">
@@ -113,7 +113,7 @@
                             <h:panelGrid columns="2" columnClasses="label, value">
                                 <h:outputText value="RA: " />
                                 <h:outputText value="#{reservaMB.reserva.estudante.ra}" styleClass="outputLabel"/>
-                            
+
                             </h:panelGrid>
                         </h:panelGrid>
 

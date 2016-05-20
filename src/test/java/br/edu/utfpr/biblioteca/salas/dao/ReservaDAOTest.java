@@ -11,12 +11,11 @@ import br.edu.utfpr.biblioteca.salas.model.dao.SalaDAO;
 import br.edu.utfpr.biblioteca.salas.model.entity.EstudantePO;
 import br.edu.utfpr.biblioteca.salas.model.entity.ReservaPO;
 import br.edu.utfpr.biblioteca.salas.model.entity.SalaPO;
+import br.edu.utfpr.biblioteca.salas.tools.CalendarioHelper;
 import java.util.Date;
 import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import org.junit.Test;
-import tools.CalendarioHelper;
 
 /**
  *

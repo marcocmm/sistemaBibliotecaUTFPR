@@ -3,13 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.edu.utfpr.biblioteca.salas.model;
+package br.edu.utfpr.biblioteca.salas.view;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+
+/**
+ * Armazena os atributos css de todos os botões da interface
+ * @author romulo
+ * @deprecated Utilizar BotaoHorario ao invés desta classe
+ */
+@Deprecated
 public class StatusBotao implements Serializable {
 
     private final String parametroUmAtivo;
@@ -30,7 +37,7 @@ public class StatusBotao implements Serializable {
         numeroBotao = 0;
         parametrosBotoes = new ArrayList<>();
     }
-
+    
     public void setParametrosBotoes(List<String> horasAtivas, Date date) {
         String hora;
         for (int i = 8; i < 22; i++) {

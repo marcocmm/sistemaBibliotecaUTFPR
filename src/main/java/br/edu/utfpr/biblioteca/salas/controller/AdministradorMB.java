@@ -2,7 +2,7 @@ package br.edu.utfpr.biblioteca.salas.controller;
 
 import br.edu.utfpr.biblioteca.salas.model.Dia;
 import br.edu.utfpr.biblioteca.salas.model.bo.ReservaBO;
-import tools.CalendarioHelper;
+import br.edu.utfpr.biblioteca.salas.tools.CalendarioHelper;
 import br.edu.utfpr.biblioteca.salas.model.entity.AdministradorPO;
 import br.edu.utfpr.biblioteca.salas.model.entity.ReservaPO;
 import java.util.Date;

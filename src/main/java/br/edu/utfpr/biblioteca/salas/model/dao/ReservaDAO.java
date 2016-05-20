@@ -2,12 +2,15 @@ package br.edu.utfpr.biblioteca.salas.model.dao;
 
 import br.edu.utfpr.biblioteca.salas.model.entity.ReservaPO;
 import br.edu.utfpr.biblioteca.salas.model.entity.StatusPO;
+import br.edu.utfpr.biblioteca.salas.tools.CalendarioHelper;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
-import tools.CalendarioHelper;
+
+
+
 
 public class ReservaDAO extends GenericDAO<ReservaPO> implements Serializable {
 
@@ -56,7 +59,7 @@ public class ReservaDAO extends GenericDAO<ReservaPO> implements Serializable {
      * @param date
      * @return List<ReservaPO>
      */
-    public List<ReservaPO> listByDate(Date date) {
+    public List<ReservaPO> listByDateTime(Date date) {
         Query q = entityManager.createQuery("SELECT e FROM " + ReservaPO.class.getSimpleName() + " e "
                 + "WHERE e.dataInicial=:dataInicial");
         q.setParameter("dataInicial", date);
@@ -78,7 +81,9 @@ public class ReservaDAO extends GenericDAO<ReservaPO> implements Serializable {
     }
 
     /**
-     * SELECT busca a quantidade de reservas exitentes dado dia, mes, ano, e hora inicial
+     * SELECT busca a quantidade de reservas exitentes dado dia, mes, ano, e
+     * hora inicial
+     *
      * @param data
      * @return int
      */
@@ -94,4 +99,16 @@ public class ReservaDAO extends GenericDAO<ReservaPO> implements Serializable {
         return (int) qtdeReservas;
     }
 
+    public boolean isReservado(ReservaPO reserva) {
+        try {
+            Query q = entityManager.createQuery("SELECT e FROM Reserva e WHERE e.dataInicial = :dataInicial AND e.sala = :sala AND e.status = :status");
+            q.setParameter("dataInicial", reserva.getDataInicial());
+            q.setParameter("sala", reserva.getSala());
+            q.setParameter("status", new StatusPO("ativa"));
+            q.getSingleResult();
+            return true;
+        } catch (NoResultException ex) {
+            return false;
+        }
+    }
 }

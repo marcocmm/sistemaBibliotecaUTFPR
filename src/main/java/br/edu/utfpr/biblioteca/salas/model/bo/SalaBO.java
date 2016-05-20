@@ -7,35 +7,77 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import br.edu.utfpr.biblioteca.salas.model.ReservasHorario;
+import static br.edu.utfpr.biblioteca.salas.model.bo.ReservaBO.reservaDAO;
 import br.edu.utfpr.biblioteca.salas.model.entity.StatusPO;
+import br.edu.utfpr.biblioteca.salas.tools.CalendarioHelper;
 import java.util.Date;
-import tools.CalendarioHelper;
 
 public class SalaBO {
 
+    public static SalaDAO salaDAO = new SalaDAO();
+
     /**
-     * Este método recebe uma data e retorna um hash contendo uma chave horário,
-     * set true se alguma sala possui reservas disponíves ou false se todas as
-     * salas estão reservadas naquele horário.
+     *nome do método alterado para getHorariosDisponiveis
+     * @param date
+     * @return
+     * @deprecated utilizar getHorariosDisponiveis
+     */
+    @Deprecated
+    public static HashMap<Integer, Boolean> getStatusDaSala(Date date) {
+        Date dataInicial = CalendarioHelper.parseDate("10-05-2016", "07", "00", "00");
+        Date dataFinal = CalendarioHelper.parseDate("10-05-2016", "23", "00", "00");
+//        Date dataTeste = CalendarioHelper.parseDate("10-05-2016", "08", "00", "00");
+        int full = 0;
+        List<ReservaPO> list = new ArrayList<>();
+        List<ReservaPO> listR = new ArrayList();
+        HashMap<Integer, Boolean> hashList = null;
+//        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Brazil/East"));
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getDataInicial().equals(date)) {
+                listR.add(list.get(i));
+            }
+        }
+        for (int j = 0; j < listR.size(); j++) {
+            if (listR.get(j).getStatus().equals(new StatusPO("ativa"))) {
+                full++;
+                if (full == 6) {
+                    int horario = date.getHours();
+                    hashList.put(horario, false);
+                }
+                if (j == listR.size() && full < 6) {
+                    int horario = date.getHours();
+                    hashList.put(horario, true);
+                }
+            }
+        }
+        return hashList;
+    }
+
+    /**
+     * Este método recebe uma data(Composta de dia e hora) e retorna um hash
+     * contendo uma chave horário e valor boolean. O valor é true se alguma sala
+     * não possui reserva nesse horario ou false se todas as salas estão
+     * reservadas naquele horário.
      *
      * @param date
      * @return HashMap<Integer, Boolean>
      */
-    public static HashMap<Integer, Boolean> getStatusDaSala(Date date) {
+    public static HashMap<Integer, Boolean> getHorariosDisponiveis(Date date) {
+        //executa o metodo getSalasDisp para todos horarios do dia recebido /\
+        //Na lista que retornara: pega a posição 0 se for null põe no hash(dessa função) hash.put(8,false)
+        //se não for null pega o horario e põe true
+
         Date dataInicial = CalendarioHelper.parseDate("10-05-2016", "07", "00", "00");
         Date dataFinal = CalendarioHelper.parseDate("10-05-2016", "23", "00", "00");
-        SalaDAO salaDAO = new SalaDAO();
-        List<ReservaPO> list = salaDAO.getStatusDaSala(dataInicial, dataFinal);
+        List<ReservaPO> list = new ArrayList<>();
         HashMap<Integer, Boolean> hashList = null;
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).getStatus().equals(new StatusPO("inativa"))) {
                 hashList.put(list.get(i).getId(), false);
-
             }
             if (list.get(i).getStatus().equals(new StatusPO("ativa"))) {
                 hashList.put(list.get(i).getId(), true);
             }
-
         }
         //O método não está fazendo oque deveria porque a documentação está confusa.
         return hashList;
@@ -49,17 +91,27 @@ public class SalaBO {
      * @return List<SalaPO>
      */
     public static List<SalaPO> getSalasDisponiveis(Date date) {
+        //USA O RESERVADAO - metodo listByDateTime
+        //Pega todas as reservas dado o horario
+        //verifica se dado essas reservas existe alguma sala disponivel e add as salas disponiveis na lista
         Date dataInicial = CalendarioHelper.parseDate("10-05-2016", "07", "00", "00");
         Date dataFinal = CalendarioHelper.parseDate("10-05-2016", "23", "00", "00");
-        SalaDAO salaDAO = new SalaDAO();
         List<SalaPO> list = salaDAO.getSalasDisponiveis(dataInicial, dataFinal);
-
         return list;
+    }
+
+    /**
+     * Contaca o dao para obter uma sala dado um id.
+     *
+     * @param id
+     * @return
+     */
+    public static SalaPO obter(int id) {
+        return salaDAO.obter(id);
     }
 
     @Deprecated
     public List<ReservasHorario> getReservasHorario(SalaPO salaPO) {
-        SalaDAO salaDAO = new SalaDAO();
         SalaPO sala = salaDAO.obter(salaPO);
         List<ReservasHorario> reservasHorario = new ArrayList();
 //        for (ReservaPO reserva : ReservaBO.getReservas(this.dataSelecionada, this.idSala)) {
@@ -78,27 +130,20 @@ public class SalaBO {
      * parâmetro, e faz os procedimentos para reservas uma sala, retorn true se
      * a reserva foi feita e false quando não possível realizar.
      *
-     * @param idSala
-     * @param qtdeAlunos
-     * @param ra
-     * @param senha
-     * @param data
-     * @param hora
      * @return boolean Talvez retornar um boolean fique difícil de indentificar
      * o erro (login, sala já reservada) para mandar a mensagem para o usuário.
      */
     public static boolean reservarSala(ReservaPO reserva) {
-        //implement the code here!
-        //Construir o Objeto ReservaPO com os parâmentros
-        //Chamar o insert do dao após as verificaçoes serem aprovasdas...
-        if (!EstudanteBO.autenticar(reserva.getEstudante().getRa(), reserva.getEstudante().getSenha())) {//verificando a autenticação do estudante
+        if (!EstudanteBO.autenticar(reserva.getEstudante().getRa(), reserva.getEstudante().getSenha())) {
             return false;
         }
-        return false;
+        if (reservaDAO.isReservado(reserva)) {
+            return false;
+        }
+        return reservaDAO.insert(reserva);
     }
 
     public HashMap<String, String> getSalas() {
-        SalaDAO salaDAO = new SalaDAO();
         HashMap<String, String> salas = new HashMap<>();
         for (SalaPO sala : salaDAO.list()) {
             System.out.println("Sala: " + sala.getId());

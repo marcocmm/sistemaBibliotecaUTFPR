@@ -1,4 +1,5 @@
-Reservas-- Insert de Estudantes -- 
+use bdBiblioteca;
+-- Insert de Estudantes -- 
 INSERT INTO bdBiblioteca.Estudantes (ra, nome, senha, email)
 VALUES ('1136631', 'Leonardo', 'baiser', 'lpbaiser@gmail.com'),
        ('1137112', 'Rômulo', 'meloca', 'rmmeloca@gmail.com'),

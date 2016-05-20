@@ -16,25 +16,27 @@ public class SalaDAO extends GenericDAO<SalaPO> {
     }
 
     /**
-     * SELECT que busca no bd o status da sala dado uma data
+     * está faltando coisas no método, pois uma sala inativa nao é uma sala
+     * livre e corrigir nome do método para condizer com sua função
      *
      * @param dataInicial
      * @param dataFinal
      * @return List<ReservaPO>
      */
-    public List<ReservaPO> getStatusDaSala(Date dataInicial, Date dataFinal) {
+    @Deprecated
+    public List<SalaPO> getStatusDaSala(Date dataInicial, Date dataFinal) {
         Query q = entityManager.createQuery("SELECT e.sala FROM Reserva e WHERE e.status = :status AND e.dataInicial > :dataInicial AND e.dataFinal < :dataFinal");
         q.setParameter("status", new StatusPO("inativa"));
         q.setParameter("dataInicial", dataInicial);
         q.setParameter("dataFinal", dataFinal);
-        List<ReservaPO> reservas = null;
+        List<SalaPO> salasInativas = null;
         try {
-            reservas = (List<ReservaPO>) q.getResultList();
+            salasInativas = (List<SalaPO>) q.getResultList();
         } catch (Exception ex) {
             System.err.println("Erro SQL: " + ex.getMessage());
             return null;
         }
-        return reservas;
+        return salasInativas;
     }
 
     /**
@@ -44,6 +46,7 @@ public class SalaDAO extends GenericDAO<SalaPO> {
      * @param dataFinal
      * @return List<SalaPO>
      */
+    @Deprecated
     public List<SalaPO> getSalasDisponiveis(Date dataInicial, Date dataFinal) {
         Query q = entityManager.createQuery("SELECT e.sala FROM Reserva e WHERE e.status = :status AND e.dataInicial > :dataInicial AND e.dataFinal < :dataFinal");
         q.setParameter("status", new StatusPO("inativa"));

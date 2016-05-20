@@ -1,6 +1,7 @@
 package br.edu.utfpr.biblioteca.salas.model.entity;
 
 import br.edu.utfpr.biblioteca.salas.model.dao.StatusDAO;
+import br.edu.utfpr.biblioteca.salas.tools.CalendarioHelper;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -70,7 +71,7 @@ public class ReservaPO implements Serializable {
         this.estudante = estudante;
         this.sala = sala;
         this.dataInicial = dataInicial;
-        this.dataFinal = dataInicial;//+1h
+        this.dataFinal = CalendarioHelper.addHora(this.dataInicial);
         this.quantidadeAlunos = quantidadeAlunos;
         StatusDAO statusDAO = new StatusDAO();
         StatusPO inativa = statusDAO.obter("inativa");

@@ -10,6 +10,10 @@ import java.util.Date;
 import java.util.List;
 
 /**
+ * Mapeia as folhas de papel existentes na biblioteca. Nas folhas e nesta classe
+ * constam o dia no formato Date e uma lista de horas. Cada hora é uma tupla
+ * contendo as reservas programadas para o horário em questão (no máximo 6
+ * reservas, uma para cada sala).
  *
  * @author romulo
  */
