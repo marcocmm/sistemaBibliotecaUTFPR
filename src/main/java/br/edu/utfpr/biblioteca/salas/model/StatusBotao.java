@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class StatusBotao implements Serializable {
+public  class StatusBotao implements Serializable {
 
     private final String parametroUmAtivo;
     private final String parametroUmDesativado;
@@ -30,7 +30,7 @@ public class StatusBotao implements Serializable {
         numeroBotao = 0;
         parametrosBotoes = new ArrayList<>();
     }
-
+    
     public void setParametrosBotoes(List<String> horasAtivas, Date date) {
         String hora;
         for (int i = 8; i < 22; i++) {
