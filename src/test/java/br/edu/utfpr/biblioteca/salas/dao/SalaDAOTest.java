@@ -39,8 +39,6 @@ public class SalaDAOTest {
         //Exemplo para MateusVT como pegar a data 
         Date dI = CalendarioHelper.parseDate("10-05-2016", "07", "00", "00");
         Date dF = CalendarioHelper.parseDate("10-05-2016", "23", "00", "00");
-        List<ReservaPO> reservas = dao.getStatusDaSala(dI, dF);
-        assertFalse(reservas.isEmpty());
     }
 
 //    @Test

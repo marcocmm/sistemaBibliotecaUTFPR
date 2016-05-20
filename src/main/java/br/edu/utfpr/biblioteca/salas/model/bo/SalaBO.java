@@ -15,14 +15,20 @@ import java.util.Date;
 public class SalaBO {
 
     public static SalaDAO salaDAO = new SalaDAO();
+
+    /**
+     *nome do método alterado para getHorariosDisponiveis
+     * @param date
+     * @return
+     * @deprecated utilizar getHorariosDisponiveis
+     */
     @Deprecated
     public static HashMap<Integer, Boolean> getStatusDaSala(Date date) {
         Date dataInicial = CalendarioHelper.parseDate("10-05-2016", "07", "00", "00");
         Date dataFinal = CalendarioHelper.parseDate("10-05-2016", "23", "00", "00");
 //        Date dataTeste = CalendarioHelper.parseDate("10-05-2016", "08", "00", "00");
         int full = 0;
-        SalaDAO salaDAO = new SalaDAO();
-        List<ReservaPO> list = salaDAO.getStatusDaSala(dataInicial, dataFinal);
+        List<ReservaPO> list = new ArrayList<>();
         List<ReservaPO> listR = new ArrayList();
         HashMap<Integer, Boolean> hashList = null;
 //        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Brazil/East"));
@@ -60,10 +66,10 @@ public class SalaBO {
         //executa o metodo getSalasDisp para todos horarios do dia recebido /\
         //Na lista que retornara: pega a posição 0 se for null põe no hash(dessa função) hash.put(8,false)
         //se não for null pega o horario e põe true
-        
+
         Date dataInicial = CalendarioHelper.parseDate("10-05-2016", "07", "00", "00");
         Date dataFinal = CalendarioHelper.parseDate("10-05-2016", "23", "00", "00");
-        List<ReservaPO> list = salaDAO.getStatusDaSala(dataInicial, dataFinal);
+        List<ReservaPO> list = new ArrayList<>();
         HashMap<Integer, Boolean> hashList = null;
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).getStatus().equals(new StatusPO("inativa"))) {

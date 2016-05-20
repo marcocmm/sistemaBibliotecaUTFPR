@@ -154,6 +154,9 @@ public class ReservaRapidaMB implements Serializable {
 
         //hash com key inteiro (hora -> 8, 9, 10...) e boolean se existe alguma sala disponível ou todas estão reservas.
         HashMap<Integer, Boolean> salasDisponiveis = SalaBO.getStatusDaSala(data);
+        if (salasDisponiveis == null) {
+            return;
+        }
         for (int i = 8; i <= 21; i++) {
             if (salasDisponiveis.get(i)) {
                 botoesHorario.add(new BotaoHorario(i, "verde", true));
