@@ -88,6 +88,9 @@ public class SalaBO {
      * @return List<SalaPO>
      */
     public static List<SalaPO> getSalasDisponiveis(Date date) {
+        //USA O RESERVADAO - metodo listByDate
+        //Pega todas as reservas dado o horario
+        //verifica se dado essas reservas existe alguma sala disponivel e add as salas disponiveis na lista
         Date dataInicial = CalendarioHelper.parseDate("10-05-2016", "07", "00", "00");
         Date dataFinal = CalendarioHelper.parseDate("10-05-2016", "23", "00", "00");
         SalaDAO salaDAO = new SalaDAO();
