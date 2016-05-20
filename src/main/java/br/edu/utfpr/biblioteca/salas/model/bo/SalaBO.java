@@ -57,8 +57,8 @@ public class SalaBO {
      */
     public static HashMap<Integer, Boolean> getHorariosDisponiveis(Date date) {
         //executa o metodo getSalasDisp para todos horarios do dia recebido /\
-        //Na lista que retornara: pega a posição 0 se for null poem no hash(dessa função) hash.put(8,false)
-        //se não for null pega o horario e poem true
+        //Na lista que retornara: pega a posição 0 se for null põe no hash(dessa função) hash.put(8,false)
+        //se não for null pega o horario e põe true
         
         Date dataInicial = CalendarioHelper.parseDate("10-05-2016", "07", "00", "00");
         Date dataFinal = CalendarioHelper.parseDate("10-05-2016", "23", "00", "00");
@@ -88,7 +88,7 @@ public class SalaBO {
      * @return List<SalaPO>
      */
     public static List<SalaPO> getSalasDisponiveis(Date date) {
-        //USA O RESERVADAO - metodo listByDate
+        //USA O RESERVADAO - metodo listByDateTime
         //Pega todas as reservas dado o horario
         //verifica se dado essas reservas existe alguma sala disponivel e add as salas disponiveis na lista
         Date dataInicial = CalendarioHelper.parseDate("10-05-2016", "07", "00", "00");
