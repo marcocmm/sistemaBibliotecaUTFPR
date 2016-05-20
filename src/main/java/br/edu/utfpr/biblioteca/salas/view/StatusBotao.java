@@ -3,14 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.edu.utfpr.biblioteca.salas.model;
+package br.edu.utfpr.biblioteca.salas.view;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+<<<<<<< HEAD:src/main/java/br/edu/utfpr/biblioteca/salas/model/StatusBotao.java
 public  class StatusBotao implements Serializable {
+=======
+/**
+ * Armazena os atributos css de todos os botões da interface
+ * @author romulo
+ * @deprecated Utilizar BotaoHorario ao invés desta classe
+ */
+@Deprecated
+public class StatusBotao implements Serializable {
+>>>>>>> 44abbee6475b02075d1ac8351e18bb5ee718c092:src/main/java/br/edu/utfpr/biblioteca/salas/view/StatusBotao.java
 
     private final String parametroUmAtivo;
     private final String parametroUmDesativado;

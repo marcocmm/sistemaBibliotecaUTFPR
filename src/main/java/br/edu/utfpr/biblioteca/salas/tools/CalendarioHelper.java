@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tools;
+package br.edu.utfpr.biblioteca.salas.tools;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -19,6 +19,15 @@ import java.util.List;
  */
 public class CalendarioHelper {
 
+    /**
+     * Obtém as datas do mês todo
+     *
+     * @param ano
+     * @param mes
+     * @return lista das datas do mês, incluido mês anterior, mês atual e mês
+     * posterior
+     * @deprecated Utilizar getCalendario(Date)
+     */
     @Deprecated
     public static List<Date> getCalendario(Integer ano, Integer mes) {
         int primeiroDia, ultimoDia, diaPrimeiraSemana, i;
@@ -64,6 +73,13 @@ public class CalendarioHelper {
         return calendario;
     }
 
+    /**
+     * Obtém as datas do mês todo. Observa apenas mês e ano
+     *
+     * @param date
+     * @return return lista das datas do mês, incluido mês anterior, mês atual e
+     * mês posterior
+     */
     public static List<Date> getCalendario(Date date) {
         int primeiroDia, ultimoDia, diaPrimeiraSemana, i, ano, mes;
         List<Date> calendario;
@@ -115,6 +131,14 @@ public class CalendarioHelper {
         return calendario;
     }
 
+    /**
+     * Obtém o calendário no formato de uma matriz
+     *
+     * @param ano
+     * @param mes
+     * @return
+     * @deprecated Utilizar getCalendario(Date)
+     */
     @Deprecated
     public static Date[][] getCalendarioMatriz(Integer ano, Integer mes) {
         int primeiroDia, ultimoDia, diaPrimeiraSemana, i;
@@ -166,6 +190,13 @@ public class CalendarioHelper {
         return calendario;
     }
 
+    /**
+     * Obtém uma lista de horários (Date) ordenada com os horários em que a
+     * biblioteca está em funcionamento.
+     *
+     * @param date
+     * @return
+     */
     public static List<Date> getHorarios(Date date) {
         List<Date> horarios = new ArrayList();
 
@@ -183,6 +214,12 @@ public class CalendarioHelper {
         return horarios;
     }
 
+    /**
+     * Converte uma String em Date. Formato da String: dd-mm-yyyy
+     *
+     * @param date
+     * @return
+     */
     public static Date parseDate(String date) {
         String dateParsed[] = date.split("-");
         Calendar calendar = Calendar.getInstance();
@@ -197,6 +234,13 @@ public class CalendarioHelper {
         return calendar.getTime();
     }
 
+    /**
+     * Converte uma String em Date.
+     *
+     * @param date formato dd-mm-yyy
+     * @param time formato 23:59
+     * @return
+     */
     public static Date parseDateTime(String date, String time) {
         String timeParsed[] = time.split(":");
         Calendar calendar = Calendar.getInstance();
@@ -206,6 +250,14 @@ public class CalendarioHelper {
         return calendar.getTime();
     }
 
+    /**
+     * Obtém o formato que o banco de dados utiliza para inserir datas
+     *
+     * @param date
+     * @return
+     * @deprecated Não é necessário utilizar esse método, o banco grava o objeto
+     * Date inteiro.
+     */
     @Deprecated
     public static String getDatabaseDateFormat(Date date) {
         String databaseDateFormat = "";

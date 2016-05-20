@@ -8,7 +8,6 @@ import java.util.List;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
-
 public class ReservaDAO extends GenericDAO<ReservaPO> implements Serializable {
 
     public ReservaDAO() {
@@ -16,7 +15,9 @@ public class ReservaDAO extends GenericDAO<ReservaPO> implements Serializable {
     }
 
     /**
-     * Insere uma reserva no BD, retorna true se a reserva foi inserida e false se houver algum erro.
+     * Insere uma reserva no BD, retorna true se a reserva foi inserida e false
+     * se houver algum erro.
+     *
      * @param reserva
      * @return Boolean
      */
@@ -48,7 +49,9 @@ public class ReservaDAO extends GenericDAO<ReservaPO> implements Serializable {
     }
 
     /**
-     * Dado uma data, este método retorna um lista de reservas correspondente a data.
+     * Dado uma data, este método retorna um lista de reservas correspondente a
+     * data.
+     *
      * @param date
      * @return List<ReservaPO>
      */
@@ -58,16 +61,31 @@ public class ReservaDAO extends GenericDAO<ReservaPO> implements Serializable {
         q.setParameter("dataInicial", date);
         return q.getResultList();
     }
-    
+
     /**
-     * Dado uma data, este método retorna um lista de reservas correspondente a data e o id da sala.
+     * Dado uma data, este método retorna um lista de reservas correspondente a
+     * data e o id da sala.
+     *
      * @param date
      * @return List<ReservaPO>
      */
-    public List<ReservaPO> listByDateAndIdSala(Date date, int idSala){
+    public List<ReservaPO> listByDateAndIdSala(Date date, int idSala) {
         Query q = entityManager.createQuery("SELECT e FROM Reserva e WHERE e.dataInicial=:dataInicial AND e.id =:idSala");
         q.setParameter("dataInicial", date);
         q.setParameter("idSala", idSala);
         return q.getResultList();
+    }
+
+    public boolean isReservado(ReservaPO reserva) {
+        try {
+            Query q = entityManager.createQuery("SELECT e FROM Reserva e WHERE e.dataInicial = :dataInicial AND e.sala = :sala AND e.status = :status");
+            q.setParameter("dataInicial", reserva.getDataInicial());
+            q.setParameter("sala", reserva.getSala());
+            q.setParameter("status", new StatusPO("ativa"));
+            q.getSingleResult();
+            return true;
+        } catch (NoResultException ex) {
+            return false;
+        }
     }
 }

@@ -8,10 +8,12 @@ import java.util.HashMap;
 import java.util.List;
 import br.edu.utfpr.biblioteca.salas.model.ReservasHorario;
 import br.edu.utfpr.biblioteca.salas.model.entity.StatusPO;
+import br.edu.utfpr.biblioteca.salas.tools.CalendarioHelper;
 import java.util.Date;
-import tools.CalendarioHelper;
 
 public class SalaBO {
+
+    public static SalaDAO salaDAO = new SalaDAO();
 
     /**
      * Este método recebe uma data e retorna um hash contendo uma chave horário,
@@ -54,13 +56,21 @@ public class SalaBO {
         Date dataFinal = CalendarioHelper.parseDate("10-05-2016", "23", "00", "00");
         SalaDAO salaDAO = new SalaDAO();
         List<SalaPO> list = salaDAO.getSalasDisponiveis(dataInicial, dataFinal);
-
         return list;
+    }
+
+    /**
+     * Contaca o dao para obter uma sala dado um id.
+     *
+     * @param id
+     * @return
+     */
+    public static SalaPO obter(int id) {
+        return salaDAO.obter(id);
     }
 
     @Deprecated
     public List<ReservasHorario> getReservasHorario(SalaPO salaPO) {
-        SalaDAO salaDAO = new SalaDAO();
         SalaPO sala = salaDAO.obter(salaPO);
         List<ReservasHorario> reservasHorario = new ArrayList();
 //        for (ReservaPO reserva : ReservaBO.getReservas(this.dataSelecionada, this.idSala)) {
@@ -79,12 +89,6 @@ public class SalaBO {
      * parâmetro, e faz os procedimentos para reservas uma sala, retorn true se
      * a reserva foi feita e false quando não possível realizar.
      *
-     * @param idSala
-     * @param qtdeAlunos
-     * @param ra
-     * @param senha
-     * @param data
-     * @param hora
      * @return boolean Talvez retornar um boolean fique difícil de indentificar
      * o erro (login, sala já reservada) para mandar a mensagem para o usuário.
      */
@@ -99,7 +103,6 @@ public class SalaBO {
     }
 
     public HashMap<String, String> getSalas() {
-        SalaDAO salaDAO = new SalaDAO();
         HashMap<String, String> salas = new HashMap<>();
         for (SalaPO sala : salaDAO.list()) {
             System.out.println("Sala: " + sala.getId());

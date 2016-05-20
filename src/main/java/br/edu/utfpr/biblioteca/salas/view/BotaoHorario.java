@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.edu.utfpr.biblioteca.salas.model;
+package br.edu.utfpr.biblioteca.salas.view;
 
 import java.io.Serializable;
 
 /**
- *
+ * Armazena os atributos CSS de um botão da interface.
  * @author romulo
  */
 public final class BotaoHorario implements Serializable {

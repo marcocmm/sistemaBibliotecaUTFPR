@@ -8,11 +8,10 @@ package br.edu.utfpr.biblioteca.salas.dao;
 import br.edu.utfpr.biblioteca.salas.model.dao.SalaDAO;
 import br.edu.utfpr.biblioteca.salas.model.entity.ReservaPO;
 import br.edu.utfpr.biblioteca.salas.model.entity.SalaPO;
+import br.edu.utfpr.biblioteca.salas.tools.CalendarioHelper;
 import java.util.Date;
 import java.util.List;
 import static org.junit.Assert.*;
-import org.junit.Test;
-import tools.CalendarioHelper;
 
 /**
  *
@@ -36,7 +35,7 @@ public class SalaDAOTest {
 //    }
 //    @Test
     public void test_getStatusDaSala() {
-        
+
         //Exemplo para MateusVT como pegar a data 
         Date dI = CalendarioHelper.parseDate("10-05-2016", "07", "00", "00");
         Date dF = CalendarioHelper.parseDate("10-05-2016", "23", "00", "00");
