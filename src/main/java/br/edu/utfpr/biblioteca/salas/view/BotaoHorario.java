@@ -11,18 +11,44 @@ import java.io.Serializable;
  * Armazena os atributos CSS de um botão da interface.
  * @author romulo
  */
-public class BotaoHorario implements Serializable {
+public final class BotaoHorario implements Serializable {
 
-    private final String value;
-    private final String classe;
-    private final boolean disabled;
-    private final int hora;
+    private String value;
+    private String classe;
+    private boolean disabled;
+    private int hora;
 
-    public BotaoHorario(String value, String classe, boolean disabled, int hora) {
-        this.value = value;
-        this.classe = classe;
+    public BotaoHorario(int horaInicial, String classe, boolean disabled) {
+        setValue(horaInicial);
+        setClasse(classe);
         this.disabled = disabled;
-        this.hora = hora;
+        this.hora = horaInicial;
+    }
+
+    public void setValue(int hora) {
+        String strValue = "";
+        if (hora == 8) {
+            strValue += "0" + hora + " as 0" + (hora + 1);
+        } else if (hora == 9) {
+            strValue += "0" + hora + " as " + (hora + 1);
+        } else {
+            strValue += hora + " as " + (hora + 1);
+        }
+        this.value = strValue;
+    }
+
+    public void setClasse(String classe) {
+        if (classe.equals("verde")) {
+            this.classe = "btn btn-success";
+        } else if (classe.equals("vermelho")) {
+            this.classe = "btn btn-danger";
+        } else {
+            this.classe = "ui-priority-primary";
+        }
+    }
+
+    public boolean isDisabled() {
+        return disabled;
     }
 
     public String getClasse() {

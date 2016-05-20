@@ -15,16 +15,52 @@ import java.util.Date;
 public class SalaBO {
 
     public static SalaDAO salaDAO = new SalaDAO();
+    @Deprecated
+    public static HashMap<Integer, Boolean> getStatusDaSala(Date date) {
+        Date dataInicial = CalendarioHelper.parseDate("10-05-2016", "07", "00", "00");
+        Date dataFinal = CalendarioHelper.parseDate("10-05-2016", "23", "00", "00");
+//        Date dataTeste = CalendarioHelper.parseDate("10-05-2016", "08", "00", "00");
+        int full = 0;
+        SalaDAO salaDAO = new SalaDAO();
+        List<ReservaPO> list = salaDAO.getStatusDaSala(dataInicial, dataFinal);
+        List<ReservaPO> listR = new ArrayList();
+        HashMap<Integer, Boolean> hashList = null;
+//        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Brazil/East"));
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getDataInicial().equals(date)) {
+                listR.add(list.get(i));
+            }
+        }
+        for (int j = 0; j < listR.size(); j++) {
+            if (listR.get(j).getStatus().equals(new StatusPO("ativa"))) {
+                full++;
+                if (full == 6) {
+                    int horario = date.getHours();
+                    hashList.put(horario, false);
+                }
+                if (j == listR.size() && full < 6) {
+                    int horario = date.getHours();
+                    hashList.put(horario, true);
+                }
+            }
+        }
+        return hashList;
+    }
 
     /**
-     * Este método recebe uma data e retorna um hash contendo uma chave horário,
-     * set true se alguma sala possui reservas disponíves ou false se todas as
-     * salas estão reservadas naquele horário.
+     * Este método recebe uma data(Composta de dia e hora) e retorna um hash
+     * contendo uma chave horário e valor boolean. O valor é true se alguma sala
+     * não possui reserva nesse horario ou false se todas as salas estão
+     * reservadas naquele horário.
      *
      * @param date
      * @return HashMap<Integer, Boolean>
      */
-    public static HashMap<Integer, Boolean> getStatusDaSala(Date date) {
+    public static HashMap<Integer, Boolean> getHorariosDisponiveis(Date date) {
+        //executa o metodo getSalasDisp para todos horarios do dia recebido /\
+        //Na lista que retornara: pega a posição 0 se for null põe no hash(dessa função) hash.put(8,false)
+        //se não for null pega o horario e põe true
+        
         Date dataInicial = CalendarioHelper.parseDate("10-05-2016", "07", "00", "00");
         Date dataFinal = CalendarioHelper.parseDate("10-05-2016", "23", "00", "00");
         List<ReservaPO> list = salaDAO.getStatusDaSala(dataInicial, dataFinal);
@@ -49,6 +85,9 @@ public class SalaBO {
      * @return List<SalaPO>
      */
     public static List<SalaPO> getSalasDisponiveis(Date date) {
+        //USA O RESERVADAO - metodo listByDateTime
+        //Pega todas as reservas dado o horario
+        //verifica se dado essas reservas existe alguma sala disponivel e add as salas disponiveis na lista
         Date dataInicial = CalendarioHelper.parseDate("10-05-2016", "07", "00", "00");
         Date dataFinal = CalendarioHelper.parseDate("10-05-2016", "23", "00", "00");
         List<SalaPO> list = salaDAO.getSalasDisponiveis(dataInicial, dataFinal);

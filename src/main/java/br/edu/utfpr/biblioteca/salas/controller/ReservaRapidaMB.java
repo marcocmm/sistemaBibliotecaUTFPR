@@ -43,13 +43,10 @@ public class ReservaRapidaMB implements Serializable {
         formatoEmDia = new SimpleDateFormat("dd/MM/yyyy");
 //        Aqui ficou com bug pq o método updateBotoesAtivosPorDia não retorna mais uma lista
 //        Ver se é necessário retornar uma lista ou implematar o set do css dos botões no próprio método updateBotoesAtivosPorDia
-
         this.reserva = new ReservaPO(new EstudantePO(null, null, null, null), new SalaPO(0, true), new Date(), 0);
-
         this.botoesHorario = new ArrayList<>();
-        botoesHorario.add(new BotaoHorario("8 as 9", "btn btn-success", true, 8));
-        botoesHorario.add(new BotaoHorario("9 as 10", "btn btn-success", false, 8));
-        botoesHorario.add(new BotaoHorario("10 as 11", "btn btn-success", true, 8));
+        updateBotoesAtivosPorDia(new Date());
+
     }
 
     public List<BotaoHorario> getBotoesHorario() {
@@ -79,8 +76,10 @@ public class ReservaRapidaMB implements Serializable {
      */
     public void onDateSelect(SelectEvent event) {
         Date data = (Date) event.getObject();
+        //   this.botoesHorario = ReservaBO.
         FacesContext facesContext = FacesContext.getCurrentInstance();
         facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected", formatoEmDia.format(event.getObject())));
+        updateBotoesAtivosPorDia(new Date());
     }
 
     /**
@@ -151,11 +150,17 @@ public class ReservaRapidaMB implements Serializable {
      * que possuem horários disponíveis dado um dia. Ele é quem deve setar o css
      * dos botões.
      */
-    public void updateBotoesAtivosPorDia() {
+    public void updateBotoesAtivosPorDia(Date data) {
 
         //hash com key inteiro (hora -> 8, 9, 10...) e boolean se existe alguma sala disponível ou todas estão reservas.
-        HashMap<Integer, Boolean> salasDisponiveis = SalaBO.getStatusDaSala(this.reserva.getDataInicial());
-
+        HashMap<Integer, Boolean> salasDisponiveis = SalaBO.getStatusDaSala(data);
+        for (int i = 8; i <= 21; i++) {
+            if (salasDisponiveis.get(i)) {
+                botoesHorario.add(new BotaoHorario(i, "verde", true));
+            } else {
+                botoesHorario.add(new BotaoHorario(i, "vermelho", false));
+            }
+        }
         //chamar método alteraEstilo ou implementar o método aqui
     }
 
