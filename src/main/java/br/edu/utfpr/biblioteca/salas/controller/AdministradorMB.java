@@ -90,14 +90,33 @@ public class AdministradorMB {
         this.strSala = strSala;
     }
 
+    /**
+     * Obtém uma lista com os dias do mês incluindo mês anterior, atual e
+     * posterior. Fecha um calendário.
+     *
+     * @return
+     */
     public List<Date> getCalendario() {
         return CalendarioHelper.getCalendario(new Date());
     }
 
+    /**
+     * Obtém uma lista com todos os dias do mês dado. Cada dia é uma relação de
+     * 14 horas cada qual com no máximo 6 reservas
+     *
+     * @param date
+     * @return
+     */
     public List<Dia> getMes(Date date) {
-        return ReservaBO.getMes(date);
+        return ReservaBO.descreverMes(date);
     }
 
+    /**
+     * Obtém lista com todos os dias do mês atual. Cada dia é uma relação de 14
+     * horas cada qual com no máximo 6 reservas
+     *
+     * @return
+     */
     public List<Dia> getMes() {
         return getMes(new Date());
     }

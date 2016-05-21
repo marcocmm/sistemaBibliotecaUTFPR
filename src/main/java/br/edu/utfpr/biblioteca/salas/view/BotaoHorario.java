@@ -9,6 +9,7 @@ import java.io.Serializable;
 
 /**
  * Armazena os atributos CSS de um botão da interface.
+ *
  * @author romulo
  */
 public final class BotaoHorario implements Serializable {
@@ -61,10 +62,6 @@ public final class BotaoHorario implements Serializable {
 
     public String getValue() {
         return value;
-    }
-
-    public boolean getDisabled() {
-        return disabled;
     }
 
 }

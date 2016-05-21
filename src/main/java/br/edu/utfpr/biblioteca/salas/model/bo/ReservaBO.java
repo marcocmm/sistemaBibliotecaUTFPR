@@ -12,41 +12,40 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import br.edu.utfpr.biblioteca.salas.tools.CalendarioHelper;
+import br.edu.utfpr.biblioteca.salas.tools.HashMapHelper;
 
 public class ReservaBO {
 
     public static ReservaDAO reservaDAO = new ReservaDAO();
 
     /**
-     * Método que faz uma consulta no BD com uma data e um id da strSala,
-     * retorna uma lista de reservas correspondente.
+     * Método que invoca o DAO para obter as reservas de um determinado dia-hora
+     * e sala.
      *
      * @param data Date
-     * @param sala
      * @param idSala int
-     * @return List<Reserva> reservas
+     * @return lista de reservas
      */
     public static List<ReservaPO> getReservas(Date data, int idSala) {
-        return reservaDAO.listByDateAndIdSala(data, idSala);
-    }
-
-    //O que isto faz??? @author comenatar pls
-    private static HashMap<SalaPO, ReservaPO> clone(HashMap<SalaPO, ReservaPO> map) {
-        HashMap<SalaPO, ReservaPO> copy = new HashMap();
-
-        for (Map.Entry<SalaPO, ReservaPO> entry : map.entrySet()) {
-            try {
-                copy.put((SalaPO) entry.getKey().clone(), (ReservaPO) entry.getValue().clone());
-            } catch (NullPointerException ex) {
-                copy.put((SalaPO) entry.getKey().clone(), null);
-            }
-        }
-        return copy;
+        return reservaDAO.listByDateTimeAndSala(data, idSala);
     }
 
     /**
-     * Método descreve um dia
+     * Sobrecarga de método.
      *
+     * @param data Date
+     * @param sala
+     * @return lista de reservas
+     */
+    public static List<ReservaPO> getReservas(Date data, SalaPO sala) {
+        return getReservas(data, sala.getId());
+    }
+
+    /**
+     * Método descreve um dia. Obtém um relatório de todas as reservas feitas e
+     * não feitas em todas as salas durante um dia.
+     *
+     * @see descreverDia(Date date)
      * @param date uma data válida
      * @return um hashmap que associa data ao conjunto de salas, cada qual com
      * sua reserva
@@ -67,7 +66,7 @@ public class ReservaBO {
         }
 
         for (Date horario : horarios) {
-            dataTemReservas.put(horario, clone(salaTemReservas));
+            dataTemReservas.put(horario, HashMapHelper.clone(salaTemReservas));
         }
 
         for (ReservaPO reserva : reservas) {
@@ -75,6 +74,17 @@ public class ReservaBO {
         }
         return dataTemReservas;
     }
+
+    /**
+     * Método que descreve um dia. Obtém um relatório de todas as reservas
+     * feitas e não feitas em todas as salas durante um dia.
+     *
+     * @see descreverDiaHash(Date date)
+     * @param date
+     * @return Um objeto dia composto de uma lista de horário. Cada horário
+     * contém uma lista de Reservas cujo tamanho máximo limita-se ao número de
+     * salas.
+     */
     public static Dia descreverDia(Date date) {
         HashMap<Date, HashMap<SalaPO, ReservaPO>> dataTemReservas = descreverDiaHash(date);
 
@@ -100,7 +110,14 @@ public class ReservaBO {
         return dia;
     }
 
-    public static List<Dia> getMes(Date date) {
+    /**
+     * Obtém um relatório mensal de todos os dias. Contém todas as reservas
+     * feitas e não feitas em todos os horários e salas.
+     *
+     * @param date
+     * @return
+     */
+    public static List<Dia> descreverMes(Date date) {
         List<Date> dias = CalendarioHelper.getCalendario(date);
         List<Dia> mes = new ArrayList<>();
         for (Date dia : dias) {

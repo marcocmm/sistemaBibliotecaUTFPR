@@ -1,13 +1,10 @@
 package br.edu.utfpr.biblioteca.salas.model.dao;
 
-import br.edu.utfpr.biblioteca.salas.model.entity.ReservaPO;
 import br.edu.utfpr.biblioteca.salas.model.entity.SalaPO;
 import br.edu.utfpr.biblioteca.salas.model.entity.StatusPO;
 import java.util.Date;
-
 import java.util.List;
 import javax.persistence.Query;
-import javax.persistence.criteria.CriteriaQuery;
 
 public class SalaDAO extends GenericDAO<SalaPO> {
 
@@ -64,15 +61,16 @@ public class SalaDAO extends GenericDAO<SalaPO> {
 
     /**
      * SELECT que busca a quantidade de salas no bd
+     *
      * @return int
      */
     public int getQuantidadeSalas() {
         Query q = entityManager.createNativeQuery("SELECT count(*) FROM Salas");
         long qtdeSalas = 0;
 
-        try{
+        try {
             qtdeSalas = (long) q.getSingleResult();
-        }catch (Exception ex){
+        } catch (Exception ex) {
             return 0;
         }
         return (int) qtdeSalas;

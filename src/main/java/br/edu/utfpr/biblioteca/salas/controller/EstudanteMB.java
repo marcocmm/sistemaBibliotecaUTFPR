@@ -6,7 +6,6 @@
 package br.edu.utfpr.biblioteca.salas.controller;
 
 import br.edu.utfpr.biblioteca.salas.model.bo.EstudanteBO;
-import br.edu.utfpr.biblioteca.salas.model.dao.EstudanteDAO;
 import br.edu.utfpr.biblioteca.salas.model.entity.EstudantePO;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -40,20 +39,36 @@ public class EstudanteMB {
     }
 
     /**
-     * verifica se o estudante já está cadastrado e se a senha é vazia, caso ele
-     * nao seja cadastrado e sua senha exista, o estudante é inserido.
+     * Valida a entrada do usuário e cadastra um estudante.
      *
      * @param estudante
      */
-    private void cadastrarEstudante(EstudantePO estudante) {
-        EstudanteDAO estudanteDAO = new EstudanteDAO();
-        if (alreadyCadastrado(estudante)) {
-            return;
+    private void cadastrarEstudante() {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        try {
+            Long.parseLong(estudante.getRa());
+            if (estudante.getNome().isEmpty()) {
+                throw new Exception("Preencha todos os campos");
+            }
+            if (estudante.getEmail().isEmpty()) {
+                throw new Exception("Preencha todos os campos");
+            }
+            if (estudante.getSenha().isEmpty()) {
+                throw new Exception("Preencha todos os campos");
+            }
+            String[] split = estudante.getEmail().split("@");
+            if (split[0].isEmpty() || split[1].isEmpty()) {
+                throw new Exception("E-mail inválido");
+            }
+        } catch (NumberFormatException ex) {
+            facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "RA inválido", "Inválido"));
+        } catch (IndexOutOfBoundsException ex) {
+            facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Preencher nome", "Inválido"));
+        } catch (Exception ex) {
+            facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, ex.getMessage(), "Inválido"));
         }
-        if (estudante.getSenha().isEmpty()) {
-            return;
-        }
-        estudanteDAO.insert(estudante);
+
+        EstudanteBO.cadastrarEstudante(estudante);
     }
 
     /**
@@ -62,36 +77,30 @@ public class EstudanteMB {
      * @param estudante
      * @return boolean
      */
-    private boolean alreadyCadastrado(EstudantePO estudante) {
-        EstudanteDAO estudanteDAO = new EstudanteDAO();
-        return estudanteDAO.obter(estudante) != null;
+    private boolean alreadyCadastrado() {
+        return EstudanteBO.alreadyCadastrado(estudante);
     }
 
     /**
-     * obtém o login e senha do estudante e, caso esteja autenticado, joga
+     * obtém o login e senha do estudante e, caso esteja autenticado, exibe
      * mensagem na tela
      *
      * @param event
      */
     public void autenticar(ActionEvent event) {
         FacesMessage message = null;
-        boolean loggedIn = false;
-        FacesContext fc = FacesContext.getCurrentInstance();
-        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        boolean loggedIn;
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
         session.setAttribute("estudanteLogado", this.estudante);
 
-        if (!alreadyCadastrado(this.estudante)) {
+        if (!alreadyCadastrado()) {
             message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Estudante não cadastrado!", null);
         }
-        loggedIn = EstudanteBO.autenticar(this.estudante.getRa(), this.estudante.getSenha());
-
+        loggedIn = EstudanteBO.isAutentico(this.estudante.getRa(), this.estudante.getSenha());
         if (loggedIn) {
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bem-Vindo!", estudante.getNome());
-
         }
-
-        FacesContext facesContext = FacesContext.getCurrentInstance();
         facesContext.addMessage(null, message);
-
     }
 }

@@ -9,9 +9,6 @@ import java.util.List;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
-
-
-
 public class ReservaDAO extends GenericDAO<ReservaPO> implements Serializable {
 
     public ReservaDAO() {
@@ -27,34 +24,20 @@ public class ReservaDAO extends GenericDAO<ReservaPO> implements Serializable {
      */
     @Override
     public boolean insert(ReservaPO reserva) {
-        StatusPO status;
-        StatusDAO statusDAO;
-
-        statusDAO = new StatusDAO();
-
-        try {
-            entityManager.getTransaction().begin();
-            Query q = entityManager.createQuery("SELECT e FROM Reserva e WHERE e.dataInicial = :dataInicial AND e.sala = :sala AND e.status = :status");
-            q.setParameter("dataInicial", reserva.getDataInicial());
-            q.setParameter("sala", reserva.getSala());
-            q.setParameter("status", new StatusPO("ativa"));
-            q.getSingleResult();
+        entityManager.getTransaction().begin();
+        if (isReservado(reserva)) {
             entityManager.getTransaction().rollback();
-            System.out.println("Horário e sala já reservadas");
             return false;
-        } catch (NoResultException ex) {
-            status = statusDAO.obter("ativa");
-            reserva.setStatus(status);
-            entityManager.persist(reserva);
-            entityManager.getTransaction().commit();
-            System.out.println("Sucesso");
-            return true;
         }
+        reserva.setStatus(new StatusPO("ativa"));
+        entityManager.persist(reserva);
+        entityManager.getTransaction().commit();
+        return true;
     }
 
     /**
-     * Dado uma data, este método retorna um lista de reservas correspondente a
-     * data.
+     * Dado uma data-hora, este método retorna um lista de reservas
+     * correspondente a data.
      *
      * @param date
      * @return List<ReservaPO>
@@ -67,13 +50,14 @@ public class ReservaDAO extends GenericDAO<ReservaPO> implements Serializable {
     }
 
     /**
-     * Dado uma data, este método retorna um lista de reservas correspondente a
-     * data e o id da sala.
+     * Dado uma data-hora, este método retorna um lista de reservas
+     * correspondente a data e o id da sala.
      *
      * @param date
+     * @param idSala
      * @return List<ReservaPO>
      */
-    public List<ReservaPO> listByDateAndIdSala(Date date, int idSala) {
+    public List<ReservaPO> listByDateTimeAndSala(Date date, int idSala) {
         Query q = entityManager.createQuery("SELECT e FROM Reserva e WHERE e.dataInicial=:dataInicial AND e.id =:idSala");
         q.setParameter("dataInicial", date);
         q.setParameter("idSala", idSala);
@@ -84,11 +68,11 @@ public class ReservaDAO extends GenericDAO<ReservaPO> implements Serializable {
      * SELECT busca a quantidade de reservas exitentes dado dia, mes, ano, e
      * hora inicial
      *
-     * @param data
+     * @param date
      * @return int
      */
-    public int getQuantidadeReservas(Date data) {
-        String strData = CalendarioHelper.getDataToDataBase(data);
+    public int getQuantidadeReservas(Date date) {
+        String strData = CalendarioHelper.getDataToDataBase(date);
         Query q = entityManager.createNativeQuery("SELECT count(*) FROM Reservas r WHERE r.data_inicial = '" + strData + "'");
         long qtdeReservas = 0;
         try {
@@ -99,6 +83,14 @@ public class ReservaDAO extends GenericDAO<ReservaPO> implements Serializable {
         return (int) qtdeReservas;
     }
 
+    /**
+     * Busca por uma reserva ativa na data-hora e sala contidas no objeto dado.
+     * Retorna true se já existe uma reserva neste horario ou false se não foi
+     * encontrada nenhuma.
+     *
+     * @param reserva
+     * @return
+     */
     public boolean isReservado(ReservaPO reserva) {
         try {
             Query q = entityManager.createQuery("SELECT e FROM Reserva e WHERE e.dataInicial = :dataInicial AND e.sala = :sala AND e.status = :status");

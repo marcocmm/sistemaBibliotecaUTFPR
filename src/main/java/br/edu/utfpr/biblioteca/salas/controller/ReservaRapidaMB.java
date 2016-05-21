@@ -1,7 +1,5 @@
 package br.edu.utfpr.biblioteca.salas.controller;
 
-import br.edu.utfpr.biblioteca.salas.model.bo.EstudanteBO;
-import br.edu.utfpr.biblioteca.salas.model.bo.ReservaBO;
 import br.edu.utfpr.biblioteca.salas.view.BotaoHorario;
 import br.edu.utfpr.biblioteca.salas.model.bo.SalaBO;
 import br.edu.utfpr.biblioteca.salas.model.entity.EstudantePO;
@@ -29,11 +27,11 @@ import java.io.Serializable;
 public class ReservaRapidaMB implements Serializable {
 
     private ReservaPO reserva;
-    private String hora;
+    private String strHora;
 
     private List<BotaoHorario> botoesHorario;
 
-    //Formatadores de data-
+    //Formatadores de data
     private final SimpleDateFormat formatoEmHoras;
     private final SimpleDateFormat formatoEmDia;
 
@@ -49,24 +47,24 @@ public class ReservaRapidaMB implements Serializable {
 
     }
 
+    public ReservaPO getReserva() {
+        return this.reserva;
+    }
+
+    public String getStrHora() {
+        return strHora;
+    }
+
+    public void setStrHora(String strHora) {
+        this.strHora = strHora;
+    }
+
     public List<BotaoHorario> getBotoesHorario() {
         return botoesHorario;
     }
 
-    public String getHora() {
-        return hora;
-    }
-
-    public void setHora(String hora) {
-        this.hora = hora;
-    }
-
     public Date getDataAtual() {
         return new Date();
-    }
-
-    public ReservaPO getReserva() {
-        return this.reserva;
     }
 
     /**
@@ -80,16 +78,6 @@ public class ReservaRapidaMB implements Serializable {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected", formatoEmDia.format(event.getObject())));
         updateBotoesAtivosPorDia(new Date());
-    }
-
-    /**
-     * Este método solicita para a classe SalaBO uma lista de salas disponíveis
-     * dado um dia e uma hora. Exibe em um Select<html> as salas
-     *
-     * @return
-     */
-    public List<SalaPO> getSalasDisponiveis() {
-        return SalaBO.getSalasDisponiveis(this.reserva.getDataInicial());
     }
 
     /**
@@ -111,48 +99,52 @@ public class ReservaRapidaMB implements Serializable {
     }
 
     /**
+     * Este método solicita para a classe SalaBO uma lista de salas disponíveis
+     * dado um dia e uma strHora. Exibe em um Select<html> as salas
      *
      * @return
      */
+    public List<SalaPO> getSalasDisponiveis() {
+        return SalaBO.getSalasDisponiveis(this.reserva.getDataInicial());
+    }
+
+    /**
+     * Valida a entrada do usuário e faz a reserva invocando as camadas
+     * inferiores.
+     */
     public void reservarSala() {
-        Date dataInicial = CalendarioHelper.parseDateTime(this.reserva.getStrDataInicial(), this.hora);
+        Date dataInicial = CalendarioHelper.parseDateTime(this.reserva.getStrDataInicial(), this.strHora);
         this.reserva.setDataInicial(dataInicial);
+        FacesMessage msg;
 
         if (reserva.getDataFinal().equals(reserva.getDataInicial())) {
-            FacesMessage msg = new FacesMessage("Data Final igual data inicial");
+            msg = new FacesMessage("Data Final igual data inicial");
             FacesContext.getCurrentInstance().addMessage(null, msg);
         }
         if (reserva.getDataFinal().before(reserva.getDataInicial())) {
-            FacesMessage msg = new FacesMessage("Data Final deve ser posterior à data inicial");
+            msg = new FacesMessage("Data Final deve ser posterior à data inicial");
             FacesContext.getCurrentInstance().addMessage(null, msg);
         }
 
-        EstudantePO estudante;
-        estudante = EstudanteBO.obterEstudante(this.reserva.getEstudante().getRa());
-        this.reserva.setEstudante(estudante);
-
-        SalaPO sala = SalaBO.obter(this.reserva.getSala().getId());
-        this.reserva.setSala(sala);
-
-        boolean canReservar = SalaBO.reservarSala(reserva);
-
-        if (!canReservar) {
-            FacesMessage msg = new FacesMessage("Fail", "Welcome :" + getReserva().getEstudante().getRa());
-            FacesContext.getCurrentInstance().addMessage(null, msg);
-        } else {
-            FacesMessage msg = new FacesMessage("Successful", "Welcome :" + getReserva().getEstudante().getRa());
-            FacesContext.getCurrentInstance().addMessage(null, msg);
+        try {
+            SalaBO.reservarSala(reserva);
+            msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Reservado", getReserva().getStrDataInicial());
+        } catch (Exception ex) {
+            msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Fail", ex.getMessage());
         }
+        FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 
     /**
      * Este método deve solicitar para a classe SalaBO um hash contendo as salas
      * que possuem horários disponíveis dado um dia. Ele é quem deve setar o css
      * dos botões.
+     *
+     * @param data
      */
     public void updateBotoesAtivosPorDia(Date data) {
 
-        //hash com key inteiro (hora -> 8, 9, 10...) e boolean se existe alguma sala disponível ou todas estão reservas.
+        //hash com key inteiro (strHora -> 8, 9, 10...) e boolean se existe alguma sala disponível ou todas estão reservas.
         HashMap<Integer, Boolean> salasDisponiveis = SalaBO.getStatusDaSala(data);
         if (salasDisponiveis == null) {
             return;

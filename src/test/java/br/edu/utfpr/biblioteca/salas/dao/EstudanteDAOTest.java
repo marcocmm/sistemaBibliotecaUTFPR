@@ -9,6 +9,7 @@ import br.edu.utfpr.biblioteca.salas.model.dao.EstudanteDAO;
 import br.edu.utfpr.biblioteca.salas.model.entity.EstudantePO;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
+import static org.junit.Assert.assertTrue;
 
 /**
  *
@@ -33,7 +34,7 @@ public class EstudanteDAOTest {
 //    @Test
     public void test_autenticar(){
         EstudanteDAO dao = new EstudanteDAO();
-        boolean d = dao.autenticar("1136631", "baiser");
+        boolean d = dao.isAutentico("1136631", "baiser");
         assertTrue(d);
     }
 

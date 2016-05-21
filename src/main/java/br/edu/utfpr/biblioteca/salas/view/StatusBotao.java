@@ -10,9 +10,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-
 /**
  * Armazena os atributos css de todos os botões da interface
+ *
  * @author romulo
  * @deprecated Utilizar BotaoHorario ao invés desta classe
  */
@@ -37,7 +37,7 @@ public class StatusBotao implements Serializable {
         numeroBotao = 0;
         parametrosBotoes = new ArrayList<>();
     }
-    
+
     public void setParametrosBotoes(List<String> horasAtivas, Date date) {
         String hora;
         for (int i = 8; i < 22; i++) {

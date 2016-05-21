@@ -322,13 +322,13 @@ public class CalendarioHelper {
      * Este método recebe uma data tipo Date e converte para string (dd/MM/yyyy
      * HH:mm:ss)
      *
-     * @param data
+     * @param date
      * @return String(dd/MM/yyyy HH:mm:ss)
      */
-    public static String getData(Date data) {
+    public static String getData(Date date) {
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
-        String reportDate = df.format(data);
+        String reportDate = df.format(date);
 
         return reportDate;
     }
@@ -337,13 +337,13 @@ public class CalendarioHelper {
      * Este método recebe uma data tipo Date e converte para string (yyyy-MM-dd
      * HH:mm:ss)
      *
-     * @param data
+     * @param date
      * @return String(yyyy-MM-dd HH:mm:ss)
      */
-    public static String getDataToDataBase(Date data) {
+    public static String getDataToDataBase(Date date) {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-        String reportDate = df.format(data);
+        String reportDate = df.format(date);
 
         return reportDate;
     }
