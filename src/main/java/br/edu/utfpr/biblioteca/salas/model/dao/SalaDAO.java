@@ -1,9 +1,12 @@
 package br.edu.utfpr.biblioteca.salas.model.dao;
 
+import br.edu.utfpr.biblioteca.salas.model.entity.ReservaPO;
 import br.edu.utfpr.biblioteca.salas.model.entity.SalaPO;
 import br.edu.utfpr.biblioteca.salas.model.entity.StatusPO;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 public class SalaDAO extends GenericDAO<SalaPO> {
@@ -13,27 +16,86 @@ public class SalaDAO extends GenericDAO<SalaPO> {
     }
 
     /**
-     * está faltando coisas no método, pois uma sala inativa nao é uma sala
-     * livre e corrigir nome do método para condizer com sua função
+     * Obtém a disponibilidade de horários para serem reservados nos limites
+     * (inclusive) passados por parâmetro
      *
      * @param dataInicial
      * @param dataFinal
-     * @return List<ReservaPO>
+     * @return
      */
     @Deprecated
-    public List<SalaPO> getStatusDaSala(Date dataInicial, Date dataFinal) {
-        Query q = entityManager.createQuery("SELECT e.sala FROM Reserva e WHERE e.status = :status AND e.dataInicial > :dataInicial AND e.dataFinal < :dataFinal");
+    public HashMap<Date, Boolean> getHorarioIsDisponivelHash(Date dataInicial, Date dataFinal) {
+        /**
+         * SELECT COUNT(*) < (SELECT count(*) FROM Salas) FROM Reservas e WHERE
+         * e.status_name != "inativa" AND e.data_inicial BETWEEN "2016-05-17
+         * 08:00:00" AND "2016-05-17 22:00:00" GROUP BY e.data_inicial
+         */
+
+        Query q = entityManager.createQuery("SELECT e FROM Reserva e WHERE e.status != :status AND e.dataInicial BETWEEN :dataInicial AND :dataFinal GROUP BY e.dataInicial ORDER BY e.dataInicial");
         q.setParameter("status", new StatusPO("inativa"));
         q.setParameter("dataInicial", dataInicial);
         q.setParameter("dataFinal", dataFinal);
-        List<SalaPO> salasInativas = null;
+        List<ReservaPO> cabecalhosGruposReservas = null;
         try {
-            salasInativas = (List<SalaPO>) q.getResultList();
+            cabecalhosGruposReservas = (List<ReservaPO>) q.getResultList();
+            for (ReservaPO cabecalhoGrupo : cabecalhosGruposReservas) {
+
+            }
         } catch (Exception ex) {
             System.err.println("Erro SQL: " + ex.getMessage());
             return null;
         }
-        return salasInativas;
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * Responde se uma sala está disponível para reserva na data dada.
+     *
+     * @param sala
+     * @param datetime
+     * @return
+     */
+    public boolean isDisponivel(SalaPO sala, Date datetime) {
+        Query q = entityManager.createQuery("SELECT e FROM Reserva e WHERE e.status != :status AND e.dataInicial = :data AND e.sala = :sala");
+        q.setParameter("status", new StatusPO("inativa"));
+        q.setParameter("data", datetime);
+        q.setParameter("sala", sala);
+        try {
+            q.getSingleResult();
+            return false;
+        } catch (NoResultException ex) {
+            return true;
+        }
+    }
+
+    /**
+     * Obtém a lista de salas que estão disponíveis para reservas na data-hora
+     * informada.
+     *
+     * @param datetime
+     * @return
+     */
+    public List<SalaPO> getWhichSalasAreVagas(Date datetime) {
+        Query q = entityManager.createQuery("SELECT s FROM Sala s WHERE s NOT IN (SELECT e.sala FROM Reserva e WHERE e.status != :status AND e.dataInicial = :data)");
+        q.setParameter("status", new StatusPO("inativa"));
+        q.setParameter("data", datetime);
+        List<SalaPO> salasVagas = (List<SalaPO>) q.getResultList();
+        return salasVagas;
+    }
+
+    /**
+     * Responde se existe alguma sala vaga na data-hora dada. Verifica se o
+     * número de salas reservadas é inferior ao número de salas disponíveis.
+     *
+     * @param datetime
+     * @return
+     */
+    public boolean isAnyoneSalaVaga(Date datetime) {
+        Query q = entityManager.createQuery("SELECT COUNT(e) FROM Reserva e WHERE e.status != :status AND e.dataInicial = :data");
+        q.setParameter("status", new StatusPO("inativa"));
+        q.setParameter("data", datetime);
+        Long numeroReservas = (Long) q.getSingleResult();
+        return numeroReservas < 5;
     }
 
     /**
@@ -41,7 +103,8 @@ public class SalaDAO extends GenericDAO<SalaPO> {
      *
      * @param dataInicial
      * @param dataFinal
-     * @return List<SalaPO>
+     * @return
+     * @deprecated utilizar método getWhichSalasAreVagas
      */
     @Deprecated
     public List<SalaPO> getSalasDisponiveis(Date dataInicial, Date dataFinal) {
@@ -56,7 +119,7 @@ public class SalaDAO extends GenericDAO<SalaPO> {
             System.err.println("Erro SQL: " + ex.getMessage());
             return null;
         }
-        return salas;
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -65,7 +128,7 @@ public class SalaDAO extends GenericDAO<SalaPO> {
      * @return int
      */
     public int getQuantidadeSalas() {
-        Query q = entityManager.createNativeQuery("SELECT count(*) FROM Salas");
+        Query q = entityManager.createNativeQuery("SELECT COUNT(*) FROM Salas");
         long qtdeSalas = 0;
 
         try {

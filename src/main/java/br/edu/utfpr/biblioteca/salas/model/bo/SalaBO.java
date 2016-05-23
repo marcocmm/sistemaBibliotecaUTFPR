@@ -56,49 +56,32 @@ public class SalaBO {
     }
 
     /**
-     * Este método recebe uma data (Composta de dia e hora) e retorna um hash
+     * Este método recebe uma data (hora é desconsiderada) e retorna um hash
      * contendo uma chave horário e valor boolean. O valor é true se alguma sala
      * não possui reserva nesse horario ou false se todas as salas estão
      * reservadas naquele horário.
      *
      * @param date
-     * @return HashMap<Integer, Boolean>
+     * @return HashMap<Date, Boolean>
      */
-    public static HashMap<Integer, Boolean> getHorariosDisponiveis(Date date) {
-        //executa o metodo getSalasDisp para todos horarios do dia recebido /\
-        //Na lista que retornara: pega a posição 0 se for null põe no hash(dessa função) hash.put(8,false)
-        //se não for null pega o horario e põe true
-
-        Date dataInicial = CalendarioHelper.parseDate("10-05-2016", "07", "00", "00");
-        Date dataFinal = CalendarioHelper.parseDate("10-05-2016", "23", "00", "00");
-        List<ReservaPO> list = new ArrayList<>();
-        HashMap<Integer, Boolean> hashList = null;
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getStatus().equals(new StatusPO("inativa"))) {
-                hashList.put(list.get(i).getId(), false);
-            }
-            if (list.get(i).getStatus().equals(new StatusPO("ativa"))) {
-                hashList.put(list.get(i).getId(), true);
-            }
+    public static HashMap<Date, Boolean> getHorariosDisponiveis(Date date) {
+        HashMap<Date, Boolean> horariosDisponiveis = new HashMap<>();
+        List<Date> horarios = CalendarioHelper.getHorarios(date);
+        for (Date horario : horarios) {
+            horariosDisponiveis.put(horario, salaDAO.isAnyoneSalaVaga(horario));
         }
-        throw new UnsupportedOperationException();
+        return horariosDisponiveis;
     }
 
     /**
      * Este método recebe uma data-hora, e deve retornar uma lista de salas
      * disponíveis.
      *
-     * @param date
-     * @return List<SalaPO>
+     * @param horario
+     * @return
      */
-    public static List<SalaPO> getSalasDisponiveis(Date date) {
-        //USA O RESERVADAO - metodo listByDateTime
-        //Pega todas as reservas dado o horario
-        //verifica se dado essas reservas existe alguma sala disponivel e add as salas disponiveis na lista
-        Date dataInicial = CalendarioHelper.parseDate("10-05-2016", "07", "00", "00");
-        Date dataFinal = CalendarioHelper.parseDate("10-05-2016", "23", "00", "00");
-        List<SalaPO> list = salaDAO.getSalasDisponiveis(dataInicial, dataFinal);
-        throw new UnsupportedOperationException();
+    public static List<SalaPO> getSalasDisponiveis(Date horario) {
+        return salaDAO.getWhichSalasAreVagas(horario);
     }
 
     /**

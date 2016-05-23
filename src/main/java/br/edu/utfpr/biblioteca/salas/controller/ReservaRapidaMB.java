@@ -20,6 +20,7 @@ import org.primefaces.context.RequestContext;
 import org.primefaces.event.FlowEvent;
 import org.primefaces.event.SelectEvent;
 import java.io.Serializable;
+import java.util.Map;
 
 @Named(value = "reservaRapidaMB")
 @ViewScoped
@@ -44,7 +45,6 @@ public class ReservaRapidaMB implements Serializable {
         this.reserva = new ReservaPO(new EstudantePO(null, null, null, null), new SalaPO(0, true), new Date(), 0);
         this.botoesHorario = new ArrayList<>();
         updateBotoesAtivosPorDia(new Date());
-
     }
 
     public ReservaPO getReserva() {
@@ -73,11 +73,10 @@ public class ReservaRapidaMB implements Serializable {
      * @param event
      */
     public void onDateSelect(SelectEvent event) {
-        Date data = (Date) event.getObject();
-        //   this.botoesHorario = ReservaBO.
+        Date dataSelecionada = (Date) event.getObject();
         FacesContext facesContext = FacesContext.getCurrentInstance();
-        facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected", formatoEmDia.format(event.getObject())));
-        updateBotoesAtivosPorDia(new Date());
+        facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Data Selecionada", formatoEmDia.format(event.getObject())));
+        updateBotoesAtivosPorDia(dataSelecionada);
     }
 
     /**
@@ -143,17 +142,16 @@ public class ReservaRapidaMB implements Serializable {
      * @param data
      */
     public void updateBotoesAtivosPorDia(Date data) {
-
         //hash com key inteiro (strHora -> 8, 9, 10...) e boolean se existe alguma sala disponível ou todas estão reservas.
-        HashMap<Integer, Boolean> salasDisponiveis = SalaBO.getStatusDaSala(data);
+        HashMap<Date, Boolean> salasDisponiveis = SalaBO.getHorariosDisponiveis(data);
         if (salasDisponiveis == null) {
             return;
         }
-        for (int i = 8; i <= 21; i++) {
-            if (salasDisponiveis.get(i)) {
-                botoesHorario.add(new BotaoHorario(i, "verde", true));
+        for (Map.Entry<Date, Boolean> entry : salasDisponiveis.entrySet()) {
+            if (entry.getValue()) {
+                botoesHorario.add(new BotaoHorario(entry.getKey().getHours(), "verde", true));
             } else {
-                botoesHorario.add(new BotaoHorario(i, "vermelho", false));
+                botoesHorario.add(new BotaoHorario(entry.getKey().getHours(), "vermelho", false));
             }
         }
         //chamar método alteraEstilo ou implementar o método aqui

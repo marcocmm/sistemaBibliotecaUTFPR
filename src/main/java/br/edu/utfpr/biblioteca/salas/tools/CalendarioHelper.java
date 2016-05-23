@@ -201,6 +201,7 @@ public class CalendarioHelper {
         List<Date> horarios = new ArrayList();
 
         Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
         calendar.set(Calendar.HOUR_OF_DAY, 0); // ! clear would not reset the hour of day !
         calendar.clear(Calendar.MINUTE);
         calendar.clear(Calendar.SECOND);
@@ -208,7 +209,7 @@ public class CalendarioHelper {
 
         for (int i = 8; i < 21; i++) {
             calendar.set(Calendar.HOUR_OF_DAY, i);
-            horarios.add(calendar.getTime());
+            horarios.add((Date) calendar.getTime().clone());
         }
 
         return horarios;
