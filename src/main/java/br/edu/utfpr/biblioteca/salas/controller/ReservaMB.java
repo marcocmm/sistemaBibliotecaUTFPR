@@ -40,4 +40,7 @@ public class ReservaMB {
         return strHorario;
     }
 
+    public void reservarSala(){
+        throw new UnsupportedOperationException();
+    }
 }

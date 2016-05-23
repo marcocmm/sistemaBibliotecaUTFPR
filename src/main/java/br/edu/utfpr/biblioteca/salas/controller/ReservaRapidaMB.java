@@ -6,25 +6,28 @@ import br.edu.utfpr.biblioteca.salas.model.entity.EstudantePO;
 import br.edu.utfpr.biblioteca.salas.model.entity.ReservaPO;
 import br.edu.utfpr.biblioteca.salas.model.entity.SalaPO;
 import br.edu.utfpr.biblioteca.salas.tools.CalendarioHelper;
-import java.text.SimpleDateFormat;
+
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import org.primefaces.context.RequestContext;
+import org.primefaces.event.FlowEvent;
+import org.primefaces.event.SelectEvent;
+
+import java.io.Serializable;
+import java.util.Map;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import javax.faces.application.FacesMessage;
+import java.text.SimpleDateFormat;
 import javax.inject.Named;
-import javax.faces.bean.ManagedBean;
-import javax.faces.context.FacesContext;
-import javax.faces.bean.ViewScoped;
-import org.primefaces.context.RequestContext;
-import org.primefaces.event.FlowEvent;
-import org.primefaces.event.SelectEvent;
-import java.io.Serializable;
-import java.util.Map;
 
 @Named(value = "reservaRapidaMB")
-@ViewScoped
 @ManagedBean
+@ViewScoped
 public class ReservaRapidaMB implements Serializable {
 
     private ReservaPO reserva;
@@ -99,7 +102,7 @@ public class ReservaRapidaMB implements Serializable {
 
     /**
      * Este método solicita para a classe SalaBO uma lista de salas disponíveis
-     * dado um dia e uma strHora. Exibe em um Select<html> as salas
+     * dado um dia-hora. Exibe em um Select<html> as salas
      *
      * @return
      */

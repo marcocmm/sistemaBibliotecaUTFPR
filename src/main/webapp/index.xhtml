@@ -21,8 +21,8 @@
             <p:growl id="growl" sticky="true" showDetail="true"/>
 
             <p:wizard flowListener="#{reservaRapidaMB.onFlowProcess}">
-                <p:tab id="data" title="Data e Horário">
 
+                <p:tab id="data" title="Data e Horário">
                     <p:messages />
                     <h:panelGrid columns="3" cellpadding="5">
                         <p:growl id="msgs" showDetail="true" />
@@ -39,12 +39,49 @@
                     </h:panelGrid>
 
                 </p:tab>
+
                 <p:tab id="sala" title="Sala">
-                    
+                    <p:messages />
+                    <p:dataGrid var="sala" value="#{reservaRapidaMB.salasDisponiveis}" columns="1" rows="5" paginator="false" id="salas">
+                        <h:commandButton value="#{sala.id}" class="" actionListener="#{reservaRapidaMB.reserva.sala.setId(sala.id)}"/>
+                    </p:dataGrid>
                 </p:tab>
+
                 <p:tab id="confirmacao" title="Confirmação">
-                    
+                    <p:messages />
+                    <p:panel header="Reserva">
+                        <h:panelGrid id="confirmation" columns="1" columnClasses="grid,grid,grid">
+                            <h:panelGrid columns="2" columnClasses="label, value">
+                                <h:outputText value="Data: " />
+                                <h:outputText value="#{reservaRapidaMB.reserva.dataInicial}" styleClass="outputLabel"/>
+
+                                <h:outputText value="Horário: " />
+                                <h:outputText value="#{reservaRapidaMB.reserva.dataInicial}" styleClass="outputLabel"/>
+                            </h:panelGrid>
+
+                            <h:panelGrid columns="2" columnClasses="label, value">
+                                <h:outputText value="Sala: " />
+                                <h:outputText value="#{reservaRapidaMB.reserva.sala.id}" styleClass="outputLabel"/>
+                                <h:outputText value="Quantidade de alunos: " />
+                                <h:outputText value="#{reservaRapidaMB.reserva.quantidadeAlunos}" styleClass="outputLabel"/>
+                            </h:panelGrid>
+
+                        </h:panelGrid>
+                    </p:panel>
+
+                    <p:panel header="Autenticação">
+                        <h:panelGrid columns="2" columnClasses="label, value">
+                            <h:outputText value="RA: *" />
+                            <p:inputText value="#{reservaRapidaMB.reserva.estudante.ra}" required="true" label="RA"/>
+                            <h:outputText value="Senha: *" />
+                            <p:password id="password" value="#{reservaRapidaMB.reserva.estudante.senha}" required="true" label="Senha" />
+
+                            <p:commandButton value="Reservar" actionListener="#{reservaRapidaMB.reservarSala()}" update="growl" process="@this"/>
+                        </h:panelGrid>
+                    </p:panel>
+
                 </p:tab>
+
             </p:wizard>
 
         </h:form>

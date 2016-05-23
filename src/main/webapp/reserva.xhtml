@@ -97,7 +97,7 @@
                         <h:panelGrid id="confirmation" columns="1" columnClasses="grid,grid,grid">
                             <h:panelGrid columns="2" columnClasses="label, value">
                                 <h:outputText value="Data: " />
-                                <h:outputText value="#{reservaMB.strDataInicial}" styleClass="outputLabel"/>
+                                <h:outputText value="#{reservaMB.reserva.dataInicial}" styleClass="outputLabel"/>
 
                                 <h:outputText value="Horário: " />
                                 <h:outputText value="#{reservaMB.strHorario}" styleClass="outputLabel"/>
@@ -117,7 +117,7 @@
                             </h:panelGrid>
                         </h:panelGrid>
 
-                        <p:commandButton value="Submit" actionListener="#{reservaMB.save}" update="growl" process="@this"/>
+                        <p:commandButton value="Submit" actionListener="#{reservaMB.reservarSala()}" update="growl" process="@this"/>
                     </p:panel>
                 </p:tab>
             </p:wizard>
