@@ -1,11 +1,15 @@
 package br.edu.utfpr.biblioteca.salas.controller;
 
 import br.edu.utfpr.biblioteca.salas.model.Dia;
+import br.edu.utfpr.biblioteca.salas.model.ReservasHorario;
 import br.edu.utfpr.biblioteca.salas.model.bo.ReservaBO;
+import br.edu.utfpr.biblioteca.salas.model.bo.SalaBO;
 import br.edu.utfpr.biblioteca.salas.tools.CalendarioHelper;
 import br.edu.utfpr.biblioteca.salas.model.entity.AdministradorPO;
 import br.edu.utfpr.biblioteca.salas.model.entity.ReservaPO;
+import br.edu.utfpr.biblioteca.salas.model.entity.SalaPO;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import javax.inject.Named;
 import javax.faces.bean.ManagedBean;
@@ -21,7 +25,7 @@ public class AdministradorMB {
     private Date dataSelecionada;
     private Dia diaSelecionado;
 
-    private int idSala;
+    private SalaPO sala;
     private String strSala;
     private String strHorario;
     private String strStatus;
@@ -31,6 +35,7 @@ public class AdministradorMB {
      */
     public AdministradorMB() {
         this.strSala = "Sala";
+        this.sala = new SalaPO(1, true);
         this.administrador = new AdministradorPO(null, null);
     }
 
@@ -58,12 +63,8 @@ public class AdministradorMB {
         this.diaSelecionado = diaSelecionado;
     }
 
-    public int getIdSala() {
-        return idSala;
-    }
-
-    public void setIdSala(int idSala) {
-        this.idSala = idSala;
+    public SalaPO getSala() {
+        return sala;
     }
 
     public String getStrHorario() {
@@ -88,6 +89,19 @@ public class AdministradorMB {
 
     public void setStrSala(String strSala) {
         this.strSala = strSala;
+    }
+
+    /**
+     * Obtém HashMap com lista de salas
+     *
+     * @return
+     */
+    public HashMap<String, String> getSalas() {
+        return SalaBO.getSalas();
+    }
+
+    public List<ReservasHorario> getReservasHorario() {
+        return SalaBO.getReservasHorario(this.sala);
     }
 
     /**

@@ -138,6 +138,17 @@ public class SalaDAO extends GenericDAO<SalaPO> {
         }
         return (int) qtdeSalas;
     }
+
+    /**
+     * Sobrescreve o método list pois seu nome de entidade difere o padrão
+     *
+     * @return
+     */
+    @Override
+    public List<SalaPO> list() {
+        return entityManager.createQuery("SELECT e FROM Sala e").getResultList();
+    }
+
 }
 
 /* EXEMPLO DE DAO 

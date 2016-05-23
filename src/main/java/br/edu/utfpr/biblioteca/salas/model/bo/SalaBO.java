@@ -102,12 +102,12 @@ public class SalaBO {
      * @deprecated
      */
     @Deprecated
-    public List<ReservasHorario> getReservasHorario(SalaPO sala) {
+    public static List<ReservasHorario> getReservasHorario(SalaPO sala) {
         SalaPO salaPO = obter(sala.getId());
         List<ReservasHorario> reservasHorario = new ArrayList();
         ReservasHorario rH = new ReservasHorario();
         reservasHorario.add(rH);
-        throw new UnsupportedOperationException();
+        return reservasHorario;
     }
 
     /**
@@ -143,7 +143,7 @@ public class SalaBO {
      *
      * @return
      */
-    public HashMap<String, String> getSalas() {
+    public static HashMap<String, String> getSalas() {
         HashMap<String, String> salas = new HashMap<>();
         for (SalaPO sala : salaDAO.list()) {
             salas.put(String.valueOf(sala.getId()), "Sala " + String.valueOf(sala.getId()));

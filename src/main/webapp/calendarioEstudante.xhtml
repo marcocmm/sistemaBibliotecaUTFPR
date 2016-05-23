@@ -26,8 +26,8 @@
             <p:growl id="msgs" showDetail="true" />
 
             <h:panelGrid columns="3" cellpadding="5">
-                <p:calendar class="ui-widget" id="inline" value="#{reservaMB.date}" mode="inline">
-                    <p:ajax event="dateSelect" listener="#{statusBotoes.onDateSelect}" update="msgs" />
+                <p:calendar class="ui-widget" id="inline" value="#{reservaRapidaMB.dataAtual}" mode="inline">
+                    <p:ajax event="dateSelect" listener="#{reservaRapidaMB.onDateSelect}" update="msgs" />
                 </p:calendar>
             </h:panelGrid>
         </h:form>
