@@ -9,7 +9,6 @@ import java.util.List;
 import br.edu.utfpr.biblioteca.salas.model.ReservasHorario;
 import static br.edu.utfpr.biblioteca.salas.model.bo.ReservaBO.reservaDAO;
 import br.edu.utfpr.biblioteca.salas.model.entity.EstudantePO;
-import br.edu.utfpr.biblioteca.salas.model.entity.StatusPO;
 import br.edu.utfpr.biblioteca.salas.tools.CalendarioHelper;
 import java.util.Date;
 
@@ -26,33 +25,29 @@ public class SalaBO {
      * @deprecated utilizar getHorariosDisponiveis(Date date)
      */
     @Deprecated
-    public static HashMap<Integer, Boolean> getStatusDaSala(Date date) {
+    public static HashMap<Integer, Boolean> getStatusDaSala(String date) {
         Date dataInicial = CalendarioHelper.parseDate("10-05-2016", "07", "00", "00");
         Date dataFinal = CalendarioHelper.parseDate("10-05-2016", "23", "00", "00");
-        Date dataTeste = CalendarioHelper.parseDate("10-05-2016", "08", "00", "00");
-        int full = 0;
-        List<ReservaPO> list = new ArrayList<>();
-        List<ReservaPO> listR = new ArrayList();
+       
+        int qtdSalas = salaDAO.getQuantidadeSalas();
         HashMap<Integer, Boolean> hashList = null;
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getDataInicial().equals(date)) {
-                listR.add(list.get(i));
-            }
-        }
-        for (int j = 0; j < listR.size(); j++) {
-            if (listR.get(j).getStatus().equals(new StatusPO("ativa"))) {
-                full++;
-                if (full == 6) {
-                    int horario = date.getHours();
-                    hashList.put(horario, false);
+        
+        for(int i = 8; i<=23; i++){
+        
+        Date data = CalendarioHelper.parseDate(date, i, 0, 0);
+        
+        int qtdReservas = reservaDAO.getQuantidadeReservas(data);
+        
+        if(qtdReservas == qtdSalas){
+        hashList.put(i, Boolean.FALSE);
+                    
                 }
-                if (j == listR.size() && full < 6) {
-                    int horario = date.getHours();
-                    hashList.put(horario, true);
-                }
-            }
+        else{
+        hashList.put(i, Boolean.FALSE);
+        
+        }        
         }
-        throw new UnsupportedOperationException();
+        return hashList;
     }
 
     /**
