@@ -207,7 +207,7 @@ public class CalendarioHelper {
         calendar.clear(Calendar.SECOND);
         calendar.clear(Calendar.MILLISECOND);
 
-        for (int i = 8; i < 21; i++) {
+        for (int i = 8; i <= 21; i++) {
             calendar.set(Calendar.HOUR_OF_DAY, i);
             horarios.add((Date) calendar.getTime().clone());
         }

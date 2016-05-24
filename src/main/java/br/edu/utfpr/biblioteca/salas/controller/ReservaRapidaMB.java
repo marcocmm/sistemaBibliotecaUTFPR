@@ -23,6 +23,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
+import java.util.Collections;
 import javax.inject.Named;
 
 @Named(value = "reservaRapidaMB")
@@ -157,6 +159,8 @@ public class ReservaRapidaMB implements Serializable {
                 botoesHorario.add(new BotaoHorario(entry.getKey().getHours(), "vermelho", false));
             }
         }
+        botoesHorario.add(new BotaoHorario(0, "branco", true));
+        Collections.sort(botoesHorario);
         //chamar método alteraEstilo ou implementar o método aqui
     }
 

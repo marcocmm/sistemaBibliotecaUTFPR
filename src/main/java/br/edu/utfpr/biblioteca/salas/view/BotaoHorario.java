@@ -12,7 +12,7 @@ import java.io.Serializable;
  *
  * @author romulo
  */
-public final class BotaoHorario implements Serializable {
+public final class BotaoHorario implements Serializable, Comparable<BotaoHorario> {
 
     private String value;
     private String classe;
@@ -62,6 +62,11 @@ public final class BotaoHorario implements Serializable {
 
     public String getValue() {
         return value;
+    }
+
+    @Override
+    public int compareTo(BotaoHorario o) {
+        return Integer.compare(this.hora, o.hora);
     }
 
 }
