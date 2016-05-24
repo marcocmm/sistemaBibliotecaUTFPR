@@ -152,6 +152,7 @@ public class ReservaRapidaMB implements Serializable {
         if (salasDisponiveis == null) {
             return;
         }
+        botoesHorario.clear();
         for (Map.Entry<Date, Boolean> entry : salasDisponiveis.entrySet()) {
             if (entry.getValue()) {
                 botoesHorario.add(new BotaoHorario(entry.getKey().getHours(), "verde", true));
