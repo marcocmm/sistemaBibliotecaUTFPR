@@ -107,6 +107,7 @@ public class ReservaRapidaMB implements Serializable {
      * @return
      */
     public List<SalaPO> getSalasDisponiveis() {
+        this.reserva.setDataInicial(CalendarioHelper.mergeDiaHora(this.reserva.getDataInicial(),strHora));
         return SalaBO.getSalasDisponiveis(this.reserva.getDataInicial());
     }
 

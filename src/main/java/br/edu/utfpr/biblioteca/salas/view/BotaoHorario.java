@@ -32,7 +32,9 @@ public final class BotaoHorario implements Serializable {
             strValue += "0" + hora + " as 0" + (hora + 1);
         } else if (hora == 9) {
             strValue += "0" + hora + " as " + (hora + 1);
-        } else {
+        } else if(hora == 0){
+            strValue = "";
+        }else {
             strValue += hora + " as " + (hora + 1);
         }
         this.value = strValue;
