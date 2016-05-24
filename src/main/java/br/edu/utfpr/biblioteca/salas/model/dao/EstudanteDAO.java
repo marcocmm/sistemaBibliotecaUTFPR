@@ -1,11 +1,23 @@
 package br.edu.utfpr.biblioteca.salas.model.dao;
 
+import static br.edu.utfpr.biblioteca.salas.model.dao.GenericDAO.entityManager;
 import br.edu.utfpr.biblioteca.salas.model.entity.EstudantePO;
+import javax.persistence.Query;
 
 public class EstudanteDAO extends GenericDAO<EstudantePO> {
 
     public EstudanteDAO() {
         super(EstudantePO.class);
+    }
+
+    public boolean canReservar(EstudantePO estudante) {
+
+        long qtdReservas;
+        Query q = entityManager.createNativeQuery("SELECT COUNT(*) FROM Reservas r WHERE r.estudante_ra = " + estudante.getRa());
+        qtdReservas = (long) q.getSingleResult();
+
+        return qtdReservas < 2;
+
     }
 
     /**

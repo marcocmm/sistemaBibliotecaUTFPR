@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import br.edu.utfpr.biblioteca.salas.model.ReservasHorario;
 import static br.edu.utfpr.biblioteca.salas.model.bo.ReservaBO.reservaDAO;
+import br.edu.utfpr.biblioteca.salas.model.dao.EstudanteDAO;
 import br.edu.utfpr.biblioteca.salas.model.entity.EstudantePO;
 import br.edu.utfpr.biblioteca.salas.tools.CalendarioHelper;
 import java.util.Date;
@@ -28,24 +29,22 @@ public class SalaBO {
     public static HashMap<Integer, Boolean> getStatusDaSala(String date) {
         Date dataInicial = CalendarioHelper.parseDate("10-05-2016", "07", "00", "00");
         Date dataFinal = CalendarioHelper.parseDate("10-05-2016", "23", "00", "00");
-       
+
         int qtdSalas = salaDAO.getQuantidadeSalas();
         HashMap<Integer, Boolean> hashList = null;
-        
-        for(int i = 8; i<=23; i++){
-        
-        Date data = CalendarioHelper.parseDate(date, i, 0, 0);
-        
-        int qtdReservas = reservaDAO.getQuantidadeReservas(data);
-        
-        if(qtdReservas == qtdSalas){
-        hashList.put(i, Boolean.FALSE);
-                    
-                }
-        else{
-        hashList.put(i, Boolean.FALSE);
-        
-        }        
+
+        for (int i = 8; i <= 23; i++) {
+
+            Date data = CalendarioHelper.parseDate(date, i, 0, 0);
+
+            int qtdReservas = reservaDAO.getQuantidadeReservas(data);
+
+            if (qtdReservas == qtdSalas) {
+                hashList.put(i, Boolean.FALSE);
+            } else {
+                hashList.put(i, Boolean.FALSE);
+
+            }
         }
         return hashList;
     }
@@ -116,6 +115,7 @@ public class SalaBO {
     public static void reservarSala(ReservaPO reserva) throws Exception {
         EstudantePO estudante;
         SalaPO sala;
+        EstudanteDAO estudanteD = new EstudanteDAO();
 
         if (!EstudanteBO.isAutentico(reserva.getEstudante())) {
             throw new Exception("Credenciais inválidas");
@@ -130,7 +130,10 @@ public class SalaBO {
         if (reservaDAO.isReservado(reserva)) {
             throw new Exception("Sala já reservada");
         }
-        reservaDAO.insert(reserva);
+
+        if (estudanteD.canReservar(reserva.getEstudante())) {
+            reservaDAO.insert(reserva);
+        }
     }
 
     /**

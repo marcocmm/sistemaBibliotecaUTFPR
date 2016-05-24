@@ -24,15 +24,21 @@ public class ReservaDAO extends GenericDAO<ReservaPO> implements Serializable {
      */
     @Override
     public boolean insert(ReservaPO reserva) {
-        entityManager.getTransaction().begin();
-        if (isReservado(reserva)) {
-            entityManager.getTransaction().rollback();
-            return false;
+        EstudanteDAO estudante = new EstudanteDAO();
+        if (estudante.canReservar(reserva.getEstudante())) {
+
+            entityManager.getTransaction().begin();
+            if (isReservado(reserva)) {
+                entityManager.getTransaction().rollback();
+                return false;
+            }
+            reserva.setStatus(new StatusPO("ativa"));
+            entityManager.persist(reserva);
+            entityManager.getTransaction().commit();
+            return true;
         }
-        reserva.setStatus(new StatusPO("ativa"));
-        entityManager.persist(reserva);
-        entityManager.getTransaction().commit();
-        return true;
+
+        return false;
     }
 
     /**
@@ -58,7 +64,7 @@ public class ReservaDAO extends GenericDAO<ReservaPO> implements Serializable {
      * @return List<ReservaPO>
      */
     public List<ReservaPO> listByDateTimeAndSala(Date date, int idSala) {
-        Query q = entityManager.createQuery("SELECT e FROM Reserva e WHERE e.dataInicial=:dataInicial AND e.id =:idSala");
+        Query q = entityManager.createQuery("SELECT e FROM Reserva e WHERE e.dataIniciaxdataInicial AND e.id =:idSala");
         q.setParameter("dataInicial", date);
         q.setParameter("idSala", idSala);
         return q.getResultList();

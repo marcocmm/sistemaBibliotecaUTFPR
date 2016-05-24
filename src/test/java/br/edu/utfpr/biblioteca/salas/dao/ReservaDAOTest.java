@@ -15,21 +15,9 @@ import br.edu.utfpr.biblioteca.salas.tools.CalendarioHelper;
 import java.util.Date;
 import java.util.List;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import org.junit.Test;
 
 /**
  *
@@ -47,10 +35,13 @@ public class ReservaDAOTest {
         SalaPO sala = salaDao.obter(2);
 
         EstudanteDAO estudanteDAO = new EstudanteDAO();
-        EstudantePO estudante = estudanteDAO.obter("1137112");
+        EstudantePO estudante = estudanteDAO.obter("1602063");
         ReservaDAO dao = new ReservaDAO();
         ReservaPO reserva = new ReservaPO(estudante, sala, new Date(), 5);
-        dao.insert(reserva);
+        
+        
+        boolean test = dao.insert(reserva);
+        assertTrue(test);
     }
 
     public void listar() {
