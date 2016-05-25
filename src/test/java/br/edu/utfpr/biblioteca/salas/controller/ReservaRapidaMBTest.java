@@ -11,7 +11,7 @@ import org.junit.Test;
  */
 public class ReservaRapidaMBTest {
    
-   @Test
+//   @Test
    public void test_getSalasDisponiveis(){
        ReservaRapidaMB reserva = new ReservaRapidaMB();
 //       List<SalaPO> salas = reserva.getSalasDisponiveis();
