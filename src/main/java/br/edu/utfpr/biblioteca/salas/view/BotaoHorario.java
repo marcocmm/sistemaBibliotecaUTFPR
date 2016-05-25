@@ -12,20 +12,20 @@ import java.io.Serializable;
  *
  * @author romulo
  */
-public final class BotaoHorario implements Serializable {
-    
+public final class BotaoHorario implements Serializable, Comparable<BotaoHorario> {
+
     private String value;
     private String classe;
     private boolean disabled;
     private int hora;
-    
+
     public BotaoHorario(int horaInicial, String classe, boolean disabled) {
         setValue(horaInicial);
         setClasse(classe);
         this.disabled = disabled;
         this.hora = horaInicial;
     }
-    
+
     public void setValue(int hora) {
         String strValue = "";
         if (hora == 8) {
@@ -39,7 +39,7 @@ public final class BotaoHorario implements Serializable {
         }
         this.value = strValue;
     }
-    
+
     public void setClasse(String classe) {
         if (classe.equals("verde")) {
             this.classe = "btn btn-success";
@@ -51,21 +51,26 @@ public final class BotaoHorario implements Serializable {
             this.classe = "ui-priority-primary";
         }
     }
-    
+
     public boolean isDisabled() {
         return disabled;
     }
-    
+
     public String getClasse() {
         return classe;
     }
-    
+
     public int getHora() {
         return hora;
     }
-    
+
     public String getValue() {
         return value;
     }
-    
+
+    @Override
+    public int compareTo(BotaoHorario o) {
+        return Integer.compare(this.hora, o.hora);
+    }
+
 }
