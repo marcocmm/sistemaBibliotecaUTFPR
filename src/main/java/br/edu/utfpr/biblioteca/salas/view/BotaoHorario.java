@@ -12,32 +12,34 @@ import java.io.Serializable;
  *
  * @author romulo
  */
-public final class BotaoHorario implements Serializable {
-    
+public final class BotaoHorario implements Serializable, Comparable<BotaoHorario> {
+
     private String value;
     private String classe;
     private boolean disabled;
     private int hora;
-    
+
     public BotaoHorario(int horaInicial, String classe, boolean disabled) {
         setValue(horaInicial);
         setClasse(classe);
         this.disabled = disabled;
         this.hora = horaInicial;
     }
-    
+
     public void setValue(int hora) {
         String strValue = "";
         if (hora == 8) {
-            strValue += "0" + hora + " as 0" + (hora + 1);
+            strValue += "0" + hora + " às 0" + (hora + 1);
         } else if (hora == 9) {
-            strValue += "0" + hora + " as " + (hora + 1);
-        } else {
-            strValue += hora + " as " + (hora + 1);
+            strValue += "0" + hora + " às " + (hora + 1);
+        } else if(hora == 0){
+            strValue = "";
+        }else {
+            strValue += hora + " às " + (hora + 1);
         }
         this.value = strValue;
     }
-    
+
     public void setClasse(String classe) {
         if (classe.equals("verde")) {
             this.classe = "btn btn-success";
@@ -49,21 +51,26 @@ public final class BotaoHorario implements Serializable {
             this.classe = "ui-priority-primary";
         }
     }
-    
+
     public boolean isDisabled() {
         return disabled;
     }
-    
+
     public String getClasse() {
         return classe;
     }
-    
+
     public int getHora() {
         return hora;
     }
-    
+
     public String getValue() {
         return value;
     }
-    
+
+    @Override
+    public int compareTo(BotaoHorario o) {
+        return Integer.compare(this.hora, o.hora);
+    }
+
 }

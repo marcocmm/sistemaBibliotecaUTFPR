@@ -23,6 +23,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
+import java.util.Collections;
 import javax.inject.Named;
 
 @Named(value = "reservaRapidaMB")
@@ -179,13 +181,16 @@ public class ReservaRapidaMB implements Serializable {
         if (salasDisponiveis == null) {
             return;
         }
+        botoesHorario.clear();
         for (Map.Entry<Date, Boolean> entry : salasDisponiveis.entrySet()) {
             if (entry.getValue()) {
-                botoesHorario.add(new BotaoHorario(entry.getKey().getHours(), "verde", true));
+                botoesHorario.add(new BotaoHorario(entry.getKey().getHours(), "verde", false));
             } else {
-                botoesHorario.add(new BotaoHorario(entry.getKey().getHours(), "vermelho", false));
+                botoesHorario.add(new BotaoHorario(entry.getKey().getHours(), "vermelho", true));
             }
         }
+        botoesHorario.add(new BotaoHorario(0, "branco", true));
+        Collections.sort(botoesHorario);
         //chamar método alteraEstilo ou implementar o método aqui
     }
 

@@ -207,7 +207,7 @@ public class CalendarioHelper {
         calendar.clear(Calendar.SECOND);
         calendar.clear(Calendar.MILLISECOND);
 
-        for (int i = 8; i < 21; i++) {
+        for (int i = 8; i <= 21; i++) {
             calendar.set(Calendar.HOUR_OF_DAY, i);
             horarios.add((Date) calendar.getTime().clone());
         }
@@ -360,5 +360,22 @@ public class CalendarioHelper {
         calendar.setTime(date);
         calendar.add(Calendar.HOUR_OF_DAY, 1);
         return calendar.getTime();
+    }
+    /**
+     * Atribui o valor da hora na hora do dia(do tipo Date)
+     * 
+     * @param dia
+     * @param hora
+     * @return 
+     */
+    public static Date mergeDiaHora(Date dia, String hora){
+        String dataHora = CalendarioHelper.getData(dia).split(" ")[0].split(":")[0];
+        int dataHoraAux;
+        while (!dataHora.equals(hora)){
+            dataHoraAux =  Integer.parseInt(dataHora) + 1;
+            dataHora = String.valueOf(dataHoraAux);
+            addHora(dia);
+        }
+        return dia;
     }
 }
