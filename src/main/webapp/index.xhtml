@@ -33,7 +33,7 @@
                         </h:panelGrid>
                         <h:panelGrid id="horariosReservas" columns="1">
                             <p:dataGrid var="botao" value="#{reservaRapidaMB.botoesHorario}" columns="3" rows="13" paginator="false" id="horarios">
-                                <h:commandButton value="#{botao.value}" class="#{botao.classe}" disabled="#{botao.disabled}" actionListener="#{reservaRapidaMB.setStrHora(botao.hora)}"/>
+                                <h:commandButton value="#{botao.value}" class="#{botao.classe}" disabled="#{botao.disabled}" actionListener="#{reservaRapidaMB.setStrHora(botao.horaString)}"/>
                             </p:dataGrid>
                         </h:panelGrid>
                     </h:panelGrid>
@@ -42,13 +42,10 @@
 
                 <p:tab id="sala" title="Sala">
                     <p:messages />
-
-
-
                     <p:dataGrid var="sala" value="#{reservaRapidaMB.salasDisponiveis}" columns="1" rows="5" paginator="false" id="salas">
                         <p:selectOneMenu id="sala" value="Salas" effect="fold" editable="true">
-                            <f:selectItem itemValue="#{reservaRapidaMB.reserva.sala.setId}" />
-                            <f:selectItems value="#{reservaRapidaMB.salasDisponiveis}" />
+                            <f:selectItem itemValue="#{reservaRapidaMB.reserva.sala.setId(sala.id)}" />
+                            <f:selectItems value="#{reservaRapidaMB.salasDisponiveis}"/>
                         </p:selectOneMenu>
                             <!--<h:commandButton value="#{sala.id}" class="" actionListener="#{reservaRapidaMB.reserva.sala.setId(sala.id)}"/>-->
                     </p:dataGrid>

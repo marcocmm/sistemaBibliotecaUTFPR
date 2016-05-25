@@ -63,11 +63,12 @@ public class ReservaRapidaMB implements Serializable {
     }
 
     public void setStrHora(String strHora) {
+        System.out.println(strHora);
         this.strHora = strHora;
     }
 
     public List<BotaoHorario> getBotoesHorario() {
-        return botoesHorario;
+    return botoesHorario;
     }
 
     public Date getDataAtual() {
