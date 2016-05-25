@@ -29,11 +29,11 @@ public final class BotaoHorario implements Serializable, Comparable<BotaoHorario
     public void setValue(int hora) {
         String strValue = "";
         if (hora == 8) {
-            strValue += "0" + hora + " as 0" + (hora + 1);
+            strValue += "0" + hora + " às 0" + (hora + 1);
         } else if (hora == 9) {
-            strValue += "0" + hora + " as " + (hora + 1);
+            strValue += "0" + hora + " às " + (hora + 1);
         } else {
-            strValue += hora + " as " + (hora + 1);
+            strValue += hora + " às " + (hora + 1);
         }
         this.value = strValue;
     }
