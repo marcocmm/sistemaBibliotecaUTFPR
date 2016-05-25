@@ -32,6 +32,8 @@ public class ReservaRapidaMB implements Serializable {
 
     private ReservaPO reserva;
     private String strHora;
+    private SalaPO sala;
+    private String idSala;
 
     private List<BotaoHorario> botoesHorario;
 
@@ -70,6 +72,28 @@ public class ReservaRapidaMB implements Serializable {
         return new Date();
     }
 
+    public SalaPO getSala() {
+        return sala;
+    }
+
+    public void setSala(SalaPO sala) {
+        
+        this.sala = sala;
+    }
+
+    public String getIdSala() {
+        return idSala;
+    }
+
+    public void setIdSala(String idSala) {
+        reserva.setSala(new SalaPO(Integer.parseInt(idSala), true));
+        this.idSala = idSala;
+    }
+    
+    
+    
+    
+
     /**
      * Método executado ao ser escolhida uma data no calendário
      *
@@ -106,8 +130,13 @@ public class ReservaRapidaMB implements Serializable {
      *
      * @return
      */
-    public List<SalaPO> getSalasDisponiveis() {
-        return SalaBO.getSalasDisponiveis(this.reserva.getDataInicial());
+    public HashMap<String, String> getSalasDisponiveis() {
+        HashMap<String, String> salasHash = new HashMap<>();
+        List<SalaPO> salas = SalaBO.getSalasDisponiveis(this.reserva.getDataInicial());
+        for (SalaPO sala : salas) {
+            salasHash.put(String.valueOf(sala.getId()), "Sala "+ sala.getId());
+        }
+        return salasHash;
     }
 
     /**
