@@ -163,7 +163,6 @@ public class ReservaRapidaMB implements Serializable {
         }
         botoesHorario.add(new BotaoHorario(0, "branco", true));
         Collections.sort(botoesHorario);
-        //chamar método alteraEstilo ou implementar o método aqui
     }
 
     public void alterarEstilo() {
