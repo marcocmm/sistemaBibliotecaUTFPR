@@ -23,7 +23,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.text.SimpleDateFormat;
-import java.util.Collection;
 import java.util.Collections;
 import javax.inject.Named;
 
@@ -60,6 +59,14 @@ public class ReservaRapidaMB implements Serializable {
         return strHora;
     }
 
+    public String getViewDataInicial() {
+        return formatoEmDia.format(reserva.getDataInicial());
+    }
+
+    public String getViewHoraInicial() {
+        return formatoEmHoras.format(reserva.getDataInicial());
+    }
+
     public void setStrHora(String strHora) {
         this.strHora = strHora;
     }
@@ -91,6 +98,7 @@ public class ReservaRapidaMB implements Serializable {
      * @return
      */
     public String onFlowProcess(FlowEvent event) {
+        this.reserva.setDataInicial(CalendarioHelper.mergeDiaHora(this.reserva.getDataInicial(), strHora));
         return event.getNewStep();
     }
 
@@ -108,9 +116,13 @@ public class ReservaRapidaMB implements Serializable {
      *
      * @return
      */
-    public List<SalaPO> getSalasDisponiveis() {
-        this.reserva.setDataInicial(CalendarioHelper.mergeDiaHora(this.reserva.getDataInicial(),strHora));
-        return SalaBO.getSalasDisponiveis(this.reserva.getDataInicial());
+    public HashMap<String, String> getSalasDisponiveis() {
+        HashMap<String, String> salasHash = new HashMap<>();
+        List<SalaPO> salas = SalaBO.getSalasDisponiveis(this.reserva.getDataInicial());
+        for (SalaPO sala : salas) {
+            salasHash.put(String.valueOf(sala.getId()), "Sala " + sala.getId());
+        }
+        return salasHash;
     }
 
     /**
@@ -118,8 +130,6 @@ public class ReservaRapidaMB implements Serializable {
      * inferiores.
      */
     public void reservarSala() {
-        Date dataInicial = CalendarioHelper.parseDateTime(this.reserva.getStrDataInicial(), this.strHora);
-        this.reserva.setDataInicial(dataInicial);
         FacesMessage msg;
 
         if (reserva.getDataFinal().equals(reserva.getDataInicial())) {

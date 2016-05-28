@@ -33,7 +33,7 @@
                         </h:panelGrid>
                         <h:panelGrid id="horariosReservas" columns="1">
                             <p:dataGrid var="botao" value="#{reservaRapidaMB.botoesHorario}" columns="3" rows="13" paginator="false" id="horarios">
-                                <h:commandButton value="#{botao.value}" class="#{botao.classe}" disabled="#{botao.disabled}" actionListener="#{reservaRapidaMB.setStrHora(botao.hora)}"/>
+                                <h:commandButton value="#{botao.value}" class="#{botao.classe}" disabled="#{botao.disabled}" actionListener="#{reservaRapidaMB.setStrHora(botao.horaString)}"/>
                             </p:dataGrid>
                         </h:panelGrid>
                     </h:panelGrid>
@@ -43,7 +43,10 @@
                 <p:tab id="sala" title="Sala">
                     <p:messages />
                     <p:dataGrid var="sala" value="#{reservaRapidaMB.salasDisponiveis}" columns="1" rows="5" paginator="false" id="salas">
-                        <h:commandButton value="#{sala.id}" class="" actionListener="#{reservaRapidaMB.reserva.sala.setId(sala.id)}"/>
+                        <p:selectOneMenu id="sala" value="Salas" effect="fold" editable="true">
+                            <f:selectItems value="#{reservaRapidaMB.salasDisponiveis}"/>
+                            <f:selectItem itemValue="#{reservaRapidaMB.reserva.sala.id}" />
+                        </p:selectOneMenu>
                     </p:dataGrid>
                 </p:tab>
 
@@ -53,10 +56,10 @@
                         <h:panelGrid id="confirmation" columns="1" columnClasses="grid,grid,grid">
                             <h:panelGrid columns="2" columnClasses="label, value">
                                 <h:outputText value="Data: " />
-                                <h:outputText value="#{reservaRapidaMB.reserva.dataInicial}" styleClass="outputLabel"/>
+                                <h:outputText value="#{reservaRapidaMB.viewDataInicial}" styleClass="outputLabel"/>
 
                                 <h:outputText value="Horário: " />
-                                <h:outputText value="#{reservaRapidaMB.reserva.dataInicial}" styleClass="outputLabel"/>
+                                <h:outputText value="#{reservaRapidaMB.viewHoraInicial}" styleClass="outputLabel"/>
                             </h:panelGrid>
 
                             <h:panelGrid columns="2" columnClasses="label, value">
