@@ -29,11 +29,11 @@
                         <h:panelGrid columns="1" cellpadding="5">
                             <p:calendar id="inline" value="#{reservaRapidaMB.reserva.dataInicial}" mode="inline">
                                 <p:ajax event="dateSelect" listener="#{reservaRapidaMB.onDateSelect}" update="msgs,horariosReservas"/>
-                            </p:calendar>
+                            </p:calendar> 
                         </h:panelGrid>
                         <h:panelGrid id="horariosReservas" columns="1">
                             <p:dataGrid var="botao" value="#{reservaRapidaMB.botoesHorario}" columns="3" rows="13" paginator="false" id="horarios">
-                                <h:commandButton value="#{botao.value}" class="#{botao.classe}" disabled="#{botao.disabled}" actionListener="#{reservaRapidaMB.setStrHora(botao.horaString)}"/>
+                                <h:commandButton value="#{botao.value}" class="#{botao.classe}" disabled="#{botao.disabled}" actionListener="#{reservaRapidaMB.setStrHora(botao.horaStr)}"/>
                             </p:dataGrid>
                         </h:panelGrid>
                     </h:panelGrid>
