@@ -50,7 +50,7 @@
                     </p:dataGrid>
                     <header>Selecione a sala desejada : </header>                       
                     <p:dataGrid var="sala" value="#{reservaRapidaMB.salasDisponiveis}" columns="1" rows="1" paginator="false"  id="salas">
-                        <p:selectOneMenu id="salaid" value="#{reservaRapidaMB.idSala}" effect="fold" editable="false">
+                        <p:selectOneMenu id="salaid" value="#{reservaRapidaMB.reserva.sala.id}" effect="fold" editable="false">
                             <!--<f:selectItem itemLabel="Salas :" itemValue="" />-->
                             <f:selectItems value="#{reservaRapidaMB.list}"/>
                         </p:selectOneMenu>

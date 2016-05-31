@@ -54,8 +54,8 @@ public class SalaPO implements Serializable {
         return id;
     }
 
-    public void setIdStr(String idStr) {
-        this.id = Integer.parseInt(idStr);
+    public void setId(String idStr) {
+        this.id = Integer.valueOf(idStr);
     }
 
     public void setId(int id) {
