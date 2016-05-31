@@ -53,7 +53,7 @@
                     <p:messages />
                     <p:panel header="Reserva">
                         <h:panelGrid id="confirmation" columns="1" columnClasses="grid,grid,grid">
-                            <h:panelGrid columns="2" columnClasses="label, value">
+                            <h:panelGrid columns="2" columnClasses="value">
                                 <h:outputText value="Data: " />
                                 <h:outputText value="#{reservaRapidaMB.viewDataInicial}" styleClass="outputLabel"/>
 
@@ -61,10 +61,10 @@
                                 <h:outputText value="#{reservaRapidaMB.viewHoraInicial}" styleClass="outputLabel"/>
                             </h:panelGrid>
 
-                            <h:panelGrid columns="2" columnClasses="label, value">
+                            <h:panelGrid columns="2" columnClasses="value">
                                 <h:outputText value="Sala: " />
                                 <h:outputText value="#{reservaRapidaMB.reserva.sala.id}" styleClass="outputLabel"/>
-                                <h:outputText value="Quantidade de alunos: " />
+                                <h:outputText value="Alunos: " />
                                 <h:outputText value="#{reservaRapidaMB.reserva.quantidadeAlunos}" styleClass="outputLabel"/>
                             </h:panelGrid>
 
@@ -72,7 +72,7 @@
                     </p:panel>
 
                     <p:panel header="Autenticação">
-                        <h:panelGrid columns="2" columnClasses="label, value">
+                        <h:panelGrid columns="2" columnClasses="value">
                             <h:outputText value="RA: *" />
                             <p:inputText value="#{reservaRapidaMB.reserva.estudante.ra}" required="true" label="RA"/>
                             <h:outputText value="Senha: *" />
