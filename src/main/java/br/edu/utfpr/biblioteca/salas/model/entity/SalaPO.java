@@ -50,17 +50,19 @@ public class SalaPO implements Serializable {
         this.ar = ar;
     }
 
-    public Integer getId() {
+//    public Integer getId() {
+    public int getId() {
         return id;
     }
 
     public void setIdStr(String idStr) {
         this.id = Integer.parseInt(idStr);
-   }
+    }
+
     public void setId(int id) {
         System.out.println(id);
         this.id = id;
-   }
+    }
 
     public Boolean hasAr() {
         return ar;

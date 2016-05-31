@@ -361,21 +361,18 @@ public class CalendarioHelper {
         calendar.add(Calendar.HOUR_OF_DAY, 1);
         return calendar.getTime();
     }
+
     /**
      * Atribui o valor da hora na hora do dia(do tipo Date)
-     * 
+     *
      * @param dia
      * @param hora
-     * @return 
+     * @return
      */
-    public static Date mergeDiaHora(Date dia, String hora){
-        String dataHora = CalendarioHelper.getData(dia).split(" ")[0].split(":")[0];
-        int dataHoraAux;
-        while (!dataHora.equals(hora)){
-            dataHoraAux =  Integer.parseInt(dataHora) + 1;
-            dataHora = String.valueOf(dataHoraAux);
-            addHora(dia);
-        }
-        return dia;
+    public static Date mergeDiaHora(Date dia, String hora) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(dia);
+        calendar.set(Calendar.HOUR_OF_DAY, Integer.valueOf(hora));
+        return calendar.getTime();
     }
 }

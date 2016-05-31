@@ -23,7 +23,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.text.SimpleDateFormat;
-import java.util.Collection;
 import java.util.Collections;
 import javax.inject.Named;
 
@@ -34,6 +33,7 @@ public class ReservaRapidaMB implements Serializable {
 
     private ReservaPO reserva;
     private String strHora;
+
     private SalaPO sala;
     private String idSala;
 
@@ -62,8 +62,15 @@ public class ReservaRapidaMB implements Serializable {
         return strHora;
     }
 
+    public String getViewDataInicial() {
+        return formatoEmDia.format(reserva.getDataInicial());
+    }
+
+    public String getViewHoraInicial() {
+        return formatoEmHoras.format(reserva.getDataInicial());
+    }
+
     public void setStrHora(String strHora) {
-        System.out.println(strHora);
         this.strHora = strHora;
     }
 
@@ -113,6 +120,7 @@ public class ReservaRapidaMB implements Serializable {
      * @return
      */
     public String onFlowProcess(FlowEvent event) {
+        this.reserva.setDataInicial(CalendarioHelper.mergeDiaHora(this.reserva.getDataInicial(), strHora));
         return event.getNewStep();
     }
 
@@ -145,8 +153,6 @@ public class ReservaRapidaMB implements Serializable {
      * inferiores.
      */
     public void reservarSala() {
-        Date dataInicial = CalendarioHelper.parseDateTime(this.reserva.getStrDataInicial(), this.strHora);
-        this.reserva.setDataInicial(dataInicial);
         FacesMessage msg;
 
         if (reserva.getDataFinal().equals(reserva.getDataInicial())) {
@@ -190,7 +196,6 @@ public class ReservaRapidaMB implements Serializable {
         }
         botoesHorario.add(new BotaoHorario(0, "branco", true));
         Collections.sort(botoesHorario);
-        //chamar método alteraEstilo ou implementar o método aqui
     }
 
     public void alterarEstilo() {
