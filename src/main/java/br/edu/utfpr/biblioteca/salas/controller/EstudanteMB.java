@@ -5,8 +5,12 @@
  */
 package br.edu.utfpr.biblioteca.salas.controller;
 
+import br.edu.utfpr.biblioteca.salas.model.Dia;
 import br.edu.utfpr.biblioteca.salas.model.bo.EstudanteBO;
+import br.edu.utfpr.biblioteca.salas.model.bo.ReservaBO;
 import br.edu.utfpr.biblioteca.salas.model.entity.EstudantePO;
+import java.util.Date;
+import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -25,6 +29,7 @@ import javax.servlet.http.HttpSession;
 public class EstudanteMB {
 
     private EstudantePO estudante;
+    private Dia diaSelecionado;
 
     public EstudanteMB() {
         this.estudante = new EstudantePO(null, null, null, null);
@@ -36,6 +41,14 @@ public class EstudanteMB {
 
     public void setEstudante(EstudantePO estudantePO) {
         this.estudante = estudantePO;
+    }
+
+    public Dia getDiaSelecionado() {
+        return diaSelecionado;
+    }
+
+    public void setDiaSelecionado(Dia diaSelecionado) {
+        this.diaSelecionado = diaSelecionado;
     }
 
     /**
@@ -103,4 +116,26 @@ public class EstudanteMB {
         }
         facesContext.addMessage(null, message);
     }
+
+    /**
+     * Obtém uma lista com todos os dias do mês dado. Cada dia é uma relação de
+     * 14 horas cada qual com no máximo 6 reservas
+     *
+     * @param date
+     * @return
+     */
+    public List<Dia> getMes(Date date) {
+        return ReservaBO.descreverMes(date);
+    }
+
+    /**
+     * Obtém lista com todos os dias do mês atual. Cada dia é uma relação de 14
+     * horas cada qual com no máximo 6 reservas
+     *
+     * @return
+     */
+    public List<Dia> getMes() {
+        return getMes(new Date());
+    }
+
 }

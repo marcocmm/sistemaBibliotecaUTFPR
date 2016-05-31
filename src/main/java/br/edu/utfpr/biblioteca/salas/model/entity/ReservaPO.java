@@ -90,6 +90,9 @@ public class ReservaPO implements Serializable {
     }
 
     public int getQuantidadeAlunos() {
+        if (quantidadeAlunos > 5) {
+            quantidadeAlunos = 5;
+        }
         return quantidadeAlunos;
     }
 

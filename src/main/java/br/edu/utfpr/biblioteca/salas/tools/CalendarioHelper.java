@@ -370,16 +370,10 @@ public class CalendarioHelper {
      * @return
      */
     public static Date mergeDiaHora(Date dia, String hora) {
-        if (hora == null) {
-            return dia;
-        }
-        String dataHora = CalendarioHelper.getData(dia).split(" ")[1].split("/")[0];
-        int dataHoraAux;
-        while (!dataHora.equals(hora)) {
-            dataHoraAux = Integer.parseInt(dataHora) + 1;
-            dataHora = String.valueOf(dataHoraAux);
-            addHora(dia);
-        }
-        return dia;
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(dia);
+        calendar.set(Calendar.HOUR_OF_DAY, Integer.valueOf(hora));
+        return calendar.getTime();
     }
 }

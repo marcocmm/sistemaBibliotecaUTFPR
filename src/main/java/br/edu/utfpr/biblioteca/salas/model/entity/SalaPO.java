@@ -45,16 +45,20 @@ public class SalaPO implements Serializable {
     protected SalaPO() {
     }
 
-    public SalaPO(int id, boolean ar) {
+    public SalaPO(Integer id, boolean ar) {
         this.id = id;
         this.ar = ar;
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setIdStr(String idStr) {
+        this.id = Integer.parseInt(idStr);
+    }
+
+    public void setId(int id) {
         this.id = id;
     }
 

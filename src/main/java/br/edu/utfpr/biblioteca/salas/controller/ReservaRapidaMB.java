@@ -23,7 +23,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.text.SimpleDateFormat;
-import java.util.Collection;
 import java.util.Collections;
 import javax.inject.Named;
 
@@ -33,9 +32,13 @@ import javax.inject.Named;
 public class ReservaRapidaMB implements Serializable {
 
     private ReservaPO reserva;
+    private EstudantePO estudante;
     private String strHora;
 
+    private SalaPO sala;
+    private String idSala;
     private List<BotaoHorario> botoesHorario;
+    List<String> list = new ArrayList();
 
     //Formatadores de data
     private final SimpleDateFormat formatoEmHoras;
@@ -54,8 +57,24 @@ public class ReservaRapidaMB implements Serializable {
         return this.reserva;
     }
 
+    public EstudantePO getEstudante() {
+        return this.estudante;
+    }
+
+    public EstudantePO setEstudante(EstudantePO estudante) {
+        return this.estudante;
+    }
+
     public String getStrHora() {
         return strHora;
+    }
+
+    public String getViewDataInicial() {
+        return formatoEmDia.format(reserva.getDataInicial());
+    }
+
+    public String getViewHoraInicial() {
+        return formatoEmHoras.format(reserva.getDataInicial());
     }
 
     public void setStrHora(String strHora) {
@@ -68,6 +87,31 @@ public class ReservaRapidaMB implements Serializable {
 
     public Date getDataAtual() {
         return new Date();
+    }
+
+    public SalaPO getSala() {
+        return sala;
+    }
+
+    public void setSala(SalaPO sala) {
+        this.sala = sala;
+    }
+
+    public String getIdSala() {
+        return idSala;
+    }
+
+    public void setIdSala(String idSala) {
+        reserva.setSala(new SalaPO(Integer.parseInt(idSala), true));
+        this.idSala = idSala;
+    }
+
+    public List<String> getList() {
+        return list;
+    }
+
+    public void setList(List<String> list) {
+        this.list = list;
     }
 
     /**
@@ -89,6 +133,7 @@ public class ReservaRapidaMB implements Serializable {
      * @return
      */
     public String onFlowProcess(FlowEvent event) {
+        this.reserva.setDataInicial(CalendarioHelper.mergeDiaHora(this.reserva.getDataInicial(), strHora));
         return event.getNewStep();
     }
 
@@ -100,15 +145,30 @@ public class ReservaRapidaMB implements Serializable {
 
     }
 
+    public List getSelectQtd() {
+        List qtdA = new ArrayList();
+        for (int i = 1; i <= 5; i++) {
+            qtdA.add(i);
+        }
+        return qtdA;
+    }
+
     /**
      * Este método solicita para a classe SalaBO uma lista de salas disponíveis
      * dado um dia-hora. Exibe em um Select<html> as salas
      *
      * @return
      */
-    public List<SalaPO> getSalasDisponiveis() {
-        this.reserva.setDataInicial(CalendarioHelper.mergeDiaHora(this.reserva.getDataInicial(),strHora));
-        return SalaBO.getSalasDisponiveis(this.reserva.getDataInicial());
+    public HashMap<String, String> getSalasDisponiveis() {
+        HashMap<String, String> salasHash = new HashMap<>();
+        List<SalaPO> salas = SalaBO.getSalasDisponiveis(this.reserva.getDataInicial());
+        list = new ArrayList<>();
+        for (SalaPO s : salas) {
+            salasHash.put(String.valueOf(s.getId()), "Sala " + s.getId());
+            list.add(String.valueOf(s.getId()));
+        }
+
+        return salasHash;
     }
 
     /**
@@ -116,8 +176,6 @@ public class ReservaRapidaMB implements Serializable {
      * inferiores.
      */
     public void reservarSala() {
-        Date dataInicial = CalendarioHelper.parseDateTime(this.reserva.getStrDataInicial(), this.strHora);
-        this.reserva.setDataInicial(dataInicial);
         FacesMessage msg;
 
         if (reserva.getDataFinal().equals(reserva.getDataInicial())) {
@@ -161,7 +219,6 @@ public class ReservaRapidaMB implements Serializable {
         }
         botoesHorario.add(new BotaoHorario(0, "branco", true));
         Collections.sort(botoesHorario);
-        //chamar método alteraEstilo ou implementar o método aqui
     }
 
     public void alterarEstilo() {
