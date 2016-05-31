@@ -1,0 +1,3 @@
+Servidores e professores podem usar a salas? Sim, mas não podem usar para dar aula
+Possibilidade de exixtir um leitor de RA para fazer checkin/checkout? Teria que estudar o caso. Idéia nova - Verificar se o aluno esta no rede(IP) da UTF
+É possível penalizar os usuários? Não, apenas a perda da reserva após 15 minutos
