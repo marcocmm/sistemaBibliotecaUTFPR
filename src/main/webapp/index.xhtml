@@ -42,9 +42,9 @@
                 <p:tab id="sala" title="Sala">
                     <p:messages />
                     <p:dataGrid var="sala" value="#{reservaRapidaMB.salasDisponiveis}" columns="1" rows="5" paginator="false" id="salas">
-                        <p:selectOneMenu id="sala" value="Salas" effect="fold" editable="true">
+                        <p:selectOneMenu id="sala" value="#{reservaRapidaMB.idSala}" effect="fold" editable="true">
+                            <f:selectItem itemLabel="Selecione uma Sala" itemValue="" />
                             <f:selectItems value="#{reservaRapidaMB.salasDisponiveis}"/>
-                            <f:selectItem itemValue="#{reservaRapidaMB.reserva.sala.setId(4)}" />
                         </p:selectOneMenu>
                     </p:dataGrid>
                 </p:tab>

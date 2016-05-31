@@ -96,6 +96,7 @@ public class ReservaRapidaMB implements Serializable {
     }
 
     public void setIdSala(String idSala) {
+        System.out.println("SALA: " + idSala);
         reserva.setSala(new SalaPO(Integer.parseInt(idSala), true));
         this.idSala = idSala;
     }
