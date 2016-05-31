@@ -36,8 +36,8 @@ public class ReservaRapidaMB implements Serializable {
 
     private SalaPO sala;
     private String idSala;
-
     private List<BotaoHorario> botoesHorario;
+    
 
     //Formatadores de data
     private final SimpleDateFormat formatoEmHoras;
@@ -128,6 +128,13 @@ public class ReservaRapidaMB implements Serializable {
         requestContext.update("form:display");
         requestContext.execute("PF('dlg').show()");
 
+    }
+    public List getQtdAlunos(){
+        List qtdA = new ArrayList();
+        for(int i = 1; i<=5;i++){
+        qtdA.add(i);
+        }    
+        return qtdA;
     }
 
     /**
