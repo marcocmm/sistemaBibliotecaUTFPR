@@ -50,7 +50,6 @@ public class SalaPO implements Serializable {
         this.ar = ar;
     }
 
-//    public Integer getId() {
     public int getId() {
         return id;
     }
@@ -60,7 +59,6 @@ public class SalaPO implements Serializable {
     }
 
     public void setId(int id) {
-        System.out.println(id);
         this.id = id;
     }
 
