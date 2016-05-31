@@ -33,9 +33,9 @@ public class ReservaRapidaMB implements Serializable {
 
     private ReservaPO reserva;
     private EstudantePO estudante;
-    private String strHora;
-
     private SalaPO sala;
+    
+    private String strHora;   
     private String idSala;
     private List<BotaoHorario> botoesHorario;
     List<String> list = new ArrayList();
@@ -58,39 +58,19 @@ public class ReservaRapidaMB implements Serializable {
     public ReservaPO getReserva() {
         return this.reserva;
     }
-
+    
+    public ReservaPO setReserva(ReservaPO reserva) {
+        return this.reserva = reserva;
+    }
+   
     public EstudantePO getEstudante() {
         return this.estudante;
     }
 
     public EstudantePO setEstudante(EstudantePO estudante) {
-        return this.estudante;
+        return this.estudante = estudante;
     }
-
-    public String getStrHora() {
-        return strHora;
-    }
-
-    public String getViewDataInicial() {
-        return formatoEmDia.format(reserva.getDataInicial());
-    }
-
-    public String getViewHoraInicial() {
-        return formatoEmHoras.format(reserva.getDataInicial());
-    }
-
-    public void setStrHora(String strHora) {
-        this.strHora = strHora;
-    }
-
-    public List<BotaoHorario> getBotoesHorario() {
-        return botoesHorario;
-    }
-
-    public Date getDataAtual() {
-        return new Date();
-    }
-
+    
     public SalaPO getSala() {
         return sala;
     }
@@ -99,6 +79,30 @@ public class ReservaRapidaMB implements Serializable {
         this.sala = sala;
     }
 
+    public String getStrHora() {
+        return strHora;
+    }
+    
+    public void setStrHora(String strHora) {
+        this.strHora = strHora;
+    }
+
+    public Date getDataAtual() {
+        return new Date();
+    }
+    
+    public String getViewDataInicial() {
+        return formatoEmDia.format(reserva.getDataInicial());
+    }
+
+    public String getViewHoraInicial() {
+        return formatoEmHoras.format(reserva.getDataInicial());
+    }    
+
+    public List<BotaoHorario> getBotoesHorario() {
+        return botoesHorario;
+    }    
+    
     public String getIdSala() {
         return idSala;
     }
@@ -108,12 +112,20 @@ public class ReservaRapidaMB implements Serializable {
         this.idSala = idSala;
     }
 
+    public void setList(List<String> list) {
+        this.list = list;
+    }
+    
     public List<String> getList() {
         return list;
     }
-
-    public void setList(List<String> list) {
-        this.list = list;
+    
+    public List getSelectQtd() {
+        List qtdA = new ArrayList();
+        for (int i = 1; i <= 5; i++) {
+            qtdA.add(i);
+        }
+        return qtdA;
     }
 
     /**
@@ -145,15 +157,7 @@ public class ReservaRapidaMB implements Serializable {
         requestContext.update("form:display");
         requestContext.execute("PF('dlg').show()");
 
-    }
-
-    public List getSelectQtd() {
-        List qtdA = new ArrayList();
-        for (int i = 1; i <= 5; i++) {
-            qtdA.add(i);
-        }
-        return qtdA;
-    }
+    }    
 
     /**
      * Este método solicita para a classe SalaBO uma lista de salas disponíveis

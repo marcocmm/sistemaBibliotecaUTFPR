@@ -81,9 +81,9 @@
 
                     <p:panel header="Autenticação">
                         <h:panelGrid columns="2" columnClasses="value">
-                            <h:outputText value="RA: *" />
+                            <h:outputText value="RA: " />
                             <p:inputText id="username" value="#{reservaRapidaMB.reserva.estudante.ra}" required="true" label="RA"/>
-                            <h:outputText value="Senha: *" />
+                            <h:outputText value="Senha: " />
                             <p:password id="password" value="#{reservaRapidaMB.reserva.estudante.senha}" required="true" label="Senha" />
 
                             <p:commandButton value="Reservar" actionListener="#{reservaRapidaMB.reservarSala}" update="growl" process="@this"/>
