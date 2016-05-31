@@ -40,22 +40,21 @@
                 </p:tab>
 
                 <p:tab id="sala" title="Sala">
-                   <p:messages />
-                   
-                   <header>Selecione a sala desejada : </header>                       
-                   <p:dataGrid var="sala" value="#{reservaRapidaMB.salasDisponiveis}" columns="1" rows="1" paginator="false" id="salas">
-                        <p:selectOneMenu id="sala" value="#{reservaRapidaMB.idSala}" effect="fold" editable="true">
-                            <!--<f:selectItem itemLabel="Salas :" itemValue="" />-->
-                            <f:selectItems value="#{reservaRapidaMB.salasDisponiveis}"/>
+                    <!--<p:messages />-->  
+                    <header>Defina a quantidade de alunos : </header>   
+                    <p:dataGrid var="aluno" value="#{reservaRapidaMB.selectQtd}" columns="1" rows="1" paginator="false" id="qtdA">
+                        <p:selectOneMenu id="qtd" value="#{reservaRapidaMB.reserva.quantidadeAlunos}" effect="fold">
+                            <!--<f:selectItem itemLabel="Quantidade de alunos :" itemValue=""/>-->
+                            <f:selectItems value="#{reservaRapidaMB.selectQtd}"/>
                         </p:selectOneMenu>
                     </p:dataGrid>
-                   <header>Defina a quantidade de alunos : </header>   
-                   <p:dataGrid var="aluno" value="#{reservaRapidaMB.qtdAlunos}" columns="1" rows="1" paginator="false" id="qtdA">
-                       <p:selectOneMenu id="qtd" value="#{reservaRapidaMB.reserva.quantidadeAlunos}" effect="fold" editable="false">
-                            <!--<f:selectItem itemLabel="Quantidade de alunos :" itemValue=""/>-->
-                            <f:selectItems value="#{reservaRapidaMB.qtdAlunos}"/>
-                           </p:selectOneMenu>
-                    </p:dataGrid>
+                    <header>Selecione a sala desejada : </header>                       
+                    <p:dataGrid var="sala" value="#{reservaRapidaMB.salasDisponiveis}" columns="1" rows="1" paginator="false"  id="salas">
+                        <p:selectOneMenu id="salaid" value="#{reservaRapidaMB.idSala}" effect="fold" editable="false">
+                            <!--<f:selectItem itemLabel="Salas :" itemValue="" />-->
+                            <f:selectItems value="#{reservaRapidaMB.list}"/>
+                        </p:selectOneMenu>
+                    </p:dataGrid>                  
                 </p:tab>
 
                 <p:tab id="confirmacao" title="Confirmação">
@@ -83,7 +82,7 @@
                     <p:panel header="Autenticação">
                         <h:panelGrid columns="2" columnClasses="value">
                             <h:outputText value="RA: *" />
-                            <p:inputText value="#{reservaRapidaMB.reserva.estudante.ra}" required="true" label="RA"/>
+                            <p:inputText id="username" value="#{reservaRapidaMB.reserva.estudante.ra}" required="true" label="RA"/>
                             <h:outputText value="Senha: *" />
                             <p:password id="password" value="#{reservaRapidaMB.reserva.estudante.senha}" required="true" label="Senha" />
 

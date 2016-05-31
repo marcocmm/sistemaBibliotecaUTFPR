@@ -32,12 +32,13 @@ import javax.inject.Named;
 public class ReservaRapidaMB implements Serializable {
 
     private ReservaPO reserva;
+    private EstudantePO estudante;
     private String strHora;
 
     private SalaPO sala;
     private String idSala;
     private List<BotaoHorario> botoesHorario;
-    
+    List<String> list = new ArrayList();
 
     //Formatadores de data
     private final SimpleDateFormat formatoEmHoras;
@@ -56,6 +57,14 @@ public class ReservaRapidaMB implements Serializable {
 
     public ReservaPO getReserva() {
         return this.reserva;
+    }
+
+    public EstudantePO getEstudante() {
+        return this.estudante;
+    }
+
+    public EstudantePO setEstudante(EstudantePO estudante) {
+        return this.estudante;
     }
 
     public String getStrHora() {
@@ -99,6 +108,14 @@ public class ReservaRapidaMB implements Serializable {
         this.idSala = idSala;
     }
 
+    public List<String> getList() {
+        return list;
+    }
+
+    public void setList(List<String> list) {
+        this.list = list;
+    }
+
     /**
      * Método executado ao ser escolhida uma data no calendário
      *
@@ -130,11 +147,12 @@ public class ReservaRapidaMB implements Serializable {
         requestContext.execute("PF('dlg').show()");
 
     }
-    public List getQtdAlunos(){
+
+    public List getSelectQtd() {
         List qtdA = new ArrayList();
-        for(int i = 1; i<=5;i++){
-        qtdA.add(i);
-        }    
+        for (int i = 1; i <= 5; i++) {
+            qtdA.add(i);
+        }
         return qtdA;
     }
 
@@ -147,8 +165,10 @@ public class ReservaRapidaMB implements Serializable {
     public HashMap<String, String> getSalasDisponiveis() {
         HashMap<String, String> salasHash = new HashMap<>();
         List<SalaPO> salas = SalaBO.getSalasDisponiveis(this.reserva.getDataInicial());
-        for (SalaPO sala : salas) {
-            salasHash.put(String.valueOf(sala.getId()), "Sala " + sala.getId());
+        list = new ArrayList<>();
+        for (SalaPO s : salas) {
+            salasHash.put(String.valueOf(s.getId()), "Sala " + s.getId());
+            list.add(String.valueOf(s.getId()));
         }
 
         return salasHash;

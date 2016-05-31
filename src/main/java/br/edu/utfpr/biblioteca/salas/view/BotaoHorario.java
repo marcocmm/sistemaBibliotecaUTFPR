@@ -36,7 +36,7 @@ public final class BotaoHorario implements Serializable, Comparable<BotaoHorario
                 strValue += "0" + hora + " às " + (hora + 1);
                 break;
             case 0:
-                strValue = ".";
+                strValue = "               ";
                 break;
             default:
                 strValue += hora + " às " + (hora + 1);
