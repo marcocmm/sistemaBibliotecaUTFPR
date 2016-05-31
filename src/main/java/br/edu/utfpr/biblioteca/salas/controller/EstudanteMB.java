@@ -47,6 +47,10 @@ public class EstudanteMB {
         return diaSelecionado;
     }
 
+    public void setDiaSelecionado(Dia diaSelecionado) {
+        this.diaSelecionado = diaSelecionado;
+    }
+
     /**
      * Valida a entrada do usuário e cadastra um estudante.
      *
