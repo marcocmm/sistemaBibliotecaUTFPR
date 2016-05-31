@@ -370,6 +370,7 @@ public class CalendarioHelper {
      * @return
      */
     public static Date mergeDiaHora(Date dia, String hora) {
+
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(dia);
         calendar.set(Calendar.HOUR_OF_DAY, Integer.valueOf(hora));

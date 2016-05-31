@@ -48,8 +48,6 @@ public class ReservaRapidaMB implements Serializable {
 
         formatoEmHoras = new SimpleDateFormat("HH");
         formatoEmDia = new SimpleDateFormat("dd/MM/yyyy");
-//        Aqui ficou com bug pq o método updateBotoesAtivosPorDia não retorna mais uma lista
-//        Ver se é necessário retornar uma lista ou implematar o set do css dos botões no próprio método updateBotoesAtivosPorDia
         this.reserva = new ReservaPO(new EstudantePO(null, null, null, null), new SalaPO(0, true), new Date(), 0);
         this.botoesHorario = new ArrayList<>();
         updateBotoesAtivosPorDia(new Date());
