@@ -78,7 +78,7 @@
                             <h:outputText value="Senha: *" />
                             <p:password id="password" value="#{reservaRapidaMB.reserva.estudante.senha}" required="true" label="Senha" />
 
-                            <p:commandButton value="Reservar" actionListener="#{reservaRapidaMB.reservarSala()}" update="growl" process="@this"/>
+                            <p:commandButton value="Reservar" actionListener="#{reservaRapidaMB.reservarSala}" update="growl" process="@this"/>
                         </h:panelGrid>
                     </p:panel>
 
