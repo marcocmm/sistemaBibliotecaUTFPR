@@ -108,7 +108,6 @@ public class ReservaRapidaMB implements Serializable {
         Date dataSelecionada = (Date) event.getObject();
         FacesContext facesContext = FacesContext.getCurrentInstance();
         facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Data Selecionada", formatoEmDia.format(event.getObject())));
-        System.out.println(dataSelecionada);
         updateBotoesAtivosPorDia(dataSelecionada);
     }
 
