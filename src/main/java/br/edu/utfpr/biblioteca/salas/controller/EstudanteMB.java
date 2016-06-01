@@ -138,4 +138,7 @@ public class EstudanteMB {
         return getMes(new Date());
     }
 
+    public Date getMesAtual(){
+        return new Date();
+    }
 }

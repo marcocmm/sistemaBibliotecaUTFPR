@@ -19,6 +19,17 @@
 
         <h:panelGroup>
             <h:form id="form">
+                <p:link outcome="index" value="Anterior">
+                    <f:param name="productId" value="10" />
+                </p:link>
+                
+                <p:link outcome="index" value="Atual">
+                    <f:param name="productId" value="10" />
+                </p:link>
+                
+                <p:link outcome="index" value="Próximo">
+                    <f:param name="productId" value="10" />
+                </p:link>
                 <p:dataGrid var="dia" value="#{estudanteMB.mes}" columns="7"
                             rows="42" paginator="false" id="calendario">
 
@@ -28,7 +39,7 @@
 
                     <p:panel header="#{dia.data.date}" style="text-align:center">
                         <h:panelGrid columns="1" style="width:100%">
-                            <h:outputText value="#{dia.data}" />
+
 
                             <p:commandLink update=":form:descricaoDia" oncomplete="PF('diaDialog').show()" title="View Detail">
                                 <h:outputText styleClass="ui-icon ui-icon-search" style="margin:0 auto;" />
