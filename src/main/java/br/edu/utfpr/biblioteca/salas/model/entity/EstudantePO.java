@@ -6,6 +6,7 @@
 package br.edu.utfpr.biblioteca.salas.model.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -72,7 +73,7 @@ public class EstudantePO implements Serializable {
     }
 
     public String getRa() {
-        System.out.println("teste" + ra);
+        System.out.println(ra);
         return ra;
     }
 
@@ -80,7 +81,7 @@ public class EstudantePO implements Serializable {
         this.ra = ra;
     }
 
-    public String getNome() {   
+    public String getNome() {
         return nome;
     }
 
@@ -89,6 +90,7 @@ public class EstudantePO implements Serializable {
     }
 
     public String getSenha() {
+        System.out.println(senha);
         return senha;
     }
 
@@ -107,6 +109,24 @@ public class EstudantePO implements Serializable {
     public List<ReservaPO> getReservas() {
         return reservas;
     }
+
+//    public List getQuantidadeReservas() {
+//        List QuantidadeR = new ArrayList();
+//        for (int i = 1; i <= this.getReservas().size(); i++) {
+//            QuantidadeR.add("Reserva "+i+" : "+this.getReservas().get(i).getDataInicial());
+//        }
+//        return QuantidadeR;
+//    }
+    
+     public List getQuantidadeReservas() {
+        List QuantidadeR = new ArrayList();
+        for (int i = 1; i <= 2; i++) {
+            QuantidadeR.add("Reserva "+i);
+        }
+        return QuantidadeR;
+    }
+
+
 
     public void setReservas(List<ReservaPO> reservas) {
         this.reservas = reservas;
