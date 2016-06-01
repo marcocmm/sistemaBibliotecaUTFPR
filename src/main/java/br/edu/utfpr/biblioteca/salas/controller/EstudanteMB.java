@@ -9,6 +9,7 @@ import br.edu.utfpr.biblioteca.salas.model.Dia;
 import br.edu.utfpr.biblioteca.salas.model.bo.EstudanteBO;
 import br.edu.utfpr.biblioteca.salas.model.bo.ReservaBO;
 import br.edu.utfpr.biblioteca.salas.model.entity.EstudantePO;
+import br.edu.utfpr.biblioteca.salas.tools.CalendarioHelper;
 import java.util.Date;
 import java.util.List;
 import javax.faces.application.FacesMessage;
@@ -30,9 +31,11 @@ public class EstudanteMB {
 
     private EstudantePO estudante;
     private Dia diaSelecionado;
+    private Date mesEscolhido;
 
     public EstudanteMB() {
         this.estudante = new EstudantePO(null, null, null, null);
+        mesEscolhido = new Date();
     }
 
     public EstudantePO getEstudante() {
@@ -135,10 +138,44 @@ public class EstudanteMB {
      * @return
      */
     public List<Dia> getMes() {
-        return getMes(new Date());
+        return getMes(this.mesEscolhido);
     }
 
-    public Date getMesAtual(){
+    /**
+     * retorna o mes atual
+     *
+     * @return
+     */
+    public Date getDataAtual() {
         return new Date();
+    }
+
+    public Date getMesEscolhido() {
+        return mesEscolhido;
+    }
+
+    public void setMesEscolhido(Date mesEscolhido) {
+        this.mesEscolhido = mesEscolhido;
+//        this.mesEscolhido = CalendarioHelper.parseMonth(mesEscolhido);
+    }
+
+    public Date getMesAnterior() {
+        return CalendarioHelper.mesAnterior(mesEscolhido);
+    }
+
+    public Date getMesPosterior() {
+        return CalendarioHelper.mesPosterior(mesEscolhido);
+    }
+
+    public String getNomeAtual() {
+        return CalendarioHelper.getNomeMes(mesEscolhido);
+    }
+
+    public String getNomeAnterior() {
+        return CalendarioHelper.getNomeMes(getMesAnterior());
+    }
+
+    public String getNomePosterior() {
+        return CalendarioHelper.getNomeMes(getMesPosterior());
     }
 }

@@ -370,10 +370,45 @@ public class CalendarioHelper {
      * @return
      */
     public static Date mergeDiaHora(Date dia, String hora) {
-
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(dia);
         calendar.set(Calendar.HOUR_OF_DAY, Integer.valueOf(hora));
         return calendar.getTime();
     }
+
+    /**
+     * a partir de uma data retorna o mes anterior
+     *
+     * @param data
+     * @return
+     */
+    public static Date mesAnterior(Date data) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(data);
+        calendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH) - 1);
+        return calendar.getTime();
+    }
+
+    /**
+     * a partir de uma data retorna o mes posterior
+     *
+     * @param data
+     * @return
+     */
+    public static Date mesPosterior(Date data) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(data);
+        calendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH) + 1);
+        return calendar.getTime();
+    }
+
+    public static String getNomeMes(Date date) {
+        SimpleDateFormat formatoEmDia = new SimpleDateFormat("MMMM");
+        return formatoEmDia.format(date);
+    }
+
+    public static Date parseMonth(int mesEscolhido) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }
