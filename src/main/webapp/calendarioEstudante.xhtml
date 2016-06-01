@@ -20,24 +20,25 @@
         <f:metadata>
             <f:viewParam name="mesEscolhido" value="#{estudanteMB.mesEscolhido}" />
         </f:metadata>
+
+        <p:outputPanel style="float: left; width: 33%; text-align: left">
+            <p:link outcome="calendarioEstudante" value="#{estudanteMB.nomeAnterior}">
+                <f:param name="mesEscolhido" value="#{estudanteMB.mesAnterior}" />
+            </p:link>
+        </p:outputPanel>
+
+        <p:outputPanel style="float: left; width: 33%; text-align: center">
+            <p:link outcome="calendarioEstudante" value="#{estudanteMB.nomeAtual}">
+                <f:param name="mesEscolhido" value="#{estudanteMB.dataAtual}" />
+            </p:link>
+        </p:outputPanel>
+
+        <p:outputPanel style="float: left; width: 33%; text-align: right">
+            <p:link outcome="calendarioEstudante" value="#{estudanteMB.nomePosterior}">
+                <f:param name="mesEscolhido" value="#{estudanteMB.mesPosterior}" />
+            </p:link>
+        </p:outputPanel>
         
-        <div style="float: left; width: 33%; text-align: left">
-        <p:link outcome="calendarioEstudante" value="#{estudanteMB.nomeAnterior}">
-            <f:param name="mesEscolhido" value="#{estudanteMB.mesAnterior}" />
-        </p:link>
-        </div>
-            
-        <div style="float: left; width: 33%; text-align: center">
-        <p:link outcome="calendarioEstudante" value="#{estudanteMB.nomeAtual}">
-            <f:param name="mesEscolhido" value="#{estudanteMB.dataAtual}" />
-        </p:link>
-        </div>
-        
-        <div style="float: left; width: 33%; text-align: right">
-        <p:link outcome="calendarioEstudante" value="#{estudanteMB.nomePosterior}">
-            <f:param name="mesEscolhido" value="#{estudanteMB.mesPosterior}" />
-        </p:link>
-        </div>    
         <h:panelGroup>
             <h:form id="form">
 
@@ -78,4 +79,3 @@
     </h:body>
 
 </html>
-

@@ -15,28 +15,19 @@ import br.edu.utfpr.biblioteca.salas.tools.CalendarioHelper;
 import java.util.Date;
 import java.util.List;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import org.junit.Test;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
  *
  * @author romulo
  */
+
+
 public class ReservaDAOTest {
 
     public ReservaDAOTest() {
     }
-        ReservaDAO dao = new ReservaDAO();
+    ReservaDAO dao = new ReservaDAO();
 
 //    @Test
     public void reservar() {
@@ -47,8 +38,7 @@ public class ReservaDAOTest {
         EstudantePO estudante = estudanteDAO.obter("1602063");
         ReservaDAO dao = new ReservaDAO();
         ReservaPO reserva = new ReservaPO(estudante, sala, new Date(), 5);
-        
-        
+
         boolean test = dao.insert(reserva);
         assertTrue(test);
     }
@@ -64,7 +54,8 @@ public class ReservaDAOTest {
         assertTrue(reservas != null);
     }
 //    @Test
-    public void test_getQuantidadeReservas(){
+
+    public void test_getQuantidadeReservas() {
         Date dataInicial = CalendarioHelper.parseDate("10-05-2016", "09", "00", "00");
         int qtde = dao.getQuantidadeReservas(dataInicial);
         System.out.println("QTDE:" + qtde);

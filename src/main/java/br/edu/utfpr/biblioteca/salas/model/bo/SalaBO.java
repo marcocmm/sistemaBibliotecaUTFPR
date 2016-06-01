@@ -136,6 +136,12 @@ public class SalaBO {
         }
     }
 
+    public static void cancelarSala(ReservaPO reserva) throws Exception {
+        if (reservaDAO.isReservado(reserva)) {
+            reservaDAO.delete(reserva);
+        }
+    }
+
     /**
      * Obtém um HashMap que associa o id (String) da sala com o nome da sala.
      *

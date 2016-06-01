@@ -9,6 +9,7 @@ import br.edu.utfpr.biblioteca.salas.model.Dia;
 import br.edu.utfpr.biblioteca.salas.model.bo.EstudanteBO;
 import br.edu.utfpr.biblioteca.salas.model.bo.ReservaBO;
 import br.edu.utfpr.biblioteca.salas.model.entity.EstudantePO;
+import br.edu.utfpr.biblioteca.salas.model.entity.ReservaPO;
 import br.edu.utfpr.biblioteca.salas.tools.CalendarioHelper;
 import java.util.Date;
 import java.util.List;
@@ -32,6 +33,7 @@ public class EstudanteMB {
     private EstudantePO estudante;
     private Dia diaSelecionado;
     private Date mesEscolhido;
+    private ReservaPO reserva;
 
     public EstudanteMB() {
         this.estudante = new EstudantePO(null, null, null, null);

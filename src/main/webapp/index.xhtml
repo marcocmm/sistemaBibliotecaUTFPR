@@ -82,15 +82,15 @@
                     <p:panel header="Autenticação">
                         <h:panelGrid columns="" columnClasses="value">
 
-                            <h:outputText value="RA " />
+                            <h:outputText value="RA :" />
                             <p:inputText id="firstname" value="#{reservaRapidaMB.reserva.estudante.ra}">
                                 <p:ajax event="keyup" />
                             </p:inputText>
                             
-                            <h:outputText value="Senha " />
+                            <h:outputText value="Senha :" />
                             <p:password id="lastname" value="#{reservaRapidaMB.reserva.estudante.senha}">
                                 <p:ajax event="keyup" />
-                            </p:password>>
+                            </p:password>
 
                             <p:commandButton value="Reservar" actionListener="#{reservaRapidaMB.reservarSala}" update="growl" process="@this"/>
                         </h:panelGrid>
@@ -124,6 +124,7 @@
         <ui:include src="footer.xhtml"/>
 
         <a href="faces/reserva.xhtml">Reserva Lenta</a>
+        <a href="faces/exibirReserva.xhtml">Exibir Reserva</a>
         <a href="faces/calendarioAdministrador.xhtml">Calendário Administrador</a>
         <a href="faces/calendarioEstudante.xhtml">Calendário Estudante</a>
 

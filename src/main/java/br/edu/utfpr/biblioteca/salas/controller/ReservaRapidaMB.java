@@ -206,10 +206,6 @@ public class ReservaRapidaMB implements Serializable {
         }
     }
 
-    public void cancelarReserva() {
-        throw new UnsupportedOperationException();
-    }
-
     public void ativarReserva() {
         throw new UnsupportedOperationException();
     }

@@ -17,6 +17,8 @@ import java.util.List;
  *
  * @author romulo
  */
+
+
 public class CalendarioHelper {
 
     /**
@@ -406,9 +408,4 @@ public class CalendarioHelper {
         SimpleDateFormat formatoEmDia = new SimpleDateFormat("MMMM");
         return formatoEmDia.format(date);
     }
-
-    public static Date parseMonth(int mesEscolhido) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
 }
