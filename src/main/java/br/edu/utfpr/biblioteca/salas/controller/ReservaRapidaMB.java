@@ -171,18 +171,6 @@ public class ReservaRapidaMB implements Serializable {
         }
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
-    
-    public void cancelarReserva() {
-        FacesMessage msg;
-        
-        try {
-            SalaBO.cancelarSala(reserva);
-            msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Reserva cancelada", getReserva().getStrDataInicial());
-        } catch (Exception ex) {
-            msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Falha ao cancelar a reserva", ex.getMessage());
-        }
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-    }
 
     /**
      * Este método deve solicitar para a classe SalaBO um hash contendo as salas

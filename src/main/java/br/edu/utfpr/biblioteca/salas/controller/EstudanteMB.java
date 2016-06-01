@@ -8,7 +8,9 @@ package br.edu.utfpr.biblioteca.salas.controller;
 import br.edu.utfpr.biblioteca.salas.model.Dia;
 import br.edu.utfpr.biblioteca.salas.model.bo.EstudanteBO;
 import br.edu.utfpr.biblioteca.salas.model.bo.ReservaBO;
+import br.edu.utfpr.biblioteca.salas.model.bo.SalaBO;
 import br.edu.utfpr.biblioteca.salas.model.entity.EstudantePO;
+import br.edu.utfpr.biblioteca.salas.model.entity.ReservaPO;
 import java.util.Date;
 import java.util.List;
 import javax.faces.application.FacesMessage;
@@ -29,6 +31,7 @@ import javax.servlet.http.HttpSession;
 public class EstudanteMB {
 
     private EstudantePO estudante;
+    private ReservaPO reserva;
     private Dia diaSelecionado;
 
     public EstudanteMB() {
@@ -83,7 +86,17 @@ public class EstudanteMB {
 
         EstudanteBO.cadastrarEstudante(estudante);
     }
-
+    public void cancelarReserva() {
+        FacesMessage msg;
+        
+        try {
+            SalaBO.cancelarSala(reserva);
+            msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Reserva cancelada", "!");
+        } catch (Exception ex) {
+            msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Falha ao cancelar a reserva", ex.getMessage());
+        }
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
     /**
      * verifica se o estudante está cadastrado
      *
