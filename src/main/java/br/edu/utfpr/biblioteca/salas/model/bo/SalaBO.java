@@ -135,6 +135,30 @@ public class SalaBO {
             reservaDAO.insert(reserva);
         }
     }
+    
+    public static void cancelarSala(ReservaPO reserva) throws Exception {
+//        EstudantePO estudante;
+        SalaPO sala;
+//        EstudanteDAO estudanteD = new EstudanteDAO();
+
+//        if (!EstudanteBO.isAutentico(reserva.getEstudante())) {
+//            throw new Exception("Credenciais inválidas");
+//        }
+
+//        estudante = EstudanteBO.obterEstudante(reserva.getEstudante().getRa());
+//        reserva.setEstudante(estudante);
+
+        sala = SalaBO.obter(reserva.getSala().getId());
+        reserva.setSala(sala);
+        
+        if (reservaDAO.isReservado(reserva)) {
+//            if (estudanteD.canReservar(reserva.getEstudante())) {
+            reservaDAO.delete(reserva);
+//        }
+        }
+
+        
+    }
 
     /**
      * Obtém um HashMap que associa o id (String) da sala com o nome da sala.

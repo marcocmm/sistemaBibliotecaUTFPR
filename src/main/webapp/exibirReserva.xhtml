@@ -18,17 +18,14 @@
                 <h:panelGrid columns="2" columnClasses="value">
                     <h:outputText value="Data: " />
                     <h:outputText value="#{reservaRapidaMB.viewDataInicial}" styleClass="outputLabel"/>
-
                     <h:outputText value="Horário: " />
                     <h:outputText value="#{reservaRapidaMB.viewHoraInicial}" styleClass="outputLabel"/>
-                </h:panelGrid>
-
-                <h:panelGrid columns="2" columnClasses="value">
                     <h:outputText value="Sala: " />
                     <h:outputText value="#{reservaRapidaMB.reserva.sala.id}" styleClass="outputLabel"/>
                     <h:outputText value="Alunos: " />
                     <h:outputText value="#{reservaRapidaMB.reserva.quantidadeAlunos}" styleClass="outputLabel"/>
-                </h:panelGrid>
+                    <p:commandButton value="Cancelar Reserva" actionListener="#{reservaRapidaMB.cancelarReserva()}" process="@this"/>
+                </h:panelGrid>                
 
             </h:panelGrid>
             <!--<p:commandButton value="Submit" update="growl" process="@this"/>-->
