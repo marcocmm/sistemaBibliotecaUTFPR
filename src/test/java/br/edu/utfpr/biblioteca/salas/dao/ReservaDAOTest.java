@@ -11,11 +11,13 @@ import br.edu.utfpr.biblioteca.salas.model.dao.SalaDAO;
 import br.edu.utfpr.biblioteca.salas.model.entity.EstudantePO;
 import br.edu.utfpr.biblioteca.salas.model.entity.ReservaPO;
 import br.edu.utfpr.biblioteca.salas.model.entity.SalaPO;
+import br.edu.utfpr.biblioteca.salas.model.entity.StatusPO;
 import br.edu.utfpr.biblioteca.salas.tools.CalendarioHelper;
 import java.util.Date;
 import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import org.junit.Test;
 
 /**
  *
@@ -27,7 +29,8 @@ public class ReservaDAOTest {
 
     public ReservaDAOTest() {
     }
-    ReservaDAO dao = new ReservaDAO();
+    static ReservaDAO dao = new ReservaDAO();
+    static ReservaPO reservaPO = null;
 
 //    @Test
     public void reservar() {
@@ -42,6 +45,23 @@ public class ReservaDAOTest {
         boolean test = dao.insert(reserva);
         assertTrue(test);
     }
+    
+    @Test
+    public void test_cancelarReserva(){
+        
+        ReservaPO reserva = null;
+        reserva = dao.obter(10);
+        assertTrue(reserva != null);
+        reserva.setStatus(new StatusPO("inativa"));
+        dao.update(reserva);
+//        assertTrue(teste);
+    }
+    
+//    public static void main(String[] args) {
+//        reservaPO = dao.obter(10);
+//        boolean teste = dao.cancelReserva(reservaPO);
+//    }
+    
 
     public void listar() {
         List<ReservaPO> reservas = dao.list();
