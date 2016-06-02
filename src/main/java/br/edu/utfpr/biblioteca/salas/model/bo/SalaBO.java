@@ -131,9 +131,10 @@ public class SalaBO {
             throw new Exception("Sala já reservada");
         }
 
-        if (estudanteD.canReservar(reserva.getEstudante())) {
-            reservaDAO.insert(reserva);
+        if (!(estudanteD.canReservar(reserva.getEstudante(), reserva.getDataInicial()))) {
+            throw new Exception("Você já efetuou o limite máximo de reservas diárias!");
         }
+        reservaDAO.insert(reserva);
     }
 
     public static void cancelarSala(ReservaPO reserva) throws Exception {
