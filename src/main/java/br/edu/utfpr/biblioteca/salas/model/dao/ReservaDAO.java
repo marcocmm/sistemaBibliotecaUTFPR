@@ -25,7 +25,7 @@ public class ReservaDAO extends GenericDAO<ReservaPO> implements Serializable {
     @Override
     public boolean insert(ReservaPO reserva) {
         EstudanteDAO estudante = new EstudanteDAO();
-        if (estudante.canReservar(reserva.getEstudante())) {
+        if (estudante.canReservar(reserva.getEstudante(), reserva.getDataInicial())) {
 
             entityManager.getTransaction().begin();
             if (isReservado(reserva)) {

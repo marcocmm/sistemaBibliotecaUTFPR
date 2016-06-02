@@ -5,6 +5,7 @@
  */
 package br.edu.utfpr.biblioteca.salas.model;
 
+import br.edu.utfpr.biblioteca.salas.model.entity.EstudantePO;
 import br.edu.utfpr.biblioteca.salas.model.entity.ReservaPO;
 import java.util.ArrayList;
 import java.util.Date;
@@ -44,6 +45,8 @@ public class Hora {
     public void addReserva(ReservaPO reserva) {
         if (reserva != null) {
             reservas.add(reserva);
+        } else {
+            reservas.add(new ReservaPO(null, null, null, 0));
         }
     }
 

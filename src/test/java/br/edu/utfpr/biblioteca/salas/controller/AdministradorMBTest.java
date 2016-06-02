@@ -16,6 +16,12 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertTrue;
 
 /**
  *
@@ -24,11 +30,11 @@ import static org.junit.Assert.assertTrue;
 public class AdministradorMBTest {
 
     List<ReservaPO> reservas = null;
-    AdministradorMB adminstradorMB;
+    CalendarioAdministradorMB adminstradorMB;
 
     public AdministradorMBTest() {
 
-        adminstradorMB = new AdministradorMB();
+        adminstradorMB = new CalendarioAdministradorMB();
 
         Date data = new Date(2016, 04, 29, 18, 0, 0);
         adminstradorMB.setDataSelecionada(data);
