@@ -46,7 +46,7 @@ public class ReservaDAOTest {
         assertTrue(test);
     }
     
-    @Test
+//    @Test
     public void test_cancelarReserva(){
         
         ReservaPO reserva = null;
@@ -54,14 +54,8 @@ public class ReservaDAOTest {
         assertTrue(reserva != null);
         reserva.setStatus(new StatusPO("inativa"));
         dao.update(reserva);
-//        assertTrue(teste);
     }
-    
-//    public static void main(String[] args) {
-//        reservaPO = dao.obter(10);
-//        boolean teste = dao.cancelReserva(reservaPO);
-//    }
-    
+
 
     public void listar() {
         List<ReservaPO> reservas = dao.list();
