@@ -11,6 +11,9 @@ import br.edu.utfpr.biblioteca.salas.model.bo.ReservaBO;
 import br.edu.utfpr.biblioteca.salas.model.entity.EstudantePO;
 import br.edu.utfpr.biblioteca.salas.model.entity.ReservaPO;
 import br.edu.utfpr.biblioteca.salas.tools.CalendarioHelper;
+import br.edu.utfpr.biblioteca.salas.view.BotaoHorario;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import javax.faces.application.FacesMessage;
@@ -34,6 +37,15 @@ public class CalendarioEstudanteMB {
     private Dia diaSelecionado;
     private Date mesEscolhido;
     private ReservaPO reserva;
+    private BotaoHorario botao;
+
+    public BotaoHorario getBotao() {
+        return botao;
+    }
+
+    public void setBotao(BotaoHorario botao) {
+        this.botao = botao;
+    }
 
     public CalendarioEstudanteMB() {
         this.estudante = new EstudantePO(null, null, null, null);
@@ -55,6 +67,14 @@ public class CalendarioEstudanteMB {
     public void setDiaSelecionado(Dia diaSelecionado) {
         this.diaSelecionado = diaSelecionado;
     }
+//    public List<String> getSalas() {       
+//       List list = new ArrayList();
+//       for(int i=1; i<=14;i++){
+//       list.add(i);
+//       }
+//        return list;
+//    }
+    
 
     /**
      * Valida a entrada do usuário e cadastra um estudante.

@@ -8,9 +8,10 @@
 
     <h:head>
         <title>Sislib</title>
-
+        <f:metadata charset="UTF-8"> </f:metadata>
+        <f:metadata name="viewport" content="width=device-width, initial-scale=1.0"> </f:metadata>
+        <h:outputStylesheet library="css" name="csspage.css"/> <!--css padrão para todas as páginas-->
         <f:metadata name="description" content="Sistema de gerenciamento das salas da biblioteca da UTFPR"></f:metadata>
-
         <ui:include src="header.xhtml"/>
 
     </h:head>
@@ -57,14 +58,190 @@
 
                 </p:dataGrid>
 
-                <p:dialog header="Horários para o dia" widgetVar="diaDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-                    <p:outputPanel id="descricaoDia" style="text-align:center;">
-                        <p:panelGrid  columns="2" rendered="#{not empty calendarioEstudanteMB.diaSelecionado}" columnClasses="value">
+                <p:dialog header="Horários para o dia" width="700" height="800" widgetVar="diaDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+
+                    <p:outputPanel id="descricaoDia"  style="text-align:center;">
+                        <p:panelGrid  columns="2"  rendered="#{not empty calendarioEstudanteMB.diaSelecionado}" columnClasses="value">
 
                             <h:outputText value="Data:" />
                             <h:outputText value="#{calendarioEstudanteMB.diaSelecionado.data}" />
+                        </p:panelGrid>      
 
-                        </p:panelGrid>
+                                                <table border="1">
+                                                    <tr>
+                                                        <th>Horários</th>
+                                                        <th></th>
+                                                        <th>Sala 1</th>
+                                                        <th>Sala 2</th>
+                                                        <th>Sala 3</th>
+                                                        <th>Sala 4</th>
+                                                        <th>Sala 5</th>
+                                                        <th>Sala 6</th>                                
+                        
+                                                    </tr>
+                                                    <tr>
+                                                        
+                                                        <td><b>08 às 09</b></td>
+                                                        <td> </td>
+                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
+                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
+                                                        <td>Não Reservado</td>
+                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
+                                                        <td>Não Reservado</td>
+                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
+                        
+                                                    </tr>
+                                                    <tr>
+                                                        <td><b>09 às 10</b></td>
+                                                        <td> </td>
+                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
+                                                        <td>Não Reservado</td>
+                                                        <td>Não Reservado</td>
+                                                        <td>Não Reservado</td>
+                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
+                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><b>10 às 11</b></td>
+                                                        <td> </td>
+                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
+                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
+                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
+                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
+                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
+                                                        <td>Não Reservado</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><b>11 às 12</b></td>
+                                                        <td> </td>
+                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>                                
+                                                        <td>Não Reservado</td>
+                                                        <td>Não Reservado</td>
+                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
+                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
+                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><b>12 às 13</b></td>
+                                                        <td> </td>
+                                                        <td>Não Reservado</td>
+                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
+                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
+                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
+                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
+                                                        <td>Não Reservado</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><b>13 às 14</b></td>
+                                                        <td> </td>
+                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
+                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
+                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
+                                                        <td>Não Reservado</td>
+                                                        <td>Não Reservado</td>
+                                                        <td>Não Reservado</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><b>14 às 15</b></td>
+                                                        <td> </td>
+                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
+                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
+                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
+                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
+                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
+                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
+                                                    </tr><tr>
+                                                        <td><b>15 às 16</b></td>
+                                                        <td> </td>
+                                                        <td>Não Reservado</td>
+                                                        <td>Não Reservado</td>
+                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
+                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
+                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
+                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
+                                                    </tr><tr>
+                                                        <td><b>16 às 17</b></td>
+                                                        <td> </td>
+                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
+                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
+                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
+                                                       <td>Não Reservado</td>
+                                                       <td>Não Reservado</td>
+                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><b>18 às 19</b></td>
+                                                        <td> </td>
+                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
+                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
+                                                        <td>Não Reservado</td>
+                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
+                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
+                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><b>19 às 20</b></td>
+                                                        <td> </td>
+                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
+                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
+                                                        <td>Não Reservado</td>
+                                                        <td>Não Reservado</td>
+                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
+                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><b>20 às 21</b></td>
+                                                        <td> </td>
+                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
+                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
+                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
+                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
+                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
+                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><b>21 às 22</b></td>
+                                                        <td> </td>
+                                                        <td>Não Reservado</td>
+                                                        <td>Não Reservado</td>
+                                                        <td>Não Reservado</td>
+                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
+                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
+                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><b>22 às 23</b></td>
+                                                        <td> </td>
+                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
+                                                        <td>Não Reservado</td>
+                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
+                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
+                                                        <td>Não Reservado</td>
+                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
+                                                    </tr>
+                        
+                        
+                        
+                        
+                        
+                                                </table>
+<!--                        <p:dataTable  var="Salas" value="">
+                            <p:column headerText="Horários " >                                                                
+                            </p:column>    
+                            <p:column headerText="Sala 1 ">
+                            </p:column>
+                            <p:column headerText="Sala 2 ">
+                            </p:column>
+                            <p:column headerText="Sala 3 ">
+                            </p:column>
+                            <p:column headerText="Sala 4 ">
+                            </p:column>
+                            <p:column headerText="Sala 5 ">
+                            </p:column>
+                            <p:column headerText="Sala 6 ">
+                            </p:column>                               
+
+                        </p:dataTable>                       -->
                     </p:outputPanel>
                 </p:dialog>
             </h:form>
