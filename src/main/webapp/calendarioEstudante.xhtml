@@ -39,209 +39,47 @@
                     </p:commandLink>
                 </p:outputPanel>
 
-                <p:dataGrid var="dia" value="#{calendarioEstudanteMB.mes}" columns="7"
-                            rows="42" paginator="false" id="calendario">
-
+                <p:dataGrid var="dia" value="#{calendarioEstudanteMB.mes}" columns="7" rows="42" paginator="false" id="calendario">
                     <f:facet name="header">
                         Calendário de Reservas
                     </f:facet>
-
                     <p:panel header="#{dia.data.date}" style="text-align:center">
                         <h:panelGrid columns="1" style="width:100%">
-
                             <p:commandLink update=":form:descricaoDia" oncomplete="PF('diaDialog').show()" title="View Detail">
                                 <h:outputText styleClass="ui-icon ui-icon-search" style="margin:0 auto;" />
                                 <f:setPropertyActionListener value="#{dia}" target="#{calendarioEstudanteMB.diaSelecionado}" />
                             </p:commandLink>
                         </h:panelGrid>
                     </p:panel>
-
                 </p:dataGrid>
 
                 <p:dialog header="Horários para o dia" width="700" height="800" widgetVar="diaDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-
                     <p:outputPanel id="descricaoDia"  style="text-align:center;">
-                        <p:panelGrid  columns="2"  rendered="#{not empty calendarioEstudanteMB.diaSelecionado}" columnClasses="value">
+                        <p:dataTable var="hora" value="#{calendarioEstudanteMB.diaSelecionado.horario}">
+                            <p:column headerText="Sala 1">
+                                <h:outputText value="#{hora.reservas.get(0)}" />
+                            </p:column>
 
-                            <h:outputText value="Data:" />
-                            <h:outputText value="#{calendarioEstudanteMB.diaSelecionado.data}" />
-                        </p:panelGrid>      
+                            <p:column headerText="Sala 2">
+                                <h:outputText value="#{hora.reservas.get(1)}" />
+                            </p:column>
 
-                                                <table border="1">
-                                                    <tr>
-                                                        <th>Horários</th>
-                                                        <th></th>
-                                                        <th>Sala 1</th>
-                                                        <th>Sala 2</th>
-                                                        <th>Sala 3</th>
-                                                        <th>Sala 4</th>
-                                                        <th>Sala 5</th>
-                                                        <th>Sala 6</th>                                
-                        
-                                                    </tr>
-                                                    <tr>
-                                                        
-                                                        <td><b>08 às 09</b></td>
-                                                        <td> </td>
-                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
-                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
-                                                        <td>Não Reservado</td>
-                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
-                                                        <td>Não Reservado</td>
-                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
-                        
-                                                    </tr>
-                                                    <tr>
-                                                        <td><b>09 às 10</b></td>
-                                                        <td> </td>
-                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
-                                                        <td>Não Reservado</td>
-                                                        <td>Não Reservado</td>
-                                                        <td>Não Reservado</td>
-                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
-                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><b>10 às 11</b></td>
-                                                        <td> </td>
-                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
-                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
-                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
-                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
-                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
-                                                        <td>Não Reservado</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><b>11 às 12</b></td>
-                                                        <td> </td>
-                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>                                
-                                                        <td>Não Reservado</td>
-                                                        <td>Não Reservado</td>
-                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
-                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
-                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><b>12 às 13</b></td>
-                                                        <td> </td>
-                                                        <td>Não Reservado</td>
-                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
-                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
-                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
-                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
-                                                        <td>Não Reservado</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><b>13 às 14</b></td>
-                                                        <td> </td>
-                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
-                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
-                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
-                                                        <td>Não Reservado</td>
-                                                        <td>Não Reservado</td>
-                                                        <td>Não Reservado</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><b>14 às 15</b></td>
-                                                        <td> </td>
-                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
-                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
-                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
-                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
-                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
-                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
-                                                    </tr><tr>
-                                                        <td><b>15 às 16</b></td>
-                                                        <td> </td>
-                                                        <td>Não Reservado</td>
-                                                        <td>Não Reservado</td>
-                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
-                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
-                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
-                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
-                                                    </tr><tr>
-                                                        <td><b>16 às 17</b></td>
-                                                        <td> </td>
-                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
-                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
-                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
-                                                       <td>Não Reservado</td>
-                                                       <td>Não Reservado</td>
-                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><b>18 às 19</b></td>
-                                                        <td> </td>
-                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
-                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
-                                                        <td>Não Reservado</td>
-                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
-                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
-                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><b>19 às 20</b></td>
-                                                        <td> </td>
-                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
-                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
-                                                        <td>Não Reservado</td>
-                                                        <td>Não Reservado</td>
-                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
-                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><b>20 às 21</b></td>
-                                                        <td> </td>
-                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
-                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
-                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
-                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
-                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
-                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><b>21 às 22</b></td>
-                                                        <td> </td>
-                                                        <td>Não Reservado</td>
-                                                        <td>Não Reservado</td>
-                                                        <td>Não Reservado</td>
-                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
-                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
-                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><b>22 às 23</b></td>
-                                                        <td> </td>
-                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
-                                                        <td>Não Reservado</td>
-                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
-                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
-                                                        <td>Não Reservado</td>
-                                                        <td>Reservado<p><a href="exibirReserva.xhtml"> Exibir Detalhes </a></p></td>
-                                                    </tr>
-                        
-                        
-                        
-                        
-                        
-                                                </table>
-<!--                        <p:dataTable  var="Salas" value="">
-                            <p:column headerText="Horários " >                                                                
-                            </p:column>    
-                            <p:column headerText="Sala 1 ">
+                            <p:column headerText="Sala 3">
+                                <h:outputText value="#{hora.reservas.get(2)}" />
                             </p:column>
-                            <p:column headerText="Sala 2 ">
-                            </p:column>
-                            <p:column headerText="Sala 3 ">
-                            </p:column>
-                            <p:column headerText="Sala 4 ">
-                            </p:column>
-                            <p:column headerText="Sala 5 ">
-                            </p:column>
-                            <p:column headerText="Sala 6 ">
-                            </p:column>                               
 
-                        </p:dataTable>                       -->
+                            <p:column headerText="Sala 4">
+                                <h:outputText value="#{hora.reservas.get(3)}" />
+                            </p:column>
+
+                            <p:column headerText="Sala 5">
+                                <h:outputText value="#{hora.reservas.get(4)}" />
+                            </p:column>
+
+                            <p:column headerText="Sala 6">
+                                <h:outputText value="#{hora.reservas.get(5)}" />
+                            </p:column>
+                        </p:dataTable>
                     </p:outputPanel>
                 </p:dialog>
             </h:form>

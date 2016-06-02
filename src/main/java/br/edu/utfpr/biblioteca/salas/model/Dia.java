@@ -24,6 +24,7 @@ public class Dia {
 
     public Dia() {
         this.horario = new ArrayList<>();
+        this.data = new Date();
     }
 
     public Date getData() {
