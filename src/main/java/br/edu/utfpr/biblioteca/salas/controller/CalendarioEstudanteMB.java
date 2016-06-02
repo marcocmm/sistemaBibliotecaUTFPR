@@ -143,21 +143,16 @@ public class CalendarioEstudanteMB {
         return getMes(this.mesEscolhido);
     }
 
-    /**
-     * retorna o mes atual
-     *
-     * @return
-     */
-    public Date getDataAtual() {
-        return new Date();
+    public void renderMesAnterior() {
+        this.mesEscolhido = CalendarioHelper.mesAnterior(mesEscolhido);
     }
 
-    public Date getMesEscolhido() {
-        return mesEscolhido;
+    public void renderMesPosterior() {
+        this.mesEscolhido = CalendarioHelper.mesPosterior(mesEscolhido);
     }
 
-    public void setMesEscolhido(Date mesEscolhido) {
-        this.mesEscolhido = mesEscolhido;
+    public void renderMesAtual() {
+        this.mesEscolhido = new Date();
     }
 
     public Date getMesAnterior() {
@@ -169,14 +164,14 @@ public class CalendarioEstudanteMB {
     }
 
     public String getNomeAtual() {
-        return CalendarioHelper.getNomeMes(mesEscolhido);
+        return CalendarioHelper.getMesAno(mesEscolhido);
     }
 
     public String getNomeAnterior() {
-        return CalendarioHelper.getNomeMes(getMesAnterior());
+        return CalendarioHelper.getMesAno(getMesAnterior());
     }
 
     public String getNomePosterior() {
-        return CalendarioHelper.getNomeMes(getMesPosterior());
+        return CalendarioHelper.getMesAno(getMesPosterior());
     }
 }

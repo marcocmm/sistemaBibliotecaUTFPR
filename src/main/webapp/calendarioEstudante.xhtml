@@ -21,26 +21,21 @@
             <h:form id="form">
 
                 <p:outputPanel style="float: left; width: 33%; text-align: left">
-                    <p:link outcome="calendarioEstudante" value="#{calendarioEstudanteMB.nomeAnterior}">
-                        <f:param name="mesEscolhido" value="#{calendarioEstudanteMB.mesAnterior}" />
-                    </p:link>
-
-                    <p:commandLink id="anterior" actionListener="#{calendarioEstudanteMB.mesAnterior}" ajax="false">
-                        <h:outputText value="Non-Ajax Submit" />
+                    <p:commandLink id="anterior" actionListener="#{calendarioEstudanteMB.renderMesAnterior()}" ajax="false">
+                        <h:outputText value="#{calendarioEstudanteMB.nomeAnterior}" />
                     </p:commandLink>
-
                 </p:outputPanel>
 
                 <p:outputPanel style="float: left; width: 34%; text-align: center">
-                    <p:link outcome="calendarioEstudante" value="#{calendarioEstudanteMB.nomeAtual}">
-                        <f:param name="mesEscolhido" value="#{calendarioEstudanteMB.dataAtual}" />
-                    </p:link>
+                    <p:commandLink id="atual" actionListener="#{calendarioEstudanteMB.renderMesAtual()}" ajax="false">
+                        <h:outputText value="#{calendarioEstudanteMB.nomeAtual}" />
+                    </p:commandLink>
                 </p:outputPanel>
 
                 <p:outputPanel style="float: left; width: 33%; text-align: right">
-                    <p:link outcome="calendarioEstudante" value="#{calendarioEstudanteMB.nomePosterior}">
-                        <f:param name="mesEscolhido" value="#{calendarioEstudanteMB.mesPosterior}" />
-                    </p:link>
+                    <p:commandLink id="posterior" actionListener="#{calendarioEstudanteMB.renderMesPosterior()}" ajax="false">
+                        <h:outputText value="#{calendarioEstudanteMB.nomePosterior}" />
+                    </p:commandLink>
                 </p:outputPanel>
 
                 <p:dataGrid var="dia" value="#{calendarioEstudanteMB.mes}" columns="7"
