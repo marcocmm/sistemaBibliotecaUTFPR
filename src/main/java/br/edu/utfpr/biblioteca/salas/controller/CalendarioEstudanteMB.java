@@ -25,17 +25,17 @@ import javax.servlet.http.HttpSession;
  *
  * @author marco
  */
-@Named(value = "estudanteMB")
+@Named(value = "calendarioEstudanteMB")
 @SessionScoped
 @ManagedBean
-public class EstudanteMB {
+public class CalendarioEstudanteMB {
 
     private EstudantePO estudante;
     private Dia diaSelecionado;
     private Date mesEscolhido;
     private ReservaPO reserva;
 
-    public EstudanteMB() {
+    public CalendarioEstudanteMB() {
         this.estudante = new EstudantePO(null, null, null, null);
         mesEscolhido = new Date();
     }
@@ -158,7 +158,6 @@ public class EstudanteMB {
 
     public void setMesEscolhido(Date mesEscolhido) {
         this.mesEscolhido = mesEscolhido;
-//        this.mesEscolhido = CalendarioHelper.parseMonth(mesEscolhido);
     }
 
     public Date getMesAnterior() {

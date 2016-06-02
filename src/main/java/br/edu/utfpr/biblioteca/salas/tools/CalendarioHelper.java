@@ -17,8 +17,6 @@ import java.util.List;
  *
  * @author romulo
  */
-
-
 public class CalendarioHelper {
 
     /**

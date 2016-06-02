@@ -17,32 +17,33 @@
 
     <h:body>
 
-        <f:metadata>
-            <f:viewParam name="mesEscolhido" value="#{estudanteMB.mesEscolhido}" />
-        </f:metadata>
-
-        <p:outputPanel style="float: left; width: 33%; text-align: left">
-            <p:link outcome="calendarioEstudante" value="#{estudanteMB.nomeAnterior}">
-                <f:param name="mesEscolhido" value="#{estudanteMB.mesAnterior}" />
-            </p:link>
-        </p:outputPanel>
-
-        <p:outputPanel style="float: left; width: 33%; text-align: center">
-            <p:link outcome="calendarioEstudante" value="#{estudanteMB.nomeAtual}">
-                <f:param name="mesEscolhido" value="#{estudanteMB.dataAtual}" />
-            </p:link>
-        </p:outputPanel>
-
-        <p:outputPanel style="float: left; width: 33%; text-align: right">
-            <p:link outcome="calendarioEstudante" value="#{estudanteMB.nomePosterior}">
-                <f:param name="mesEscolhido" value="#{estudanteMB.mesPosterior}" />
-            </p:link>
-        </p:outputPanel>
-        
         <h:panelGroup>
             <h:form id="form">
 
-                <p:dataGrid var="dia" value="#{estudanteMB.mes}" columns="7"
+                <p:outputPanel style="float: left; width: 33%; text-align: left">
+                    <p:link outcome="calendarioEstudante" value="#{calendarioEstudanteMB.nomeAnterior}">
+                        <f:param name="mesEscolhido" value="#{calendarioEstudanteMB.mesAnterior}" />
+                    </p:link>
+
+                    <p:commandLink id="anterior" actionListener="#{calendarioEstudanteMB.mesAnterior}" ajax="false">
+                        <h:outputText value="Non-Ajax Submit" />
+                    </p:commandLink>
+
+                </p:outputPanel>
+
+                <p:outputPanel style="float: left; width: 34%; text-align: center">
+                    <p:link outcome="calendarioEstudante" value="#{calendarioEstudanteMB.nomeAtual}">
+                        <f:param name="mesEscolhido" value="#{calendarioEstudanteMB.dataAtual}" />
+                    </p:link>
+                </p:outputPanel>
+
+                <p:outputPanel style="float: left; width: 33%; text-align: right">
+                    <p:link outcome="calendarioEstudante" value="#{calendarioEstudanteMB.nomePosterior}">
+                        <f:param name="mesEscolhido" value="#{calendarioEstudanteMB.mesPosterior}" />
+                    </p:link>
+                </p:outputPanel>
+
+                <p:dataGrid var="dia" value="#{calendarioEstudanteMB.mes}" columns="7"
                             rows="42" paginator="false" id="calendario">
 
                     <f:facet name="header">
@@ -54,7 +55,7 @@
 
                             <p:commandLink update=":form:descricaoDia" oncomplete="PF('diaDialog').show()" title="View Detail">
                                 <h:outputText styleClass="ui-icon ui-icon-search" style="margin:0 auto;" />
-                                <f:setPropertyActionListener value="#{dia}" target="#{estudanteMB.diaSelecionado}" />
+                                <f:setPropertyActionListener value="#{dia}" target="#{calendarioEstudanteMB.diaSelecionado}" />
                             </p:commandLink>
                         </h:panelGrid>
                     </p:panel>
@@ -63,10 +64,10 @@
 
                 <p:dialog header="Horários para o dia" widgetVar="diaDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                     <p:outputPanel id="descricaoDia" style="text-align:center;">
-                        <p:panelGrid  columns="2" rendered="#{not empty estudanteMB.diaSelecionado}" columnClasses="value">
+                        <p:panelGrid  columns="2" rendered="#{not empty calendarioEstudanteMB.diaSelecionado}" columnClasses="value">
 
                             <h:outputText value="Data:" />
-                            <h:outputText value="#{estudanteMB.diaSelecionado.data}" />
+                            <h:outputText value="#{calendarioEstudanteMB.diaSelecionado.data}" />
 
                         </p:panelGrid>
                     </p:outputPanel>
