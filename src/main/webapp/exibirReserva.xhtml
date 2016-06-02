@@ -7,23 +7,31 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
     <h:head>
-        <title>TODO supply a title</title>
+        <title>Exibir Reserva</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <ui:include src="header.xhtml"/>
     </h:head>
     <h:body>
+        <p:panel header="Reservas">
+            <header>Selecione a reserva desejada : </header>   
+            <p:dataGrid var="aluno" value="#{estudanteMB.estudante.quantidadeReservas}" columns="1" rows="1" paginator="false" id="qtdA">
+                <p:selectOneMenu id="qtd" value="#{estudanteMB.estudante.reservas}" effect="fold">
+                    <f:selectItems value="#{estudanteMB.estudante.quantidadeReservas}"/>
+                </p:selectOneMenu>
+            </p:dataGrid>
+        </p:panel>
 
-        <p:panel header="Reserva">
+        <p:panel header="Detalhes da Reserva">
             <h:panelGrid id="confirmation" columns="1" columnClasses="grid,grid,grid">
                 <h:panelGrid columns="2" columnClasses="value">
                     <h:outputText value="Data: " />
-                    <h:outputText value="#{reservaRapidaMB.viewDataInicial}" styleClass="outputLabel"/>
+                    <h:outputText value="#{estudanteMB.estudante.reservas.viewDataInicial}" styleClass="outputLabel"/>
                     <h:outputText value="Horário: " />
-                    <h:outputText value="#{reservaRapidaMB.viewHoraInicial}" styleClass="outputLabel"/>
+                    <h:outputText value="#{estudanteMB.estudante.reservas.viewHoraInicial}:00:00" styleClass="outputLabel"/>
                     <h:outputText value="Sala: " />
-                    <h:outputText value="#{reservaRapidaMB.reserva.sala.id}" styleClass="outputLabel"/>
+                    <h:outputText value="#{estudanteMB.estudante.reservas.sala.id}" styleClass="outputLabel"/>
                     <h:outputText value="Alunos: " />
-                    <h:outputText value="#{reservaRapidaMB.reserva.quantidadeAlunos}" styleClass="outputLabel"/>
+                    <h:outputText value="#{estudanteMB.estudante.reservas.quantidadeAlunos}" styleClass="outputLabel"/>
                     <p:commandButton value="Cancelar Reserva" actionListener="#{estudanteMB.cancelarReserva()}" process="@this"/>
                 </h:panelGrid>                
 
