@@ -10,6 +10,7 @@ import br.edu.utfpr.biblioteca.salas.model.ReservasHorario;
 import static br.edu.utfpr.biblioteca.salas.model.bo.ReservaBO.reservaDAO;
 import br.edu.utfpr.biblioteca.salas.model.dao.EstudanteDAO;
 import br.edu.utfpr.biblioteca.salas.model.entity.EstudantePO;
+import br.edu.utfpr.biblioteca.salas.model.entity.StatusPO;
 import br.edu.utfpr.biblioteca.salas.tools.CalendarioHelper;
 import java.util.Date;
 
@@ -127,16 +128,21 @@ public class SalaBO {
         sala = SalaBO.obter(reserva.getSala().getId());
         reserva.setSala(sala);
 
+        reserva.setStatus(new StatusPO("ativa"));
+
         if (reservaDAO.isReservado(reserva)) {
             throw new Exception("Sala já reservada");
         }
 
         if (!(estudanteD.canReservar(reserva.getEstudante(), reserva.getDataInicial()))) {
             throw new Exception("Você já efetuou o limite máximo de reservas diárias!");
+
         }
+
         reservaDAO.insert(reserva);
     }
 
+    @Deprecated
     public static void cancelarSala(ReservaPO reserva) throws Exception {
         if (reservaDAO.isReservado(reserva)) {
             reservaDAO.delete(reserva);

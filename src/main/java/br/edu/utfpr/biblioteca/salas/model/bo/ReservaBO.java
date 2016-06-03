@@ -6,6 +6,7 @@ import br.edu.utfpr.biblioteca.salas.model.dao.ReservaDAO;
 import br.edu.utfpr.biblioteca.salas.model.dao.SalaDAO;
 import br.edu.utfpr.biblioteca.salas.model.entity.ReservaPO;
 import br.edu.utfpr.biblioteca.salas.model.entity.SalaPO;
+import br.edu.utfpr.biblioteca.salas.model.entity.StatusPO;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -13,6 +14,8 @@ import java.util.List;
 import java.util.Map;
 import br.edu.utfpr.biblioteca.salas.tools.CalendarioHelper;
 import br.edu.utfpr.biblioteca.salas.tools.HashMapHelper;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ReservaBO {
 
@@ -126,4 +129,30 @@ public class ReservaBO {
         return mes;
     }
 
+    /**
+     * Método atualiza a reserva, se possível, senão propaga exceção.
+     *
+     * @param reservaAnterior
+     * @param atualizarPara
+     */
+    public static void update(ReservaPO reservaAnterior, ReservaPO atualizarPara) throws Exception {
+        try {
+            SalaBO.reservarSala(atualizarPara);
+            SalaBO.cancelarSala(reservaAnterior);
+        } catch (Exception ex) {
+            throw new Exception("Impossível atualizar reserva!");
+        }
+    }
+
+    /**
+     * Altera o status de uma reserva para 'inativa' e faz o update no banco.
+     *
+     * @param reserva
+     * @return boolean
+     */
+    public static boolean cancelarReserva(ReservaPO reserva) {
+        reserva.setStatus(new StatusPO("inativa"));
+        reservaDAO.update(reserva);
+        return false;
+    }
 }

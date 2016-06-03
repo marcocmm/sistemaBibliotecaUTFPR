@@ -32,7 +32,6 @@ public class ReservaDAO extends GenericDAO<ReservaPO> implements Serializable {
                 entityManager.getTransaction().rollback();
                 return false;
             }
-            reserva.setStatus(new StatusPO("ativa"));
             entityManager.persist(reserva);
             entityManager.getTransaction().commit();
             return true;
@@ -43,9 +42,9 @@ public class ReservaDAO extends GenericDAO<ReservaPO> implements Serializable {
 
     @Override
     public void delete(ReservaPO reserva) {
+        throw new UnsupportedOperationException();
     }
 
-    
     /**
      * Dado uma data-hora, este método retorna um lista de reservas
      * correspondente a data.
