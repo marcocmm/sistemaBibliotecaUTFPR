@@ -57,7 +57,7 @@ public class ExibirReservaMB {
 
     public void cancelarReserva() {
         FacesMessage msg;
-        if (ReservaBO.cancelarReserva(reserva)) {
+        if (ReservaBO.setStatus(reserva, "inativa")) {
             msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Reserva Cancelada", getReserva().getStrDataInicial());
         } else {
             msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Reserva não pôde ser cancelada!", getReserva().getStrDataInicial());

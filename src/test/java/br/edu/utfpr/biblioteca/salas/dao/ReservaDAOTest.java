@@ -6,6 +6,7 @@
  */
 package br.edu.utfpr.biblioteca.salas.dao;
 
+import br.edu.utfpr.biblioteca.salas.model.bo.ReservaBO;
 import br.edu.utfpr.biblioteca.salas.model.dao.ReservaDAO;
 import br.edu.utfpr.biblioteca.salas.model.dao.EstudanteDAO;
 import br.edu.utfpr.biblioteca.salas.model.dao.SalaDAO;
@@ -55,8 +56,18 @@ public class ReservaDAOTest {
         ReservaPO reserva = null;
         reserva = dao.obter(10);
         assertTrue(reserva != null);
-        reserva.setStatus(new StatusPO("inativa"));
-        boolean t = dao.update(reserva);
+        boolean t = ReservaBO.setStatus(reserva, "inativa");
+        assertTrue(t);
+    }
+
+
+//    @Test
+      public void test_updateReservaEmCurso(){
+        
+        ReservaPO reserva = null;
+        reserva = dao.obter(10);
+        assertTrue(reserva != null);
+        boolean t = ReservaBO.setStatus(reserva, "em_curso");
         assertTrue(t);
     }
 
