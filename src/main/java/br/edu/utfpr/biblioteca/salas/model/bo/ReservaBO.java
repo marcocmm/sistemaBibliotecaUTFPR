@@ -55,12 +55,11 @@ public class ReservaBO {
      * sua reserva
      */
     public static HashMap<Date, HashMap<SalaPO, ReservaPO>> descreverDiaHash(Date date) {
-        ReservaDAO dao = new ReservaDAO();
         SalaDAO salaDAO = new SalaDAO();
 
         List<SalaPO> salas = salaDAO.list();
         List<Date> horarios = CalendarioHelper.getHorarios(date);
-        List<ReservaPO> reservas = dao.listByDateTime(date);
+        List<ReservaPO> reservas = reservaDAO.listByDateTime(date);
 
         HashMap<SalaPO, ReservaPO> salaTemReservas = new HashMap();
         HashMap<Date, HashMap<SalaPO, ReservaPO>> dataTemReservas = new HashMap();
