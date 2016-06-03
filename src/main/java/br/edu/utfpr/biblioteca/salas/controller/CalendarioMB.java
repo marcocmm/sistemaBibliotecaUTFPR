@@ -25,10 +25,10 @@ import javax.servlet.http.HttpSession;
  *
  * @author marco
  */
-@Named(value = "calendarioEstudanteMB")
+@Named(value = "calendarioMB")
 @SessionScoped
 @ManagedBean
-public class CalendarioEstudanteMB {
+public class CalendarioMB {
 
     private EstudantePO estudante;
     private Dia diaSelecionado;
@@ -39,7 +39,7 @@ public class CalendarioEstudanteMB {
         return reserva;
     }
 
-    public CalendarioEstudanteMB() {
+    public CalendarioMB() {
         this.estudante = new EstudantePO(null, null, null, null);
         mesEscolhido = new Date();
         diaSelecionado = new Dia();

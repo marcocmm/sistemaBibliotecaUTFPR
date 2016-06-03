@@ -22,24 +22,24 @@
             <h:form id="form">
 
                 <p:outputPanel style="float: left; width: 33%; text-align: left">
-                    <p:commandLink id="anterior" actionListener="#{calendarioEstudanteMB.renderMesAnterior()}" ajax="false">
-                        <h:outputText value="#{calendarioEstudanteMB.nomeAnterior}" />
+                    <p:commandLink id="anterior" actionListener="#{calendarioMB.renderMesAnterior()}" ajax="false">
+                        <h:outputText value="#{calendarioMB.nomeAnterior}" />
                     </p:commandLink>
                 </p:outputPanel>
 
                 <p:outputPanel style="float: left; width: 34%; text-align: center">
-                    <p:commandLink id="atual" actionListener="#{calendarioEstudanteMB.renderMesAtual()}" ajax="false">
-                        <h:outputText value="#{calendarioEstudanteMB.nomeAtual}" />
+                    <p:commandLink id="atual" actionListener="#{calendarioMB.renderMesAtual()}" ajax="false">
+                        <h:outputText value="#{calendarioMB.nomeAtual}" />
                     </p:commandLink>
                 </p:outputPanel>
 
                 <p:outputPanel style="float: left; width: 33%; text-align: right">
-                    <p:commandLink id="posterior" actionListener="#{calendarioEstudanteMB.renderMesPosterior()}" ajax="false">
-                        <h:outputText value="#{calendarioEstudanteMB.nomePosterior}" />
+                    <p:commandLink id="posterior" actionListener="#{calendarioMB.renderMesPosterior()}" ajax="false">
+                        <h:outputText value="#{calendarioMB.nomePosterior}" />
                     </p:commandLink>
                 </p:outputPanel>
 
-                <p:dataGrid var="dia" value="#{calendarioEstudanteMB.mes}" columns="7" rows="42" paginator="false" id="calendario">
+                <p:dataGrid var="dia" value="#{calendarioMB.mes}" columns="7" rows="42" paginator="false" id="calendario">
                     <f:facet name="header">
                         Calendário de Reservas
                     </f:facet>
@@ -47,7 +47,7 @@
                         <h:panelGrid columns="1" style="width:100%">
                             <p:commandLink update=":form:descricaoDia" oncomplete="PF('diaDialog').show()" title="View Detail">
                                 <h:outputText styleClass="ui-icon ui-icon-search" style="margin:0 auto;" />
-                                <f:setPropertyActionListener value="#{dia}" target="#{calendarioEstudanteMB.diaSelecionado}" />
+                                <f:setPropertyActionListener value="#{dia}" target="#{calendarioMB.diaSelecionado}" />
                             </p:commandLink>
                         </h:panelGrid>
                     </p:panel>
@@ -55,7 +55,7 @@
 
                 <p:dialog header="Horários para o dia" width="700" height="800" widgetVar="diaDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                     <p:outputPanel id="descricaoDia"  style="text-align:center;">
-                        <p:dataTable var="hora" value="#{calendarioEstudanteMB.diaSelecionado.horario}">
+                        <p:dataTable var="hora" value="#{calendarioMB.diaSelecionado.horario}">
 
                             <p:column headerText="Horários ">
                                 <h:outputText value="#{hora.hora}" />

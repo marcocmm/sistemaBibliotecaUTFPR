@@ -27,7 +27,7 @@ import javax.faces.view.ViewScoped;
 public class ExibirReservaMB {
 
     private ReservaPO reserva;
-    private CalendarioEstudanteMB calendario;
+    private CalendarioMB calendario;
     private int idReserva;
 
 
@@ -42,7 +42,11 @@ public class ExibirReservaMB {
         return reserva;
     }
 
-    public CalendarioEstudanteMB getCalendario() {
+    public String getDiaMesReserva(){
+        return CalendarioHelper.getDiaMesAno(reserva.getDataInicial());
+    }
+    
+    public CalendarioMB getCalendario() {
         return calendario;
 
     }
