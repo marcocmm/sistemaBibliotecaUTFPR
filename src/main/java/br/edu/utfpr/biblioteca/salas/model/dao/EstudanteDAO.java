@@ -15,13 +15,13 @@ public class EstudanteDAO extends GenericDAO<EstudantePO> {
     public boolean canReservar(EstudantePO estudante, Date dataInicial) {
 
         long qtdReservas;
-        Query q = entityManager.createNativeQuery
-        ("SELECT COUNT(*) FROM Reservas r WHERE r.status_name = :ativa AND r.estudante_ra = :estudante AND r.data_inicial = :dataInicial");
+        Query q = entityManager.createQuery
+        ("SELECT e FROM Reserva e WHERE e.status = :ativa AND e.estudante = :estudante AND e.dataInicial = :data");
         q.setParameter("ativa", new StatusPO("ativa"));
-        q.setParameter("estudante", estudante.getRa());
+        q.setParameter("estudante", estudante);
         q.setParameter("data", dataInicial);
-        qtdReservas = (long) q.getSingleResult();
-        
+        qtdReservas = (long) q.getResultList().size();
+
         return qtdReservas < 2;
     }
 

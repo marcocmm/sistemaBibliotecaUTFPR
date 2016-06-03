@@ -12,15 +12,6 @@
         <ui:include src="header.xhtml"/>
     </h:head>
     <h:body>
-        <p:panel header="Reservas">
-            <header>Selecione a reserva desejada : </header>   
-            <p:dataGrid var="aluno" value="#{estudanteMB.estudante.quantidadeReservas}" columns="1" rows="1" paginator="false" id="qtdA">
-                <p:selectOneMenu id="qtd" value="#{estudanteMB.estudante.reservas}" effect="fold">
-                    <f:selectItems value="#{estudanteMB.estudante.quantidadeReservas}"/>
-                </p:selectOneMenu>
-            </p:dataGrid>
-        </p:panel>
-
         <p:panel header="Detalhes da Reserva">
             <h:panelGrid id="confirmation" columns="1" columnClasses="grid,grid,grid">
                 <h:panelGrid columns="2" columnClasses="value">

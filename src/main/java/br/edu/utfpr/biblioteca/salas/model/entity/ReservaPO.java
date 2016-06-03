@@ -71,7 +71,11 @@ public class ReservaPO implements Serializable {
         this.estudante = estudante;
         this.sala = sala;
         this.dataInicial = dataInicial;
-        this.dataFinal = CalendarioHelper.addHora(this.dataInicial);
+        if (dataInicial != null) {
+            this.dataFinal = CalendarioHelper.addHora(this.dataInicial);
+        } else {
+            this.dataFinal = new Date();
+        }
         this.quantidadeAlunos = quantidadeAlunos;
         StatusDAO statusDAO = new StatusDAO();
         StatusPO inativa = statusDAO.obter("inativa");
