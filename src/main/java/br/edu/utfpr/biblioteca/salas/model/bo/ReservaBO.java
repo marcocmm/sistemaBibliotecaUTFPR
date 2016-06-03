@@ -6,6 +6,7 @@ import br.edu.utfpr.biblioteca.salas.model.dao.ReservaDAO;
 import br.edu.utfpr.biblioteca.salas.model.dao.SalaDAO;
 import br.edu.utfpr.biblioteca.salas.model.entity.ReservaPO;
 import br.edu.utfpr.biblioteca.salas.model.entity.SalaPO;
+import br.edu.utfpr.biblioteca.salas.model.entity.StatusPO;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -126,4 +127,9 @@ public class ReservaBO {
         return mes;
     }
 
+    public static boolean cancelarReserva(ReservaPO reserva){
+        reserva.setStatus(new StatusPO("inativa"));
+        reservaDAO.update(reserva);
+        return false;
+    }
 }

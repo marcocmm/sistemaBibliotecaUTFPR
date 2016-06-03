@@ -54,7 +54,8 @@ public class ReservaDAOTest {
         reserva = dao.obter(10);
         assertTrue(reserva != null);
         reserva.setStatus(new StatusPO("inativa"));
-        dao.update(reserva);
+        boolean t = dao.update(reserva);
+        assertTrue(t);
     }
 
 

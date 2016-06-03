@@ -24,7 +24,8 @@ public class CalendarioAdministradorMB {
 
     private Date dataSelecionada;
     private Dia diaSelecionado;
-
+    
+    private ReservaPO reserva;
     private SalaPO sala;
     private String strSala;
     private String strHorario;
@@ -141,5 +142,11 @@ public class CalendarioAdministradorMB {
 
     public List<ReservaPO> obterRelatorio(Date dataInicial, Date dataFinal) {
         throw new UnsupportedOperationException();
+    }
+    
+    public void cancelarReserva(){
+        
+        
+        ReservaBO.cancelarReserva(reserva);
     }
 }
