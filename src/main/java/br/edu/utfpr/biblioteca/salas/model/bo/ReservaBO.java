@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Map;
 import br.edu.utfpr.biblioteca.salas.tools.CalendarioHelper;
 import br.edu.utfpr.biblioteca.salas.tools.HashMapHelper;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ReservaBO {
 
@@ -124,6 +126,21 @@ public class ReservaBO {
             mes.add(descreverDia(dia));
         }
         return mes;
+    }
+
+    /**
+     * Método atualiza a reserva, se possível, senão propaga exceção.
+     *
+     * @param reservaAnterior
+     * @param atualizarPara
+     */
+    public static void update(ReservaPO reservaAnterior, ReservaPO atualizarPara) throws Exception {
+        try {
+            SalaBO.reservarSala(atualizarPara);
+            SalaBO.cancelarSala(reservaAnterior);
+        } catch (Exception ex) {
+            throw new Exception("Impossível atualizar reserva!");
+        }
     }
 
 }

@@ -150,33 +150,3 @@ public class SalaDAO extends GenericDAO<SalaPO> {
     }
 
 }
-
-/* EXEMPLO DE DAO 
-  Retorna um objeto do tipo Categoria  
-  public Categoria buscaCategoria(String categoria) {
-        Query q = em.createQuery("SELECT e FROM Categoria e WHERE e.categoria = :categoria");
-        q.setParameter("categoria", categoria);
-        Categoria c = null;
-        try {
-
-            c = (Categoria) q.getSingleResult();
-            return c;
-
-        } catch (Exception ex) {
-            return null;
-        }
-    }
-Retorna uma lista de Notas
-public List<Notas> listaNotas(){
-        Query q = em.createQuery("SELECT e FROM Notas e ORDER BY e.data DESC");
-        List<Notas> notas;
-        
-        try{
-            notas = (List<Notas>) q.getResultList();
-            return notas;
-        }catch (Exception ex){
-            System.out.println("Erro: "+ ex.getMessage());
-            return null;
-        }
-    }    
- */
