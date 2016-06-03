@@ -30,14 +30,18 @@
                     <h:outputText value="#{exibirReservaMB.reserva.sala.id}" styleClass="outputLabel"/>
                     <h:outputText value="Alunos: " />
                     <h:outputText value="#{exibirReservaMB.reserva.quantidadeAlunos}" styleClass="outputLabel"/>
-                    <p:commandButton value="Cancelar Reserva" actionListener="#{estudanteMB.cancelarReserva()}" process="@this"/>
+                    <h:form>
+                        <p:growl id="growl" sticky="true" showDetail="true"/>
+                        <p:commandButton value="Cancelar Reserva" update="growl" actionListener="#{exibirReservaMB.cancelarReserva()}" process="@this"/>
+                    </h:form>
                 </h:panelGrid>                
+
                 <p>You've been redirected to this bookmarkable page with button.
                     ViewParameter you've passed is <strong>"
                         #{exibirReservaMB.idReserva}"</strong>
                 </p>
+
             </h:panelGrid>
-            <!--<p:commandButton value="Submit" update="growl" process="@this"/>-->
         </p:panel>
         <ui:include src="footer.xhtml"/>
     </h:body>

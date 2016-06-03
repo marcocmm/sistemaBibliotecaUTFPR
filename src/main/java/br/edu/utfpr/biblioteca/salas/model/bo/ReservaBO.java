@@ -158,7 +158,6 @@ public class ReservaBO {
      */
     public static boolean cancelarReserva(ReservaPO reserva) {
         reserva.setStatus(new StatusPO("inativa"));
-        reservaDAO.update(reserva);
-        return false;
+        return reservaDAO.update(reserva);
     }
 }

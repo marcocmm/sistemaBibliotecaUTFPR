@@ -5,13 +5,16 @@
  */
 package br.edu.utfpr.biblioteca.salas.controller;
 
+import br.edu.utfpr.biblioteca.salas.model.bo.ReservaBO;
 import br.edu.utfpr.biblioteca.salas.model.entity.EstudantePO;
 import br.edu.utfpr.biblioteca.salas.model.entity.ReservaPO;
 import br.edu.utfpr.biblioteca.salas.model.entity.SalaPO;
 import br.edu.utfpr.biblioteca.salas.tools.CalendarioHelper;
 import java.util.Date;
+import javax.faces.application.FacesMessage;
 import javax.inject.Named;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 
 /**
@@ -27,6 +30,7 @@ public class ExibirReservaMB {
     private CalendarioEstudanteMB calendario;
     private int idReserva;
 
+
     /**
      * Creates a new instance of SalaMB
      */
@@ -40,18 +44,21 @@ public class ExibirReservaMB {
 
     public CalendarioEstudanteMB getCalendario() {
         return calendario;
+
     }
 
-    public void setCalendario(CalendarioEstudanteMB calendario) {
-        this.calendario = calendario;
-    }
-
-    public String getDiaMesReserva(){
-        return CalendarioHelper.getDiaMesAno(reserva.getDataInicial());
-    }
-    
-    public String getHora(){
+    public String getHora() {
         return CalendarioHelper.getHora(reserva.getDataInicial());
+    }
+
+    public void cancelarReserva() {
+        FacesMessage msg;
+        if (ReservaBO.cancelarReserva(reserva)) {
+            msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Reserva Cancelada", getReserva().getStrDataInicial());
+        } else {
+            msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Reserva não pôde ser cancelada!", getReserva().getStrDataInicial());
+        }
+        FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 
     public int getIdReserva() {
