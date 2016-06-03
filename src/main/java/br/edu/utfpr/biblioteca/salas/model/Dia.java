@@ -5,6 +5,7 @@
  */
 package br.edu.utfpr.biblioteca.salas.model;
 
+import br.edu.utfpr.biblioteca.salas.tools.CalendarioHelper;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -29,6 +30,10 @@ public class Dia {
 
     public Date getData() {
         return data;
+    }
+    
+     public String getStrDia() {
+        return CalendarioHelper.getDia(data);
     }
 
     public void setData(Date data) {

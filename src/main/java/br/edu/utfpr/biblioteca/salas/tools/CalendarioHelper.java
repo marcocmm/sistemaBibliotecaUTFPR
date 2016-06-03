@@ -334,9 +334,22 @@ public class CalendarioHelper {
 
         return reportDate;
     }
+    /**
+     * Este método recebe uma data tipo Date e converte para string (dd/MM)
+     *
+     * @param date
+     * @return String(dd/MM/yyyy HH:mm:ss)
+     */
+    public static String getDia(Date date) {
+        DateFormat df = new SimpleDateFormat("dd/MM");
+
+        String reportDate = df.format(date);
+
+        return reportDate;
+    }
 
     /**
-     * Este método recebe uma data tipo Date e converte para string (HH:mm:ss)
+     * Este método recebe uma data tipo Date e converte para string (HH:mm)
      * @param date
      * @return 
      */
