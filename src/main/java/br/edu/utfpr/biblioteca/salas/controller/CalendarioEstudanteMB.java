@@ -35,6 +35,10 @@ public class CalendarioEstudanteMB {
     private Date mesEscolhido;
     private ReservaPO reserva;
 
+    public ReservaPO getReserva() {
+        return reserva;
+    }
+
     public CalendarioEstudanteMB() {
         this.estudante = new EstudantePO(null, null, null, null);
         mesEscolhido = new Date();

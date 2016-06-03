@@ -25,14 +25,22 @@ public class Hora implements Comparable<Hora>{
     public Hora() {
         this.reservas = new ArrayList<>();
     }
-
+    
+    public String getId(int index){
+       if(reservas.get(index).getDataInicial() == null){
+            return "-1";
+        }
+        else {
+            return String.valueOf(reservas.get(index).getId());
+        }
+    }
+    
     public String getStatusReserva(int index) {
-        ReservaPO reserva = reservas.get(index);
-        if(reserva.getDataInicial() == null){
+        if(reservas.get(index).getDataInicial() == null){
             return "Livre";
         }
         else {
-            return "Ocupada";
+            return "Ocupado";
         }
     }
 
@@ -47,7 +55,7 @@ public class Hora implements Comparable<Hora>{
     public List<ReservaPO> getReservas() {
         return reservas;
     }
-
+    
     public void setReservas(List<ReservaPO> reservas) {
         this.reservas = reservas;
     }

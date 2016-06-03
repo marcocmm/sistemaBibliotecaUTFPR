@@ -88,6 +88,9 @@ public class ReservaPO implements Serializable {
     public Integer getId() {
         return id;
     }
+    public String getStrId(){
+        return id.toString();
+    }
 
     public void setId(Integer id) {
         this.id = id;

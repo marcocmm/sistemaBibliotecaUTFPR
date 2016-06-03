@@ -25,6 +25,7 @@ public class ExibirReservaMB {
 
     private ReservaPO reserva;
     private CalendarioEstudanteMB calendario;
+    private int idReserva;
 
     /**
      * Creates a new instance of SalaMB
@@ -36,10 +37,6 @@ public class ExibirReservaMB {
     public ReservaPO getReserva() {
         return reserva;
     }
-
-//    public String getDiaMesAno(){
-////        return CalendarioHelper.getDiaMesAno(mesEscolhido);
-//    }
 
     public CalendarioEstudanteMB getCalendario() {
         return calendario;
@@ -55,6 +52,14 @@ public class ExibirReservaMB {
     
     public String getHora(){
         return CalendarioHelper.getHora(reserva.getDataInicial());
+    }
+
+    public int getIdReserva() {
+        return idReserva;
+    }
+
+    public void setIdReserva(int idReserva) {
+        this.idReserva = idReserva;
     }
 
 }

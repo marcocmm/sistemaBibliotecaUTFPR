@@ -9,6 +9,9 @@
     <h:head>
         <title>Exibir Reserva</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <f:metadata>
+            <f:viewParam name="idReserva" value="#{exibirReservaMB.idReserva}" />
+        </f:metadata>
         <ui:include src="header.xhtml"/>
     </h:head>
     <h:body>
@@ -29,7 +32,10 @@
                     <h:outputText value="#{exibirReservaMB.reserva.quantidadeAlunos}" styleClass="outputLabel"/>
                     <p:commandButton value="Cancelar Reserva" actionListener="#{estudanteMB.cancelarReserva()}" process="@this"/>
                 </h:panelGrid>                
-
+                <p>You've been redirected to this bookmarkable page with button.
+                    ViewParameter you've passed is <strong>"
+                        #{exibirReservaMB.idReserva}"</strong>
+                </p>
             </h:panelGrid>
             <!--<p:commandButton value="Submit" update="growl" process="@this"/>-->
         </p:panel>
