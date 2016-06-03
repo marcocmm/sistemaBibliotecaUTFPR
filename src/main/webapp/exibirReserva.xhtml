@@ -27,11 +27,12 @@
                     <h:outputText value="#{exibirReservaMB.reserva.sala.id}" styleClass="outputLabel"/>
                     <h:outputText value="Alunos: " />
                     <h:outputText value="#{exibirReservaMB.reserva.quantidadeAlunos}" styleClass="outputLabel"/>
-                    <p:commandButton value="Cancelar Reserva" actionListener="#{estudanteMB.cancelarReserva()}" process="@this"/>
+                    <h:form>
+                        <p:growl id="growl" sticky="true" showDetail="true"/>
+                        <p:commandButton value="Cancelar Reserva" update="growl" actionListener="#{exibirReservaMB.cancelarReserva()}" process="@this"/>
+                    </h:form>
                 </h:panelGrid>                
-
             </h:panelGrid>
-            <!--<p:commandButton value="Submit" update="growl" process="@this"/>-->
         </p:panel>
         <ui:include src="footer.xhtml"/>
     </h:body>
