@@ -21,7 +21,7 @@ import javax.faces.view.ViewScoped;
 @Named(value = "calendarioAdministradorMB")
 @ViewScoped
 @ManagedBean
-public class CalendarioAdministradorMB {
+public class RelatorioMB {
 
     private AdministradorPO administrador;
 
@@ -37,7 +37,7 @@ public class CalendarioAdministradorMB {
     /**
      * Creates a new instance of AdministradorMB
      */
-    public CalendarioAdministradorMB() {
+    public RelatorioMB() {
         this.strSala = "Sala";
         this.sala = new SalaPO(1, true);
         this.administrador = new AdministradorPO(null, null);
