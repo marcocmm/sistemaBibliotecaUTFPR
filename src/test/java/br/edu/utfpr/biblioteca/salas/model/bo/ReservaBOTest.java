@@ -23,7 +23,7 @@ public class ReservaBOTest {
     public ReservaBOTest() {
     }
 
-    @Test
+//    @Test
     public void testSomeMethod() {
         System.out.println("");
         int a = 10;
