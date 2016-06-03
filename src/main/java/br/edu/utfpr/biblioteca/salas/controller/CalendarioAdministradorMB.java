@@ -11,8 +11,10 @@ import br.edu.utfpr.biblioteca.salas.model.entity.SalaPO;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import javax.faces.application.FacesMessage;
 import javax.inject.Named;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 
 @Named(value = "administradorMB")
@@ -24,7 +26,7 @@ public class CalendarioAdministradorMB {
 
     private Date dataSelecionada;
     private Dia diaSelecionado;
-    
+
     private ReservaPO reserva;
     private SalaPO sala;
     private String strSala;
@@ -143,10 +145,17 @@ public class CalendarioAdministradorMB {
     public List<ReservaPO> obterRelatorio(Date dataInicial, Date dataFinal) {
         throw new UnsupportedOperationException();
     }
-    
-    public void cancelarReserva(){
-        
-        
-        ReservaBO.cancelarReserva(reserva);
+
+    /**
+     * Tenta cancelar uma reserva, se conseguir envia mensagem de sucesso!
+     * Falta testar!
+     */
+    public void cancelarReserva() {
+        FacesMessage msg = new FacesMessage("Erro encontrado \n Reserva não cancelada!");
+
+        if (ReservaBO.cancelarReserva(reserva)) {
+            msg = new FacesMessage("Reserva cancelda com sucesso!");
+        }
+        FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 }

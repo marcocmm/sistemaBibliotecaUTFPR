@@ -137,6 +137,7 @@ public class SalaBO {
         reservaDAO.insert(reserva);
     }
 
+    @Deprecated
     public static void cancelarSala(ReservaPO reserva) throws Exception {
         if (reservaDAO.isReservado(reserva)) {
             reservaDAO.delete(reserva);

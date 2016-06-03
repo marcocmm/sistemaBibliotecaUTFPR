@@ -127,6 +127,11 @@ public class ReservaBO {
         return mes;
     }
 
+    /**
+     * Altera o status de uma reserva para 'inativa' e faz o update no banco.
+     * @param reserva
+     * @return boolean
+     */
     public static boolean cancelarReserva(ReservaPO reserva){
         reserva.setStatus(new StatusPO("inativa"));
         reservaDAO.update(reserva);
