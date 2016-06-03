@@ -340,8 +340,21 @@ public class CalendarioHelper {
      * @param date
      * @return String(dd/MM/yyyy HH:mm:ss)
      */
-    public static String getDia(Date date) {
+    public static String getDiaMes(Date date) {
         DateFormat df = new SimpleDateFormat("dd/MM");
+
+        String reportDate = df.format(date);
+
+        return reportDate;
+    }
+    /**
+     * Este método recebe uma data tipo Date e converte para string (dd/MM/yyyy)
+     *
+     * @param date
+     * @return String(dd/MM/yyyy)
+     */
+    public static String getDiaMesAno(Date date) {
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 
         String reportDate = df.format(date);
 

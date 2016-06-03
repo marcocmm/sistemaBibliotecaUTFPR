@@ -33,7 +33,7 @@ public class Dia {
     }
     
      public String getStrDia() {
-        return CalendarioHelper.getDia(data);
+        return CalendarioHelper.getDiaMes(data);
     }
 
     public void setData(Date data) {

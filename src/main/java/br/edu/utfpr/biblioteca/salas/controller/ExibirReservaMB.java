@@ -49,7 +49,12 @@ public class ExibirReservaMB {
         this.calendario = calendario;
     }
 
+    public String getDiaMesReserva(){
+        return CalendarioHelper.getDiaMesAno(reserva.getDataInicial());
+    }
     
+    public String getHora(){
+        return CalendarioHelper.getHora(reserva.getDataInicial());
+    }
 
-    
 }
