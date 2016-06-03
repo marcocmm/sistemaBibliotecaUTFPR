@@ -34,11 +34,21 @@ public class CalendarioEstudanteMB {
     private Dia diaSelecionado;
     private Date mesEscolhido;
     private ReservaPO reserva;
+    int i = 7;
+    int j = 8;
 
     public CalendarioEstudanteMB() {
         this.estudante = new EstudantePO(null, null, null, null);
         mesEscolhido = new Date();
         diaSelecionado = new Dia();
+    }
+
+    public int getContador() {
+        return i++;
+    }
+
+    public int getContadorPlus() {
+        return j++;
     }
 
     public EstudantePO getEstudante() {
