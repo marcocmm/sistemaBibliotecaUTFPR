@@ -425,5 +425,5 @@ public class CalendarioHelper {
         SimpleDateFormat formatoEmDia = new SimpleDateFormat("MMMM 'de' yyyy", new Locale("pt", "BR"));
         return formatoEmDia.format(date);
     }
-
+    
 }

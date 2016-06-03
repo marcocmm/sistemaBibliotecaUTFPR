@@ -17,7 +17,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 
-@Named(value = "administradorMB")
+@Deprecated
+@Named(value = "calendarioAdministradorMB")
 @ViewScoped
 @ManagedBean
 public class CalendarioAdministradorMB {

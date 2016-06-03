@@ -15,14 +15,18 @@
         <p:panel header="Detalhes da Reserva">
             <h:panelGrid id="confirmation" columns="1" columnClasses="grid,grid,grid">
                 <h:panelGrid columns="2" columnClasses="value">
+                    <h:outputText value="Nome: " />
+                    <h:outputText value="#{exibirReservaMB.reserva.estudante.nome}" styleClass="outputLabel"/>
+                    <h:outputText value="Email: " />
+                    <h:outputText value="#{exibirReservaMB.reserva.estudante.email}" styleClass="outputLabel"/>
                     <h:outputText value="Data: " />
-                    <h:outputText value="#{estudanteMB.estudante.reservas.viewDataInicial}" styleClass="outputLabel"/>
+                    <h:outputText value="#{exibirReservaMB.reserva.dataInicial}" styleClass="outputLabel"/>
                     <h:outputText value="Horário: " />
-                    <h:outputText value="#{estudanteMB.estudante.reservas.viewHoraInicial}:00:00" styleClass="outputLabel"/>
+                    <h:outputText value="#{exibirReservaMB.reserva.dataFinal}:00:00" styleClass="outputLabel"/>
                     <h:outputText value="Sala: " />
-                    <h:outputText value="#{estudanteMB.estudante.reservas.sala.id}" styleClass="outputLabel"/>
+                    <h:outputText value="#{exibirReservaMB.reserva.sala.id}" styleClass="outputLabel"/>
                     <h:outputText value="Alunos: " />
-                    <h:outputText value="#{estudanteMB.estudante.reservas.quantidadeAlunos}" styleClass="outputLabel"/>
+                    <h:outputText value="#{exibirReservaMB.reserva.quantidadeAlunos}" styleClass="outputLabel"/>
                     <p:commandButton value="Cancelar Reserva" actionListener="#{estudanteMB.cancelarReserva()}" process="@this"/>
                 </h:panelGrid>                
 

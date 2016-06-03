@@ -27,12 +27,12 @@
                 <p:messages autoUpdate="true" />
 
                 <p:outputLabel for="popup" value="Data:" />
-                <p:calendar id="popup" value="#{administradorMB.dataSelecionada}" />
+                <p:calendar id="popup" value="#{calendarioAdministradorMB.dataSelecionada}" />
 
                 <h:outputLabel value="Sala"/>
                 <p:selectOneMenu id="sala" value="Salas" effect="fold" editable="true">
-                    <f:selectItem itemLabel="Selecione uma sala" itemValue="#{administradorMB.sala.id}" />
-                    <f:selectItems value="#{administradorMB.salas}" />
+                    <f:selectItem itemLabel="Selecione uma sala" itemValue="#{calendarioAdministradorMB.sala.id}" />
+                    <f:selectItems value="#{calendarioAdministradorMB.salas}" />
                 </p:selectOneMenu>
                 <!--
                                 <p:commandButton value="Consultar">
@@ -40,11 +40,11 @@
                                 </p:commandButton>-->
 
 
-                <h:outputText value="#{administradorMB.strSala}"/>
+                <h:outputText value="#{calendarioAdministradorMB.strSala}"/>
 
-                <p:dataTable id="tabelaHorarios" var="reservasHorario" value="#{administradorMB.reservasHorario}">
+                <p:dataTable id="tabelaHorarios" var="reservasHorario" value="#{calendarioAdministradorMB.reservasHorario}">
                     <p:column headerText="Horário">
-                        <h:outputText value="#{reservasHorario.horario}" />
+                        <h:outputText value="#{reservaMB.reserva}" />
                     </p:column>
 
                     <p:column headerText="Status">
