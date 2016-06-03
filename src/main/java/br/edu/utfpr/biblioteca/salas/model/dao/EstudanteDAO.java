@@ -11,7 +11,12 @@ public class EstudanteDAO extends GenericDAO<EstudantePO> {
     public EstudanteDAO() {
         super(EstudantePO.class);
     }
-
+/**
+ * Verifica se o limite diario de reserva foi atingido
+ * @param estudante
+ * @param dataInicial
+ * @return 
+ */
     public boolean canReservar(EstudantePO estudante, Date dataInicial) {
 
         long qtdReservas;

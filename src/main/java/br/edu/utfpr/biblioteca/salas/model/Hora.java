@@ -7,6 +7,7 @@ package br.edu.utfpr.biblioteca.salas.model;
 
 import br.edu.utfpr.biblioteca.salas.model.entity.EstudantePO;
 import br.edu.utfpr.biblioteca.salas.model.entity.ReservaPO;
+import br.edu.utfpr.biblioteca.salas.tools.CalendarioHelper;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -25,6 +26,15 @@ public class Hora {
     public Hora() {
         this.reservas = new ArrayList<>();
     }
+
+    @Override
+    public String toString() {
+        if(hora == null){
+            return "livre";
+        }
+        return CalendarioHelper.getData(hora);
+    }
+    
 
     public Date getHora() {
         return hora;

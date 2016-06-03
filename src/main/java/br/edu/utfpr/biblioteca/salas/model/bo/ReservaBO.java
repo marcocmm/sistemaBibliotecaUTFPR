@@ -26,7 +26,7 @@ public class ReservaBO {
      * @param idSala int
      * @return lista de reservas
      */
-    public static List<ReservaPO> getReservas(Date data, int idSala) {
+    public static List<ReservaPO> getReservaAtiva(Date data, int idSala) {
         return reservaDAO.listByDateTimeAndSala(data, idSala);
     }
 
@@ -37,8 +37,8 @@ public class ReservaBO {
      * @param sala
      * @return lista de reservas
      */
-    public static List<ReservaPO> getReservas(Date data, SalaPO sala) {
-        return getReservas(data, sala.getId());
+    public static List<ReservaPO> getReservaAtiva(Date data, SalaPO sala) {
+        return getReservaAtiva(data, sala.getId());
     }
 
     /**

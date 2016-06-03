@@ -58,7 +58,7 @@
                         <p:dataTable var="hora" value="#{calendarioEstudanteMB.diaSelecionado.horario}">
                             
                             <p:column headerText="Horários ">
-                                <h:outputText value="08 às 09" />
+                                <h:outputText value="#{hora.toString}" />
                             </p:column>
                             <p:column headerText="Sala 1">
                                 <h:outputText value="sala1" />
