@@ -55,25 +55,31 @@ public class ReservaBO {
      * sua reserva
      */
     public static HashMap<Date, HashMap<SalaPO, ReservaPO>> descreverDiaHash(Date date) {
-        SalaDAO salaDAO = new SalaDAO();
+        HashMap<SalaPO, ReservaPO> salaTemReservas;
+        HashMap<Date, HashMap<SalaPO, ReservaPO>> dataTemReservas;
+        SalaDAO salaDAO;
+        List<SalaPO> salas;
+        List<Date> horarios;
+        List<ReservaPO> reservas;
 
-        List<SalaPO> salas = salaDAO.list();
-        List<Date> horarios = CalendarioHelper.getHorarios(date);
-        List<ReservaPO> reservas = reservaDAO.listByDateTime(date);
+        salaTemReservas = new HashMap();
+        dataTemReservas = new HashMap();
+        salaDAO = new SalaDAO();
 
-        HashMap<SalaPO, ReservaPO> salaTemReservas = new HashMap();
-        HashMap<Date, HashMap<SalaPO, ReservaPO>> dataTemReservas = new HashMap();
+        salas = salaDAO.list();
+        horarios = CalendarioHelper.getHorarios(date);
 
         for (SalaPO sala : salas) {
             salaTemReservas.put(sala, null);
         }
 
         for (Date horario : horarios) {
+            reservas = reservaDAO.listByDateTime(horario);
             dataTemReservas.put(horario, HashMapHelper.clone(salaTemReservas));
-        }
 
-        for (ReservaPO reserva : reservas) {
-            dataTemReservas.get(reserva.getDataInicial()).put(reserva.getSala(), reserva);
+            for (ReservaPO reserva : reservas) {
+                dataTemReservas.get(reserva.getDataInicial()).put(reserva.getSala(), reserva);
+            }
         }
         return dataTemReservas;
     }
@@ -105,7 +111,6 @@ public class ReservaBO {
             horario.setHora(hora);
             for (Map.Entry<SalaPO, ReservaPO> salaTemReserva : salaTemReservas.entrySet()) {
                 ReservaPO reserva = salaTemReserva.getValue();
-
                 horario.addReserva(reserva);
             }
             dia.addHora(horario);

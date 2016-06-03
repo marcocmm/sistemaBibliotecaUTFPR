@@ -231,7 +231,7 @@ public class CalendarioHelper {
         calendar.clear(Calendar.MILLISECOND);
 
         calendar.set(Calendar.DAY_OF_MONTH, Integer.valueOf(dateParsed[0]));
-        calendar.set(Calendar.MONTH, Integer.valueOf(dateParsed[1]));
+        calendar.set(Calendar.MONTH, Integer.valueOf(dateParsed[1]) - 1);
         calendar.set(Calendar.YEAR, Integer.valueOf(dateParsed[2]));
         return calendar.getTime();
     }
@@ -334,6 +334,7 @@ public class CalendarioHelper {
 
         return reportDate;
     }
+
     /**
      * Este método recebe uma data tipo Date e converte para string (dd/MM)
      *
@@ -350,8 +351,9 @@ public class CalendarioHelper {
 
     /**
      * Este método recebe uma data tipo Date e converte para string (HH:mm)
+     *
      * @param date
-     * @return 
+     * @return
      */
     public static String getHora(Date date) {
         DateFormat df = new SimpleDateFormat("HH:mm");
