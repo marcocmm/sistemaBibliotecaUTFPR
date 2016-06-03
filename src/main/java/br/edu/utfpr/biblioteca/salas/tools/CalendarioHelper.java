@@ -336,6 +336,19 @@ public class CalendarioHelper {
     }
 
     /**
+     * Este método recebe uma data tipo Date e converte para string (HH:mm:ss)
+     * @param date
+     * @return 
+     */
+    public static String getHora(Date date) {
+        DateFormat df = new SimpleDateFormat("HH:mm");
+
+        String reportDate = df.format(date);
+
+        return reportDate;
+    }
+
+    /**
      * Este método recebe uma data tipo Date e converte para string (yyyy-MM-dd
      * HH:mm:ss)
      *

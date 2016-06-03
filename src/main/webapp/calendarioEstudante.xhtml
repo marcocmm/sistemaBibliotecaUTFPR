@@ -53,35 +53,35 @@
                     </p:panel>
                 </p:dataGrid>
 
-                <p:dialog header="Horários para o dia" width="700" height="800" widgetVar="diaDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                <p:dialog header="Horários para o dia" width="700" height="450" widgetVar="diaDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                     <p:outputPanel id="descricaoDia"  style="text-align:center;">
                         <p:dataTable var="hora" value="#{calendarioEstudanteMB.diaSelecionado.horario}">
                             
                             <p:column headerText="Horários ">
-                                <h:outputText value="#{hora.toString}" />
+                                <h:outputText value="#{hora.hora}" />
                             </p:column>
                             <p:column headerText="Sala 1">
-                                <h:outputText value="sala1" />
+                                <h:outputText value="#{hora.getStatusReserva(0)}" />
                             </p:column>
 
                             <p:column headerText="Sala 2">
-                                <h:outputText value="sala 2" />
+                                <h:outputText value="#{hora.getStatusReserva(1)}" />
                             </p:column>
 
                             <p:column headerText="Sala 3">
-                                <h:outputText value="sala 3" />
+                                <h:outputText value="#{hora.getStatusReserva(2)}" />
                             </p:column>
 
                             <p:column headerText="Sala 4">
-                                <h:outputText value="sala 4" />
+                                <h:outputText value="#{hora.getStatusReserva(3)}" />
                             </p:column>
 
                             <p:column headerText="Sala 5">
-                                <h:outputText value="sala 5" />
+                                <h:outputText value="#{hora.getStatusReserva(4)}" />
                             </p:column>
 
                             <p:column headerText="Sala 6">
-                                <h:outputText value="sala 6" />
+                                <h:outputText value="#{hora.getStatusReserva(5)}" />
                             </p:column>
                         </p:dataTable>
                     </p:outputPanel>

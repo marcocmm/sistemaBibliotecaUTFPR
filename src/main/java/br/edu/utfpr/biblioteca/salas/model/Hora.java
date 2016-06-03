@@ -5,7 +5,6 @@
  */
 package br.edu.utfpr.biblioteca.salas.model;
 
-import br.edu.utfpr.biblioteca.salas.model.entity.EstudantePO;
 import br.edu.utfpr.biblioteca.salas.model.entity.ReservaPO;
 import br.edu.utfpr.biblioteca.salas.tools.CalendarioHelper;
 import java.util.ArrayList;
@@ -18,7 +17,7 @@ import java.util.List;
  *
  * @author romulo
  */
-public class Hora {
+public class Hora implements Comparable<Hora>{
 
     private Date hora;
     private List<ReservaPO> reservas;
@@ -27,17 +26,18 @@ public class Hora {
         this.reservas = new ArrayList<>();
     }
 
-    @Override
-    public String toString() {
-        if(hora == null){
-            return "livre";
+    public String getStatusReserva(int index) {
+        ReservaPO reserva = reservas.get(index);
+        if(reserva.getDataInicial() == null){
+            return "Livre";
         }
-        return CalendarioHelper.getData(hora);
+        else {
+            return "Ocupada";
+        }
     }
-    
 
-    public Date getHora() {
-        return hora;
+    public String getHora() {
+        return CalendarioHelper.getHora(hora);
     }
 
     public void setHora(Date hora) {
@@ -66,6 +66,11 @@ public class Hora {
         hora.setHora(this.hora);
         hora.reservas.addAll(this.reservas);
         return hora;
+    }
+
+    @Override
+    public int compareTo(Hora o) {
+        return this.hora.compareTo(o.hora);
     }
 
 }
