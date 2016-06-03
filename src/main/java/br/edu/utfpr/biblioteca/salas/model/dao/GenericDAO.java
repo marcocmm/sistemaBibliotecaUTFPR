@@ -29,10 +29,15 @@ public abstract class GenericDAO<T> {
         return true;
     }
 
-    public void update(T entity) {
-        entityManager.getTransaction().begin();
-        entityManager.merge(entity);
-        entityManager.getTransaction().commit();
+    public boolean update(T entity) {
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.merge(entity);
+            entityManager.getTransaction().commit();
+        } catch (Exception ex) {
+            return false;
+        }
+        return true;
     }
 
     public void delete(T entity) {

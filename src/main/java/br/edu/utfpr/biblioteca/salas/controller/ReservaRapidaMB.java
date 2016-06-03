@@ -153,7 +153,7 @@ public class ReservaRapidaMB implements Serializable {
      */
     public void reservarSala() {
         FacesMessage msg;
-
+        
         if (reserva.getDataFinal().equals(reserva.getDataInicial())) {
             msg = new FacesMessage("Data Final igual data inicial");
             FacesContext.getCurrentInstance().addMessage(null, msg);
