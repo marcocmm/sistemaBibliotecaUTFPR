@@ -8,67 +8,78 @@
 
     <h:head>
         <title>Sislib</title>
-
+        <f:metadata charset="UTF-8"> </f:metadata>
+        <f:metadata name="viewport" content="width=device-width, initial-scale=1.0"> </f:metadata>
+        <h:outputStylesheet library="css" name="csspage.css"/> <!--css padrão para todas as páginas-->
         <f:metadata name="description" content="Sistema de gerenciamento das salas da biblioteca da UTFPR"></f:metadata>
-
         <ui:include src="header.xhtml"/>
 
     </h:head>
 
     <h:body>
 
-        <f:metadata>
-            <f:viewParam name="mesEscolhido" value="#{estudanteMB.mesEscolhido}" />
-        </f:metadata>
-
-        <p:outputPanel style="float: left; width: 33%; text-align: left">
-            <p:link outcome="calendarioEstudante" value="#{estudanteMB.nomeAnterior}">
-                <f:param name="mesEscolhido" value="#{estudanteMB.mesAnterior}" />
-            </p:link>
-        </p:outputPanel>
-
-        <p:outputPanel style="float: left; width: 33%; text-align: center">
-            <p:link outcome="calendarioEstudante" value="#{estudanteMB.nomeAtual}">
-                <f:param name="mesEscolhido" value="#{estudanteMB.dataAtual}" />
-            </p:link>
-        </p:outputPanel>
-
-        <p:outputPanel style="float: left; width: 33%; text-align: right">
-            <p:link outcome="calendarioEstudante" value="#{estudanteMB.nomePosterior}">
-                <f:param name="mesEscolhido" value="#{estudanteMB.mesPosterior}" />
-            </p:link>
-        </p:outputPanel>
-        
         <h:panelGroup>
             <h:form id="form">
 
-                <p:dataGrid var="dia" value="#{estudanteMB.mes}" columns="7"
-                            rows="42" paginator="false" id="calendario">
+                <p:outputPanel style="float: left; width: 33%; text-align: left">
+                    <p:commandLink id="anterior" actionListener="#{calendarioEstudanteMB.renderMesAnterior()}" ajax="false">
+                        <h:outputText value="#{calendarioEstudanteMB.nomeAnterior}" />
+                    </p:commandLink>
+                </p:outputPanel>
 
+                <p:outputPanel style="float: left; width: 34%; text-align: center">
+                    <p:commandLink id="atual" actionListener="#{calendarioEstudanteMB.renderMesAtual()}" ajax="false">
+                        <h:outputText value="#{calendarioEstudanteMB.nomeAtual}" />
+                    </p:commandLink>
+                </p:outputPanel>
+
+                <p:outputPanel style="float: left; width: 33%; text-align: right">
+                    <p:commandLink id="posterior" actionListener="#{calendarioEstudanteMB.renderMesPosterior()}" ajax="false">
+                        <h:outputText value="#{calendarioEstudanteMB.nomePosterior}" />
+                    </p:commandLink>
+                </p:outputPanel>
+
+                <p:dataGrid var="dia" value="#{calendarioEstudanteMB.mes}" columns="7" rows="42" paginator="false" id="calendario">
                     <f:facet name="header">
                         Calendário de Reservas
                     </f:facet>
-
                     <p:panel header="#{dia.data.date}" style="text-align:center">
                         <h:panelGrid columns="1" style="width:100%">
-
                             <p:commandLink update=":form:descricaoDia" oncomplete="PF('diaDialog').show()" title="View Detail">
                                 <h:outputText styleClass="ui-icon ui-icon-search" style="margin:0 auto;" />
-                                <f:setPropertyActionListener value="#{dia}" target="#{estudanteMB.diaSelecionado}" />
+                                <f:setPropertyActionListener value="#{dia}" target="#{calendarioEstudanteMB.diaSelecionado}" />
                             </p:commandLink>
                         </h:panelGrid>
                     </p:panel>
-
                 </p:dataGrid>
 
-                <p:dialog header="Horários para o dia" widgetVar="diaDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-                    <p:outputPanel id="descricaoDia" style="text-align:center;">
-                        <p:panelGrid  columns="2" rendered="#{not empty estudanteMB.diaSelecionado}" columnClasses="value">
+                <p:dialog header="Horários para o dia" width="700" height="800" widgetVar="diaDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                    <p:outputPanel id="descricaoDia"  style="text-align:center;">
+                        <p:dataTable var="hora" value="#{calendarioEstudanteMB.diaSelecionado.horario}">
+                            <p:column headerText="Sala 1">
+                                <h:outputText value="#{hora.reservas.get(0)}" />
+                            </p:column>
 
-                            <h:outputText value="Data:" />
-                            <h:outputText value="#{estudanteMB.diaSelecionado.data}" />
+                            <p:column headerText="Sala 2">
+                                <h:outputText value="#{hora.reservas.get(1)}" />
+                            </p:column>
 
-                        </p:panelGrid>
+                            <p:column headerText="Sala 3">
+                                <h:outputText value="#{hora.reservas.get(2)}" />
+                            </p:column>
+
+                            <p:column headerText="Sala 4">
+                                <h:outputText value="#{hora.reservas.get(3)}" />
+                            </p:column>
+
+                            <p:column headerText="Sala 5">
+                                <h:outputText value="#{hora.reservas.get(4)}" />
+                            </p:column>
+
+                            <p:column headerText="Sala 6">
+                                <h:outputText value="#{hora.reservas.get(5)}" />
+                            </p:column>
+                        </p:dataTable>
                     </p:outputPanel>
                 </p:dialog>
             </h:form>

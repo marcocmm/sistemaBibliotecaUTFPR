@@ -18,7 +18,7 @@ import javax.faces.view.ViewScoped;
 @Named(value = "administradorMB")
 @ViewScoped
 @ManagedBean
-public class AdministradorMB {
+public class CalendarioAdministradorMB {
 
     private AdministradorPO administrador;
 
@@ -33,7 +33,7 @@ public class AdministradorMB {
     /**
      * Creates a new instance of AdministradorMB
      */
-    public AdministradorMB() {
+    public CalendarioAdministradorMB() {
         this.strSala = "Sala";
         this.sala = new SalaPO(1, true);
         this.administrador = new AdministradorPO(null, null);

@@ -16,7 +16,8 @@ VALUES (1, 0),
 	   (2, 0),
 	   (3, 1),
 	   (4, 0),
-	   (5, 1);
+	(5,0),
+	   (6, 1);
 
 -- Insert Administradores-- 
 INSERT INTO bdBiblioteca.Administradores (login, senha)

@@ -41,6 +41,11 @@ public class ReservaDAO extends GenericDAO<ReservaPO> implements Serializable {
         return false;
     }
 
+    @Override
+    public void delete(ReservaPO reserva) {
+    }
+
+    
     /**
      * Dado uma data-hora, este método retorna um lista de reservas
      * correspondente a data.

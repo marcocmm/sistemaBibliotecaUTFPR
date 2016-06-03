@@ -12,13 +12,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  *
  * @author romulo
  */
-
-
 public class CalendarioHelper {
 
     /**
@@ -408,4 +407,10 @@ public class CalendarioHelper {
         SimpleDateFormat formatoEmDia = new SimpleDateFormat("MMMM");
         return formatoEmDia.format(date);
     }
+
+    public static String getMesAno(Date date) {
+        SimpleDateFormat formatoEmDia = new SimpleDateFormat("MMMM 'de' yyyy", new Locale("pt", "BR"));
+        return formatoEmDia.format(date);
+    }
+
 }

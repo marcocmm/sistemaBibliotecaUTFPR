@@ -73,7 +73,6 @@ public class EstudantePO implements Serializable {
     }
 
     public String getRa() {
-        System.out.println(ra);
         return ra;
     }
 
@@ -90,7 +89,6 @@ public class EstudantePO implements Serializable {
     }
 
     public String getSenha() {
-        System.out.println(senha);
         return senha;
     }
 
