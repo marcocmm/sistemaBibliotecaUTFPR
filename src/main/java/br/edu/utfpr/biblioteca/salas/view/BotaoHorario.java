@@ -70,6 +70,7 @@ public final class BotaoHorario implements Serializable, Comparable<BotaoHorario
     }
 
     public String getHoraStr() {
+        System.out.println(hora);
         return Integer.toString(hora);
     }
 
