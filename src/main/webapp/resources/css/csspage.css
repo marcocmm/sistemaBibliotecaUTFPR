@@ -1,55 +1,116 @@
-/*
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
-*/
-/* 
-    Created on : 01/05/2016, 23:18:54
-    Author     : elivelton
-*/
+html,body{
+    font-family: 'Open Sans';
+    min-height: 100%;
+    position: relative;
+}
+body{
+    margin: 0 0 60px;
+    padding:0;
+}
+
 .corpo{
     width: 100%;
     margin: 0px auto;
 }
 .corpo .topo{
-    width: 96%;
+    height: 250px;
+    width: 100%;
     float: left;
     background: #EDF3F3;
-    margin: 1%;
-    padding: 1%;
+    margin: 0%;
+    padding: 0%;
 }
 .corpo .topo .logo{
+    margin: 5em;
     width: 50px;
-    height: 110px;
+    height: 90px;
     float: left;
     background-image:url(images/logo.png);
     background-repeat: no-repeat;
     background-position: center;
     background-size: auto;
 }
-.corpo .topo .login{
-    width: 220px;
+
+.loginRR{
+    margin: 3em;
+    max-width: 200px;
+    width: 100%;
     float: right;
+    font-size: 1.5em;
+    font-family: 'Open Sans';
 }
+
+.loginRR input[type="text"]{
+    font-size: 0.75em;
+    font-family: 'Open Sans';
+    padding: 20px 10px; line-height: 28px;
+}
+.loginRR input[type="password"]{
+    font-size: 0.75em;
+    font-family: 'Open Sans';
+    padding: 20px 10px; line-height: 28px;
+}
+
+.loginButton {
+    float: right;
+    font-family: 'Open Sans';
+    /*outline: 0;*/
+    /*background: #4CAF50;*/
+    background: #0088cc;
+    width: 100%;
+    border: 0;
+    padding: 5%;
+    color: #FFFFFF;
+    
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.logoutButton {
+    float: right;
+    
+    /*outline: 0;*/
+    /*background: #4CAF50;*/
+    background: red;
+    width: 10%;
+    border: 0;
+    border-radius: 10px;
+    padding: 4%;
+    color: #FFFFFF;
+    font-size: .75em;
+    cursor: pointer;
+    font-weight: bold;
+}
+
 .corpo .topo .login .botaoLogin{
     float: right;
 }
 .corpo .conteudo{
-    width: 96%;
+    width: 90%;
     float: left;
     background: #EDF3F3;
     margin: 1%;
     padding: 1%;
 }
 .corpo .rodape{
-    width: 96%;
+    width: 100%;
     float: left;
     background: #EDF3F3;
-    margin: 1%;
-    padding: 1%;
+    margin: 2% 0 0 0 ;
+    padding: 3%;
 }
 .corpo .rodape .infoRodape{
     width: 100%;
     float: left;
     text-align: center;
+    font-size: 1em;
+}
+
+.gridSemBorda tr, .gridSemBorda td {
+    font-family: 'Open Sans';
+    font-size: .85em;
+    max-width: 350px;
+    width: 100%;
+    border: none !important;
+    background-color: #EDF3F3;
 }

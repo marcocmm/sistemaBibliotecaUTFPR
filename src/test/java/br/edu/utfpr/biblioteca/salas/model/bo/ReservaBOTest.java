@@ -20,6 +20,8 @@ public class ReservaBOTest {
     public ReservaBOTest() {
     }
 
+
+//    @Test
     public void testSomeMethod() {
         System.out.println("");
         int a = 10;

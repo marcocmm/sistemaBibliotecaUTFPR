@@ -118,7 +118,7 @@ public class SalaBO {
         SalaPO sala;
         EstudanteDAO estudanteD = new EstudanteDAO();
 
-        if (!EstudanteBO.isAutentico(reserva.getEstudante())) {
+        if (EstudanteBO.isAutentico(reserva.getEstudante()) == null) {
             throw new Exception("Credenciais inválidas");
         }
 
