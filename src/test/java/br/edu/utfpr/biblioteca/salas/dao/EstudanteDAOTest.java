@@ -9,8 +9,6 @@ import br.edu.utfpr.biblioteca.salas.model.bo.EstudanteBO;
 import br.edu.utfpr.biblioteca.salas.model.dao.EstudanteDAO;
 import br.edu.utfpr.biblioteca.salas.model.entity.EstudantePO;
 import static org.junit.Assert.assertTrue;
-import org.junit.Test;
-import static org.junit.Assert.assertTrue;
 
 /**
  *
@@ -33,6 +31,7 @@ public class EstudanteDAOTest {
 
         }
     }
+
 //    @Test
     public void test_autenticar() {
         EstudantePO d = dao.isAutentico("1136631", "baiser");
@@ -43,6 +42,6 @@ public class EstudanteDAOTest {
     public void test_estudanteCadastrado() {
         EstudantePO estudante = new EstudantePO("1136631", null, "baiser", "");
         assertTrue(EstudanteBO.alreadyCadastrado(estudante));
-    }
 
+    }
 }

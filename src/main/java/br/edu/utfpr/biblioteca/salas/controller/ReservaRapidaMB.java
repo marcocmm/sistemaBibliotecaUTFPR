@@ -36,8 +36,7 @@ import javax.servlet.http.HttpSession;
 public class ReservaRapidaMB implements Serializable {
 
     private ReservaPO reserva;
-    private String strHora;
-
+    private String strHora = "0";
     private List<BotaoHorario> botoesHorario;
     List<String> list = new ArrayList();
 
@@ -121,8 +120,18 @@ public class ReservaRapidaMB implements Serializable {
      * @return
      */
     public String onFlowProcess(FlowEvent event) {
+        FacesMessage msg;
         this.reserva.setDataInicial(CalendarioHelper.mergeDiaHora(this.reserva.getDataInicial(), strHora));
+
+        if (this.strHora.equals("0")) {
+            msg = new FacesMessage("Para avançar selecione um horário.");
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+            return event.getOldStep();
+        }
+        else{
         return event.getNewStep();
+        }
+
     }
 
     public void click() {
@@ -157,7 +166,7 @@ public class ReservaRapidaMB implements Serializable {
      */
     public void reservarSala() {
         FacesMessage msg;
-        
+
         if (reserva.getDataFinal().equals(reserva.getDataInicial())) {
             msg = new FacesMessage("Data Final igual data inicial");
             FacesContext.getCurrentInstance().addMessage(null, msg);

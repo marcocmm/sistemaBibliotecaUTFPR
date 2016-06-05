@@ -5,14 +5,11 @@
  */
 package br.edu.utfpr.biblioteca.salas.model.bo;
 
-import br.edu.utfpr.biblioteca.salas.model.Dia;
 import br.edu.utfpr.biblioteca.salas.model.entity.ReservaPO;
 import br.edu.utfpr.biblioteca.salas.model.entity.SalaPO;
 import br.edu.utfpr.biblioteca.salas.tools.CalendarioHelper;
 import java.util.Date;
 import java.util.HashMap;
-import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
@@ -22,6 +19,7 @@ public class ReservaBOTest {
 
     public ReservaBOTest() {
     }
+
 
 //    @Test
     public void testSomeMethod() {
