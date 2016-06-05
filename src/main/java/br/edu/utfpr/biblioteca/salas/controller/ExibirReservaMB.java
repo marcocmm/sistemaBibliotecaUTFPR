@@ -5,12 +5,14 @@
  */
 package br.edu.utfpr.biblioteca.salas.controller;
 
+import br.edu.utfpr.biblioteca.salas.model.Hora;
 import br.edu.utfpr.biblioteca.salas.model.bo.ReservaBO;
 import br.edu.utfpr.biblioteca.salas.model.entity.EstudantePO;
 import br.edu.utfpr.biblioteca.salas.model.entity.ReservaPO;
 import br.edu.utfpr.biblioteca.salas.model.entity.SalaPO;
 import br.edu.utfpr.biblioteca.salas.tools.CalendarioHelper;
 import java.util.Date;
+import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.inject.Named;
 import javax.faces.bean.ManagedBean;
@@ -27,6 +29,8 @@ import javax.faces.view.ViewScoped;
 public class ExibirReservaMB {
 
     private ReservaPO reserva;
+    private Hora hora;
+//    private List<ReservaPO> reservas;
     private CalendarioMB calendario;
     private int idReserva;
 
@@ -37,6 +41,15 @@ public class ExibirReservaMB {
     public ExibirReservaMB() {
         this.reserva = new ReservaPO(new EstudantePO(null, null, null, null), new SalaPO(0, true), new Date(), 0);
     }
+    
+//    public String getNome(int index){
+//       reservas.get(index).getEstudante().getNome();
+//            
+//       
+//        
+//            return reservas.get(index).getEstudante().getNome();
+//        
+//    }
 
     public ReservaPO getReserva() {
         return reserva;
@@ -51,13 +64,11 @@ public class ExibirReservaMB {
 
     }
 
-    public String getHora() {
-        return CalendarioHelper.getHora(reserva.getDataInicial());
-    }
+    
 
     public void cancelarReserva() {
         FacesMessage msg;
-        if (ReservaBO.cancelarReserva(reserva)) {
+        if (ReservaBO.setStatus(reserva, "inativa")) {
             msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Reserva Cancelada", getReserva().getStrDataInicial());
         } else {
             msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Reserva não pôde ser cancelada!", getReserva().getStrDataInicial());
@@ -71,6 +82,14 @@ public class ExibirReservaMB {
 
     public void setIdReserva(int idReserva) {
         this.idReserva = idReserva;
+    }
+
+    public Hora getHora() {
+        return hora;
+    }
+
+    public void setHora(Hora hora) {
+        this.hora = hora;
     }
 
 }

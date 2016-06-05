@@ -15,8 +15,6 @@ import java.util.Map;
 import br.edu.utfpr.biblioteca.salas.tools.CalendarioHelper;
 import br.edu.utfpr.biblioteca.salas.tools.HashMapHelper;
 import java.util.Collections;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class ReservaBO {
 
@@ -151,13 +149,14 @@ public class ReservaBO {
     }
 
     /**
-     * Altera o status de uma reserva para 'inativa' e faz o update no banco.
+     * Altera o status de uma reserva e faz o update no banco.
      *
-     * @param reserva
+     * @param reserva 
+     * @param newStatus
      * @return boolean
      */
-    public static boolean cancelarReserva(ReservaPO reserva) {
-        reserva.setStatus(new StatusPO("inativa"));
+    public static boolean setStatus(ReservaPO reserva, String newStatus) {
+        reserva.setStatus(new StatusPO(newStatus));
         return reservaDAO.update(reserva);
     }
 }

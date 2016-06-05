@@ -17,9 +17,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
 import javax.inject.Named;
-import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -95,36 +93,12 @@ public class CalendarioMB {
     }
 
     /**
-     * verifica se o estudante está cadastrado
+     * Retorna estudante logado
      *
-     * @param estudante
-     * @return boolean
+     * @return EstuantePO
      */
-    private boolean alreadyCadastrado() {
-        return EstudanteBO.alreadyCadastrado(estudante);
-    }
-
-    /**
-     * obtém o login e senha do estudante e, caso esteja autenticado, exibe
-     * mensagem na tela
-     *
-     * @param event
-     */
-    public void autenticar(ActionEvent event) {
-        FacesMessage message = null;
-        boolean loggedIn;
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
-        session.setAttribute("estudanteLogado", this.estudante);
-
-        if (!alreadyCadastrado()) {
-            message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Estudante não cadastrado!", null);
-        }
-        loggedIn = EstudanteBO.isAutentico(this.estudante.getRa(), this.estudante.getSenha());
-        if (loggedIn) {
-            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bem-Vindo!", estudante.getNome());
-        }
-        facesContext.addMessage(null, message);
+    public EstudantePO getEstudanteLogado() {
+        return (EstudantePO) SessionContext.getInstance().getEstudanteLogado();
     }
 
     /**

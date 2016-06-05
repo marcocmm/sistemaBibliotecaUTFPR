@@ -6,19 +6,16 @@
  */
 package br.edu.utfpr.biblioteca.salas.dao;
 
+import br.edu.utfpr.biblioteca.salas.model.bo.ReservaBO;
 import br.edu.utfpr.biblioteca.salas.model.dao.ReservaDAO;
 import br.edu.utfpr.biblioteca.salas.model.dao.EstudanteDAO;
 import br.edu.utfpr.biblioteca.salas.model.dao.SalaDAO;
 import br.edu.utfpr.biblioteca.salas.model.entity.EstudantePO;
 import br.edu.utfpr.biblioteca.salas.model.entity.ReservaPO;
 import br.edu.utfpr.biblioteca.salas.model.entity.SalaPO;
-import br.edu.utfpr.biblioteca.salas.model.entity.StatusPO;
 import br.edu.utfpr.biblioteca.salas.tools.CalendarioHelper;
 import java.util.Date;
 import java.util.List;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -35,7 +32,6 @@ public class ReservaDAOTest {
     static ReservaDAO dao = new ReservaDAO();
     static ReservaPO reservaPO = null;
 
-//    @Test
     public void reservar() {
         SalaDAO salaDao = new SalaDAO();
         SalaPO sala = salaDao.obter(2);
@@ -49,14 +45,22 @@ public class ReservaDAOTest {
         assertTrue(test);
     }
     
-//    @Test
     public void test_cancelarReserva(){
         
         ReservaPO reserva = null;
         reserva = dao.obter(10);
         assertTrue(reserva != null);
-        reserva.setStatus(new StatusPO("inativa"));
-        boolean t = dao.update(reserva);
+        boolean t = ReservaBO.setStatus(reserva, "inativa");
+        assertTrue(t);
+    }
+
+
+      public void test_updateReservaEmCurso(){
+        
+        ReservaPO reserva = null;
+        reserva = dao.obter(10);
+        assertTrue(reserva != null);
+        boolean t = ReservaBO.setStatus(reserva, "em_curso");
         assertTrue(t);
     }
 
@@ -71,7 +75,6 @@ public class ReservaDAOTest {
         }
         assertTrue(reservas != null);
     }
-//    @Test
 
     public void test_getQuantidadeReservas() {
         Date dataInicial = CalendarioHelper.parseDate("10-05-2016", "09", "00", "00");

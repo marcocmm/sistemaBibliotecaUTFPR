@@ -23,10 +23,32 @@
     </servlet-mapping>
     <session-config>
         <session-timeout>
-            30
+            <!--Finaliza a sessão em 15 minutos-->
+            15 
         </session-timeout>
     </session-config>
     <welcome-file-list>
         <welcome-file>faces/index.xhtml</welcome-file>
     </welcome-file-list>
+    
+  <!--  login filter -->
+  <filter>
+      <filter-name>LoginFilter</filter-name>
+      <filter-class>br.edu.utfpr.biblioteca.salas.controller.LoginFilter</filter-class>    
+  </filter>
+  
+  <!--Páginas Filtradas para um Estudante-->
+  <filter-mapping>
+      <filter-name>LoginFilter</filter-name>
+      <url-pattern>/faces/calendario.xhtml</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+      <filter-name>LoginFilter</filter-name>
+      <url-pattern>/faces/reserva.xhtml</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+      <filter-name>LoginFilter</filter-name>
+      <url-pattern>/faces/exibirReserva.xhtml</url-pattern>
+  </filter-mapping>
+    
 </web-app>

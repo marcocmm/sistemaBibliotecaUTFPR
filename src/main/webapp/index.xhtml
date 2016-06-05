@@ -31,12 +31,11 @@
                             </p:calendar> 
                         </h:panelGrid>
                         <h:panelGrid id="horariosReservas" columns="1">
-                            <p:dataGrid var="botao" value="#{reservaRapidaMB.botoesHorario}" columns="3" rows="13" paginator="false" id="horarios">
+                            <p:dataGrid var="botao" value="#{reservaRapidaMB.botoesHorario}" columns="3" rows="15" paginator="false" id="horarios">
                                 <h:commandButton value="#{botao.value}" class="#{botao.classe}" disabled="#{botao.disabled}" actionListener="#{reservaRapidaMB.setStrHora(botao.horaStr)}"/>
                             </p:dataGrid>
                         </h:panelGrid>
                     </h:panelGrid>
-
                 </p:tab>
 
                 <p:tab id="sala" title="Sala">
@@ -123,9 +122,9 @@
 
         <ui:include src="footer.xhtml"/>
 
-        <a href="faces/reserva.xhtml">Reserva Lenta</a>
-        <a href="faces/exibirReserva.xhtml">Exibir Reserva</a>
-        <a href="faces/calendario.xhtml">Calendário Estudante</a>
+        <a href="reserva.xhtml">Reserva Lenta</a>
+        <a href="exibirReserva.xhtml">Exibir Reserva</a>
+        <a href="calendario.xhtml">Calendário Estudante</a>
 
     </h:body>
 </html>

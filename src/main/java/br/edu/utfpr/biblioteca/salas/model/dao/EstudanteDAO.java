@@ -48,14 +48,14 @@ public class EstudanteDAO extends GenericDAO<EstudantePO> {
      * @param senha
      * @return Boolean
      */
-    public boolean isAutentico(String ra, String senha) {
+    public EstudantePO isAutentico(String ra, String senha) {
         EstudantePO estudante = obter(ra);
         if (estudante != null) {
             if (estudante.getSenha().equals(senha)) {
-                return true;
+                return estudante;
             }
         }
-        return false;
+        return null;
     }
 
 }

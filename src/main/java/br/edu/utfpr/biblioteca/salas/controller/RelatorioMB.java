@@ -154,7 +154,7 @@ public class RelatorioMB {
     public void cancelarReserva() {
         FacesMessage msg = new FacesMessage("Erro encontrado \n Reserva não cancelada!");
 
-        if (ReservaBO.cancelarReserva(reserva)) {
+        if (ReservaBO.setStatus(reserva, "inativa")) {
             msg = new FacesMessage("Reserva cancelda com sucesso!");
         }
         FacesContext.getCurrentInstance().addMessage(null, msg);

@@ -1,9 +1,11 @@
 package br.edu.utfpr.biblioteca.salas.controller;
 
+import br.edu.utfpr.biblioteca.salas.model.bo.EstudanteBO;
 import br.edu.utfpr.biblioteca.salas.view.BotaoHorario;
 import br.edu.utfpr.biblioteca.salas.model.bo.SalaBO;
 import br.edu.utfpr.biblioteca.salas.model.entity.EstudantePO;
 import br.edu.utfpr.biblioteca.salas.model.entity.ReservaPO;
+import static br.edu.utfpr.biblioteca.salas.model.entity.ReservaPO_.estudante;
 import br.edu.utfpr.biblioteca.salas.model.entity.SalaPO;
 import br.edu.utfpr.biblioteca.salas.tools.CalendarioHelper;
 
@@ -24,7 +26,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
+import javax.faces.event.ActionEvent;
 import javax.inject.Named;
+import javax.servlet.http.HttpSession;
 
 @Named(value = "reservaRapidaMB")
 @ManagedBean
@@ -32,8 +36,7 @@ import javax.inject.Named;
 public class ReservaRapidaMB implements Serializable {
 
     private ReservaPO reserva;
-    private String strHora;
-
+    private String strHora = "0";
     private List<BotaoHorario> botoesHorario;
     List<String> list = new ArrayList();
 
@@ -117,8 +120,18 @@ public class ReservaRapidaMB implements Serializable {
      * @return
      */
     public String onFlowProcess(FlowEvent event) {
+        FacesMessage msg;
         this.reserva.setDataInicial(CalendarioHelper.mergeDiaHora(this.reserva.getDataInicial(), strHora));
+
+        if (this.strHora.equals("0")) {
+            msg = new FacesMessage("Para avançar selecione um horário.");
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+            return event.getOldStep();
+        }
+        else{
         return event.getNewStep();
+        }
+
     }
 
     public void click() {
@@ -153,7 +166,7 @@ public class ReservaRapidaMB implements Serializable {
      */
     public void reservarSala() {
         FacesMessage msg;
-        
+
         if (reserva.getDataFinal().equals(reserva.getDataInicial())) {
             msg = new FacesMessage("Data Final igual data inicial");
             FacesContext.getCurrentInstance().addMessage(null, msg);
@@ -213,5 +226,7 @@ public class ReservaRapidaMB implements Serializable {
     public List<ReservaPO> listarReservas(EstudantePO estudante) {
         throw new UnsupportedOperationException();
     }
+    
+     
 
 }
