@@ -14,7 +14,7 @@ public class EstudanteBO {
      * @param senha
      * @return boolean
      */
-    public static boolean isAutentico(String ra, String senha) {
+    public static EstudantePO isAutentico(String ra, String senha) {
         return estudanteDAO.isAutentico(ra, senha);
     }
 
@@ -25,7 +25,7 @@ public class EstudanteBO {
      * @param estudante
      * @return boolean
      */
-    public static boolean isAutentico(EstudantePO estudante) {
+    public static EstudantePO isAutentico(EstudantePO estudante) {
         return isAutentico(estudante.getRa(), estudante.getSenha());
     }
 
@@ -46,7 +46,7 @@ public class EstudanteBO {
      * @return boolean
      */
     public static boolean alreadyCadastrado(EstudantePO estudante) {
-        return estudanteDAO.obter(estudante) != null;
+        return estudanteDAO.obter(estudante.getRa()) != null;
     }
 
     /**

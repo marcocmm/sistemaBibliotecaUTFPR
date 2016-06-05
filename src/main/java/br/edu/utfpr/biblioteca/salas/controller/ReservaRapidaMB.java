@@ -1,9 +1,11 @@
 package br.edu.utfpr.biblioteca.salas.controller;
 
+import br.edu.utfpr.biblioteca.salas.model.bo.EstudanteBO;
 import br.edu.utfpr.biblioteca.salas.view.BotaoHorario;
 import br.edu.utfpr.biblioteca.salas.model.bo.SalaBO;
 import br.edu.utfpr.biblioteca.salas.model.entity.EstudantePO;
 import br.edu.utfpr.biblioteca.salas.model.entity.ReservaPO;
+import static br.edu.utfpr.biblioteca.salas.model.entity.ReservaPO_.estudante;
 import br.edu.utfpr.biblioteca.salas.model.entity.SalaPO;
 import br.edu.utfpr.biblioteca.salas.tools.CalendarioHelper;
 
@@ -24,7 +26,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
+import javax.faces.event.ActionEvent;
 import javax.inject.Named;
+import javax.servlet.http.HttpSession;
 
 @Named(value = "reservaRapidaMB")
 @ManagedBean
@@ -213,5 +217,7 @@ public class ReservaRapidaMB implements Serializable {
     public List<ReservaPO> listarReservas(EstudantePO estudante) {
         throw new UnsupportedOperationException();
     }
+    
+     
 
 }
