@@ -53,7 +53,7 @@
                     </p:panel>
                 </p:dataGrid>
 
-                <p:dialog header="Horários para o dia" width="700" height="450" widgetVar="diaDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                <p:dialog header="Horários para o dia" width="700" height="800" widgetVar="diaDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                     <p:outputPanel id="descricaoDia"  style="text-align:center;">
                         <p:dataTable var="hora" value="#{calendarioMB.diaSelecionado.horario}">
 
@@ -63,7 +63,7 @@
                             <p:column headerText="Sala 1">
                                 <h:outputText value="#{hora.getStatusReserva(0)}" />
                                 <br/>
-                                <p:link outcome="exibirReserva" value="Editar" style="background-color: #0ca3d2">
+                                <p:link outcome="exibirReserva" value="Detalhes" style="color: blue">
                                     <f:param name="idReserva" value="#{hora.getId(0)}" />
                                 </p:link>
                             </p:column>
@@ -71,7 +71,7 @@
                             <p:column headerText="Sala 2">
                                 <h:outputText value="#{hora.getStatusReserva(1)}" />
                                 <br/>
-                                <p:link outcome="exibirReserva" value="Editar" style="background-color: #0ca3d2">
+                                <p:link outcome="exibirReserva" value="Detalhes" style="color: blue">
                                     <f:param name="idReserva" value="#{hora.getId(1)}" />
                                 </p:link>
                             </p:column>
@@ -79,7 +79,7 @@
                             <p:column headerText="Sala 3">
                                 <h:outputText value="#{hora.getStatusReserva(2)}" />
                                 <br/>
-                                <p:link outcome="exibirReserva" value="Editar" style="background-color: #0ca3d2">
+                                <p:link outcome="exibirReserva" value="Detalhes" style="color: blue">
                                     <f:param name="idReserva" value="#{hora.getId(2)}" />
                                 </p:link>
                             </p:column>
@@ -87,7 +87,7 @@
                             <p:column headerText="Sala 4">
                                 <h:outputText value="#{hora.getStatusReserva(3)}" />
                                 <br/>
-                                <p:link outcome="exibirReserva" value="Editar" style="background-color: #0ca3d2">
+                                <p:link outcome="exibirReserva" value="Detalhes"   style="color: blue">
                                     <f:param name="idReserva" value="#{hora.getId(3)}" />
                                 </p:link>
                             </p:column>
@@ -95,7 +95,7 @@
                             <p:column headerText="Sala 5">
                                 <h:outputText value="#{hora.getStatusReserva(4)}" />
                                 <br/>
-                                <p:link outcome="exibirReserva" value="Editar" style="background-color: #0ca3d2">
+                                <p:link outcome="exibirReserva" value="Detalhes" style="color: blue">
                                     <f:param name="idReserva" value="#{hora.getId(4)}" />
                                 </p:link>
                             </p:column>
@@ -103,7 +103,7 @@
                             <p:column headerText="Sala 6">
                                 <h:outputText value="#{hora.getStatusReserva(5)}" />
                                 <br/>
-                                <p:link outcome="exibirReserva" value="Editar" style="background-color: #0ca3d2">
+                                <p:link outcome="exibirReserva" value="Detalhes" style="color: blue">
                                     <f:param name="idReserva" value="#{hora.getId(5)}" />
                                 </p:link>
                             </p:column>
