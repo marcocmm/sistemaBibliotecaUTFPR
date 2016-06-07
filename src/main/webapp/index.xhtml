@@ -26,7 +26,7 @@
                     <h:panelGrid columns="3" cellpadding="5">
                         <p:growl id="msgs" showDetail="true" />
                         <h:panelGrid columns="1" cellpadding="5">
-                            <p:calendar id="inline" value="#{reservaRapidaMB.reserva.dataInicial}" mode="inline">
+                            <p:calendar showOn="button" id="inline" value="#{reservaRapidaMB.reserva.dataInicial}" mode="inline">
                                 <p:ajax event="dateSelect" listener="#{reservaRapidaMB.onDateSelect}" update="msgs,horariosReservas"/>
                             </p:calendar> 
                         </h:panelGrid>
@@ -90,7 +90,6 @@
                             <p:password id="lastname" value="#{reservaRapidaMB.reserva.estudante.senha}">
                                 <p:ajax event="keyup" />
                             </p:password>
-                            <!--<p:commandButton value="Submit" actionListener="#{reservaRapidaMB.reservarSala}" oncomplete="PF('wiz').loadStep('tabId',false)" />-->
                             <p:commandButton value="Reservar" actionListener="#{reservaRapidaMB.reservarSala}" update="growl" process="@this"/>
                         </h:panelGrid>
                     </p:panel>

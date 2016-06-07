@@ -159,4 +159,13 @@ public class ReservaBO {
         reserva.setStatus(new StatusPO(newStatus));
         return reservaDAO.update(reserva);
     }
+    
+    /**
+     * Obtém uma reserva pelo id
+     * @param index
+     * @return ReservaPO 
+     */
+    public static ReservaPO getReservaPorId(int index){
+        return reservaDAO.obter(index);
+    }
 }

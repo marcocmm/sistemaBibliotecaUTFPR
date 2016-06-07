@@ -51,7 +51,7 @@ public class SessionContext {
     public String getNameEstudanteLogado() {
         EstudantePO e = (EstudantePO) getAttribute("estudanteLogado");
         
-        return (e != null) ? "Olá: " + e.getNome() : "";
+        return (e != null) ? "Bem vindo, " + e.getNome() : " ";
     }
 
     /**

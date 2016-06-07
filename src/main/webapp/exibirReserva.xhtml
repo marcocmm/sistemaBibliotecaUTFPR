@@ -35,12 +35,6 @@
                         <p:commandButton value="Cancelar Reserva" update="growl" rendered="#{exibirReservaMB.canCancelReserva()}" actionListener="#{exibirReservaMB.cancelarReserva()}" process="@this"/>
                     </h:form>
                 </h:panelGrid>                
-
-                <p>You've been redirected to this bookmarkable page with button.
-                    ViewParameter you've passed is <strong>"
-                        #{exibirReservaMB.idReserva}"</strong>
-                </p>
-
             </h:panelGrid>
         </p:panel>
         <ui:include src="footer.xhtml"/>
