@@ -33,6 +33,7 @@
                     <h:form>
                         <p:growl id="growl" sticky="true" showDetail="true"/>
                         <p:commandButton value="Cancelar Reserva" update="growl" rendered="#{exibirReservaMB.canCancelReserva()}" actionListener="#{exibirReservaMB.cancelarReserva()}" process="@this"/>
+
                     </h:form>
                 </h:panelGrid>                
             </h:panelGrid>

@@ -54,8 +54,9 @@ public class ReservaDAO extends GenericDAO<ReservaPO> implements Serializable {
      */
     public List<ReservaPO> listByDateTime(Date date) {
         Query q = entityManager.createQuery("SELECT e FROM Reserva e "
-                + "WHERE e.dataInicial=:dataInicial");
+                + "WHERE e.dataInicial=:dataInicial AND e.status = :ativa");
         q.setParameter("dataInicial", date);
+        q.setParameter("ativa", new StatusPO("ativa"));
         return q.getResultList();
     }
 
