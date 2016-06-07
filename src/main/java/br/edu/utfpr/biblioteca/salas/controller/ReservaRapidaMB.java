@@ -167,15 +167,6 @@ public class ReservaRapidaMB implements Serializable {
     public void reservarSala() {
         FacesMessage msg;
 
-        if (reserva.getDataFinal().equals(reserva.getDataInicial())) {
-            msg = new FacesMessage("Data Final igual data inicial");
-            FacesContext.getCurrentInstance().addMessage(null, msg);
-        }
-        if (reserva.getDataFinal().before(reserva.getDataInicial())) {
-            msg = new FacesMessage("Data Final deve ser posterior à data inicial");
-            FacesContext.getCurrentInstance().addMessage(null, msg);
-        }
-
         try {
             SalaBO.reservarSala(reserva);
             msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Reservado", getReserva().getStrDataInicial());
@@ -200,7 +191,7 @@ public class ReservaRapidaMB implements Serializable {
         }
         botoesHorario.clear();
         for (Map.Entry<Date, Boolean> entry : salasDisponiveis.entrySet()) {
-            if (entry.getValue()) {
+            if ((entry.getValue()) && ((new Date()).before(entry.getKey()))) {
                 botoesHorario.add(new BotaoHorario(entry.getKey().getHours(), "verde", false));
             } else {
                 botoesHorario.add(new BotaoHorario(entry.getKey().getHours(), "vermelho", true));

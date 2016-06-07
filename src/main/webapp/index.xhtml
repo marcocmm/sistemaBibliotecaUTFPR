@@ -90,7 +90,7 @@
                             <p:password id="lastname" value="#{reservaRapidaMB.reserva.estudante.senha}">
                                 <p:ajax event="keyup" />
                             </p:password>
-
+                            <!--<p:commandButton value="Submit" actionListener="#{reservaRapidaMB.reservarSala}" oncomplete="PF('wiz').loadStep('tabId',false)" />-->
                             <p:commandButton value="Reservar" actionListener="#{reservaRapidaMB.reservarSala}" update="growl" process="@this"/>
                         </h:panelGrid>
                     </p:panel>
