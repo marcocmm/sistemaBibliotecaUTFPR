@@ -61,7 +61,8 @@ public class LoginMB {
         }
         estudante = EstudanteBO.isAutentico(estudante);
         if (estudante != null) {
-            SessionContext.getInstance().setAttribute("estudanteLogado", estudante);
+//            SessionContext.getInstance().setAttribute("estudanteLogado", estudante);
+            SessionContext.getInstance().setEstudanteLogado(estudante);
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bem-Vindo!", estudante.getNome());
             facesContext.addMessage(null, message);
             try {

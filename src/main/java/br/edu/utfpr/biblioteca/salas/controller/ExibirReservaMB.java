@@ -32,8 +32,12 @@ public class ExibirReservaMB {
     private String hora;
     private CalendarioMB calendario;
     private int idReserva;
+    private LoginMB sessionLogin;
+    private EstudantePO estudante;
 
     public ExibirReservaMB() {
+//        this.sessionLogin = new LoginMB();
+        this.estudante = SessionContext.getInstance().getEstudanteLogado();
         this.reserva = new ReservaPO(new EstudantePO(null, null, null, null), new SalaPO(0, true), new Date(), 0);
     }
 
@@ -48,6 +52,13 @@ public class ExibirReservaMB {
     public CalendarioMB getCalendario() {
         return calendario;
 
+    }
+    
+    public String canCancelReserva(){
+        if (reserva.getEstudante().getRa().equals(estudante.getRa())){
+            return "true";
+        }
+        return "false";
     }
 
     public void cancelarReserva() {
