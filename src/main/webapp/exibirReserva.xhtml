@@ -18,10 +18,10 @@
         <p:panel header="Detalhes da Reserva">
             <h:panelGrid id="confirmation" columns="1" columnClasses="grid,grid,grid">
                 <h:panelGrid columns="2" columnClasses="value">
-                    <h:outputText value="Nome: " />
-                    <h:outputText value="#{exibirReservaMB.reserva.estudante.nome}" styleClass="outputLabel"/>
-                    <h:outputText value="Email: " />
-                    <h:outputText value="#{exibirReservaMB.reserva.estudante.email}" styleClass="outputLabel"/>
+                    <h:outputText value="Nome: " rendered="#{exibirReservaMB.canCancelReserva()}" />
+                    <h:outputText value="#{exibirReservaMB.reserva.estudante.nome}" rendered="#{exibirReservaMB.canCancelReserva()}" styleClass="outputLabel"/>
+                    <h:outputText value="Email: " rendered="#{exibirReservaMB.canCancelReserva()}" />
+                    <h:outputText value="#{exibirReservaMB.reserva.estudante.email}" rendered="#{exibirReservaMB.canCancelReserva()}" styleClass="outputLabel"/>
                     <h:outputText value="Data: " />
                     <h:outputText value="#{exibirReservaMB.diaMesReserva}" styleClass="outputLabel"/>
                     <h:outputText value="Horário: " />

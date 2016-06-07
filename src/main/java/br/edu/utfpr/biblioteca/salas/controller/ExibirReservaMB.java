@@ -32,10 +32,12 @@ public class ExibirReservaMB {
     private String hora;
     private CalendarioMB calendario;
     private int idReserva;
-    private LoginMB sessionLogin = new LoginMB();
-    private EstudantePO estudante = sessionLogin.getEstudante();
+    private LoginMB sessionLogin;
+    private EstudantePO estudante;
 
     public ExibirReservaMB() {
+//        this.sessionLogin = new LoginMB();
+        this.estudante = SessionContext.getInstance().getEstudanteLogado();
         this.reserva = new ReservaPO(new EstudantePO(null, null, null, null), new SalaPO(0, true), new Date(), 0);
     }
 

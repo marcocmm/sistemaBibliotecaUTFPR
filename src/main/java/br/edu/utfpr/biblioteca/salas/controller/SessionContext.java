@@ -56,10 +56,10 @@ public class SessionContext {
 
     /**
      * Seta um novo estudante na sessão
-     * @param usuario 
+     * @param estudante 
      */
-    public void setEstudanteLogado(EstudantePO usuario) {
-        setAttribute("estudanteLogado", usuario);
+    public void setEstudanteLogado(EstudantePO estudante) {
+        setAttribute("estudanteLogado", estudante);
     }
 
     /**
