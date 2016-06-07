@@ -54,9 +54,9 @@ public class ReservaDAO extends GenericDAO<ReservaPO> implements Serializable {
      */
     public List<ReservaPO> listByDateTime(Date date) {
         Query q = entityManager.createQuery("SELECT e FROM Reserva e "
-                + "WHERE e.dataInicial=:dataInicial AND e.status = :ativa");
+                + "WHERE e.dataInicial=:dataInicial AND e.status != :inativa");
         q.setParameter("dataInicial", date);
-        q.setParameter("ativa", new StatusPO("ativa"));
+        q.setParameter("inativa", new StatusPO("inativa"));
         return q.getResultList();
     }
 
@@ -72,7 +72,6 @@ public class ReservaDAO extends GenericDAO<ReservaPO> implements Serializable {
         Query q = entityManager.createQuery("SELECT e FROM Reserva e WHERE e.dataIniciaxdataInicial AND e.id =:idSala");
         q.setParameter("dataInicial", date);
         q.setParameter("idSala", idSala);
-        q.setParameter("ativa", new StatusPO("ativa"));
         return q.getResultList();
     }
 
@@ -105,10 +104,10 @@ public class ReservaDAO extends GenericDAO<ReservaPO> implements Serializable {
      */
     public boolean isReservado(ReservaPO reserva) {
         try {
-            Query q = entityManager.createQuery("SELECT e FROM Reserva e WHERE e.dataInicial = :dataInicial AND e.sala = :sala AND e.status = :status");
+            Query q = entityManager.createQuery("SELECT e FROM Reserva e WHERE e.dataInicial = :dataInicial AND e.sala = :sala AND e.status != :status");
             q.setParameter("dataInicial", reserva.getDataInicial());
             q.setParameter("sala", reserva.getSala());
-            q.setParameter("status", new StatusPO("ativa"));
+            q.setParameter("status", new StatusPO("inativa"));
             q.getSingleResult();
             return true;
         } catch (NoResultException ex) {

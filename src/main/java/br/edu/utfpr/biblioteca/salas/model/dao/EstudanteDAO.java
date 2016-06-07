@@ -21,8 +21,8 @@ public class EstudanteDAO extends GenericDAO<EstudantePO> {
 
         long qtdReservas;
         Query q = entityManager.createQuery
-        ("SELECT e FROM Reserva e WHERE e.status = :ativa AND e.estudante = :estudante AND e.dataInicial = :data");
-        q.setParameter("ativa", new StatusPO("ativa"));
+        ("SELECT e FROM Reserva e WHERE e.status != :inativa AND e.estudante = :estudante AND e.dataInicial = :data");
+        q.setParameter("inativa", new StatusPO("inativa"));
         q.setParameter("estudante", estudante);
         q.setParameter("data", dataInicial);
         qtdReservas = (long) q.getResultList().size();
