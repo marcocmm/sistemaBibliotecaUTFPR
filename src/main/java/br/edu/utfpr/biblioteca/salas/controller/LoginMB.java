@@ -71,6 +71,12 @@ public class LoginMB {
                 Logger.getLogger(LoginMB.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
+//            try {
+//                ec.redirect("index.xhtml");
+//            } catch (IOException ex) {
+//                Logger.getLogger(LoginMB.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+            estudante = new EstudantePO(null, null, null, null);
             message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Ra ou Senha incorretos! \n Por favor tente novamente.", null);
         }
         facesContext.addMessage(null, message);
