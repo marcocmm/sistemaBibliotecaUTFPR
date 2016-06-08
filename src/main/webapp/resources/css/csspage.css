@@ -12,27 +12,53 @@ body{
     width: 100%;
     margin: 0px auto;
 }
+
 .corpo .topo{
-    height: 250px;
+    height: 190px;
     width: 100%;
     float: left;
-    background: #EDF3F3;
+    background: #EDF3FF;
     margin: 0%;
     padding: 0%;
 }
 .corpo .topo .logo{
-    margin: 5em;
-    width: 50px;
-    height: 90px;
+    margin: 0.2em;    
+    width: 150px;
+    height: 152px;
     float: left;
     background-image:url(images/logo.png);
     background-repeat: no-repeat;
     background-position: center;
     background-size: auto;
+    border: 2px;
+    box-sizing: border-box;
+}
+
+.corpo .topo .barNav a {
+position: relative; 
+font-size: 1.2em;
+color: #000;
+text-decoration: none;
+background:  #cccccc;
+text-align: center;
+padding: 1px 5px;
+left: -152px;   
+top : 148px;
+border: 1px solid #000;
+}
+
+.barNav a:hover {
+color: #666;
+background: #e3e3e3;
+border: 1px solid #666;
 }
 
 .loginRR{
-    margin: 3em;
+    position: relative;
+    /*margin: 1.75em;*/
+    top : -40px;
+    left : -60px;
+    /*margin-top: 0.0em;*/
     max-width: 200px;
     width: 100%;
     float: right;
@@ -43,12 +69,14 @@ body{
 .loginRR input[type="text"]{
     font-size: 0.75em;
     font-family: 'Open Sans';
-    padding: 20px 10px; line-height: 28px;
+    padding: 15px 10px; 
+    line-height: 28px;
 }
 .loginRR input[type="password"]{
     font-size: 0.75em;
     font-family: 'Open Sans';
-    padding: 20px 10px; line-height: 28px;
+    padding: 15px 10px; 
+    line-height: 28px;
 }
 
 .loginButton {
@@ -61,14 +89,14 @@ body{
     border: 0;
     padding: 5%;
     color: #FFFFFF;
-    
+
     cursor: pointer;
     font-weight: bold;
 }
 
 .logoutButton {
     float: right;
-    
+
     /*outline: 0;*/
     /*background: #4CAF50;*/
     background: red;
@@ -95,7 +123,7 @@ body{
 .corpo .rodape{
     width: 100%;
     float: left;
-    background: #EDF3F3;
+    background: #EDF3FF;
     margin: 2% 0 0 0 ;
     padding: 3% 0 3% 0;
 }
@@ -114,3 +142,43 @@ body{
     border: none !important;
     background-color: #EDF3F3;
 }
+
+
+// CSS Responsivo ->
+
+/*  #header{
+            min-height: 100px;
+            background-color: #666699;
+        }
+        #menu{
+            min-height: 40px;
+            background-color: #999999;
+        }
+        #body{
+            min-height: 400px;
+            margin-top: 3%;
+            background-color: #efefef;
+        }
+        #footer{
+            min-height: 100px;
+            margin-top: 3%;
+            background-color: #666699;
+        }
+        #header, #menu, #body, #footer{
+            margin-left: 10%;
+            margin-right: 10%;
+            
+            box-shadow: 3px 5px 7px #666666;
+            border: 1px solid black;
+        }
+        @viewport{
+            zoom: 1.0;
+            width: extend-to-zoom;
+        }
+        @-ms-viewport{
+            width: extend-to-zoom;
+            zoom: 1.0;
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+        }*/

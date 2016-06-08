@@ -116,7 +116,7 @@ public class SalaBO {
     public static void reservarSala(ReservaPO reserva) throws Exception {
         EstudantePO estudante;
         SalaPO sala;
-        EstudanteDAO estudanteD = new EstudanteDAO();
+        EstudanteDAO estudanteDAO = new EstudanteDAO();
 
         if (EstudanteBO.isAutentico(reserva.getEstudante()) == null) {
             throw new Exception("Credenciais inválidas");
@@ -134,7 +134,7 @@ public class SalaBO {
             throw new Exception("Sala já reservada");
         }
 
-        if (!(estudanteD.canReservar(reserva.getEstudante(), reserva.getDataInicial()))) {
+        if (!(estudanteDAO.canReservar(reserva.getEstudante(), reserva.getDataInicial()))) {
             throw new Exception("Você já efetuou o limite máximo de reservas diárias!");
 
         }

@@ -24,16 +24,20 @@
             <div class="topo">
 
                 <a class="logo" href="index.xhtml" ></a> <!--Atualizar URL após a definição do escopo de sessão.-->
-
+                    <p class="barNav">
+                        <a  href="calendario.xhtml">Calendário Estudante</a>        
+                        <a  href="calendario.xhtml">Contato</a>  
+                    </p>                    
                 <div class="loginRR">
                     <h:form rendered="#{loginMB.exibirFormLogin()}"> 
-                        <p:inputText id="username" class="form-control" placeholder="Digite seu RA" value="#{loginMB.estudante.ra}"  required="true" label="username" />
+                        <p:inputText id="username" class="form-control" placeholder="Digite seu R.A" value="#{loginMB.estudante.ra}"  required="true" label="username" />
                         <!--</h:outputLabel>-->
                         <p:password id="password" class="password" placeholder="Digite sua senha" value="#{loginMB.estudante.senha}" required="true"  label="password" />
                         <!--</h:outputLabel>-->
                         <h:commandButton value="Login" class="btn-navbar"  actionListener="#{loginMB.doLogin}"/>
 
                     </h:form>
+                    
                     <h:form class="gridSemBorda">
                         <!--<p:panelGrid columns="1" >-->
                         <h:outputLabel for="estudanteLogadoNome" value="#{loginMB.nomeEstudanteLogado}"/>
@@ -47,6 +51,7 @@
         </div>
 
     </h:body>
+    
 
 </html>
 
