@@ -26,7 +26,7 @@
                     <h:panelGrid columns="3" cellpadding="5">
                         <p:growl id="msgs" showDetail="true" />
                         <h:panelGrid columns="1" cellpadding="5">
-                            <p:calendar showOn="button" id="inline" value="#{reservaRapidaMB.reserva.dataInicial}" mode="inline">
+                            <p:calendar showOn="button" disabledWeekends="true" mindate="#{reservaRapidaMB.dataAtual}" id="inline" value="#{reservaRapidaMB.reserva.dataInicial}" mode="inline">
                                 <p:ajax event="dateSelect" listener="#{reservaRapidaMB.onDateSelect}" update="msgs,horariosReservas"/>
                             </p:calendar> 
                         </h:panelGrid>

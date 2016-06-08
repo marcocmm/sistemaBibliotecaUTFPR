@@ -109,11 +109,7 @@ public class ReservaRapidaMB implements Serializable {
     public void onDateSelect(SelectEvent event) {
         Date dataSelecionada = (Date) event.getObject();
         FacesContext facesContext = FacesContext.getCurrentInstance();
-        if (dataSelecionada.before(this.getDataAtual())) {
-            facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Reservas indisponíveis!", "Data Selecionada : " + formatoEmDia.format(event.getObject())));
-        } else {
-            facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Data Selecionada", formatoEmDia.format(event.getObject())));
-        }
+        facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Data Selecionada", formatoEmDia.format(event.getObject())));
         updateBotoesAtivosPorDia(dataSelecionada);
     }
 
@@ -126,7 +122,6 @@ public class ReservaRapidaMB implements Serializable {
     public String onFlowProcess(FlowEvent event) {
         FacesMessage msg;
         this.reserva.setDataInicial(CalendarioHelper.mergeDiaHora(this.reserva.getDataInicial(), strHora));
-
         if (this.strHora.equals("0")) {
             msg = new FacesMessage("Para avançar selecione um horário!");
             FacesContext.getCurrentInstance().addMessage(null, msg);
