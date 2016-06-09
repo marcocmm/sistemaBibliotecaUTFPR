@@ -150,12 +150,17 @@ public class LoginMB {
     }
 
     public void fazerCheckin() {
+        EstudantePO estudanteLogado = SessionContext.getInstance().getEstudanteLogado();
         try {
-            if (estudante.getRa() == null || estudante.getSenha() == null) {
-                throw new Exception("Campos login e senha não podem ser nulos!");
-            }
-            if (estudante.getRa().isEmpty() || estudante.getSenha().isEmpty()) {
-                throw new Exception("Informe o login e a senha!");
+            if (estudanteLogado == null) {
+                if (estudante.getRa() == null || estudante.getSenha() == null) {
+                    throw new Exception("Campos login e senha não podem ser nulos!");
+                }
+                if (estudante.getRa().isEmpty() || estudante.getSenha().isEmpty()) {
+                    throw new Exception("Informe o login e a senha!");
+                }
+            } else {
+                this.estudante = estudanteLogado;
             }
             ReservaBO.fazerCheckin(estudante);
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Checkin efetuado!", null);
