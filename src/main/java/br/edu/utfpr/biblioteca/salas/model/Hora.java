@@ -43,6 +43,19 @@ public class Hora implements Comparable<Hora>{
             return "Ocupado";
         }
     }
+    /**
+     * Habilita o link para detalhes da reserva
+     * @param index
+     * @return 
+     */
+    public String getDisableReserva(int index) {
+        if(reservas.get(index).getDataInicial() == null){
+            return "true";
+        }
+        else {
+            return "false";
+        }
+    }
 
     public String getHora() {
         return CalendarioHelper.getHora(hora);
