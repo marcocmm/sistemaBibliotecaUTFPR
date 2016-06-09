@@ -12,8 +12,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.servlet.ServletRequest;
-import javax.servlet.http.HttpServletRequest;
 
 /**
  *
@@ -84,7 +82,7 @@ public class LoginMB {
         facesContext.addMessage(null, message);
         return "";
     }
-    
+
 //    NOT WORKING
 //    public void acessoNegado(){
 //        String erro = (String) SessionContext.getInstance().getAttribute("acesso_negado");
@@ -94,7 +92,6 @@ public class LoginMB {
 //            facesContext.addMessage(null, message);
 //        }
 //    }
-
     /**
      * Faz o logout do estudante, encerra a session
      *
@@ -153,12 +150,17 @@ public class LoginMB {
     }
 
     public void fazerCheckin() {
+        EstudantePO estudanteLogado = SessionContext.getInstance().getEstudanteLogado();
         try {
-            if (estudante.getRa() == null || estudante.getSenha() == null) {
-                throw new Exception("Campos login e senha não podem ser nulos!");
-            }
-            if (estudante.getRa().isEmpty() || estudante.getSenha().isEmpty()) {
-                throw new Exception("Informe o login e a senha!");
+            if (estudanteLogado == null) {
+                if (estudante.getRa() == null || estudante.getSenha() == null) {
+                    throw new Exception("Campos login e senha não podem ser nulos!");
+                }
+                if (estudante.getRa().isEmpty() || estudante.getSenha().isEmpty()) {
+                    throw new Exception("Informe o login e a senha!");
+                }
+            } else {
+                this.estudante = estudanteLogado;
             }
             ReservaBO.fazerCheckin(estudante);
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Checkin efetuado!", null);
@@ -167,5 +169,15 @@ public class LoginMB {
         } finally {
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
+    }
+
+    public boolean exibirBotaoCheckin() {
+        EstudantePO estudanteLogado = SessionContext.getInstance().getEstudanteLogado();
+        if (estudanteLogado == null) {
+            return true;
+        } else if (EstudanteBO.canDoChekin(estudanteLogado)) {
+            return true;
+        }
+        return false;
     }
 }

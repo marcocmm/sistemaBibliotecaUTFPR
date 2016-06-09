@@ -4,6 +4,7 @@ package br.edu.utfpr.biblioteca.salas.controller;
  *
  * @author Leonardo Baiser <lpbaiser@gmail.com>
  */
+import br.edu.utfpr.biblioteca.salas.model.entity.AdministradorPO;
 import br.edu.utfpr.biblioteca.salas.model.entity.EstudantePO;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -62,6 +63,36 @@ public class SessionContext {
      */
     public void setEstudanteLogado(EstudantePO estudante) {
         setAttribute("estudanteLogado", estudante);
+    }
+    
+    /**
+     * Retorna a instância do estudandte logado, está instância está armazenada
+     * na sessão
+     *
+     * @return EstudantePO
+     */
+    public AdministradorPO getAdministradorLogado() {
+        return (AdministradorPO) getAttribute("administradorLogado");
+    }
+
+    /**
+     * Retorna o nome do estudante,só para fins de view
+     *
+     * @return nomeEstudante
+     */
+    public String getNameAdministradorLogado() {
+        AdministradorPO e = (AdministradorPO) getAttribute("administradorLogado");
+
+        return (e != null) ? "Bem vindo, " + e.getLogin() : " ";
+    }
+
+    /**
+     * Seta um novo estudante na sessão
+     *
+     * @param estudante
+     */
+    public void setAdministradorLogado(AdministradorPO administrador) {
+        setAttribute("administradorLogado", administrador);
     }
 
     /**

@@ -182,10 +182,13 @@ public class ReservaBO {
         if (estudantePopulado == null) {
             throw new Exception("Login e senha inválidos");
         }
-        if (!EstudanteBO.hasReservaNow(estudantePopulado)) {
+        if (!EstudanteBO.canDoChekin(estudantePopulado)) {
             throw new Exception("Não há reservas disponíveis para chekin no momentos");
         }
         ReservaPO reserva = EstudanteBO.getMyReservaNow(estudantePopulado);
+        if (reserva.getStatus().equals(new StatusPO("emCurso"))) {
+            throw new Exception("Você já fez checkin, pode usar a sala!");
+        }
         ReservaBO.setStatus(reserva, "emCurso");
     }
 }
