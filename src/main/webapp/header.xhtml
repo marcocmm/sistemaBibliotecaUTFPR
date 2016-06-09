@@ -3,9 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <!--xmlns:ui="http://xmlns.jcp.org/jsf/facelets"-->
-    <!-->-->
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
     <h:head>
         <f:metadata charset="UTF-8"> </f:metadata>
@@ -18,43 +17,27 @@
         <h:outputStylesheet library="css" name="normalize.css"/> <!--css padrão para todas as páginas-->
     </h:head>
 
-
     <h:body>
         <div class="corpo">
             <div class="topo">
-
                 <a class="logo" href="index.xhtml" ></a> <!--Atualizar URL após a definição do escopo de sessão.-->
-                    <p class="barNav">
-                        <a  href="calendario.xhtml">Calendário Estudante</a>        
-                        <a  href="calendario.xhtml">Contato</a>  
-                    </p>                    
-                <div class="loginRR">
-                    <h:form rendered="#{loginMB.exibirFormLogin()}"> 
-                        <p:inputText id="username" class="form-control" placeholder="Digite seu R.A" value="#{loginMB.estudante.ra}"  required="true" label="username" />
-                        <!--</h:outputLabel>-->
-                        <p:password id="password" class="password" placeholder="Digite sua senha" value="#{loginMB.estudante.senha}" required="true"  label="password" />
-                        <!--</h:outputLabel>-->
-                        <h:commandButton value="Login" class="btn-navbar"  actionListener="#{loginMB.doLogin}"/>
-
-                    </h:form>
-                    
-                    <h:form class="gridSemBorda">
-                        <!--<p:panelGrid columns="1" >-->
+                <p class="barNav">
+                    <a  href="calendario.xhtml">Calendário Estudante</a>        
+                    <a  href="calendario.xhtml">Contato</a>  
+                </p>
+                <div class="loginRR" style="text-align: center">
+                    <h:form>
+                        <p:inputText rendered="#{loginMB.exibirFormLogin()}" id="username" class="form-control" placeholder="Digite seu R.A" value="#{loginMB.estudante.ra}"  required="true" label="username" />
+                        <p:password rendered="#{loginMB.exibirFormLogin()}" id="password" class="password" placeholder="Digite sua senha" value="#{loginMB.estudante.senha}" required="true"  label="password" />
                         <h:outputLabel for="estudanteLogadoNome" value="#{loginMB.nomeEstudanteLogado}"/>
-                        <h:commandButton rendered="#{loginMB.exibirBtnLogout()}" value="Sair" class="btn"  actionListener="#{loginMB.doLogout}"/>
-                        <!--</p:panelGrid>-->
-                    </h:form>
+                        <div>
+                            <p:commandButton rendered="#{loginMB.exibirBtnLogout()}" value="Sair" actionListener="#{loginMB.doLogout}"/>
+                            <p:commandButton rendered="#{loginMB.exibirFormLogin()}" value="Login" style="float: left" actionListener="#{loginMB.doLogin}"/>
+                            <p:commandButton value="Checkin" id="nonAjax" style="float: right" actionListener="#{loginMB.fazerCheckin()}" ajax="false" />
+                        </div>
+                    </h:form> 
                 </div>
-
-
             </div>
         </div>
-
     </h:body>
-    
-
 </html>
-
-
-
-
