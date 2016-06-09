@@ -133,14 +133,17 @@ public class SalaBO {
         if (reservaDAO.isReservado(reserva)) {
             throw new Exception("Sala já reservada");
         }
-        if (reservaDAO.haveReservaByDateIdsalaEstudante(reserva.getDataInicial(), reserva.getSala().getId(), reserva.getEstudante())) {
-            throw new Exception("Você já possui uma reserva nesse horário em outra sala!");
-        }
+        if (estudante.getRa().equals("admin")) {
+            reservaDAO.insert(reserva);
+        } else {
+            if (reservaDAO.haveReservaByDateIdsalaEstudante(reserva.getDataInicial(), reserva.getSala().getId(), reserva.getEstudante())) {
+                throw new Exception("Você já possui uma reserva nesse horário em outra sala!");
+            }
 
-        if (!(estudanteDAO.canReservar(reserva.getEstudante(), reserva.getDataInicial()))) {
-            throw new Exception("Você já efetuou o limite máximo de reservas diárias!");
+            if (!(estudanteDAO.canReservar(reserva.getEstudante(), reserva.getDataInicial()))) {
+                throw new Exception("Você já efetuou o limite máximo de reservas diárias!");
+            }
         }
-
         reservaDAO.insert(reserva);
     }
 
