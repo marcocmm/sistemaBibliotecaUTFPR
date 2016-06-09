@@ -6,11 +6,6 @@ package br.edu.utfpr.biblioteca.salas.controller;
  */
 import br.edu.utfpr.biblioteca.salas.model.entity.EstudantePO;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;

@@ -1,6 +1,7 @@
 package br.edu.utfpr.biblioteca.salas.controller;
 
 import br.edu.utfpr.biblioteca.salas.model.bo.EstudanteBO;
+import br.edu.utfpr.biblioteca.salas.model.bo.ReservaBO;
 import br.edu.utfpr.biblioteca.salas.model.entity.EstudantePO;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -16,13 +17,12 @@ import javax.faces.context.FacesContext;
  *
  * @author Leonardo Baiser <lpbaiser@gmail.com>
  */
-//@Named(value = "")
 @ManagedBean(name = "loginMB")
 @SessionScoped
 public class LoginMB {
 
-    private EstudantePO estudante = null;
-    FacesMessage message = null;
+    private EstudantePO estudante;
+    FacesMessage message;
 
     public LoginMB() {
         this.estudante = new EstudantePO(null, null, null, null);
@@ -124,8 +124,8 @@ public class LoginMB {
         }
         return "false";
     }
-    
-    public String exibirFormLogin(){
+
+    public String exibirFormLogin() {
         if (isLogado()) {
             return "false";
         }
@@ -140,4 +140,20 @@ public class LoginMB {
         this.estudante = estudante;
     }
 
+    public void fazerCheckin() {
+        try {
+            if (estudante.getRa() == null || estudante.getSenha() == null) {
+                throw new Exception("Campos login e senha não podem ser nulos!");
+            }
+            if (estudante.getRa().isEmpty() || estudante.getSenha().isEmpty()) {
+                throw new Exception("Informe o login e a senha!");
+            }
+            ReservaBO.fazerCheckin(estudante);
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Checkin efetuado!", null);
+        } catch (Exception ex) {
+            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, ex.getMessage(), null);
+        } finally {
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        }
+    }
 }
