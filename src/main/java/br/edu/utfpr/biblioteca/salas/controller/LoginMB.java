@@ -170,4 +170,14 @@ public class LoginMB {
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
     }
+
+    public boolean exibirBotaoCheckin() {
+        EstudantePO estudanteLogado = SessionContext.getInstance().getEstudanteLogado();
+        if (estudanteLogado == null) {
+            return true;
+        } else if (EstudanteBO.canDoChekin(estudanteLogado)) {
+            return true;
+        }
+        return false;
+    }
 }
