@@ -17,41 +17,46 @@ import java.util.List;
  *
  * @author romulo
  */
-public class Hora implements Comparable<Hora>{
-
+public class Hora implements Comparable<Hora> {
+    
     private Date hora;
     private List<ReservaPO> reservas;
-
+    
     public Hora() {
         this.reservas = new ArrayList<>();
     }
     
-    public String getId(int index){
-       if(reservas.get(index).getDataInicial() == null){
+    public String getId(int index) {
+        if (reservas.get(index).getDataInicial() == null) {
             return "-1";
-        }
-        else {
+        } else {
             return String.valueOf(reservas.get(index).getId());
         }
     }
     
     public String getStatusReserva(int index) {
-        if(reservas.get(index).getDataInicial() == null){
+        if (reservas.get(index).getDataInicial() == null) {
             return "Livre";
-        }
-        else {
+        } else {
             return "Ocupado";
         }
     }
-
+    
+    public String exibeDetalhes(int index) {
+        if (getId(index).equals("-1")) {
+            return "false";
+        }
+        return "true";
+    }
+    
     public String getHora() {
         return CalendarioHelper.getHora(hora);
     }
-
+    
     public void setHora(Date hora) {
         this.hora = hora;
     }
-
+    
     public List<ReservaPO> getReservas() {
         return reservas;
     }
@@ -59,7 +64,7 @@ public class Hora implements Comparable<Hora>{
     public void setReservas(List<ReservaPO> reservas) {
         this.reservas = reservas;
     }
-
+    
     public void addReserva(ReservaPO reserva) {
         if (reserva != null) {
             reservas.add(reserva);
@@ -67,7 +72,7 @@ public class Hora implements Comparable<Hora>{
             reservas.add(new ReservaPO(null, null, null, 0));
         }
     }
-
+    
     @Override
     public Object clone() {
         Hora hora = new Hora();
@@ -75,10 +80,10 @@ public class Hora implements Comparable<Hora>{
         hora.reservas.addAll(this.reservas);
         return hora;
     }
-
+    
     @Override
     public int compareTo(Hora o) {
         return this.hora.compareTo(o.hora);
     }
-
+    
 }

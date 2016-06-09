@@ -32,7 +32,9 @@
                     <h:outputText value="#{exibirReservaMB.reserva.quantidadeAlunos}" styleClass="outputLabel"/>
                     <h:form>
                         <p:growl id="growl" sticky="true" showDetail="true"/>
-                        <p:commandButton value="Cancelar Reserva" update="growl" rendered="#{exibirReservaMB.canCancelReserva()}" actionListener="#{exibirReservaMB.cancelarReserva()}" process="@this"/>
+                            <!--<p:commandButton value="Cancelar Reserva" update="growl" rendered="#{exibirReservaMB.canCancelReserva()}" actionListener="#{exibirReservaMB.cancelarReserva()}" process="@this"/>-->
+                            <h:commandButton value="Cancelar Reserva" rendered="#{exibirReservaMB.canCancelReserva()}" actionListener="#{exibirReservaMB.cancelarReserva()}"/>
+                            
 
                     </h:form>
                 </h:panelGrid>                
