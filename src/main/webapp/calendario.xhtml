@@ -53,7 +53,7 @@
                     </p:panel>
                 </p:dataGrid>
 
-                <p:dialog header="Horários para o dia" width="700" height="800" widgetVar="diaDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                <p:dialog header="Horários para o dia" width="700" height="450" widgetVar="diaDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
                     <p:outputPanel id="descricaoDia"  style="text-align:center;">
                         <p:dataTable var="hora" value="#{calendarioMB.diaSelecionado.horario}">
 
@@ -112,7 +112,6 @@
                 </p:dialog>
             </h:form>
         </h:panelGroup>
-
         <ui:include src="footer.xhtml"/>
 
     </h:body>

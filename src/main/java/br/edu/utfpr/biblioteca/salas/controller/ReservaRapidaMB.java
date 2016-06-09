@@ -122,14 +122,12 @@ public class ReservaRapidaMB implements Serializable {
     public String onFlowProcess(FlowEvent event) {
         FacesMessage msg;
         this.reserva.setDataInicial(CalendarioHelper.mergeDiaHora(this.reserva.getDataInicial(), strHora));
-
         if (this.strHora.equals("0")) {
-            msg = new FacesMessage("Para avançar selecione um horário.");
+            msg = new FacesMessage("Para avançar selecione um horário!");
             FacesContext.getCurrentInstance().addMessage(null, msg);
             return event.getOldStep();
-        }
-        else{
-        return event.getNewStep();
+        } else {
+            return event.getNewStep();
         }
 
     }
@@ -217,7 +215,5 @@ public class ReservaRapidaMB implements Serializable {
     public List<ReservaPO> listarReservas(EstudantePO estudante) {
         throw new UnsupportedOperationException();
     }
-    
-     
 
 }

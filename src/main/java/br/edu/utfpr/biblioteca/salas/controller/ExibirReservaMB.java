@@ -7,12 +7,12 @@ package br.edu.utfpr.biblioteca.salas.controller;
 
 import br.edu.utfpr.biblioteca.salas.model.Hora;
 import br.edu.utfpr.biblioteca.salas.model.bo.ReservaBO;
+import br.edu.utfpr.biblioteca.salas.model.dao.ReservaDAO;
 import br.edu.utfpr.biblioteca.salas.model.entity.EstudantePO;
 import br.edu.utfpr.biblioteca.salas.model.entity.ReservaPO;
 import br.edu.utfpr.biblioteca.salas.model.entity.SalaPO;
 import br.edu.utfpr.biblioteca.salas.tools.CalendarioHelper;
 import java.util.Date;
-import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.inject.Named;
 import javax.faces.bean.ManagedBean;
@@ -29,42 +29,37 @@ import javax.faces.view.ViewScoped;
 public class ExibirReservaMB {
 
     private ReservaPO reserva;
-    private Hora hora;
-//    private List<ReservaPO> reservas;
+    private String hora;
     private CalendarioMB calendario;
     private int idReserva;
+    private LoginMB sessionLogin;
+    private EstudantePO estudante;
 
-
-    /**
-     * Creates a new instance of SalaMB
-     */
     public ExibirReservaMB() {
+//        this.sessionLogin = new LoginMB();
+        this.estudante = SessionContext.getInstance().getEstudanteLogado();
         this.reserva = new ReservaPO(new EstudantePO(null, null, null, null), new SalaPO(0, true), new Date(), 0);
     }
-    
-//    public String getNome(int index){
-//       reservas.get(index).getEstudante().getNome();
-//            
-//       
-//        
-//            return reservas.get(index).getEstudante().getNome();
-//        
-//    }
 
     public ReservaPO getReserva() {
         return reserva;
     }
 
-    public String getDiaMesReserva(){
+    public String getDiaMesReserva() {
         return CalendarioHelper.getDiaMesAno(reserva.getDataInicial());
     }
-    
+
     public CalendarioMB getCalendario() {
         return calendario;
 
     }
-
     
+    public String canCancelReserva(){
+        if (reserva.getEstudante().getRa().equals(estudante.getRa())){
+            return "true";
+        }
+        return "false";
+    }
 
     public void cancelarReserva() {
         FacesMessage msg;
@@ -82,13 +77,17 @@ public class ExibirReservaMB {
 
     public void setIdReserva(int idReserva) {
         this.idReserva = idReserva;
+        if(idReserva != -1){
+            reserva = ReservaBO.getReservaPorId(idReserva);
+            setHora(CalendarioHelper.getHora(reserva.getDataInicial()));
+        }
     }
 
-    public Hora getHora() {
+    public String getHora() {
         return hora;
     }
 
-    public void setHora(Hora hora) {
+    public void setHora(String hora) {
         this.hora = hora;
     }
 

@@ -51,15 +51,15 @@ public class SessionContext {
     public String getNameEstudanteLogado() {
         EstudantePO e = (EstudantePO) getAttribute("estudanteLogado");
         
-        return (e != null) ? "Olá: " + e.getNome() : "";
+        return (e != null) ? "Bem vindo, " + e.getNome() : " ";
     }
 
     /**
      * Seta um novo estudante na sessão
-     * @param usuario 
+     * @param estudante 
      */
-    public void setEstudanteLogado(EstudantePO usuario) {
-        setAttribute("estudanteLogado", usuario);
+    public void setEstudanteLogado(EstudantePO estudante) {
+        setAttribute("estudanteLogado", estudante);
     }
 
     /**

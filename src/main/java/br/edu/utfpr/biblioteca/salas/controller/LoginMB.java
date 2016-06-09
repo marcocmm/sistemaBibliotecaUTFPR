@@ -61,7 +61,8 @@ public class LoginMB {
         }
         estudante = EstudanteBO.isAutentico(estudante);
         if (estudante != null) {
-            SessionContext.getInstance().setAttribute("estudanteLogado", estudante);
+//            SessionContext.getInstance().setAttribute("estudanteLogado", estudante);
+            SessionContext.getInstance().setEstudanteLogado(estudante);
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bem-Vindo!", estudante.getNome());
             facesContext.addMessage(null, message);
             try {
@@ -70,6 +71,12 @@ public class LoginMB {
                 Logger.getLogger(LoginMB.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
+//            try {
+//                ec.redirect("index.xhtml");
+//            } catch (IOException ex) {
+//                Logger.getLogger(LoginMB.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+            estudante = new EstudantePO(null, null, null, null);
             message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Ra ou Senha incorretos! \n Por favor tente novamente.", null);
         }
         facesContext.addMessage(null, message);

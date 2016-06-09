@@ -18,10 +18,10 @@
         <p:panel header="Detalhes da Reserva">
             <h:panelGrid id="confirmation" columns="1" columnClasses="grid,grid,grid">
                 <h:panelGrid columns="2" columnClasses="value">
-                    <h:outputText value="Nome: " />
-                    <h:outputText value="#{exibirReservaMB.reserva.estudante.nome}" styleClass="outputLabel"/>
-                    <h:outputText value="Email: " />
-                    <h:outputText value="#{exibirReservaMB.reserva.estudante.email}" styleClass="outputLabel"/>
+                    <h:outputText value="Nome: " rendered="#{exibirReservaMB.canCancelReserva()}" />
+                    <h:outputText value="#{exibirReservaMB.reserva.estudante.nome}" rendered="#{exibirReservaMB.canCancelReserva()}" styleClass="outputLabel"/>
+                    <h:outputText value="Email: " rendered="#{exibirReservaMB.canCancelReserva()}" />
+                    <h:outputText value="#{exibirReservaMB.reserva.estudante.email}" rendered="#{exibirReservaMB.canCancelReserva()}" styleClass="outputLabel"/>
                     <h:outputText value="Data: " />
                     <h:outputText value="#{exibirReservaMB.diaMesReserva}" styleClass="outputLabel"/>
                     <h:outputText value="Horário: " />
@@ -32,15 +32,10 @@
                     <h:outputText value="#{exibirReservaMB.reserva.quantidadeAlunos}" styleClass="outputLabel"/>
                     <h:form>
                         <p:growl id="growl" sticky="true" showDetail="true"/>
-                        <p:commandButton value="Cancelar Reserva" update="growl" actionListener="#{exibirReservaMB.cancelarReserva()}" process="@this"/>
+                        <p:commandButton value="Cancelar Reserva" update="growl" rendered="#{exibirReservaMB.canCancelReserva()}" actionListener="#{exibirReservaMB.cancelarReserva()}" process="@this"/>
+
                     </h:form>
                 </h:panelGrid>                
-
-                <p>You've been redirected to this bookmarkable page with button.
-                    ViewParameter you've passed is <strong>"
-                        #{exibirReservaMB.idReserva}"</strong>
-                </p>
-
             </h:panelGrid>
         </p:panel>
         <ui:include src="footer.xhtml"/>

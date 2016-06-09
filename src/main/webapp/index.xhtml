@@ -9,7 +9,7 @@
     <h:head>
         <title>Sislib</title>
 
-        <f:metadata name="description" content="Este site tem como objetivo informar sobre os serviços prestados pela empresa Eleve."></f:metadata>
+        <f:metadata name="description" content="Este site permite aos alunos da Universidade Tecnológica Federal do Paraná a realização de uma reserva de sala de estudos na biblioteca da instituição."></f:metadata>
         <ui:include src="header.xhtml"/>
 
 
@@ -26,7 +26,7 @@
                     <h:panelGrid columns="3" cellpadding="5">
                         <p:growl id="msgs" showDetail="true" />
                         <h:panelGrid columns="1" cellpadding="5">
-                            <p:calendar id="inline" value="#{reservaRapidaMB.reserva.dataInicial}" mode="inline">
+                            <p:calendar showOn="button" disabledWeekends="true" mindate="#{reservaRapidaMB.dataAtual}" id="inline" value="#{reservaRapidaMB.reserva.dataInicial}" mode="inline">
                                 <p:ajax event="dateSelect" listener="#{reservaRapidaMB.onDateSelect}" update="msgs,horariosReservas"/>
                             </p:calendar> 
                         </h:panelGrid>
@@ -90,7 +90,6 @@
                             <p:password id="lastname" value="#{reservaRapidaMB.reserva.estudante.senha}">
                                 <p:ajax event="keyup" />
                             </p:password>
-                            <!--<p:commandButton value="Submit" actionListener="#{reservaRapidaMB.reservarSala}" oncomplete="PF('wiz').loadStep('tabId',false)" />-->
                             <p:commandButton value="Reservar" actionListener="#{reservaRapidaMB.reservarSala}" update="growl" process="@this"/>
                         </h:panelGrid>
                     </p:panel>
@@ -118,13 +117,8 @@
                 document.form.button.className =#{statusBotoes.parametrosBotoes[0][0]}
             }
         </script>   
-
-
+        
         <ui:include src="footer.xhtml"/>
-
-        <a href="reserva.xhtml">Reserva Lenta</a>
-        <a href="exibirReserva.xhtml">Exibir Reserva</a>
-        <a href="calendario.xhtml">Calendário Estudante</a>
 
     </h:body>
 </html>
