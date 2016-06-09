@@ -2,8 +2,12 @@ package br.edu.utfpr.biblioteca.salas.model.dao;
 
 import static br.edu.utfpr.biblioteca.salas.model.dao.GenericDAO.entityManager;
 import br.edu.utfpr.biblioteca.salas.model.entity.EstudantePO;
+import br.edu.utfpr.biblioteca.salas.model.entity.ReservaPO;
 import br.edu.utfpr.biblioteca.salas.model.entity.StatusPO;
+import br.edu.utfpr.biblioteca.salas.tools.CalendarioHelper;
+import java.util.Calendar;
 import java.util.Date;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 public class EstudanteDAO extends GenericDAO<EstudantePO> {
@@ -11,22 +15,25 @@ public class EstudanteDAO extends GenericDAO<EstudantePO> {
     public EstudanteDAO() {
         super(EstudantePO.class);
     }
-/**
- * Verifica se o limite diario de reserva foi atingido
- * @param estudante
- * @param dataInicial
- * @return 
- */
-    public boolean canReservar(EstudantePO estudante, Date dataInicial) {
 
+    /**
+     * Verifica se o limite diario de reserva foi atingido
+     *
+     * @param estudante
+     * @param dataInicial
+     * @return
+     */
+    public boolean canReservar(EstudantePO estudante, Date dataInicial) {
+        Date primeiraHoraDodia = CalendarioHelper.getDateComHoraSete(dataInicial);
+        Date ultimaHoraDodia = CalendarioHelper.getDateComHoraVinteUma(dataInicial);
         long qtdReservas;
-        Query q = entityManager.createQuery
-        ("SELECT e FROM Reserva e WHERE e.status != :inativa AND e.estudante = :estudante AND e.dataInicial = :data");
+        Query q = entityManager.createQuery("SELECT COUNT(e) FROM Reserva e WHERE e.status != :inativa AND e.estudante = :estudante AND "
+                + "e.dataInicial BETWEEN :primeiraData AND :ultimaData");
         q.setParameter("inativa", new StatusPO("inativa"));
         q.setParameter("estudante", estudante);
-        q.setParameter("data", dataInicial);
-        qtdReservas = (long) q.getResultList().size();
-
+        q.setParameter("primeiraData", primeiraHoraDodia);
+        q.setParameter("ultimaData", ultimaHoraDodia);
+        qtdReservas = (long) q.getSingleResult();
         return qtdReservas < 2;
     }
 
@@ -58,4 +65,16 @@ public class EstudanteDAO extends GenericDAO<EstudantePO> {
         return null;
     }
 
+    public ReservaPO getReservaInTime(EstudantePO estudante, Date date) {
+        try {
+            Query q = entityManager.createQuery("SELECT e FROM Reserva e WHERE e.status != :status AND e.estudante = :estudante AND e.dataInicial = :dataInicial");
+            q.setParameter("status", new StatusPO("inativa"));
+            q.setParameter("estudante", estudante);
+            q.setParameter("dataInicial", date);
+            ReservaPO reserva = (ReservaPO) q.getSingleResult();
+            return reserva;
+        } catch (NoResultException ex) {
+            return null;
+        }
+    }
 }

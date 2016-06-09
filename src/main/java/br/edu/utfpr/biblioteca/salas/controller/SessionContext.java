@@ -1,7 +1,5 @@
 package br.edu.utfpr.biblioteca.salas.controller;
 
-
-
 /**
  *
  * @author Leonardo Baiser <lpbaiser@gmail.com>
@@ -37,26 +35,30 @@ public class SessionContext {
     }
 
     /**
-     * Retorna a instância do estudandte logado, está instância está armazenada na sessão
+     * Retorna a instância do estudandte logado, está instância está armazenada
+     * na sessão
+     *
      * @return EstudantePO
      */
     public EstudantePO getEstudanteLogado() {
         return (EstudantePO) getAttribute("estudanteLogado");
     }
-    
+
     /**
      * Retorna o nome do estudante,só para fins de view
+     *
      * @return nomeEstudante
      */
     public String getNameEstudanteLogado() {
         EstudantePO e = (EstudantePO) getAttribute("estudanteLogado");
-        
+
         return (e != null) ? "Bem vindo, " + e.getNome() : " ";
     }
 
     /**
      * Seta um novo estudante na sessão
-     * @param estudante 
+     *
+     * @param estudante
      */
     public void setEstudanteLogado(EstudantePO estudante) {
         setAttribute("estudanteLogado", estudante);
@@ -68,10 +70,12 @@ public class SessionContext {
     public void encerrarSessao() {
         currentExternalContext().invalidateSession();
     }
+
     /**
      * Retorna um objeto armazenado na sessão dado o nome apelido do objeto
+     *
      * @param nome
-     * @return 
+     * @return
      */
     public Object getAttribute(String nome) {
         return currentExternalContext().getSessionMap().get(nome);
@@ -79,8 +83,9 @@ public class SessionContext {
 
     /**
      * Armazena qualquer objeto na sessão
+     *
      * @param nome
-     * @param valor 
+     * @param valor
      */
     public void setAttribute(String nome, Object valor) {
         currentExternalContext().getSessionMap().put(nome, valor);

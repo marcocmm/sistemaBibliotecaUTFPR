@@ -348,6 +348,7 @@ public class CalendarioHelper {
 
         return reportDate;
     }
+
     /**
      * Este método recebe uma data tipo Date e converte para string (dd/MM/yyyy)
      *
@@ -370,9 +371,7 @@ public class CalendarioHelper {
      */
     public static String getHora(Date date) {
         DateFormat df = new SimpleDateFormat("HH:mm");
-
         String reportDate = df.format(date);
-
         return reportDate;
     }
 
@@ -401,6 +400,13 @@ public class CalendarioHelper {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         calendar.add(Calendar.HOUR_OF_DAY, 1);
+        return calendar.getTime();
+    }
+
+    public static Date lessHora(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.HOUR_OF_DAY, -1);
         return calendar.getTime();
     }
 
@@ -453,5 +459,21 @@ public class CalendarioHelper {
         SimpleDateFormat formatoEmDia = new SimpleDateFormat("MMMM 'de' yyyy", new Locale("pt", "BR"));
         return formatoEmDia.format(date);
     }
-    
+
+    public static Date getDateComHoraSete(Date date) {
+        int hora = Integer.parseInt(CalendarioHelper.getHora(date).substring(0, 2));
+        for (int i = hora; i >= 7; i--) {
+            date = CalendarioHelper.lessHora(date);
+        }
+        return date;
+    }
+
+    public static Date getDateComHoraVinteUma(Date date) {
+        int hora = Integer.parseInt(CalendarioHelper.getHora(date).substring(0, 2));
+        for (int i = hora; i <= 21; i++) {
+            date = CalendarioHelper.addHora(date);
+        }
+        return date;
+    }
+
 }

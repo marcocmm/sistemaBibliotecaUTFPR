@@ -1,5 +1,6 @@
 package br.edu.utfpr.biblioteca.salas.model.dao;
 
+import br.edu.utfpr.biblioteca.salas.model.entity.EstudantePO;
 import br.edu.utfpr.biblioteca.salas.model.entity.ReservaPO;
 import br.edu.utfpr.biblioteca.salas.model.entity.StatusPO;
 import br.edu.utfpr.biblioteca.salas.tools.CalendarioHelper;
@@ -73,6 +74,26 @@ public class ReservaDAO extends GenericDAO<ReservaPO> implements Serializable {
         q.setParameter("dataInicial", date);
         q.setParameter("idSala", idSala);
         return q.getResultList();
+    }
+
+    /**
+     * Dado uma data-hora e uma sala, este método retorna se existe uma reserva
+     * correspondente a data e em outro id da sala.      
+     * @param date
+     * @param idSala
+     * @param estudante
+     * @return 
+     */
+    public boolean haveReservaByDateIdsalaEstudante(Date date, int idSala, EstudantePO estudante) {
+        Query q = entityManager.createQuery("SELECT COUNT(e) FROM Reserva e WHERE e.dataInicial =:dataInicial AND "
+                + "e.id !=:idSala AND e.status != :status AND e.estudante = :estudante");
+        q.setParameter("dataInicial", date);
+        q.setParameter("idSala", idSala);
+        q.setParameter("status", new StatusPO("inativa"));
+        q.setParameter("estudante", estudante);
+        Long qtdReservas = (Long) q.getSingleResult();
+
+        return qtdReservas != 0;
     }
 
     /**

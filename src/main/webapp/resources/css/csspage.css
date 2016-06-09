@@ -59,7 +59,7 @@ border: 1px solid #666;
     top : -40px;
     left : -60px;
     /*margin-top: 0.0em;*/
-    max-width: 200px;
+    max-width: 250px;
     width: 100%;
     float: right;
     font-size: 1.5em;
@@ -142,8 +142,6 @@ border: 1px solid #666;
     border: none !important;
     background-color: #EDF3F3;
 }
-
-
 
 
 /*  #header{

@@ -4,6 +4,7 @@ import br.edu.utfpr.biblioteca.salas.model.Dia;
 import br.edu.utfpr.biblioteca.salas.model.Hora;
 import br.edu.utfpr.biblioteca.salas.model.dao.ReservaDAO;
 import br.edu.utfpr.biblioteca.salas.model.dao.SalaDAO;
+import br.edu.utfpr.biblioteca.salas.model.entity.EstudantePO;
 import br.edu.utfpr.biblioteca.salas.model.entity.ReservaPO;
 import br.edu.utfpr.biblioteca.salas.model.entity.SalaPO;
 import br.edu.utfpr.biblioteca.salas.model.entity.StatusPO;
@@ -151,7 +152,7 @@ public class ReservaBO {
     /**
      * Altera o status de uma reserva e faz o update no banco.
      *
-     * @param reserva 
+     * @param reserva
      * @param newStatus
      * @return boolean
      */
@@ -159,13 +160,32 @@ public class ReservaBO {
         reserva.setStatus(new StatusPO(newStatus));
         return reservaDAO.update(reserva);
     }
-    
+
     /**
      * Obtém uma reserva pelo id
+     *
      * @param index
-     * @return ReservaPO 
+     * @return ReservaPO
      */
-    public static ReservaPO getReservaPorId(int index){
+    public static ReservaPO getReservaPorId(int index) {
         return reservaDAO.obter(index);
+    }
+
+    /**
+     * Dado um estudante, verifica suas reservas e faz o checkin se possível.
+     *
+     * @param estudante
+     * @throws java.lang.Exception
+     */
+    public static void fazerCheckin(EstudantePO estudante) throws Exception {
+        EstudantePO estudantePopulado = EstudanteBO.isAutentico(estudante);
+        if (estudantePopulado == null) {
+            throw new Exception("Login e senha inválidos");
+        }
+        if (!EstudanteBO.hasReservaNow(estudantePopulado)) {
+            throw new Exception("Não há reservas disponíveis para chekin no momentos");
+        }
+        ReservaPO reserva = EstudanteBO.getMyReservaNow(estudantePopulado);
+        ReservaBO.setStatus(reserva, "emCurso");
     }
 }
