@@ -12,6 +12,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  *
@@ -82,6 +84,16 @@ public class LoginMB {
         facesContext.addMessage(null, message);
         return "";
     }
+    
+//    NOT WORKING
+//    public void acessoNegado(){
+//        String erro = (String) SessionContext.getInstance().getAttribute("acesso_negado");
+//        if (erro.equals("negado")){
+//            FacesContext facesContext = FacesContext.getCurrentInstance();
+//            message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Você precisa estar logado para ter acesso a está página.", null);
+//            facesContext.addMessage(null, message);
+//        }
+//    }
 
     /**
      * Faz o logout do estudante, encerra a session

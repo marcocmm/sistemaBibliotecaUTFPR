@@ -40,10 +40,6 @@
   <!--Páginas Filtradas para um Estudante-->
   <filter-mapping>
       <filter-name>LoginFilter</filter-name>
-      <url-pattern>/faces/calendario.xhtml</url-pattern>
-  </filter-mapping>
-  <filter-mapping>
-      <filter-name>LoginFilter</filter-name>
       <url-pattern>/faces/reserva.xhtml</url-pattern>
   </filter-mapping>
   <filter-mapping>

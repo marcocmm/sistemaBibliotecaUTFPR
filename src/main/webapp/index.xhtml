@@ -15,7 +15,7 @@
 
     </h:head>
     <h:body>
-
+        <h:outputText rendered="#{param.erro == 1}" value="Erro"/>
         <h:form>
             <p:growl id="growl" sticky="true" showDetail="true"/>
 
@@ -117,7 +117,7 @@
                 document.form.button.className =#{statusBotoes.parametrosBotoes[0][0]}
             }
         </script>   
-        
+
         <ui:include src="footer.xhtml"/>
 
     </h:body>

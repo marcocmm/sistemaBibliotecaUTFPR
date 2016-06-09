@@ -69,13 +69,13 @@ border: 1px solid #666;
 .loginRR input[type="text"]{
     font-size: 0.75em;
     font-family: 'Open Sans';
-    padding: 15px 10px; 
+    padding: 10px 10px; 
     line-height: 28px;
 }
 .loginRR input[type="password"]{
     font-size: 0.75em;
     font-family: 'Open Sans';
-    padding: 15px 10px; 
+    padding: 10px 10px; 
     line-height: 28px;
 }
 

@@ -6,6 +6,8 @@ package br.edu.utfpr.biblioteca.salas.controller;
  */
 import br.edu.utfpr.biblioteca.salas.model.entity.EstudantePO;
 import java.io.IOException;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -48,8 +50,8 @@ public class LoginFilter implements Filter {
 
         if (estudante == null) {
             String contextPath = ((HttpServletRequest) request).getContextPath();
+            
             ((HttpServletResponse) response).sendRedirect(contextPath + "/faces/index.xhtml");
-
         } else {
             chain.doFilter(request, response);
         }
