@@ -23,14 +23,13 @@ import static org.junit.Assert.assertTrue;
  *
  * @author romulo
  */
-
-
 public class ReservaDAOTest {
+
+    static ReservaDAO dao = new ReservaDAO();
+    static ReservaPO reservaPO = null;
 
     public ReservaDAOTest() {
     }
-    static ReservaDAO dao = new ReservaDAO();
-    static ReservaPO reservaPO = null;
 
     public void reservar() {
         SalaDAO salaDao = new SalaDAO();
@@ -44,9 +43,9 @@ public class ReservaDAOTest {
         boolean test = dao.insert(reserva);
         assertTrue(test);
     }
-    
-    public void test_cancelarReserva(){
-        
+
+    public void test_cancelarReserva() {
+
         ReservaPO reserva = null;
         reserva = dao.obter(10);
         assertTrue(reserva != null);
@@ -54,16 +53,14 @@ public class ReservaDAOTest {
         assertTrue(t);
     }
 
+    public void test_updateReservaEmCurso() {
 
-      public void test_updateReservaEmCurso(){
-        
         ReservaPO reserva = null;
         reserva = dao.obter(10);
         assertTrue(reserva != null);
         boolean t = ReservaBO.setStatus(reserva, "em_curso");
         assertTrue(t);
     }
-
 
     public void listar() {
         List<ReservaPO> reservas = dao.list();
