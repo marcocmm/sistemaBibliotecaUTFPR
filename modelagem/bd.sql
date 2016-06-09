@@ -101,3 +101,11 @@ CREATE INDEX `fk_reservas_status_name_idx` ON `bdBiblioteca`.`Reservas` (`status
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+SET GLOBAL event_scheduler = ON;
+
+
+CREATE EVENT e_AtualizaCheckIn
+ON SCHEDULE EVERY 1 HOUR STARTS '2016-06-06 00:15:00'
+DO UPDATE Reservas
+SET status_name = 'desistencia'
+WHERE status_name = 'ativa' AND data_inicial < NOW();
