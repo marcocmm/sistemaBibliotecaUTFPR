@@ -3,6 +3,7 @@ package br.edu.utfpr.biblioteca.salas.model.bo;
 import br.edu.utfpr.biblioteca.salas.model.dao.EstudanteDAO;
 import br.edu.utfpr.biblioteca.salas.model.entity.EstudantePO;
 import br.edu.utfpr.biblioteca.salas.model.entity.ReservaPO;
+import br.edu.utfpr.biblioteca.salas.tools.CalendarioHelper;
 import java.util.Date;
 
 public class EstudanteBO {
@@ -67,12 +68,34 @@ public class EstudanteBO {
         estudanteDAO.insert(estudante);
     }
 
-    public static boolean hasReservaNow(EstudantePO estudante) {
-        return estudanteDAO.getReservaInTime(estudante, new Date()) == null;
+    public static boolean canDoChekin(EstudantePO estudante) {
+        Date fifteenBefore;
+        Date fifteenAfter;
+        Date horaAtual = new Date();
+        int minutos = CalendarioHelper.getMinutes(horaAtual);
+        if (minutos <= 15) {
+            horaAtual = CalendarioHelper.getHoraCheia(horaAtual);
+        } else if (minutos >= 45) {
+            horaAtual = CalendarioHelper.getHoraCheia(CalendarioHelper.addHora(horaAtual));
+        } else {
+            return false;
+        }
+        fifteenBefore = CalendarioHelper.lessHora(horaAtual);
+        CalendarioHelper.setMinute(fifteenBefore, 45);
+        fifteenAfter = (Date) horaAtual.clone();
+        CalendarioHelper.setMinute(fifteenAfter, 15);
+        return estudanteDAO.getReservaInTime(estudante, horaAtual) != null;
     }
 
     public static ReservaPO getMyReservaNow(EstudantePO estudante) {
-        return estudanteDAO.getReservaInTime(estudante, new Date());
+        Date horaAtual = new Date();
+        int minutos = CalendarioHelper.getMinutes(horaAtual);
+        if (minutos <= 15) {
+            horaAtual = CalendarioHelper.getHoraCheia(horaAtual);
+        } else if (minutos >= 45) {
+            horaAtual = CalendarioHelper.getHoraCheia(CalendarioHelper.addHora(horaAtual));
+        }
+        return estudanteDAO.getReservaInTime(estudante, horaAtual);
     }
 
 }

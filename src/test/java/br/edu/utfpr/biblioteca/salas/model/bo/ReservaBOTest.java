@@ -10,6 +10,10 @@ import br.edu.utfpr.biblioteca.salas.model.entity.SalaPO;
 import br.edu.utfpr.biblioteca.salas.tools.CalendarioHelper;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
  *
@@ -20,8 +24,6 @@ public class ReservaBOTest {
     public ReservaBOTest() {
     }
 
-
-//    @Test
     public void testSomeMethod() {
         System.out.println("");
         int a = 10;
@@ -29,6 +31,14 @@ public class ReservaBOTest {
         HashMap<Date, HashMap<SalaPO, ReservaPO>> descreverDiaHash = ReservaBO.descreverDiaHash(data);
         System.out.println("");
         System.out.println("");
+    }
+
+    public void testeChekin() {
+        try {
+            ReservaBO.fazerCheckin(EstudanteBO.obterEstudante("1137085"));
+            Assert.fail();
+        } catch (Exception ex) {
+        }
     }
 
 }
