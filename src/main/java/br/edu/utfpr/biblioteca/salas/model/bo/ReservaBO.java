@@ -178,6 +178,14 @@ public class ReservaBO {
      * @throws java.lang.Exception
      */
     public static void fazerCheckin(EstudantePO estudante) throws Exception {
-        throw new Exception("Não há reservas disponíveis para chekin no momentos");
+        EstudantePO estudantePopulado = EstudanteBO.isAutentico(estudante);
+        if (estudantePopulado == null) {
+            throw new Exception("Login e senha inválidos");
+        }
+        if (!EstudanteBO.hasReservaNow(estudantePopulado)) {
+            throw new Exception("Não há reservas disponíveis para chekin no momentos");
+        }
+        ReservaPO reserva = EstudanteBO.getMyReservaNow(estudantePopulado);
+        ReservaBO.setStatus(reserva, "emCurso");
     }
 }

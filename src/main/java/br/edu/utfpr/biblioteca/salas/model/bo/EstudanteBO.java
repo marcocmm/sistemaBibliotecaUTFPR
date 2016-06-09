@@ -2,6 +2,8 @@ package br.edu.utfpr.biblioteca.salas.model.bo;
 
 import br.edu.utfpr.biblioteca.salas.model.dao.EstudanteDAO;
 import br.edu.utfpr.biblioteca.salas.model.entity.EstudantePO;
+import br.edu.utfpr.biblioteca.salas.model.entity.ReservaPO;
+import java.util.Date;
 
 public class EstudanteBO {
 
@@ -64,4 +66,13 @@ public class EstudanteBO {
         }
         estudanteDAO.insert(estudante);
     }
+
+    public static boolean hasReservaNow(EstudantePO estudante) {
+        return estudanteDAO.getReservaInTime(estudante, new Date()) == null;
+    }
+
+    public static ReservaPO getMyReservaNow(EstudantePO estudante) {
+        return estudanteDAO.getReservaInTime(estudante, new Date());
+    }
+
 }
