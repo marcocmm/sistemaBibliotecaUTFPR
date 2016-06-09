@@ -41,14 +41,22 @@ public class Hora implements Comparable<Hora> {
             return "Ocupado";
         }
     }
-    
-    public String exibeDetalhes(int index) {
-        if (getId(index).equals("-1")) {
+
+    /**
+     * Habilita o link para detalhes da reserva
+     * @param index
+     * @return 
+     */
+    public String getDisableReserva(int index) {
+        if(reservas.get(index).getDataInicial() == null){
+            return "true";
+        }
+        else {
             return "false";
         }
-        return "true";
     }
-    
+
+
     public String getHora() {
         return CalendarioHelper.getHora(hora);
     }

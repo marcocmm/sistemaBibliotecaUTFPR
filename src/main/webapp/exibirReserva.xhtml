@@ -17,25 +17,31 @@
     <h:body>
         <p:panel header="Detalhes da Reserva">
             <h:panelGrid id="confirmation" columns="1" columnClasses="grid,grid,grid">
-                <h:panelGrid columns="2" columnClasses="value">
-                    <h:outputText value="Nome: " rendered="#{exibirReservaMB.canCancelReserva()}" />
-                    <h:outputText value="#{exibirReservaMB.reserva.estudante.nome}" rendered="#{exibirReservaMB.canCancelReserva()}" styleClass="outputLabel"/>
-                    <h:outputText value="Email: " rendered="#{exibirReservaMB.canCancelReserva()}" />
-                    <h:outputText value="#{exibirReservaMB.reserva.estudante.email}" rendered="#{exibirReservaMB.canCancelReserva()}" styleClass="outputLabel"/>
-                    <h:outputText value="Data: " />
-                    <h:outputText value="#{exibirReservaMB.diaMesReserva}" styleClass="outputLabel"/>
-                    <h:outputText value="Horário: " />
-                    <h:outputText value="#{exibirReservaMB.hora}" styleClass="outputLabel"/>
-                    <h:outputText value="Sala: " />
-                    <h:outputText value="#{exibirReservaMB.reserva.sala.id}" styleClass="outputLabel"/>
-                    <h:outputText value="Alunos: " />
-                    <h:outputText value="#{exibirReservaMB.reserva.quantidadeAlunos}" styleClass="outputLabel"/>
+                <h:panelGrid columns="1" columnClasses="value">
                     <h:form>
-                        <p:growl id="growl" sticky="true" showDetail="true"/>
-                            <!--<p:commandButton value="Cancelar Reserva" update="growl" rendered="#{exibirReservaMB.canCancelReserva()}" actionListener="#{exibirReservaMB.cancelarReserva()}" process="@this"/>-->
-                            <h:commandButton value="Cancelar Reserva" rendered="#{exibirReservaMB.canCancelReserva()}" actionListener="#{exibirReservaMB.cancelarReserva()}"/>
-                            
-
+                        <h:form>
+                            <h:outputText value="Nome: " rendered="#{exibirReservaMB.canCancelReserva()}" />
+                            <h:outputText value="#{exibirReservaMB.reserva.estudante.nome}" rendered="#{exibirReservaMB.canCancelReserva()}" styleClass="outputLabel"/>
+                            <br/>
+                            <h:outputText value="Email: " rendered="#{exibirReservaMB.canCancelReserva()}" />
+                            <h:outputText value="#{exibirReservaMB.reserva.estudante.email}" rendered="#{exibirReservaMB.canCancelReserva()}" styleClass="outputLabel"/>
+                        </h:form>
+                        <h:outputText value="Data: " />
+                        <h:outputText value="#{exibirReservaMB.diaMesReserva}" styleClass="outputLabel"/>
+                            <br/>
+                        <h:outputText value="Horário: " />
+                        <h:outputText value="#{exibirReservaMB.hora}" styleClass="outputLabel"/>
+                            <br/>
+                        <h:outputText value="Sala: " />
+                        <h:outputText value="#{exibirReservaMB.reserva.sala.id}" styleClass="outputLabel"/>
+                            <br/>
+                        <h:outputText value="Alunos: " />
+                        <h:outputText value="#{exibirReservaMB.reserva.quantidadeAlunos}" styleClass="outputLabel"/>
+                            <br/><br/>
+                        <h:form>
+                            <p:growl id="growl" sticky="true" showDetail="true"/>
+                            <p:commandButton value="Cancelar Reserva" update="growl" actionListener="#{exibirReservaMB.cancelarReserva()}" process="@this"/>
+                        </h:form>
                     </h:form>
                 </h:panelGrid>                
             </h:panelGrid>
