@@ -5,11 +5,8 @@
  */
 package br.edu.utfpr.biblioteca.salas.controller;
 
-import br.edu.utfpr.biblioteca.salas.model.Hora;
 import br.edu.utfpr.biblioteca.salas.model.bo.ReservaBO;
-import br.edu.utfpr.biblioteca.salas.model.dao.ReservaDAO;
-import br.edu.utfpr.biblioteca.salas.model.entity.AdministradorPO;
-import br.edu.utfpr.biblioteca.salas.model.entity.EstudantePO;
+import br.edu.utfpr.biblioteca.salas.model.entity.UsuarioPO;
 import br.edu.utfpr.biblioteca.salas.model.entity.ReservaPO;
 import br.edu.utfpr.biblioteca.salas.model.entity.SalaPO;
 import br.edu.utfpr.biblioteca.salas.tools.CalendarioHelper;
@@ -34,14 +31,12 @@ public class ExibirReservaMB {
     private CalendarioMB calendario;
     private int idReserva;
     private LoginMB sessionLogin;
-    private EstudantePO estudante;
-    private AdministradorPO administrador;
+    private UsuarioPO usuario;
 
     public ExibirReservaMB() {
 //        this.sessionLogin = new LoginMB();
-        this.estudante = SessionContext.getInstance().getEstudanteLogado();
-        this.administrador = SessionContext.getInstance().getAdministradorLogado();
-        this.reserva = new ReservaPO(new EstudantePO(null, null, null, null), new SalaPO(0, true), new Date(), 0);
+        this.usuario = SessionContext.getInstance().getUsuarioLogado();
+        this.reserva = new ReservaPO(new UsuarioPO(null, null, null, null), new SalaPO(0, true), new Date(), 0);
     }
 
     public ReservaPO getReserva() {
@@ -58,7 +53,7 @@ public class ExibirReservaMB {
     }
 
     public String canCancelReserva() {
-        if (reserva.getEstudante().getRa().equals(estudante.getRa()) || estudante.getRa().equals("admin")) {
+        if (reserva.getUsuario().getRa().equals(usuario.getRa()) || usuario.getRa().equals("admin")) {
             return "true";
         }
         return "false";

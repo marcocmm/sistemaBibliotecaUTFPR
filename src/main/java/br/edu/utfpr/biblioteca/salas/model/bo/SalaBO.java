@@ -8,8 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import br.edu.utfpr.biblioteca.salas.model.ReservasHorario;
 import static br.edu.utfpr.biblioteca.salas.model.bo.ReservaBO.reservaDAO;
-import br.edu.utfpr.biblioteca.salas.model.dao.EstudanteDAO;
-import br.edu.utfpr.biblioteca.salas.model.entity.EstudantePO;
+import br.edu.utfpr.biblioteca.salas.model.dao.UsuarioDAO;
+import br.edu.utfpr.biblioteca.salas.model.entity.UsuarioPO;
 import br.edu.utfpr.biblioteca.salas.model.entity.StatusPO;
 import br.edu.utfpr.biblioteca.salas.tools.CalendarioHelper;
 import java.util.Date;
@@ -114,16 +114,16 @@ public class SalaBO {
      * @throws java.lang.Exception
      */
     public static void reservarSala(ReservaPO reserva) throws Exception {
-        EstudantePO estudante;
+        UsuarioPO usuario;
         SalaPO sala;
-        EstudanteDAO estudanteDAO = new EstudanteDAO();
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
 
-        if (EstudanteBO.isAutentico(reserva.getEstudante()) == null) {
+        if (UsuarioBO.isAutentico(reserva.getUsuario()) == null) {
             throw new Exception("Credenciais inválidas");
         }
 
-        estudante = EstudanteBO.obterEstudante(reserva.getEstudante().getRa());
-        reserva.setEstudante(estudante);
+        usuario = UsuarioBO.obterUsuario(reserva.getUsuario().getRa());
+        reserva.setUsuario(usuario);
 
         sala = SalaBO.obter(reserva.getSala().getId());
         reserva.setSala(sala);
@@ -133,14 +133,14 @@ public class SalaBO {
         if (reservaDAO.isReservado(reserva)) {
             throw new Exception("Sala já reservada");
         }
-        if (estudante.getRa().equals("admin")) {
+        if (usuario.getRa().equals("admin")) {
             reservaDAO.insert(reserva);
         } else {
-            if (reservaDAO.haveReservaByDateIdsalaEstudante(reserva.getDataInicial(), reserva.getSala().getId(), reserva.getEstudante())) {
+            if (reservaDAO.haveReservaByDateIdsalaUsuario(reserva.getDataInicial(), reserva.getSala().getId(), reserva.getUsuario())) {
                 throw new Exception("Você já possui uma reserva nesse horário em outra sala!");
             }
 
-            if (!(estudanteDAO.canReservar(reserva.getEstudante(), reserva.getDataInicial()))) {
+            if (!(usuarioDAO.canReservar(reserva.getUsuario(), reserva.getDataInicial()))) {
                 throw new Exception("Você já efetuou o limite máximo de reservas diárias!");
             }
         }

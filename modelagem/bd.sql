@@ -7,32 +7,23 @@ CREATE SCHEMA IF NOT EXISTS `bdBiblioteca` DEFAULT CHARACTER SET utf8 COLLATE ut
 USE `bdBiblioteca` ;
 
 
--- -----------------------------------------------------
--- Table `bdBiblioteca`.`Administradores`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `bdBiblioteca`.`Administradores` ;
-
-CREATE TABLE IF NOT EXISTS `bdBiblioteca`.`Administradores` (
-  `login` VARCHAR(15) NOT NULL,
-  `senha` VARCHAR(30) NOT NULL,
-  PRIMARY KEY (`login`))
-ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `bdBiblioteca`.`Estudantes`
+-- Table `bdBiblioteca`.`usuarios`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `bdBiblioteca`.`Estudantes` ;
+DROP TABLE IF EXISTS `bdBiblioteca`.`Usuarios` ;
 
-CREATE TABLE IF NOT EXISTS `bdBiblioteca`.`Estudantes` (
+CREATE TABLE IF NOT EXISTS `bdBiblioteca`.`Usuarios` (
   `ra` CHAR(10) NOT NULL,
   `nome` VARCHAR(45) NOT NULL,
   `senha` VARCHAR(30) NOT NULL,
   `email` VARCHAR(45) NOT NULL,
+  `administrador` BOOLEAN NOT NULL,
   PRIMARY KEY (`ra`))
 ENGINE = InnoDB;
 
-CREATE UNIQUE INDEX `email_UNIQUE` ON `bdBiblioteca`.`Estudantes` (`email` ASC);
+CREATE UNIQUE INDEX `email_UNIQUE` ON `bdBiblioteca`.`Usuarios` (`email` ASC);
 
 
 -- -----------------------------------------------------
@@ -68,13 +59,13 @@ CREATE TABLE IF NOT EXISTS `bdBiblioteca`.`Reservas` (
   `quantidade_alunos` INT NOT NULL,
   `data_inicial` DATETIME NOT NULL,
   `data_final` DATETIME NOT NULL,
-  `estudante_ra` CHAR(10) NOT NULL,
+  `usuario_ra` CHAR(10) NOT NULL,
   `sala_id` INT NOT NULL,
   `status_name` VARCHAR(15) NOT NULL,
   PRIMARY KEY (`id`),
-  CONSTRAINT `fk_reservas_estudantes_ra`
-    FOREIGN KEY (`estudante_ra`)
-    REFERENCES `bdBiblioteca`.`Estudantes` (`ra`)
+  CONSTRAINT `fk_reservas_usuarios_ra`
+    FOREIGN KEY (`usuario_ra`)
+    REFERENCES `bdBiblioteca`.`Usuarios` (`ra`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_reservas_salas_id`
@@ -93,7 +84,7 @@ CREATE INDEX `fk_reservas_salas_id_idx` ON `bdBiblioteca`.`Reservas` (`sala_id` 
 
 CREATE INDEX `data_inicial_idx` ON `bdBiblioteca`.`Reservas` (`data_inicial` ASC);
 
-CREATE INDEX `fk_reservas_estudantes_ra_idx` ON `bdBiblioteca`.`Reservas` (`estudante_ra` ASC);
+CREATE INDEX `fk_reservas_usuarios_ra_idx` ON `bdBiblioteca`.`Reservas` (`usuario_ra` ASC);
 
 CREATE INDEX `fk_reservas_status_name_idx` ON `bdBiblioteca`.`Reservas` (`status_name` ASC);
 

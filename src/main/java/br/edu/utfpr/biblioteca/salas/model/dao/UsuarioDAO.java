@@ -1,7 +1,7 @@
 package br.edu.utfpr.biblioteca.salas.model.dao;
 
 import static br.edu.utfpr.biblioteca.salas.model.dao.GenericDAO.entityManager;
-import br.edu.utfpr.biblioteca.salas.model.entity.EstudantePO;
+import br.edu.utfpr.biblioteca.salas.model.entity.UsuarioPO;
 import br.edu.utfpr.biblioteca.salas.model.entity.ReservaPO;
 import br.edu.utfpr.biblioteca.salas.model.entity.StatusPO;
 import br.edu.utfpr.biblioteca.salas.tools.CalendarioHelper;
@@ -10,27 +10,27 @@ import java.util.Date;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
-public class EstudanteDAO extends GenericDAO<EstudantePO> {
+public class UsuarioDAO extends GenericDAO<UsuarioPO> {
 
-    public EstudanteDAO() {
-        super(EstudantePO.class);
+    public UsuarioDAO() {
+        super(UsuarioPO.class);
     }
 
     /**
      * Verifica se o limite diario de reserva foi atingido
      *
-     * @param estudante
+     * @param usuario
      * @param dataInicial
      * @return
      */
-    public boolean canReservar(EstudantePO estudante, Date dataInicial) {
+    public boolean canReservar(UsuarioPO usuario, Date dataInicial) {
         Date primeiraHoraDodia = CalendarioHelper.getDateComHoraSete(dataInicial);
         Date ultimaHoraDodia = CalendarioHelper.getDateComHoraVinteUma(dataInicial);
         long qtdReservas;
-        Query q = entityManager.createQuery("SELECT COUNT(e) FROM Reserva e WHERE e.status != :inativa AND e.estudante = :estudante AND "
+        Query q = entityManager.createQuery("SELECT COUNT(e) FROM Reserva e WHERE e.status != :inativa AND e.usuario = :usuario AND "
                 + "e.dataInicial BETWEEN :primeiraData AND :ultimaData");
         q.setParameter("inativa", new StatusPO("inativa"));
-        q.setParameter("estudante", estudante);
+        q.setParameter("usuario", usuario);
         q.setParameter("primeiraData", primeiraHoraDodia);
         q.setParameter("ultimaData", ultimaHoraDodia);
         qtdReservas = (long) q.getSingleResult();
@@ -38,38 +38,38 @@ public class EstudanteDAO extends GenericDAO<EstudantePO> {
     }
 
     /**
-     * Retorna um EstudantePO dado um ra
+     * Retorna um UsuarioPO dado um ra
      *
      * @param ra
-     * @return EstudantePO estudante
+     * @return UsuarioPO usuario
      */
-    public EstudantePO obter(String ra) {
+    public UsuarioPO obter(String ra) {
         entityManager.clear();
-        return (EstudantePO) entityManager.find(EstudantePO.class, ra);
+        return (UsuarioPO) entityManager.find(UsuarioPO.class, ra);
     }
 
     /**
-     * Este método faz a autenticação do estudante no bd pelo ra e senha
+     * Este método faz a autenticação do usuario no bd pelo ra e senha
      *
      * @param ra
      * @param senha
      * @return Boolean
      */
-    public EstudantePO isAutentico(String ra, String senha) {
-        EstudantePO estudante = obter(ra);
-        if (estudante != null) {
-            if (estudante.getSenha().equals(senha)) {
-                return estudante;
+    public UsuarioPO isAutentico(String ra, String senha) {
+        UsuarioPO usuario = obter(ra);
+        if (usuario != null) {
+            if (usuario.getSenha().equals(senha)) {
+                return usuario;
             }
         }
         return null;
     }
 
-    public ReservaPO getReservaInTime(EstudantePO estudante, Date date) {
+    public ReservaPO getReservaInTime(UsuarioPO usuario, Date date) {
         try {
-            Query q = entityManager.createQuery("SELECT e FROM Reserva e WHERE e.status != :status AND e.estudante = :estudante AND e.dataInicial = :dataInicial");
+            Query q = entityManager.createQuery("SELECT e FROM Reserva e WHERE e.status != :status AND e.usuario = :usuario AND e.dataInicial = :dataInicial");
             q.setParameter("status", new StatusPO("inativa"));
-            q.setParameter("estudante", estudante);
+            q.setParameter("usuario", usuario);
             q.setParameter("dataInicial", date);
             ReservaPO reserva = (ReservaPO) q.getSingleResult();
             return reserva;

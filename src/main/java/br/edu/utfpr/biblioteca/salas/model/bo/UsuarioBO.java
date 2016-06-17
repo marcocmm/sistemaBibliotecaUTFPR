@@ -1,14 +1,14 @@
 package br.edu.utfpr.biblioteca.salas.model.bo;
 
-import br.edu.utfpr.biblioteca.salas.model.dao.EstudanteDAO;
-import br.edu.utfpr.biblioteca.salas.model.entity.EstudantePO;
+import br.edu.utfpr.biblioteca.salas.model.dao.UsuarioDAO;
+import br.edu.utfpr.biblioteca.salas.model.entity.UsuarioPO;
 import br.edu.utfpr.biblioteca.salas.model.entity.ReservaPO;
 import br.edu.utfpr.biblioteca.salas.tools.CalendarioHelper;
 import java.util.Date;
 
-public class EstudanteBO {
+public class UsuarioBO {
 
-    static EstudanteDAO estudanteDAO = new EstudanteDAO();
+    static UsuarioDAO usuarioDAO = new UsuarioDAO();
 
     /**
      * Este método chama o método isAutentico do dao
@@ -17,58 +17,58 @@ public class EstudanteBO {
      * @param senha
      * @return boolean
      */
-    public static EstudantePO isAutentico(String ra, String senha) {
-        return estudanteDAO.isAutentico(ra, senha);
+    public static UsuarioPO isAutentico(String ra, String senha) {
+        return usuarioDAO.isAutentico(ra, senha);
     }
 
     /**
      * Sobrecarga de método para permitir abstrações. Invoca isAutentico(ra,
      * senha)
      *
-     * @param estudante
+     * @param usuario
      * @return boolean
      */
-    public static EstudantePO isAutentico(EstudantePO estudante) {
-        return isAutentico(estudante.getRa(), estudante.getSenha());
+    public static UsuarioPO isAutentico(UsuarioPO usuario) {
+        return isAutentico(usuario.getRa(), usuario.getSenha());
     }
 
     /**
-     * Contata o dao para obter um estudante dado um ra.
+     * Contata o dao para obter um usuario dado um ra.
      *
      * @param ra
      * @return
      */
-    public static EstudantePO obterEstudante(String ra) {
-        return estudanteDAO.obter(ra);
+    public static UsuarioPO obterUsuario(String ra) {
+        return usuarioDAO.obter(ra);
     }
 
     /**
-     * verifica se o estudante está cadastrado
+     * verifica se o usuario está cadastrado
      *
-     * @param estudante
+     * @param usuario
      * @return boolean
      */
-    public static boolean alreadyCadastrado(EstudantePO estudante) {
-        return estudanteDAO.obter(estudante.getRa()) != null;
+    public static boolean alreadyCadastrado(UsuarioPO usuario) {
+        return usuarioDAO.obter(usuario.getRa()) != null;
     }
 
     /**
-     * verifica se o estudante já está cadastrado e se a senha é vazia, caso ele
-     * nao seja cadastrado e sua senha exista, o estudante é inserido.
+     * verifica se o usuario já está cadastrado e se a senha é vazia, caso ele
+     * nao seja cadastrado e sua senha exista, o usuario é inserido.
      *
-     * @param estudante
+     * @param usuario
      */
-    public static void cadastrarEstudante(EstudantePO estudante) {
-        if (alreadyCadastrado(estudante)) {
+    public static void cadastrarUsuario(UsuarioPO usuario) {
+        if (alreadyCadastrado(usuario)) {
             return;
         }
-        if (estudante.getSenha().isEmpty()) {
+        if (usuario.getSenha().isEmpty()) {
             return;
         }
-        estudanteDAO.insert(estudante);
+        usuarioDAO.insert(usuario);
     }
 
-    public static boolean canDoChekin(EstudantePO estudante) {
+    public static boolean canDoChekin(UsuarioPO usuario) {
         Date fifteenBefore;
         Date fifteenAfter;
         Date horaAtual = new Date();
@@ -84,10 +84,10 @@ public class EstudanteBO {
         CalendarioHelper.setMinute(fifteenBefore, 45);
         fifteenAfter = (Date) horaAtual.clone();
         CalendarioHelper.setMinute(fifteenAfter, 15);
-        return estudanteDAO.getReservaInTime(estudante, horaAtual) != null;
+        return usuarioDAO.getReservaInTime(usuario, horaAtual) != null;
     }
 
-    public static ReservaPO getMyReservaNow(EstudantePO estudante) {
+    public static ReservaPO getMyReservaNow(UsuarioPO usuario) {
         Date horaAtual = new Date();
         int minutos = CalendarioHelper.getMinutes(horaAtual);
         if (minutos <= 15) {
@@ -95,7 +95,7 @@ public class EstudanteBO {
         } else if (minutos >= 45) {
             horaAtual = CalendarioHelper.getHoraCheia(CalendarioHelper.addHora(horaAtual));
         }
-        return estudanteDAO.getReservaInTime(estudante, horaAtual);
+        return usuarioDAO.getReservaInTime(usuario, horaAtual);
     }
 
 }

@@ -5,7 +5,6 @@ import br.edu.utfpr.biblioteca.salas.model.ReservasHorario;
 import br.edu.utfpr.biblioteca.salas.model.bo.ReservaBO;
 import br.edu.utfpr.biblioteca.salas.model.bo.SalaBO;
 import br.edu.utfpr.biblioteca.salas.tools.CalendarioHelper;
-import br.edu.utfpr.biblioteca.salas.model.entity.AdministradorPO;
 import br.edu.utfpr.biblioteca.salas.model.entity.ReservaPO;
 import br.edu.utfpr.biblioteca.salas.model.entity.SalaPO;
 import java.util.Date;
@@ -23,8 +22,6 @@ import javax.faces.view.ViewScoped;
 @ManagedBean
 public class RelatorioMB {
 
-    private AdministradorPO administrador;
-
     private Date dataSelecionada;
     private Dia diaSelecionado;
 
@@ -40,15 +37,6 @@ public class RelatorioMB {
     public RelatorioMB() {
         this.strSala = "Sala";
         this.sala = new SalaPO(1, true);
-        this.administrador = new AdministradorPO(null, null);
-    }
-
-    public AdministradorPO getAdministrador() {
-        return administrador;
-    }
-
-    public void setAdministrador(AdministradorPO administrador) {
-        this.administrador = administrador;
     }
 
     public Date getDataSelecionada() {

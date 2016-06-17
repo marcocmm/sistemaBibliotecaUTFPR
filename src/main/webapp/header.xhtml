@@ -26,9 +26,9 @@
                 </p>
                 <div class="loginRR" style="text-align: center">
                     <h:form>
-                        <p:inputText rendered="#{loginMB.exibirFormLogin()}" id="username" class="form-control" placeholder="Digite seu R.A" value="#{loginMB.estudante.ra}"  required="true" label="username" />
-                        <p:password rendered="#{loginMB.exibirFormLogin()}" id="password" class="password" placeholder="Digite sua senha" value="#{loginMB.estudante.senha}" required="true"  label="password" />
-                        <h:outputLabel for="estudanteLogadoNome" value="#{loginMB.nomeEstudanteLogado}"/>
+                        <p:inputText rendered="#{loginMB.exibirFormLogin()}" id="username" class="form-control" placeholder="Digite seu R.A" value="#{loginMB.usuario.ra}"  required="true" label="username" />
+                        <p:password rendered="#{loginMB.exibirFormLogin()}" id="password" class="password" placeholder="Digite sua senha" value="#{loginMB.usuario.senha}" required="true"  label="password" />
+                        <h:outputLabel for="usuarioLogadoNome" value="#{loginMB.nomeUsuarioLogado}"/>
                         <div>
                             <p:commandButton rendered="#{loginMB.exibirBtnLogout()}" value="Sair" actionListener="#{loginMB.doLogout}"/>
                             <p:commandButton rendered="#{loginMB.exibirFormLogin()}" value="Login" style="float: left" actionListener="#{loginMB.doLogin}"/>

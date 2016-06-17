@@ -21,10 +21,10 @@
                     <h:form>
                         <h:form>
                             <h:outputText value="Nome: " rendered="#{exibirReservaMB.canCancelReserva()}" />
-                            <h:outputText value="#{exibirReservaMB.reserva.estudante.nome}" rendered="#{exibirReservaMB.canCancelReserva()}" styleClass="outputLabel"/>
+                            <h:outputText value="#{exibirReservaMB.reserva.usuario.nome}" rendered="#{exibirReservaMB.canCancelReserva()}" styleClass="outputLabel"/>
                             <br/>
                             <h:outputText value="Email: " rendered="#{exibirReservaMB.canCancelReserva()}" />
-                            <h:outputText value="#{exibirReservaMB.reserva.estudante.email}" rendered="#{exibirReservaMB.canCancelReserva()}" styleClass="outputLabel"/>
+                            <h:outputText value="#{exibirReservaMB.reserva.usuario.email}" rendered="#{exibirReservaMB.canCancelReserva()}" styleClass="outputLabel"/>
                         </h:form>
                         <h:outputText value="Data: " />
                         <h:outputText value="#{exibirReservaMB.diaMesReserva}" styleClass="outputLabel"/>

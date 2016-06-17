@@ -35,7 +35,7 @@ public class ReservaBOTest {
 
     public void testeChekin() {
         try {
-            ReservaBO.fazerCheckin(EstudanteBO.obterEstudante("1137085"));
+            ReservaBO.fazerCheckin(UsuarioBO.obterUsuario("1137085"));
             Assert.fail();
         } catch (Exception ex) {
         }

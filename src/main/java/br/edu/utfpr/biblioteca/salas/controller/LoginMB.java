@@ -1,8 +1,8 @@
 package br.edu.utfpr.biblioteca.salas.controller;
 
-import br.edu.utfpr.biblioteca.salas.model.bo.EstudanteBO;
+import br.edu.utfpr.biblioteca.salas.model.bo.UsuarioBO;
 import br.edu.utfpr.biblioteca.salas.model.bo.ReservaBO;
-import br.edu.utfpr.biblioteca.salas.model.entity.EstudantePO;
+import br.edu.utfpr.biblioteca.salas.model.entity.UsuarioPO;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,32 +21,32 @@ import javax.faces.context.FacesContext;
 @SessionScoped
 public class LoginMB {
 
-    private EstudantePO estudante;
+    private UsuarioPO usuario;
     FacesMessage message;
 
     public LoginMB() {
-        this.estudante = new EstudantePO(null, null, null, null);
+        this.usuario = new UsuarioPO(null, null, null, null);
     }
 
     /**
-     * verifica se o estudante está cadastrado
+     * verifica se o usuario está cadastrado
      *
-     * @param estudante
+     * @param usuario
      * @return boolean
      */
     private boolean alreadyCadastrado() {
-        return EstudanteBO.alreadyCadastrado(this.estudante);
+        return UsuarioBO.alreadyCadastrado(this.usuario);
     }
 
     private boolean isLogado() {
-        if (getEstudanteLogado() == null) {
+        if (getUsuarioLogado() == null) {
             return false;
         }
         return true;
     }
 
     /**
-     * Obtém o login e senha do estudante e, caso esteja autenticado, exibe
+     * Obtém o login e senha do usuario e, caso esteja autenticado, exibe
      * mensagem na tela, também cria uma nova sessão.
      *
      * @param event
@@ -57,13 +57,13 @@ public class LoginMB {
         ExternalContext ec = facesContext.getExternalContext();
 
         if (!alreadyCadastrado()) {
-            message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Estudante não cadastrado!", null);
+            message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Usuario não cadastrado!", null);
         }
-        estudante = EstudanteBO.isAutentico(estudante);
-        if (estudante != null) {
-//            SessionContext.getInstance().setAttribute("estudanteLogado", estudante);
-            SessionContext.getInstance().setEstudanteLogado(estudante);
-            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bem-Vindo!", estudante.getNome());
+        usuario = UsuarioBO.isAutentico(usuario);
+        if (usuario != null) {
+//            SessionContext.getInstance().setAttribute("usuarioLogado", usuario);
+            SessionContext.getInstance().setUsuarioLogado(usuario);
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bem-Vindo!", usuario.getNome());
             facesContext.addMessage(null, message);
             try {
                 ec.redirect("calendario.xhtml");
@@ -76,7 +76,7 @@ public class LoginMB {
 //            } catch (IOException ex) {
 //                Logger.getLogger(LoginMB.class.getName()).log(Level.SEVERE, null, ex);
 //            }
-            estudante = new EstudantePO(null, null, null, null);
+            usuario = new UsuarioPO(null, null, null, null);
             message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Ra ou Senha incorretos! \n Por favor tente novamente.", null);
         }
         facesContext.addMessage(null, message);
@@ -93,7 +93,7 @@ public class LoginMB {
 //        }
 //    }
     /**
-     * Faz o logout do estudante, encerra a session
+     * Faz o logout do usuario, encerra a session
      *
      * @return Rediret to index.html
      */
@@ -110,21 +110,21 @@ public class LoginMB {
     }
 
     /**
-     * Retorna estudante logado
+     * Retorna usuario logado
      *
      * @return EstuantePO
      */
-    public EstudantePO getEstudanteLogado() {
-        return (EstudantePO) SessionContext.getInstance().getEstudanteLogado();
+    public UsuarioPO getUsuarioLogado() {
+        return (UsuarioPO) SessionContext.getInstance().getUsuarioLogado();
     }
 
     /**
-     * Retorna nome do estudante logado
+     * Retorna nome do usuario logado
      *
      * @return EstuantePO
      */
-    public String getNomeEstudanteLogado() {
-        return SessionContext.getInstance().getNameEstudanteLogado();
+    public String getNomeUsuarioLogado() {
+        return SessionContext.getInstance().getNameUsuarioLogado();
     }
 
     public String exibirBtnLogout() {
@@ -141,28 +141,28 @@ public class LoginMB {
         return "true";
     }
 
-    public EstudantePO getEstudante() {
-        return estudante;
+    public UsuarioPO getUsuario() {
+        return usuario;
     }
 
-    public void setEstudante(EstudantePO estudante) {
-        this.estudante = estudante;
+    public void setUsuario(UsuarioPO usuario) {
+        this.usuario = usuario;
     }
 
     public void fazerCheckin() {
-        EstudantePO estudanteLogado = SessionContext.getInstance().getEstudanteLogado();
+        UsuarioPO usuarioLogado = SessionContext.getInstance().getUsuarioLogado();
         try {
-            if (estudanteLogado == null) {
-                if (estudante.getRa() == null || estudante.getSenha() == null) {
+            if (usuarioLogado == null) {
+                if (usuario.getRa() == null || usuario.getSenha() == null) {
                     throw new Exception("Campos login e senha não podem ser nulos!");
                 }
-                if (estudante.getRa().isEmpty() || estudante.getSenha().isEmpty()) {
+                if (usuario.getRa().isEmpty() || usuario.getSenha().isEmpty()) {
                     throw new Exception("Informe o login e a senha!");
                 }
             } else {
-                this.estudante = estudanteLogado;
+                this.usuario = usuarioLogado;
             }
-            ReservaBO.fazerCheckin(estudante);
+            ReservaBO.fazerCheckin(usuario);
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Checkin efetuado!", null);
         } catch (Exception ex) {
             message = new FacesMessage(FacesMessage.SEVERITY_ERROR, ex.getMessage(), null);
@@ -172,10 +172,10 @@ public class LoginMB {
     }
 
     public boolean exibirBotaoCheckin() {
-        EstudantePO estudanteLogado = SessionContext.getInstance().getEstudanteLogado();
-        if (estudanteLogado == null) {
+        UsuarioPO usuarioLogado = SessionContext.getInstance().getUsuarioLogado();
+        if (usuarioLogado == null) {
             return true;
-        } else if (EstudanteBO.canDoChekin(estudanteLogado)) {
+        } else if (UsuarioBO.canDoChekin(usuarioLogado)) {
             return true;
         }
         return false;

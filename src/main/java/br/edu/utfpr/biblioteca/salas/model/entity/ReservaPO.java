@@ -52,9 +52,9 @@ public class ReservaPO implements Serializable {
     private Date dataFinal;
     private transient String strDataFinal;
 
-    @JoinColumn(name = "estudante_ra", referencedColumnName = "ra")
+    @JoinColumn(name = "usuario_ra", referencedColumnName = "ra")
     @ManyToOne(optional = false)
-    private EstudantePO estudante;
+    private UsuarioPO usuario;
 
     @JoinColumn(name = "sala_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
@@ -67,8 +67,8 @@ public class ReservaPO implements Serializable {
     protected ReservaPO() {
     }
 
-    public ReservaPO(EstudantePO estudante, SalaPO sala, Date dataInicial, int quantidadeAlunos) {
-        this.estudante = estudante;
+    public ReservaPO(UsuarioPO usuario, SalaPO sala, Date dataInicial, int quantidadeAlunos) {
+        this.usuario = usuario;
         this.sala = sala;
         this.dataInicial = dataInicial;
         if (dataInicial != null) {
@@ -123,12 +123,12 @@ public class ReservaPO implements Serializable {
         this.dataFinal = dataFinal;
     }
 
-    public EstudantePO getEstudante() {
-        return estudante;
+    public UsuarioPO getUsuario() {
+        return usuario;
     }
 
-    public void setEstudante(EstudantePO estudante) {
-        this.estudante = estudante;
+    public void setUsuario(UsuarioPO usuario) {
+        this.usuario = usuario;
     }
 
     public SalaPO getSala() {
@@ -192,7 +192,7 @@ public class ReservaPO implements Serializable {
     public Object clone() {
         ReservaPO reserva = new ReservaPO();
         reserva.setId(this.id);
-        reserva.setEstudante(this.estudante);
+        reserva.setUsuario(this.usuario);
         reserva.setSala(this.sala);
         reserva.setDataInicial(this.dataInicial);
         reserva.setDataFinal(this.dataFinal);

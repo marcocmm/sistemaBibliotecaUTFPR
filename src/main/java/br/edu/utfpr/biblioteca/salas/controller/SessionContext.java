@@ -4,8 +4,7 @@ package br.edu.utfpr.biblioteca.salas.controller;
  *
  * @author Leonardo Baiser <lpbaiser@gmail.com>
  */
-import br.edu.utfpr.biblioteca.salas.model.entity.AdministradorPO;
-import br.edu.utfpr.biblioteca.salas.model.entity.EstudantePO;
+import br.edu.utfpr.biblioteca.salas.model.entity.UsuarioPO;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
@@ -39,61 +38,32 @@ public class SessionContext {
      * Retorna a instância do estudandte logado, está instância está armazenada
      * na sessão
      *
-     * @return EstudantePO
+     * @return UsuarioPO
      */
-    public EstudantePO getEstudanteLogado() {
-        return (EstudantePO) getAttribute("estudanteLogado");
+    public UsuarioPO getUsuarioLogado() {
+        return (UsuarioPO) getAttribute("usuarioLogado");
     }
 
     /**
-     * Retorna o nome do estudante,só para fins de view
+     * Retorna o nome do usuario,só para fins de view
      *
-     * @return nomeEstudante
+     * @return nomeUsuario
      */
-    public String getNameEstudanteLogado() {
-        EstudantePO e = (EstudantePO) getAttribute("estudanteLogado");
+    public String getNameUsuarioLogado() {
+        UsuarioPO e = (UsuarioPO) getAttribute("usuarioLogado");
 
         return (e != null) ? "Bem vindo, " + e.getNome() : " ";
     }
 
     /**
-     * Seta um novo estudante na sessão
+     * Seta um novo usuario na sessão
      *
-     * @param estudante
+     * @param usuario
      */
-    public void setEstudanteLogado(EstudantePO estudante) {
-        setAttribute("estudanteLogado", estudante);
+    public void setUsuarioLogado(UsuarioPO usuario) {
+        setAttribute("usuarioLogado", usuario);
     }
     
-    /**
-     * Retorna a instância do estudandte logado, está instância está armazenada
-     * na sessão
-     *
-     * @return EstudantePO
-     */
-    public AdministradorPO getAdministradorLogado() {
-        return (AdministradorPO) getAttribute("administradorLogado");
-    }
-
-    /**
-     * Retorna o nome do estudante,só para fins de view
-     *
-     * @return nomeEstudante
-     */
-    public String getNameAdministradorLogado() {
-        AdministradorPO e = (AdministradorPO) getAttribute("administradorLogado");
-
-        return (e != null) ? "Bem vindo, " + e.getLogin() : " ";
-    }
-
-    /**
-     * Seta um novo estudante na sessão
-     *
-     * @param estudante
-     */
-    public void setAdministradorLogado(AdministradorPO administrador) {
-        setAttribute("administradorLogado", administrador);
-    }
 
     /**
      * Invalida a sessão

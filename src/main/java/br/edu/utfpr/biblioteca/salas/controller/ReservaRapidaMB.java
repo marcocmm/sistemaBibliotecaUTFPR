@@ -1,11 +1,9 @@
 package br.edu.utfpr.biblioteca.salas.controller;
 
-import br.edu.utfpr.biblioteca.salas.model.bo.EstudanteBO;
 import br.edu.utfpr.biblioteca.salas.view.BotaoHorario;
 import br.edu.utfpr.biblioteca.salas.model.bo.SalaBO;
-import br.edu.utfpr.biblioteca.salas.model.entity.EstudantePO;
+import br.edu.utfpr.biblioteca.salas.model.entity.UsuarioPO;
 import br.edu.utfpr.biblioteca.salas.model.entity.ReservaPO;
-import static br.edu.utfpr.biblioteca.salas.model.entity.ReservaPO_.estudante;
 import br.edu.utfpr.biblioteca.salas.model.entity.SalaPO;
 import br.edu.utfpr.biblioteca.salas.tools.CalendarioHelper;
 
@@ -26,9 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
-import javax.faces.event.ActionEvent;
 import javax.inject.Named;
-import javax.servlet.http.HttpSession;
 
 @Named(value = "reservaRapidaMB")
 @ManagedBean
@@ -48,7 +44,7 @@ public class ReservaRapidaMB implements Serializable {
 
         formatoEmHoras = new SimpleDateFormat("HH");
         formatoEmDia = new SimpleDateFormat("dd/MM/yyyy");
-        this.reserva = new ReservaPO(new EstudantePO(null, null, null, null), new SalaPO(0, true), new Date(), 0);
+        this.reserva = new ReservaPO(new UsuarioPO(null, null, null, null), new SalaPO(0, true), new Date(), 0);
         this.botoesHorario = new ArrayList<>();
         updateBotoesAtivosPorDia(new Date());
     }
@@ -212,7 +208,7 @@ public class ReservaRapidaMB implements Serializable {
         throw new UnsupportedOperationException();
     }
 
-    public List<ReservaPO> listarReservas(EstudantePO estudante) {
+    public List<ReservaPO> listarReservas(UsuarioPO usuario) {
         throw new UnsupportedOperationException();
     }
 

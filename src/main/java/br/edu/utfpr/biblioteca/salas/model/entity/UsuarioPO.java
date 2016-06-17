@@ -24,12 +24,12 @@ import javax.validation.constraints.Size;
  *
  * @author mateus
  */
-@Entity(name = "Estudante")
-@Table(name = "Estudantes")
+@Entity(name = "Usuario")
+@Table(name = "Usuarios")
 @NamedQueries({
-    @NamedQuery(name = "Estudante.findAll", query = "SELECT e FROM Estudante e")})
+    @NamedQuery(name = "Usuario.findAll", query = "SELECT e FROM Usuario e")})
 
-public class EstudantePO implements Serializable {
+public class UsuarioPO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -58,14 +58,20 @@ public class EstudantePO implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "email")
     private String email;
+    
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "administrador")
+    private boolean administrador;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "estudante")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
     private List<ReservaPO> reservas;
 
-    protected EstudantePO() {
+    protected UsuarioPO() {
     }
 
-    public EstudantePO(String ra, String nome, String senha, String email) {
+    public UsuarioPO(String ra, String nome, String senha, String email) {
         this.ra = ra;
         this.nome = nome;
         this.senha = senha;
@@ -140,10 +146,10 @@ public class EstudantePO implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof EstudantePO)) {
+        if (!(object instanceof UsuarioPO)) {
             return false;
         }
-        EstudantePO other = (EstudantePO) object;
+        UsuarioPO other = (UsuarioPO) object;
         if ((this.ra == null && other.ra != null) || (this.ra != null && !this.ra.equals(other.ra))) {
             return false;
         }
@@ -152,7 +158,15 @@ public class EstudantePO implements Serializable {
 
     @Override
     public String toString() {
-        return "br.edu.utfpr.biblioteca.salas.model.Estudante[ ra=" + ra + " ]";
+        return "br.edu.utfpr.biblioteca.salas.model.Usuario[ ra=" + ra + " ]";
+    }
+
+    public boolean isAdministrador() {
+        return administrador;
+    }
+
+    public void setAdministrador(boolean administrador) {
+        this.administrador = administrador;
     }
 
 }

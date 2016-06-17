@@ -4,7 +4,7 @@ import br.edu.utfpr.biblioteca.salas.model.Dia;
 import br.edu.utfpr.biblioteca.salas.model.Hora;
 import br.edu.utfpr.biblioteca.salas.model.dao.ReservaDAO;
 import br.edu.utfpr.biblioteca.salas.model.dao.SalaDAO;
-import br.edu.utfpr.biblioteca.salas.model.entity.EstudantePO;
+import br.edu.utfpr.biblioteca.salas.model.entity.UsuarioPO;
 import br.edu.utfpr.biblioteca.salas.model.entity.ReservaPO;
 import br.edu.utfpr.biblioteca.salas.model.entity.SalaPO;
 import br.edu.utfpr.biblioteca.salas.model.entity.StatusPO;
@@ -172,20 +172,20 @@ public class ReservaBO {
     }
 
     /**
-     * Dado um estudante, verifica suas reservas e faz o checkin se possível.
+     * Dado um usuario, verifica suas reservas e faz o checkin se possível.
      *
-     * @param estudante
+     * @param usuario
      * @throws java.lang.Exception
      */
-    public static void fazerCheckin(EstudantePO estudante) throws Exception {
-        EstudantePO estudantePopulado = EstudanteBO.isAutentico(estudante);
-        if (estudantePopulado == null) {
+    public static void fazerCheckin(UsuarioPO usuario) throws Exception {
+        UsuarioPO usuarioPopulado = UsuarioBO.isAutentico(usuario);
+        if (usuarioPopulado == null) {
             throw new Exception("Login e senha inválidos");
         }
-        if (!EstudanteBO.canDoChekin(estudantePopulado)) {
+        if (!UsuarioBO.canDoChekin(usuarioPopulado)) {
             throw new Exception("Não há reservas disponíveis para chekin no momentos");
         }
-        ReservaPO reserva = EstudanteBO.getMyReservaNow(estudantePopulado);
+        ReservaPO reserva = UsuarioBO.getMyReservaNow(usuarioPopulado);
         if (reserva.getStatus().equals(new StatusPO("emCurso"))) {
             throw new Exception("Você já fez checkin, pode usar a sala!");
         }

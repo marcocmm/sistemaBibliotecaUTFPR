@@ -1,14 +1,14 @@
 use bdBiblioteca;
--- Insert de Estudantes -- 
-INSERT INTO bdBiblioteca.Estudantes (ra, nome, senha, email)
-VALUES ('1136631', 'Leonardo', 'baiser', 'lpbaiser@gmail.com'),
-       ('1137131', 'Rômulo', 'meloca', 'rmmeloca@gmail.com'),
-	   ('1137085', 'Marco', 'mattos', 'marco.cmm@gmail.com'),
-	   ('1602055', 'Mateus Tomoo', 'tomoo', 'mateustomooo@gmail.com'),
-	   ('1136632', 'Marina', 'silva', 'msilva@gmail.com'),
-	   ('637085', 'Dilmae', 'dilmae', 'dilmae@gmail.com'),
-	   ('1138081', 'João', 'ferreira', 'fjoao@gmail.com'),
-       ('1602063', 'Mateus Torres', 'torres', 'lottar1996@gmail.com');
+-- Insert de Usuarios -- 
+INSERT INTO bdBiblioteca.Usuarios (ra, nome, senha, email, administrador)
+VALUES ('1136631', 'Leonardo', 'baiser', 'lpbaiser@gmail.com', false),
+       ('1137131', 'Rômulo', 'meloca', 'rmmeloca@gmail.com', false),
+	   ('1137085', 'Marco', 'mattos', 'marco.cmm@gmail.com', false),
+	   ('1602055', 'Mateus Tomoo', 'tomoo', 'mateustomooo@gmail.com', false),
+	   ('1136632', 'Marina', 'silva', 'msilva@gmail.com', false),
+	   ('637085', 'Dilmae', 'dilmae', 'dilmae@gmail.com', false),
+	   ('1138081', 'João', 'ferreira', 'fjoao@gmail.com', false),
+       ('1602063', 'Mateus Torres', 'torres', 'lottar1996@gmail.com', false);
 
 -- Insert de salas-- 
 INSERT INTO bdBiblioteca.Salas (id, ar)
@@ -19,29 +19,25 @@ VALUES (1, 0),
 	(5,0),
 	   (6, 1);
 
--- Insert Administradores-- 
-INSERT INTO bdBiblioteca.Administradores (login, senha)
-VALUES ('dellconte@gmail.com', 'dellconte'),
-	   ('root', 'root');
 
 -- Insert Status--
 INSERT INTO bdBiblioteca.Status (name)
 VALUES	('inativa'),
 		('ativa'),
 		('desistencia'),
-		('emCurso');
+		('emCurso'),
+		('concluida');
 
 -- Insert Reservas --
-INSERT INTO bdBiblioteca.Reservas(quantidade_alunos, data_inicial, data_final, estudante_ra, sala_id, status_name)
-VALUES (5, '2016-05-05 08:00:00', '2016-05-05 09:00:00', '1136631', 1,  'emCurso'),
+INSERT INTO bdBiblioteca.Reservas(quantidade_alunos, data_inicial, data_final, usuario_ra, sala_id, status_name)
+VALUES (5, '2016-05-05 08:00:00', '2016-05-05 09:00:00', '1136631', 1,  'ativa'),
 	   (4, '2016-05-10 09:00:00', '2016-05-10 10:00:00', '1602063', 1,  'ativa'),
-	   (4, '2016-05-10 09:00:00', '2016-05-10 10:00:00', '1602063', 2,  'emCurso'),
+	   (4, '2016-05-10 09:00:00', '2016-05-10 10:00:00', '1602063', 2,  'ativa'),
 	   (4, '2016-05-10 09:00:00', '2016-05-10 10:00:00', '1602063', 3,  'ativa'),
-	   (4, '2016-05-10 09:00:00', '2016-05-10 10:00:00', '1602063', 4,  'emCurso'),
+	   (4, '2016-05-10 09:00:00', '2016-05-10 10:00:00', '1602063', 4,  'ativa'),
 	   (4, '2016-05-10 09:00:00', '2016-05-10 10:00:00', '1602063', 5,  'ativa'),
 	   (5, '2016-05-10 09:00:00', '2016-05-10 10:00:00', '1136632', 3,  'ativa'),
-	   (4, '2016-06-09 20:00:00', '2016-05-10 13:00:00', '1137131', 2,  'ativa'),
-	   (4, '2016-06-09 21:00:00', '2016-05-10 13:00:00', '1137131', 2,  'ativa'),
+	   (4, '2016-05-10 12:00:00', '2016-05-10 13:00:00', '1137131', 2,  'ativa'),
 	   (5, '2016-05-06 10:00:00', '2016-05-06 11:00:00', '1137085', 3,  'inativa'),
 	   (3, '2016-05-05 11:00:00', '2016-05-05 12:00:00', '637085', 4,  'inativa'),
 	   (5, '2016-05-09 12:00:00', '2016-05-09 13:00:00', '1602063', 5,  'inativa');

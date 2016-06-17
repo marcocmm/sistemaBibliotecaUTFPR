@@ -6,9 +6,9 @@
 package br.edu.utfpr.biblioteca.salas.controller;
 
 import br.edu.utfpr.biblioteca.salas.model.Dia;
-import br.edu.utfpr.biblioteca.salas.model.bo.EstudanteBO;
+import br.edu.utfpr.biblioteca.salas.model.bo.UsuarioBO;
 import br.edu.utfpr.biblioteca.salas.model.bo.ReservaBO;
-import br.edu.utfpr.biblioteca.salas.model.entity.EstudantePO;
+import br.edu.utfpr.biblioteca.salas.model.entity.UsuarioPO;
 import br.edu.utfpr.biblioteca.salas.model.entity.ReservaPO;
 import br.edu.utfpr.biblioteca.salas.tools.CalendarioHelper;
 import java.util.Date;
@@ -28,7 +28,7 @@ import javax.inject.Named;
 @ManagedBean
 public class CalendarioMB {
 
-    private EstudantePO estudante;
+    private UsuarioPO usuario;
     private Dia diaSelecionado;
     private Date mesEscolhido;
     private ReservaPO reserva;
@@ -38,17 +38,17 @@ public class CalendarioMB {
     }
 
     public CalendarioMB() {
-        this.estudante = new EstudantePO(null, null, null, null);
+        this.usuario = new UsuarioPO(null, null, null, null);
         mesEscolhido = new Date();
         diaSelecionado = new Dia();
     }
 
-    public EstudantePO getEstudante() {
-        return estudante;
+    public UsuarioPO getUsuario() {
+        return usuario;
     }
 
-    public void setEstudante(EstudantePO estudantePO) {
-        this.estudante = estudantePO;
+    public void setUsuario(UsuarioPO usuarioPO) {
+        this.usuario = usuarioPO;
     }
 
     public Dia getDiaSelecionado() {
@@ -60,24 +60,24 @@ public class CalendarioMB {
     }
 
     /**
-     * Valida a entrada do usuário e cadastra um estudante.
+     * Valida a entrada do usuário e cadastra um usuario.
      *
-     * @param estudante
+     * @param usuario
      */
-    private void cadastrarEstudante() {
+    private void cadastrarUsuario() {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         try {
-            Long.parseLong(estudante.getRa());
-            if (estudante.getNome().isEmpty()) {
+            Long.parseLong(usuario.getRa());
+            if (usuario.getNome().isEmpty()) {
                 throw new Exception("Preencha todos os campos");
             }
-            if (estudante.getEmail().isEmpty()) {
+            if (usuario.getEmail().isEmpty()) {
                 throw new Exception("Preencha todos os campos");
             }
-            if (estudante.getSenha().isEmpty()) {
+            if (usuario.getSenha().isEmpty()) {
                 throw new Exception("Preencha todos os campos");
             }
-            String[] split = estudante.getEmail().split("@");
+            String[] split = usuario.getEmail().split("@");
             if (split[0].isEmpty() || split[1].isEmpty()) {
                 throw new Exception("E-mail inválido");
             }
@@ -89,16 +89,16 @@ public class CalendarioMB {
             facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, ex.getMessage(), "Inválido"));
         }
 
-        EstudanteBO.cadastrarEstudante(estudante);
+        UsuarioBO.cadastrarUsuario(usuario);
     }
 
     /**
-     * Retorna estudante logado
+     * Retorna usuario logado
      *
      * @return EstuantePO
      */
-    public EstudantePO getEstudanteLogado() {
-        return (EstudantePO) SessionContext.getInstance().getEstudanteLogado();
+    public UsuarioPO getUsuarioLogado() {
+        return (UsuarioPO) SessionContext.getInstance().getUsuarioLogado();
     }
 
     /**

@@ -1,6 +1,6 @@
 package br.edu.utfpr.biblioteca.salas.model.dao;
 
-import br.edu.utfpr.biblioteca.salas.model.entity.EstudantePO;
+import br.edu.utfpr.biblioteca.salas.model.entity.UsuarioPO;
 import br.edu.utfpr.biblioteca.salas.model.entity.ReservaPO;
 import br.edu.utfpr.biblioteca.salas.model.entity.StatusPO;
 import br.edu.utfpr.biblioteca.salas.tools.CalendarioHelper;
@@ -25,8 +25,8 @@ public class ReservaDAO extends GenericDAO<ReservaPO> implements Serializable {
      */
     @Override
     public boolean insert(ReservaPO reserva) {
-        EstudanteDAO estudante = new EstudanteDAO();
-        if (estudante.canReservar(reserva.getEstudante(), reserva.getDataInicial())) {
+        UsuarioDAO usuario = new UsuarioDAO();
+        if (usuario.canReservar(reserva.getUsuario(), reserva.getDataInicial())) {
 
             entityManager.getTransaction().begin();
             if (isReservado(reserva)) {
@@ -81,16 +81,16 @@ public class ReservaDAO extends GenericDAO<ReservaPO> implements Serializable {
      * correspondente a data e em outro id da sala.      
      * @param date
      * @param idSala
-     * @param estudante
+     * @param usuario
      * @return 
      */
-    public boolean haveReservaByDateIdsalaEstudante(Date date, int idSala, EstudantePO estudante) {
+    public boolean haveReservaByDateIdsalaUsuario(Date date, int idSala, UsuarioPO usuario) {
         Query q = entityManager.createQuery("SELECT COUNT(e) FROM Reserva e WHERE e.dataInicial =:dataInicial AND "
-                + "e.id !=:idSala AND e.status != :status AND e.estudante = :estudante");
+                + "e.id !=:idSala AND e.status != :status AND e.usuario = :usuario");
         q.setParameter("dataInicial", date);
         q.setParameter("idSala", idSala);
         q.setParameter("status", new StatusPO("inativa"));
-        q.setParameter("estudante", estudante);
+        q.setParameter("usuario", usuario);
         Long qtdReservas = (Long) q.getSingleResult();
 
         return qtdReservas != 0;

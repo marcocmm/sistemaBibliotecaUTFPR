@@ -4,7 +4,7 @@ package br.edu.utfpr.biblioteca.salas.controller;
  *
  * @author Leonardo Baiser <lpbaiser@gmail.com>
  */
-import br.edu.utfpr.biblioteca.salas.model.entity.EstudantePO;
+import br.edu.utfpr.biblioteca.salas.model.entity.UsuarioPO;
 import java.io.IOException;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -28,7 +28,7 @@ public class LoginFilter implements Filter {
     }
 
     /**
-     * Filtro de paginas, se um estudante não estiver logado, ele não tem
+     * Filtro de paginas, se um usuario não estiver logado, ele não tem
      * permisssão para acessar algumas páginas A restrição de páginas dever ser
      * feita no web.xml, através da tag '<filter-mapping>'.
      *
@@ -41,14 +41,14 @@ public class LoginFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain) throws IOException, ServletException {
-        EstudantePO estudante = null;
+        UsuarioPO usuario = null;
         HttpSession sess = ((HttpServletRequest) request).getSession(false);
 
         if (sess != null) {
-            estudante = (EstudantePO) sess.getAttribute("estudanteLogado");
+            usuario = (UsuarioPO) sess.getAttribute("usuarioLogado");
         }
 
-        if (estudante == null) {
+        if (usuario == null) {
             String contextPath = ((HttpServletRequest) request).getContextPath();
             
             ((HttpServletResponse) response).sendRedirect(contextPath + "/faces/index.xhtml");
