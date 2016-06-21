@@ -7,11 +7,12 @@ package br.edu.utfpr.biblioteca.salas.dao;
 
 import br.edu.utfpr.biblioteca.salas.model.bo.UsuarioBO;
 import br.edu.utfpr.biblioteca.salas.model.dao.UsuarioDAO;
+import br.edu.utfpr.biblioteca.salas.model.entity.ReservaPO;
 import br.edu.utfpr.biblioteca.salas.model.entity.UsuarioPO;
+import br.edu.utfpr.biblioteca.salas.tools.CalendarioHelper;
+import java.util.Date;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertTrue;
+import org.junit.Test;
 
 /**
  *
@@ -46,5 +47,15 @@ public class UsuarioDAOTest {
         UsuarioPO usuario = new UsuarioPO("1136631", null, "baiser", "");
         assertTrue(UsuarioBO.alreadyCadastrado(usuario));
 
+    }
+    
+    @Test
+    public void test_ReservaEmCurso(){
+        Date date = CalendarioHelper.parseDate("09-06-2016");
+        UsuarioPO u = dao.obter("1602055");
+        assertTrue(u != null);
+        ReservaPO reserva = dao.getReservaEmCurso(u, date);
+        //assertTrue(reserva != null);
+        
     }
 }
