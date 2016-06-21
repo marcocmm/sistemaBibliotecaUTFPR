@@ -6,8 +6,6 @@ package br.edu.utfpr.biblioteca.salas.controller;
  */
 import br.edu.utfpr.biblioteca.salas.model.entity.UsuarioPO;
 import java.io.IOException;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;

@@ -180,4 +180,26 @@ public class LoginMB {
         }
         return false;
     }
+    
+    public void fazerCheckout(){
+            UsuarioPO usuarioLogado = SessionContext.getInstance().getUsuarioLogado();
+        try {
+            if (usuarioLogado == null) {
+                if (usuario.getRa() == null || usuario.getSenha() == null) {
+                    throw new Exception("Campos login e senha não podem ser nulos!");
+                }
+                if (usuario.getRa().isEmpty() || usuario.getSenha().isEmpty()) {
+                    throw new Exception("Informe o login e a senha!");
+                }
+            } else {
+                this.usuario = usuarioLogado;
+            }
+          //  ReservaBO.fazerCheckout(usuario);
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Checkin efetuado!", null);
+        } catch (Exception ex) {
+            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, ex.getMessage(), null);
+        } finally {
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        }    
+    }
 }
