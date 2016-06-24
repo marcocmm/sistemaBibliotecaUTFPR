@@ -36,6 +36,20 @@ public class UsuarioDAO extends GenericDAO<UsuarioPO> {
         qtdReservas = (long) q.getSingleResult();
         return qtdReservas < 2;
     }
+    
+    
+    public ReservaPO getReservaEmCurso(UsuarioPO usuario, Date date) {
+        try {
+            Query q = entityManager.createQuery("SELECT e FROM Reserva e WHERE e.status = :status AND e.usuario = :usuario AND e.dataInicial = :dataInicial");
+            q.setParameter("status", new StatusPO("emCurso"));
+            q.setParameter("usuario", usuario);
+            q.setParameter("dataInicial", date);
+            ReservaPO reserva = (ReservaPO) q.getSingleResult();
+            return reserva;
+        } catch (NoResultException ex) {
+            return null;
+        }
+    }
 
     /**
      * Retorna um UsuarioPO dado um ra
@@ -78,16 +92,4 @@ public class UsuarioDAO extends GenericDAO<UsuarioPO> {
         }
     }
 
-    public ReservaPO getReservaEmCurso(UsuarioPO usuario, Date date) {
-        try {
-            Query q = entityManager.createQuery("SELECT e FROM Reserva e WHERE e.status = :status AND e.usuario = :usuario AND e.dataInicial = :dataInicial");
-            q.setParameter("status", new StatusPO("emCurso"));
-            q.setParameter("usuario", usuario);
-            q.setParameter("dataInicial", date);
-            ReservaPO reserva = (ReservaPO) q.getSingleResult();
-            return reserva;
-        } catch (NoResultException ex) {
-            return null;
-        }
-    }
 }

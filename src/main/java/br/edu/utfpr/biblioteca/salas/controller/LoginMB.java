@@ -149,9 +149,9 @@ public class LoginMB {
         this.usuario = usuario;
     }
 
-    public void fazerCheckout() {
-        throw new UnsupportedOperationException();
-    }
+  
+    
+    
 
     public boolean exibirBotaoCheckout() {
         UsuarioPO usuarioLogado = SessionContext.getInstance().getUsuarioLogado();
