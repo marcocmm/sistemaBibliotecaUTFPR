@@ -193,6 +193,6 @@ public class ReservaBO {
     }
 
     public static void fazerCheckout(UsuarioPO usuario) {
-        
+
     }
 }

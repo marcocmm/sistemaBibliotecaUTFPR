@@ -151,12 +151,20 @@ public class LoginMB {
 
     public void fazerCheckout() {
         UsuarioPO usuarioLogado = SessionContext.getInstance().getUsuarioLogado();
-        if (usuarioLogado == null) {
-            throw new RuntimeException("must be logged in");
-        }
-
-        this.usuario = usuarioLogado;
         try {
+            if (usuarioLogado == null) {
+                if (usuario.getRa() == null || usuario.getSenha() == null) {
+                    throw new Exception("Campos login e senha não podem ser nulos!");
+                }
+                if (usuario.getRa().isEmpty() || usuario.getSenha().isEmpty()) {
+                    throw new Exception("Informe o login e a senha!");
+                }
+                throw new RuntimeException("must be logged in");
+            } else if (usuario.getRa().isEmpty() || usuario.getSenha().isEmpty()) {
+                throw new Exception("Informe o login e a senha!");
+            }
+
+            this.usuario = usuarioLogado;
             ReservaBO.fazerCheckout(this.usuario);
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Checkout efetuado!", null);
         } catch (Exception ex) {

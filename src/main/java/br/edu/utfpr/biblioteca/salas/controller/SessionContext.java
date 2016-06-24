@@ -12,7 +12,7 @@ public class SessionContext {
 
     private static SessionContext instance;
 
-    //Padrão de projeto singleto, só permite uma única instância por usuário
+    //Padrão de projeto singleton, só permite uma única instância por usuário
     public static SessionContext getInstance() {
         if (instance == null) {
             instance = new SessionContext();
