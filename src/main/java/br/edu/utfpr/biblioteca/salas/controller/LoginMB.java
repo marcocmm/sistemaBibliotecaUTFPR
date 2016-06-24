@@ -149,6 +149,19 @@ public class LoginMB {
         this.usuario = usuario;
     }
 
+    public void fazerCheckout() {
+        throw new UnsupportedOperationException();
+    }
+
+    public boolean exibirBotaoCheckout() {
+        UsuarioPO usuarioLogado = SessionContext.getInstance().getUsuarioLogado();
+        if (usuarioLogado == null) {
+            return false;
+        }
+        
+        return false;
+    }
+
     public void fazerCheckin() {
         UsuarioPO usuarioLogado = SessionContext.getInstance().getUsuarioLogado();
         try {
