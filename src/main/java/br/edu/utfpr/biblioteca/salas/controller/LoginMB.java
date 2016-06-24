@@ -150,16 +150,29 @@ public class LoginMB {
     }
 
     public void fazerCheckout() {
-        throw new UnsupportedOperationException();
+        UsuarioPO usuarioLogado = SessionContext.getInstance().getUsuarioLogado();
+        if (usuarioLogado == null) {
+            throw new RuntimeException("must be logged in");
+        }
+
+        this.usuario = usuarioLogado;
+        try {
+            ReservaBO.fazerCheckout(this.usuario);
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Checkout efetuado!", null);
+        } catch (Exception ex) {
+            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, ex.getMessage(), null);
+        } finally {
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        }
     }
 
     public boolean exibirBotaoCheckout() {
         UsuarioPO usuarioLogado = SessionContext.getInstance().getUsuarioLogado();
-        if (usuarioLogado == null) {
-            return false;
-        }
-        
-        return false;
+        return usuarioLogado != null;
+    }
+
+    public boolean disabledBotaoCheckout() {
+        return !UsuarioBO.canDoCheckout(this.usuario);
     }
 
     public void fazerCheckin() {
