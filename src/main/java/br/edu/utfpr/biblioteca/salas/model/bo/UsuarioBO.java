@@ -99,7 +99,9 @@ public class UsuarioBO {
     }
 
     public static boolean canDoCheckout(UsuarioPO usuario) {
-        return false;
+        Date data = CalendarioHelper.getHoraCheia(new Date());
+        
+        return usuarioDAO.getReservaEmCurso(usuario, data) != null;
     }
 
 }
