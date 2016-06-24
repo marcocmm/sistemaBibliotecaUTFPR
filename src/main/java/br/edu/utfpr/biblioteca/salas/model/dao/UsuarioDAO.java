@@ -5,7 +5,9 @@ import br.edu.utfpr.biblioteca.salas.model.entity.UsuarioPO;
 import br.edu.utfpr.biblioteca.salas.model.entity.ReservaPO;
 import br.edu.utfpr.biblioteca.salas.model.entity.StatusPO;
 import br.edu.utfpr.biblioteca.salas.tools.CalendarioHelper;
-import java.util.Calendar;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
@@ -72,13 +74,14 @@ public class UsuarioDAO extends GenericDAO<UsuarioPO> {
     public UsuarioPO isAutentico(String ra, String senha) {
         UsuarioPO usuario = obter(ra);
         if (usuario != null) {
+            
             if (usuario.getSenha().equals(senha)) {
                 return usuario;
             }
         }
         return null;
     }
-
+    
     public ReservaPO getReservaInTime(UsuarioPO usuario, Date date) {
         try {
             Query q = entityManager.createQuery("SELECT e FROM Reserva e WHERE e.status != :status AND e.usuario = :usuario AND e.dataInicial = :dataInicial");

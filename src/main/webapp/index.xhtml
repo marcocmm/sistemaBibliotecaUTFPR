@@ -18,7 +18,6 @@
         <h:outputText rendered="#{param.erro == 1}" value="Erro"/>
         <h:form>
             <p:growl id="growl" sticky="true" showDetail="true"/>
-
             <p:wizard flowListener="#{reservaRapidaMB.onFlowProcess}">
 
                 <p:tab id="data" title="Data e Horário">
