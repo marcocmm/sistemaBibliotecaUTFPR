@@ -5,10 +5,8 @@ import br.edu.utfpr.biblioteca.salas.model.entity.UsuarioPO;
 import br.edu.utfpr.biblioteca.salas.model.entity.ReservaPO;
 import br.edu.utfpr.biblioteca.salas.model.entity.StatusPO;
 import br.edu.utfpr.biblioteca.salas.tools.CalendarioHelper;
-import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
@@ -38,14 +36,24 @@ public class UsuarioDAO extends GenericDAO<UsuarioPO> {
         qtdReservas = (long) q.getSingleResult();
         return qtdReservas < 2;
     }
-    
-    
+
+    /**
+     * Seleciona uma reserva "emCurso".
+     *
+     * @param usuario
+     * @param date
+     * @return
+     */
     public ReservaPO getReservaEmCurso(UsuarioPO usuario, Date date) {
         try {
-            Query q = entityManager.createQuery("SELECT e FROM Reserva e WHERE e.status = :status AND e.usuario = :usuario AND e.dataInicial = :dataInicial");
+            List<Date> horarios = CalendarioHelper.getHorarios(date);
+            Date primeiraHoraDoDia = horarios.get(0);
+            Date ultimaHoraDoDia = horarios.get(horarios.size() - 1);
+            Query q = entityManager.createQuery("SELECT e FROM Reserva e WHERE e.status = :status AND e.usuario = :usuario AND e.dataInicial BETWEEN :primeiraData AND :segundaData");
             q.setParameter("status", new StatusPO("emCurso"));
             q.setParameter("usuario", usuario);
-            q.setParameter("dataInicial", date);
+            q.setParameter("primeiraData", primeiraHoraDoDia);
+            q.setParameter("segundaData", ultimaHoraDoDia);
             ReservaPO reserva = (ReservaPO) q.getSingleResult();
             return reserva;
         } catch (NoResultException ex) {

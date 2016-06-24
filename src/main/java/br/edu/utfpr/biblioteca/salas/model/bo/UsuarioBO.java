@@ -98,8 +98,14 @@ public class UsuarioBO {
         return usuarioDAO.getReservaInTime(usuario, horaAtual);
     }
 
+    public static ReservaPO getReservaEmCursoHoje(UsuarioPO usuario){
+        return usuarioDAO.getReservaEmCurso(usuario, new Date());
+    }
+    
     public static boolean canDoCheckout(UsuarioPO usuario) {
-        return false;
+        Date data = CalendarioHelper.getHoraCheia(new Date());
+        
+        return usuarioDAO.getReservaEmCurso(usuario, data) != null;
     }
 
 }
