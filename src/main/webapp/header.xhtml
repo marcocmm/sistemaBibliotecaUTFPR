@@ -33,6 +33,7 @@
                             <p:commandButton rendered="#{loginMB.exibirBtnLogout()}" value="Sair" actionListener="#{loginMB.doLogout}"/>
                             <p:commandButton rendered="#{loginMB.exibirFormLogin()}" value="Login" style="float: left" actionListener="#{loginMB.doLogin}"/>
                             <p:commandButton rendered="#{loginMB.exibirBotaoCheckin()}" value="Checkin" id="nonAjax" style="float: right" actionListener="#{loginMB.fazerCheckin()}" ajax="false" />
+                            <p:commandButton rendered="#{loginMB.exibirBotaoCheckout()}" value="Checkout" id="checkout" style="float: right" actionListener="#{loginMB.fazerCheckout()}" ajax="false" />
                         </div>
                     </h:form> 
                 </div>
