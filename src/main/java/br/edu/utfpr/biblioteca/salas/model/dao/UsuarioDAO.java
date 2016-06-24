@@ -5,7 +5,6 @@ import br.edu.utfpr.biblioteca.salas.model.entity.UsuarioPO;
 import br.edu.utfpr.biblioteca.salas.model.entity.ReservaPO;
 import br.edu.utfpr.biblioteca.salas.model.entity.StatusPO;
 import br.edu.utfpr.biblioteca.salas.tools.CalendarioHelper;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.NoResultException;
@@ -38,6 +37,13 @@ public class UsuarioDAO extends GenericDAO<UsuarioPO> {
         return qtdReservas < 2;
     }
 
+    /**
+     * Seleciona uma reserva "emCurso".
+     *
+     * @param usuario
+     * @param date
+     * @return
+     */
     public ReservaPO getReservaEmCurso(UsuarioPO usuario, Date date) {
         try {
             List<Date> horarios = CalendarioHelper.getHorarios(date);
