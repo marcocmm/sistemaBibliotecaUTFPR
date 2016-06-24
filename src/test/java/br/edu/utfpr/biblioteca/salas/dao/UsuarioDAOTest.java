@@ -51,11 +51,11 @@ public class UsuarioDAOTest {
     
     @Test
     public void test_ReservaEmCurso(){
-        Date date = CalendarioHelper.parseDate("09-06-2016");
-        UsuarioPO u = dao.obter("1602055");
+        Date date = CalendarioHelper.parseDate("09-05-2016", "12", "0", "0");
+        UsuarioPO u = dao.obter("1602063");
         assertTrue(u != null);
-        ReservaPO reserva = dao.getReservaEmCurso(u, date);
-        //assertTrue(reserva != null);
+//        ReservaPO reserva = dao.getReservaEmCurso(u, date);
+//        assertTrue(reserva != null);
         
     }
 }

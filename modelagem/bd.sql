@@ -94,9 +94,18 @@ SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 SET GLOBAL event_scheduler = ON;
 
+DROP EVENT IF EXISTS `bdBiblioteca`.`e_AtualizaCheckIn`;
 
 CREATE EVENT e_AtualizaCheckIn
 ON SCHEDULE EVERY 1 HOUR STARTS '2016-06-06 00:15:00'
 DO UPDATE Reservas
 SET status_name = 'desistencia'
 WHERE status_name = 'ativa' AND data_inicial < NOW();
+
+DROP EVENT IF EXISTS `bdBiblioteca`.`e_AtualizaCheckOut`;
+
+CREATE EVENT e_AtualizaCheckOut
+ON SCHEDULE EVERY 1 HOUR STARTS '2016-06-06 00:00:00'
+DO UPDATE Reservas
+SET status_name = 'concluida'
+WHERE status_name = 'emCurso' AND data_inicial < NOW();

@@ -81,7 +81,7 @@ public class UsuarioDAO extends GenericDAO<UsuarioPO> {
     public ReservaPO getReservaEmCurso(UsuarioPO usuario, Date date) {
         try {
             Query q = entityManager.createQuery("SELECT e FROM Reserva e WHERE e.status = :status AND e.usuario = :usuario AND e.dataInicial = :dataInicial");
-            q.setParameter("status", new StatusPO("em_curso"));
+            q.setParameter("status", new StatusPO("emCurso"));
             q.setParameter("usuario", usuario);
             q.setParameter("dataInicial", date);
             ReservaPO reserva = (ReservaPO) q.getSingleResult();
