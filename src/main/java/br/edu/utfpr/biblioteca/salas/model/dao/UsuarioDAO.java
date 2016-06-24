@@ -91,4 +91,5 @@ public class UsuarioDAO extends GenericDAO<UsuarioPO> {
             return null;
         }
     }
+
 }

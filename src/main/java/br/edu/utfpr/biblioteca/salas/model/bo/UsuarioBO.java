@@ -98,4 +98,8 @@ public class UsuarioBO {
         return usuarioDAO.getReservaInTime(usuario, horaAtual);
     }
 
+    public static boolean canDoCheckout(UsuarioPO usuario) {
+        return false;
+    }
+
 }

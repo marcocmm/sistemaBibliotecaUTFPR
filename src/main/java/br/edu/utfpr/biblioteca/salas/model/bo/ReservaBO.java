@@ -191,4 +191,8 @@ public class ReservaBO {
         }
         ReservaBO.setStatus(reserva, "emCurso");
     }
+
+    public static void fazerCheckout(UsuarioPO usuario) {
+
+    }
 }
