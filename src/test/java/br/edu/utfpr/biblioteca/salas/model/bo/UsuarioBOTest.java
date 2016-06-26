@@ -5,8 +5,8 @@
  */
 package br.edu.utfpr.biblioteca.salas.model.bo;
 
-import org.junit.Test;
-import static org.junit.Assert.*;
+import br.edu.utfpr.biblioteca.salas.tools.CalendarioHelper;
+import java.util.Date;
 
 /**
  *
@@ -15,6 +15,12 @@ import static org.junit.Assert.*;
 public class UsuarioBOTest {
     
     public UsuarioBOTest() {
+    }
+    
+//    @Test
+    public void test_Data(){
+        Date data = CalendarioHelper.getHoraCheia(new Date());
+        System.out.println("Data" +  CalendarioHelper.getData(data));
     }
 
 }

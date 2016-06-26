@@ -13,6 +13,7 @@ import br.edu.utfpr.biblioteca.salas.tools.CalendarioHelper;
 import java.util.Date;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
+import static org.junit.Assert.assertTrue;
 
 /**
  *
@@ -20,7 +21,7 @@ import org.junit.Test;
  */
 public class UsuarioDAOTest {
 
-    UsuarioDAO dao = new UsuarioDAO();
+    UsuarioDAO daoUsuario = new UsuarioDAO();
 
     public UsuarioDAOTest() {
     }
@@ -38,7 +39,7 @@ public class UsuarioDAOTest {
 
 //    @Test
     public void test_autenticar() {
-        UsuarioPO d = dao.isAutentico("1136631", "baiser");
+        UsuarioPO d = daoUsuario.isAutentico("1136631", "baiser");
         assertTrue(d != null);
     }
     
@@ -49,12 +50,12 @@ public class UsuarioDAOTest {
 
     }
     
-    @Test
+//    @Test
     public void test_ReservaEmCurso(){
         Date date = CalendarioHelper.parseDate("09-05-2016", "12", "0", "0");
-        UsuarioPO u = dao.obter("1602063");
+        UsuarioPO u = daoUsuario.obter("1602063");
         assertTrue(u != null);
-        ReservaPO reserva = dao.getReservaEmCurso(u, date);
+        ReservaPO reserva = daoUsuario.getReservaEmCurso(u, date);
         assertTrue(reserva != null);
         
     }
