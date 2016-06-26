@@ -1,14 +1,14 @@
 use bdBiblioteca;
 -- Insert de Usuarios -- 
 INSERT INTO bdBiblioteca.Usuarios (ra, nome, senha, email, administrador)
-VALUES ('1136631', 'Leonardo', 'baiser', 'lpbaiser@gmail.com', false),
-       ('1137131', 'Rômulo', 'meloca', 'rmmeloca@gmail.com', false),
-	   ('1137085', 'Marco', 'mattos', 'marco.cmm@gmail.com', false),
-	   ('1602055', 'Mateus Tomoo', 'tomoo', 'mateustomooo@gmail.com', false),
-	   ('1136632', 'Marina', 'silva', 'msilva@gmail.com', false),
-	   ('637085', 'Dilmae', 'dilmae', 'dilmae@gmail.com', false),
-	   ('1138081', 'João', 'ferreira', 'fjoao@gmail.com', false),
-       ('1602063', 'Mateus Torres', 'torres', 'lottar1996@gmail.com', false);
+VALUES ('1136631', 'Leonardo', MD5('baiser'), 'lpbaiser@gmail.com', false),
+       ('1137131', 'Rômulo', MD5('meloca'), 'rmmeloca@gmail.com', false),
+	   ('1137085', 'Marco', MD5('mattos'), 'marco.cmm@gmail.com', false),
+	   ('1602055', 'Mateus Tomoo', MD5('tomoo'), 'mateustomooo@gmail.com', false),
+	   ('1136632', 'Marina', MD5('silva'), 'msilva@gmail.com', false),
+	   ('637085', 'Dilmae', MD5('dilmae'), 'dilmae@gmail.com', false),
+	   ('1138081', 'João', MD5('ferreira'), 'fjoao@gmail.com', false),
+       ('1602063', 'Mateus Torres', MD5('torres'), 'lottar1996@gmail.com', false);
 
 -- Insert de salas-- 
 INSERT INTO bdBiblioteca.Salas (id, ar)

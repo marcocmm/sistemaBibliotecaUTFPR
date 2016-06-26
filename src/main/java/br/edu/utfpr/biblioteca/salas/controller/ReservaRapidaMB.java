@@ -65,9 +65,10 @@ public class ReservaRapidaMB implements Serializable {
     public void setStrHora(String strHora) {
         for (Iterator<BotaoHorario> iterator = botoesHorario.iterator(); iterator.hasNext();) {
             BotaoHorario next = iterator.next();
+            String classe = next.getClasse();
             if (next.getHoraStr().equals(strHora)) {
                 next.setClasse("azul");
-            } else if(next.getClass().equals("ui-priority-primary")){
+            } else if(classe.equals("btn btn-primary")){
                 next.setClasse("verde");
             }
         }

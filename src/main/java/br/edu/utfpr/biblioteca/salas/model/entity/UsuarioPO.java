@@ -6,6 +6,9 @@
 package br.edu.utfpr.biblioteca.salas.model.entity;
 
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
@@ -58,7 +61,7 @@ public class UsuarioPO implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "email")
     private String email;
-    
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
@@ -99,7 +102,8 @@ public class UsuarioPO implements Serializable {
     }
 
     public void setSenha(String senha) {
-        this.senha = senha;
+        String s = convertStringToMd5(senha);
+        this.senha = s;
     }
 
     public String getEmail() {
@@ -121,16 +125,13 @@ public class UsuarioPO implements Serializable {
 //        }
 //        return QuantidadeR;
 //    }
-    
-     public List getQuantidadeReservas() {
+    public List getQuantidadeReservas() {
         List QuantidadeR = new ArrayList();
         for (int i = 1; i <= 2; i++) {
-            QuantidadeR.add("Reserva "+i);
+            QuantidadeR.add("Reserva " + i);
         }
         return QuantidadeR;
     }
-
-
 
     public void setReservas(List<ReservaPO> reservas) {
         this.reservas = reservas;
@@ -167,6 +168,39 @@ public class UsuarioPO implements Serializable {
 
     public void setAdministrador(boolean administrador) {
         this.administrador = administrador;
+    }
+
+    private String convertStringToMd5(String valor) {
+        MessageDigest mDigest;
+        try {
+            //Instanciamos o nosso HASH MD5, poderíamos usar outro como
+            //SHA, por exemplo, mas optamos por MD5.
+            mDigest = MessageDigest.getInstance("MD5");
+
+            //Convert a String valor para um array de bytes em MD5
+            byte[] valorMD5 = mDigest.digest(valor.getBytes("UTF-8"));
+
+            //Convertemos os bytes para hexadecimal, assim podemos salvar
+            //no banco para posterior comparação se senhas
+            StringBuffer sb = new StringBuffer();
+            for (byte b : valorMD5) {
+                sb.append(Integer.toHexString((b & 0xFF)
+                        | 0x100).substring(1, 3));
+            }
+
+            String senha;
+            senha = sb.toString().substring(0, 30);
+            return senha;
+
+        } catch (NoSuchAlgorithmException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return null;
+        } catch (UnsupportedEncodingException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return null;
+        }
     }
 
 }

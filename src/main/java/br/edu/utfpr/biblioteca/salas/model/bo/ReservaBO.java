@@ -191,4 +191,20 @@ public class ReservaBO {
         }
         ReservaBO.setStatus(reserva, "emCurso");
     }
+
+    public static void fazerCheckout(UsuarioPO usuario) throws Exception {
+        UsuarioPO usuarioLogado = UsuarioBO.isAutentico(usuario);
+        if (usuarioLogado == null) {
+            throw new Exception("Usuário não autenticado!");
+        }
+        if (!UsuarioBO.canDoCheckout(usuario)) {
+            throw new Exception("Impossível realizar checkout nesta hora");
+        }
+
+        ReservaPO reserva = UsuarioBO.getReservaEmCursoHoje(usuarioLogado);
+        if (reserva.getStatus().equals(new StatusPO("concluida"))) {
+            throw new Exception("Você já fez checkin, pode usar a sala!");
+        }
+        ReservaBO.setStatus(reserva, "emCurso");
+    }
 }

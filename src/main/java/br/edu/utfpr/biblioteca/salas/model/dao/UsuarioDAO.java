@@ -5,8 +5,8 @@ import br.edu.utfpr.biblioteca.salas.model.entity.UsuarioPO;
 import br.edu.utfpr.biblioteca.salas.model.entity.ReservaPO;
 import br.edu.utfpr.biblioteca.salas.model.entity.StatusPO;
 import br.edu.utfpr.biblioteca.salas.tools.CalendarioHelper;
-import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
@@ -36,14 +36,24 @@ public class UsuarioDAO extends GenericDAO<UsuarioPO> {
         qtdReservas = (long) q.getSingleResult();
         return qtdReservas < 2;
     }
-    
-    
+
+    /**
+     * Seleciona uma reserva "emCurso".
+     *
+     * @param usuario
+     * @param date
+     * @return
+     */
     public ReservaPO getReservaEmCurso(UsuarioPO usuario, Date date) {
         try {
-            Query q = entityManager.createQuery("SELECT e FROM Reserva e WHERE e.status = :status AND e.usuario = :usuario AND e.dataInicial = :dataInicial");
+            List<Date> horarios = CalendarioHelper.getHorarios(date);
+            Date primeiraHoraDoDia = horarios.get(0);
+            Date ultimaHoraDoDia = horarios.get(horarios.size() - 1);
+            Query q = entityManager.createQuery("SELECT e FROM Reserva e WHERE e.status = :status AND e.usuario = :usuario AND e.dataInicial BETWEEN :primeiraData AND :segundaData");
             q.setParameter("status", new StatusPO("emCurso"));
             q.setParameter("usuario", usuario);
-            q.setParameter("dataInicial", date);
+            q.setParameter("primeiraData", primeiraHoraDoDia);
+            q.setParameter("segundaData", ultimaHoraDoDia);
             ReservaPO reserva = (ReservaPO) q.getSingleResult();
             return reserva;
         } catch (NoResultException ex) {
@@ -72,13 +82,14 @@ public class UsuarioDAO extends GenericDAO<UsuarioPO> {
     public UsuarioPO isAutentico(String ra, String senha) {
         UsuarioPO usuario = obter(ra);
         if (usuario != null) {
+            
             if (usuario.getSenha().equals(senha)) {
                 return usuario;
             }
         }
         return null;
     }
-
+    
     public ReservaPO getReservaInTime(UsuarioPO usuario, Date date) {
         try {
             Query q = entityManager.createQuery("SELECT e FROM Reserva e WHERE e.status != :status AND e.usuario = :usuario AND e.dataInicial = :dataInicial");
@@ -91,4 +102,5 @@ public class UsuarioDAO extends GenericDAO<UsuarioPO> {
             return null;
         }
     }
+
 }

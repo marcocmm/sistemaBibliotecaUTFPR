@@ -53,7 +53,7 @@ public final class BotaoHorario implements Serializable, Comparable<BotaoHorario
         } else if (classe.equals("branco")) {
             this.classe = "btn btn-small";
         } else {
-            this.classe = "ui-priority-primary";
+            this.classe = "btn btn-primary";
         }
     }
 
