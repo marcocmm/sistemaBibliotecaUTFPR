@@ -4,7 +4,6 @@ import br.edu.utfpr.biblioteca.salas.tools.CalendarioHelper;
 import java.util.Date;
 import br.edu.utfpr.biblioteca.salas.model.dao.UsuarioDAO;
 import br.edu.utfpr.biblioteca.salas.model.entity.UsuarioPO;
-import org.junit.Test;
 import static org.junit.Assert.*;
 
 

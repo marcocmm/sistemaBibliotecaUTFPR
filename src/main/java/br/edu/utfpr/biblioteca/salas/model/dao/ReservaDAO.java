@@ -78,11 +78,12 @@ public class ReservaDAO extends GenericDAO<ReservaPO> implements Serializable {
 
     /**
      * Dado uma data-hora e uma sala, este método retorna se existe uma reserva
-     * correspondente a data e em outro id da sala.      
+     * correspondente a data e em outro id da sala.
+     *
      * @param date
      * @param idSala
      * @param usuario
-     * @return 
+     * @return
      */
     public boolean haveReservaByDateIdsalaUsuario(Date date, int idSala, UsuarioPO usuario) {
         Query q = entityManager.createQuery("SELECT COUNT(e) FROM Reserva e WHERE e.dataInicial =:dataInicial AND "
@@ -134,5 +135,20 @@ public class ReservaDAO extends GenericDAO<ReservaPO> implements Serializable {
         } catch (NoResultException ex) {
             return false;
         }
+    }
+
+    /**
+     * SELECT busca as reservas entre duas datas, data inicial e data final.
+     * A data inicial deve possui hora igual a 8
+     * A data final deve possui hora igual a 22
+     * @param dataInicial
+     * @param dataFinal
+     * @return lista de reservas
+     */
+    public List<ReservaPO> getReservasPeriodo(Date dataInicial, Date dataFinal) {
+        Query q = entityManager.createQuery("SELECT e FROM Reserva e WHERE e.dataInicial >= :dataInicial AND e.dataInicial <= :dataFinal");
+        q.setParameter("dataInicial", dataInicial);
+        q.setParameter("dataFinal", dataFinal);
+        return q.getResultList();
     }
 }
