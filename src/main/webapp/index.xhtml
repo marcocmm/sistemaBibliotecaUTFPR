@@ -81,7 +81,7 @@
                                 </h:panelGrid>
                             </p:panel>
 
-                            <p:panel header="Autenticação">
+                            <p:panel id="panel" header="Autenticação" >
                                 <h:panelGrid columns="" columnClasses="value">
 
                                     <h:outputText value="RA :" />
@@ -93,7 +93,9 @@
                                     <p:password id="lastname" value="#{reservaRapidaMB.reserva.usuario.senha}">
                                         <p:ajax event="keyup" />
                                     </p:password>
-                                    <p:commandButton value="Reservar" actionListener="#{reservaRapidaMB.reservarSala}" update="growl" process="@this"/>
+                                    <p:commandButton id="reservar" rendered="#{!reservaRapidaMB.reservado}" value="Reservar" actionListener="#{reservaRapidaMB.reservarSala}" process="@this" update="reservar, link, growl, panel"/>
+                                    <p:link id="link" outcome="index" value="Fazer outra reserva" rendered="#{reservaRapidaMB.reservado}"/>
+
                                 </h:panelGrid>
                             </p:panel>
 
