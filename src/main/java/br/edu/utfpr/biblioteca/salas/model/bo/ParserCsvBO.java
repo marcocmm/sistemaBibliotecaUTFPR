@@ -86,6 +86,7 @@ public class ParserCsvBO {
     private void writeCsvReservasMensalOrAnual(List<RelatorioReservas> relatorioReservas) throws Exception {
       BufferedWriter writeFile = new BufferedWriter(new FileWriter(new File(filePath)));
       
+      
         writeFile.write("ESTATÍSTICA DO USO DAS SALAS DE ESTUDO");
         writeFile.newLine();
         writeFile.write("Mês, Manhã, Tarde, Noite, Total,");
@@ -98,12 +99,12 @@ public class ParserCsvBO {
             int quantidadeAlunosNoite = 0;
             for (RelatorioReservas relatorio : meses.getValue()) {
                 quantidadeAlunosManha += relatorio.getQuantidadeAlunosManha();
-                quantidadeAlunosTarde += relatorio.getQuantidadeAlunosNoite();
+                quantidadeAlunosTarde += relatorio.getQuantidadeAlunosTarde();
                 quantidadeAlunosNoite += relatorio.getQuantidadeAlunosNoite();
             }
             writeFile.write(quantidadeAlunosManha + ",");
             writeFile.write(quantidadeAlunosTarde + ",");
-            writeFile.write(quantidadeAlunosTarde + ",");
+            writeFile.write(quantidadeAlunosNoite + ",");
             writeFile.write((quantidadeAlunosManha + quantidadeAlunosTarde + quantidadeAlunosNoite) + ",");
             writeFile.newLine();
         }

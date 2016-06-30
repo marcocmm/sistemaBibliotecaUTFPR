@@ -25,7 +25,7 @@ and open the template in the editor.
 
 
                     <p:outputLabel for="console" value="Escolha um tipo de Relatório" />
-                    <p:selectOneMenu id="console" value="#{relatorioMB.tipoRelatorio}" style="width:125px">
+                    <p:selectOneMenu id="console" value="#{relatorioMB.tipoRelatorio}" style="width:157px">
                         <f:selectItem itemLabel="Selecione" itemValue="" />
                         <f:selectItem itemLabel="Relatório Semanal" itemValue="1" />
                         <f:selectItem itemLabel="Relatório Mensal" itemValue="2" />
@@ -33,9 +33,9 @@ and open the template in the editor.
                     </p:selectOneMenu>
 
                     <p:outputLabel for="button" value="Selecione a data inicial:" />
-                    <p:calendar id="button" value="#{relatorioMB.dataInicial}" showOn="button" />
+                    <p:calendar id="button" value="#{relatorioMB.dataInicial}" showOn="button"  />
                     <p:outputLabel for="button" value="Selecione a data final:" />
-                    <p:calendar id="button2" value="#{relatorioMB.dataFinal}" showOn="button" />
+                    <p:calendar id="button2" value="#{relatorioMB.dataFinal}" showOn="button"  />
 
                 </h:panelGrid>
 

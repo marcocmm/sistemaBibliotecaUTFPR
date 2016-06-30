@@ -203,8 +203,8 @@ public class ReservaBO {
 
         ReservaPO reserva = UsuarioBO.getReservaEmCursoHoje(usuarioLogado);
         if (reserva.getStatus().equals(new StatusPO("concluida"))) {
-            throw new Exception("Você já fez checkin, pode usar a sala!");
+            throw new Exception("Você já realizou o checkout!");
         }
-        ReservaBO.setStatus(reserva, "emCurso");
+        ReservaBO.setStatus(reserva, "concluida");
     }
 }

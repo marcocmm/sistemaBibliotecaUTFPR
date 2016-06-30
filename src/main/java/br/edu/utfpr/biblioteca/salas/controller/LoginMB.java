@@ -38,7 +38,7 @@ public class LoginMB {
         return UsuarioBO.alreadyCadastrado(this.usuario);
     }
 
-    private boolean isLogado() {
+    public boolean isLogado() {
         if (getUsuarioLogado() == null) {
             return false;
         }
@@ -155,9 +155,6 @@ public class LoginMB {
             if (usuarioLogado == null) {
                 if (usuario.getRa() == null || usuario.getSenha() == null) {
                     throw new Exception("Campos login e senha não podem ser nulos!");
-                }
-                if (usuario.getRa().isEmpty() || usuario.getSenha().isEmpty()) {
-                    throw new Exception("Informe o login e a senha!");
                 }
                 throw new RuntimeException("must be logged in");
             } else if (usuario.getRa().isEmpty() || usuario.getSenha().isEmpty()) {

@@ -7,6 +7,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
     <h:head>
+       
         <title>Sislib</title>
 
         <f:metadata name="description" content="Este site permite aos alunos da Universidade Tecnológica Federal do Paraná a realização de uma reserva de sala de estudos na biblioteca da instituição."></f:metadata>
@@ -79,19 +80,20 @@
                                     </h:panelGrid>
 
                                 </h:panelGrid>
+                                <p:commandButton  rendered="#{loginMB.logado}" id="reservarLogado" value="Reservar" actionListener="#{reservaRapidaMB.reservarSalaLogado()}" process="@this" update="reservar, link, growl, panel"/>
                             </p:panel>
 
-                            <p:panel id="panel" header="Autenticação" >
+                            <p:panel id="panel" rendered="#{!loginMB.logado}" header="Autenticação" >
                                 <h:panelGrid columns="" columnClasses="value">
 
                                     <h:outputText value="RA :" />
-                                    <p:inputText id="firstname" value="#{reservaRapidaMB.reserva.usuario.ra}">
+                                    <p:inputText id="firstname" value="#{reservaRapidaMB.reserva.usuario.ra}" >
                                         <p:ajax event="keyup" />
                                     </p:inputText>
 
                                     <h:outputText value="Senha :" />
-                                    <p:password id="lastname" value="#{reservaRapidaMB.reserva.usuario.senha}">
-                                        <p:ajax event="keyup" />
+                                    <p:password id="lastname" value="#{reservaRapidaMB.reserva.usuario.senha}"  >
+                                     <p:ajax event="keyup"  />
                                     </p:password>
                                     <p:commandButton id="reservar" rendered="#{!reservaRapidaMB.reservado}" value="Reservar" actionListener="#{reservaRapidaMB.reservarSala}" process="@this" update="reservar, link, growl, panel"/>
                                     <p:link id="link" outcome="index" value="Fazer outra reserva" rendered="#{reservaRapidaMB.reservado}"/>

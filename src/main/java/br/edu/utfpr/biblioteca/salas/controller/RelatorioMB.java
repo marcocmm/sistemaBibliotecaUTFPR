@@ -44,7 +44,7 @@ public class RelatorioMB {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         
         if (tipoRelatorio.isEmpty()){
-            facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao gerar relatório", "Você deve selecionar um tipo de relatporio"));
+            facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao gerar relatório", "Você deve selecionar um tipo de relatório"));
         }
         
         try {

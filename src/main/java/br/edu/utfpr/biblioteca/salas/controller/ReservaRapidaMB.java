@@ -1,5 +1,6 @@
 package br.edu.utfpr.biblioteca.salas.controller;
 
+import br.edu.utfpr.biblioteca.salas.model.bo.ReservaBO;
 import br.edu.utfpr.biblioteca.salas.view.BotaoHorario;
 import br.edu.utfpr.biblioteca.salas.model.bo.SalaBO;
 import br.edu.utfpr.biblioteca.salas.model.entity.UsuarioPO;
@@ -108,7 +109,8 @@ public class ReservaRapidaMB implements Serializable {
         }
         return qtdA;
     }
-
+    
+    
     /**
      * Método executado ao ser escolhida uma data no calendário
      *
@@ -182,6 +184,40 @@ public class ReservaRapidaMB implements Serializable {
         }
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
+    
+    public void reservarSalaLogado() {              
+        FacesMessage msg;
+         
+        
+         UsuarioPO usuarioLogado = SessionContext.getInstance().getUsuarioLogado();
+//        try {
+//            if (usuarioLogado == null) {
+//                if (usuario.getRa() == null || usuario.getSenha() == null) {
+//                    throw new Exception("Campos login e senha não podem ser nulos!");
+//                }
+//                throw new RuntimeException("must be logged in");
+//            } else if (usuario.getRa().isEmpty() || usuario.getSenha().isEmpty()) {
+//                throw new Exception("Informe o login e a senha!");
+//            }
+//
+//            this.usuario = usuarioLogado;
+//            ReservaBO.fazerCheckout(this.usuario);
+//            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Checkout efetuado!", null);
+//        } catch (Exception ex) {
+//            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, ex.getMessage(), null);
+//        } finally {
+//            FacesContext.getCurrentInstance().addMessage(null, message);
+//        }
+        reserva.setUsuario(usuarioLogado);
+        try {
+            SalaBO.reservarSala(reserva);
+            msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Reservado", getReserva().getStrDataInicial());
+            reservado = "true";
+        } catch (Exception ex) {
+            msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Fail", ex.getMessage());
+        }
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
 
     /**
      * Este método deve solicitar para a classe SalaBO um hash contendo as salas
@@ -200,7 +236,8 @@ public class ReservaRapidaMB implements Serializable {
         for (Map.Entry<Date, Boolean> entry : salasDisponiveis.entrySet()) {
             if ((entry.getValue()) && ((new Date()).before(entry.getKey()))) {
                 botoesHorario.add(new BotaoHorario(entry.getKey().getHours(), "verde", false));
-            } else {
+            } 
+            else {
                 botoesHorario.add(new BotaoHorario(entry.getKey().getHours(), "vermelho", true));
             }
         }

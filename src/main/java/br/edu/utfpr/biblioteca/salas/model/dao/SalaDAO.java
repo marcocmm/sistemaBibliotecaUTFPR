@@ -95,7 +95,7 @@ public class SalaDAO extends GenericDAO<SalaPO> {
         q.setParameter("status", new StatusPO("inativa"));
         q.setParameter("data", datetime);
         Long numeroReservas = (Long) q.getSingleResult();
-        return numeroReservas < 5;
+        return numeroReservas < 6;
     }
 
     /**

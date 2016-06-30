@@ -513,6 +513,7 @@ public class CalendarioHelper {
 
     public static String getPeriodoDia(Date date) {
         String hora[] = getHora(date).split(":");
+        System.out.println(hora[0]);
         int horaInt = Integer.parseInt(hora[0]);
         if (horaInt < 12) {
             return "manha";
