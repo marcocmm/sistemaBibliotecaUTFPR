@@ -25,7 +25,7 @@ public class AdministradorMBTest {
         adminstradorMB = new RelatorioMB();
 
         Date data = new Date(2016, 04, 29, 18, 0, 0);
-        adminstradorMB.setDataSelecionada(data);
+//        adminstradorMB.setDataSelecionada(data);
 
     }
 

@@ -8,7 +8,7 @@ VALUES ('1136631', 'Leonardo', MD5('baiser'), 'lpbaiser@gmail.com', false),
 	   ('1136632', 'Marina', MD5('silva'), 'msilva@gmail.com', false),
 	   ('637085', 'Dilmae', MD5('dilmae'), 'dilmae@gmail.com', false),
 	   ('1138081', 'João', MD5('ferreira'), 'fjoao@gmail.com', false),
-       ('1602063', 'Mateus Torres', MD5('torres'), 'lottar1996@gmail.com', false);
+       ('1602063', 'Mateus Torres', MD5('torres'), 'lottar1996@gmail.com', true);
 
 -- Insert de salas-- 
 INSERT INTO bdBiblioteca.Salas (id, ar)
