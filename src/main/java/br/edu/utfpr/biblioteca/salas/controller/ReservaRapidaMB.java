@@ -36,13 +36,14 @@ public class ReservaRapidaMB implements Serializable {
     private String strHora = "0";
     private List<BotaoHorario> botoesHorario;
     List<String> list = new ArrayList();
+    private String reservado;
 
     //Formatadores de data
     private final SimpleDateFormat formatoEmHoras;
     private final SimpleDateFormat formatoEmDia;
 
     public ReservaRapidaMB() {
-
+        reservado = "false";
         formatoEmHoras = new SimpleDateFormat("HH");
         formatoEmDia = new SimpleDateFormat("dd/MM/yyyy");
         this.reserva = new ReservaPO(new UsuarioPO(null, null, null, null), new SalaPO(0, true), new Date(), 0);
@@ -73,6 +74,7 @@ public class ReservaRapidaMB implements Serializable {
             }
         }
         this.strHora = strHora;
+        reservado = "false";
     }
 
     public Date getDataAtual() {
@@ -174,6 +176,7 @@ public class ReservaRapidaMB implements Serializable {
         try {
             SalaBO.reservarSala(reserva);
             msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Reservado", getReserva().getStrDataInicial());
+            reservado = "true";
         } catch (Exception ex) {
             msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Fail", ex.getMessage());
         }
@@ -220,6 +223,10 @@ public class ReservaRapidaMB implements Serializable {
 
     public List<ReservaPO> listarReservas(UsuarioPO usuario) {
         throw new UnsupportedOperationException();
+    }
+
+    public String getReservado() {
+        return reservado;
     }
 
 }
