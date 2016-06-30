@@ -11,93 +11,99 @@
 
         <f:metadata name="description" content="Este site permite aos alunos da Universidade Tecnológica Federal do Paraná a realização de uma reserva de sala de estudos na biblioteca da instituição."></f:metadata>
         <ui:include src="header.xhtml"/>
+        <h:outputStylesheet library="css" name="termoDeUso.css"/>
 
 
     </h:head>
     <h:body>
-        <h:outputText rendered="#{param.erro == 1}" value="Erro"/>
-        <h:form>
-            <p:growl id="growl" sticky="true" showDetail="true"/>
-            <p:wizard flowListener="#{reservaRapidaMB.onFlowProcess}">
+        <div class="larguraBorda">
+            <div class="largura">
 
-                <p:tab id="data" title="Data e Horário">
-                    <p:messages />
-                    <h:panelGrid columns="3" cellpadding="5">
-                        <p:growl id="msgs" showDetail="true" />
-                        <h:panelGrid columns="1" cellpadding="5">
-                            <p:calendar showOn="button" disabledWeekends="true" mindate="#{reservaRapidaMB.dataAtual}" id="inline" value="#{reservaRapidaMB.reserva.dataInicial}" mode="inline">
-                                <p:ajax event="dateSelect" listener="#{reservaRapidaMB.onDateSelect}" update="msgs,horariosReservas"/>
-                            </p:calendar> 
-                        </h:panelGrid>
-                        <h:panelGrid id="horariosReservas" columns="1">
-                            <p:dataGrid var="botao" value="#{reservaRapidaMB.botoesHorario}" columns="3" rows="15" paginator="false" id="horarios">
-                                <h:commandButton value="#{botao.value}" class="#{botao.classe}" disabled="#{botao.disabled}" actionListener="#{reservaRapidaMB.setStrHora(botao.horaStr)}"/>
+                <h:outputText rendered="#{param.erro == 1}" value="Erro"/>
+                <h:form>
+                    <p:growl id="growl" sticky="true" showDetail="true"/>
+                    <p:wizard flowListener="#{reservaRapidaMB.onFlowProcess}">
+
+                        <p:tab id="data" title="Data e Horário">
+                            <p:messages />
+                            <h:panelGrid columns="3" cellpadding="5">
+                                <p:growl id="msgs" showDetail="true" />
+                                <h:panelGrid columns="1" cellpadding="5">
+                                    <p:calendar showOn="button" disabledWeekends="true" mindate="#{reservaRapidaMB.dataAtual}" id="inline" value="#{reservaRapidaMB.reserva.dataInicial}" mode="inline">
+                                        <p:ajax event="dateSelect" listener="#{reservaRapidaMB.onDateSelect}" update="msgs,horariosReservas"/>
+                                    </p:calendar> 
+                                </h:panelGrid>
+                                <h:panelGrid id="horariosReservas" columns="1">
+                                    <p:dataGrid var="botao" value="#{reservaRapidaMB.botoesHorario}" columns="3" rows="15" paginator="false" id="horarios">
+                                        <h:commandButton value="#{botao.value}" class="#{botao.classe}" disabled="#{botao.disabled}" actionListener="#{reservaRapidaMB.setStrHora(botao.horaStr)}"/>
+                                    </p:dataGrid>
+                                </h:panelGrid>
+                            </h:panelGrid>
+                        </p:tab>
+
+                        <p:tab id="sala" title="Sala">
+                            <!--<p:messages />-->  
+                            <header>Defina a quantidade de alunos : </header>   
+                            <p:dataGrid var="aluno" value="#{reservaRapidaMB.selectQtd}" columns="1" rows="1" paginator="false" id="qtdA">
+                                <p:selectOneMenu id="qtd" value="#{reservaRapidaMB.reserva.quantidadeAlunos}" effect="fold">
+                                    <!--<f:selectItem itemLabel="Quantidade de alunos :" itemValue=""/>-->
+                                    <f:selectItems value="#{reservaRapidaMB.selectQtd}"/>
+                                </p:selectOneMenu>
                             </p:dataGrid>
-                        </h:panelGrid>
-                    </h:panelGrid>
-                </p:tab>
+                            <header>Selecione a sala desejada : </header>                       
+                            <p:dataGrid var="sala" value="#{reservaRapidaMB.salasDisponiveis}" columns="1" rows="1" paginator="false"  id="salas">
+                                <p:selectOneMenu id="salaid" value="#{reservaRapidaMB.reserva.sala.id}" effect="fold" editable="false">
+                                    <!--<f:selectItem itemLabel="Salas :" itemValue="" />-->
+                                    <f:selectItems value="#{reservaRapidaMB.list}"/>
+                                </p:selectOneMenu>
+                            </p:dataGrid>                  
+                        </p:tab>
 
-                <p:tab id="sala" title="Sala">
-                    <!--<p:messages />-->  
-                    <header>Defina a quantidade de alunos : </header>   
-                    <p:dataGrid var="aluno" value="#{reservaRapidaMB.selectQtd}" columns="1" rows="1" paginator="false" id="qtdA">
-                        <p:selectOneMenu id="qtd" value="#{reservaRapidaMB.reserva.quantidadeAlunos}" effect="fold">
-                            <!--<f:selectItem itemLabel="Quantidade de alunos :" itemValue=""/>-->
-                            <f:selectItems value="#{reservaRapidaMB.selectQtd}"/>
-                        </p:selectOneMenu>
-                    </p:dataGrid>
-                    <header>Selecione a sala desejada : </header>                       
-                    <p:dataGrid var="sala" value="#{reservaRapidaMB.salasDisponiveis}" columns="1" rows="1" paginator="false"  id="salas">
-                        <p:selectOneMenu id="salaid" value="#{reservaRapidaMB.reserva.sala.id}" effect="fold" editable="false">
-                            <!--<f:selectItem itemLabel="Salas :" itemValue="" />-->
-                            <f:selectItems value="#{reservaRapidaMB.list}"/>
-                        </p:selectOneMenu>
-                    </p:dataGrid>                  
-                </p:tab>
+                        <p:tab id="confirmacao" title="Confirmação">
+                            <p:messages />
+                            <p:panel header="Reserva">
+                                <h:panelGrid id="confirmation" columns="1" columnClasses="grid,grid,grid">
+                                    <h:panelGrid columns="2" columnClasses="value">
+                                        <h:outputText value="Data: " />
+                                        <h:outputText value="#{reservaRapidaMB.viewDataInicial}" styleClass="outputLabel"/>
 
-                <p:tab id="confirmacao" title="Confirmação">
-                    <p:messages />
-                    <p:panel header="Reserva">
-                        <h:panelGrid id="confirmation" columns="1" columnClasses="grid,grid,grid">
-                            <h:panelGrid columns="2" columnClasses="value">
-                                <h:outputText value="Data: " />
-                                <h:outputText value="#{reservaRapidaMB.viewDataInicial}" styleClass="outputLabel"/>
+                                        <h:outputText value="Horário: " />
+                                        <h:outputText value="#{reservaRapidaMB.viewHoraInicial}:00:00" styleClass="outputLabel"/>
+                                    </h:panelGrid>
 
-                                <h:outputText value="Horário: " />
-                                <h:outputText value="#{reservaRapidaMB.viewHoraInicial}:00:00" styleClass="outputLabel"/>
-                            </h:panelGrid>
+                                    <h:panelGrid columns="2" columnClasses="value">
+                                        <h:outputText value="Sala: " />
+                                        <h:outputText value="#{reservaRapidaMB.reserva.sala.id}" styleClass="outputLabel"/>
+                                        <h:outputText value="Alunos: " />
+                                        <h:outputText value="#{reservaRapidaMB.reserva.quantidadeAlunos}" styleClass="outputLabel"/>
+                                    </h:panelGrid>
 
-                            <h:panelGrid columns="2" columnClasses="value">
-                                <h:outputText value="Sala: " />
-                                <h:outputText value="#{reservaRapidaMB.reserva.sala.id}" styleClass="outputLabel"/>
-                                <h:outputText value="Alunos: " />
-                                <h:outputText value="#{reservaRapidaMB.reserva.quantidadeAlunos}" styleClass="outputLabel"/>
-                            </h:panelGrid>
+                                </h:panelGrid>
+                            </p:panel>
 
-                        </h:panelGrid>
-                    </p:panel>
+                            <p:panel header="Autenticação">
+                                <h:panelGrid columns="" columnClasses="value">
 
-                    <p:panel header="Autenticação">
-                        <h:panelGrid columns="" columnClasses="value">
+                                    <h:outputText value="RA :" />
+                                    <p:inputText id="firstname" value="#{reservaRapidaMB.reserva.usuario.ra}">
+                                        <p:ajax event="keyup" />
+                                    </p:inputText>
 
-                            <h:outputText value="RA :" />
-                            <p:inputText id="firstname" value="#{reservaRapidaMB.reserva.usuario.ra}">
-                                <p:ajax event="keyup" />
-                            </p:inputText>
+                                    <h:outputText value="Senha :" />
+                                    <p:password id="lastname" value="#{reservaRapidaMB.reserva.usuario.senha}">
+                                        <p:ajax event="keyup" />
+                                    </p:password>
+                                    <p:commandButton value="Reservar" actionListener="#{reservaRapidaMB.reservarSala}" update="growl" process="@this"/>
+                                </h:panelGrid>
+                            </p:panel>
 
-                            <h:outputText value="Senha :" />
-                            <p:password id="lastname" value="#{reservaRapidaMB.reserva.usuario.senha}">
-                                <p:ajax event="keyup" />
-                            </p:password>
-                            <p:commandButton value="Reservar" actionListener="#{reservaRapidaMB.reservarSala}" update="growl" process="@this"/>
-                        </h:panelGrid>
-                    </p:panel>
+                        </p:tab>
 
-                </p:tab>
+                    </p:wizard>
 
-            </p:wizard>
-
-        </h:form>
+                </h:form>
+            </div>
+        </div>
 
         <script type="text/javascript">
             function handleLoginRequest(xhr, status, args) {
