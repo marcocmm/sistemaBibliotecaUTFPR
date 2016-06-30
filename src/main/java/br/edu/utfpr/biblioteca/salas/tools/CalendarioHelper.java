@@ -500,4 +500,26 @@ public class CalendarioHelper {
         calendar.set(Calendar.MINUTE, minute);
         return calendar.getTime();
     }
+    
+    public static Date setHoraMinutosSegundos(Date date, int hora, int minutos, int segundos) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.HOUR, hora);
+        calendar.set(Calendar.MINUTE, minutos);
+        calendar.set(Calendar.SECOND, segundos);
+        return calendar.getTime();
+    }
+    
+
+    public static String getPeriodoDia(Date date) {
+        String hora[] = getHora(date).split(":");
+        int horaInt = Integer.parseInt(hora[0]);
+        if (horaInt < 12) {
+            return "manha";
+        } else if (horaInt >= 12 && horaInt <= 17) {
+            return "tarde";
+        }
+        return "noite";
+    }
+
 }

@@ -143,6 +143,11 @@ border: 1px solid #666;
     background-color: #EDF3F3;
 }
 
+.relatorioAling{
+    margin: 0% 10% 10% 10%;
+    padding-top: 15%;
+}
+
 
 /*  #header{
             min-height: 100px;

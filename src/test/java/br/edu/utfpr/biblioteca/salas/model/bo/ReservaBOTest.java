@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -67,8 +69,11 @@ public class ReservaBOTest {
             RelatorioReservas relatorio = new RelatorioReservas(CalendarioHelper.parseDate(String.valueOf(i) + "-06-2016", "8", "0", "0"), 10, 20, 5);
             relatoriosReservas.add(relatorio);
         }
-        ParserCsvBO parser = new ParserCsvBO(1);
-        parser.writeCsvReservasSemana(relatoriosReservas);
+        try {
+            ParserCsvBO parser = new ParserCsvBO(1, relatoriosReservas);
+        } catch (Exception ex) {
+            Logger.getLogger(ReservaBOTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }
 
@@ -79,10 +84,12 @@ public class ReservaBOTest {
             RelatorioReservas relatorio = new RelatorioReservas(CalendarioHelper.parseDate("01-" + String.valueOf(i) + "-2016"), (10 + i), (20 + i), (5 + i));
             relatoriosReservas.add(relatorio);
         }
-        ParserCsvBO parserMensal = new ParserCsvBO(2);
-        parserMensal.writeCsvReservasMensalOrAnual(relatoriosReservas);
-        ParserCsvBO parserAnual = new ParserCsvBO(3);
-        parserAnual.writeCsvReservasMensalOrAnual(relatoriosReservas);
+        try {
+            ParserCsvBO parserMensal = new ParserCsvBO(2, relatoriosReservas);
+            ParserCsvBO parserAnual = new ParserCsvBO(3, relatoriosReservas);
+        } catch (Exception ex) {
+            Logger.getLogger(ReservaBOTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }
 

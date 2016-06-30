@@ -2,6 +2,7 @@ package br.edu.utfpr.biblioteca.salas.model.bo;
 
 import br.edu.utfpr.biblioteca.salas.model.RelatorioReservas;
 import br.edu.utfpr.biblioteca.salas.tools.CalendarioHelper;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -16,6 +17,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.faces.context.FacesContext;
+import javax.servlet.ServletContext;
 
 /**
  *
@@ -24,64 +27,72 @@ import java.util.logging.Logger;
 public class ParserCsvBO {
 
     private String filePath;
-    private FileWriter file;
+    private List<RelatorioReservas> relatorioReservas;
 
-    public ParserCsvBO(int tipoRelatorio) {
+    public ParserCsvBO(int tipoRelatorio, List<RelatorioReservas> relatorioReservas) throws Exception {
         String path = "";
-        switch (tipoRelatorio){
+        this.relatorioReservas = relatorioReservas;
+        ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
+        switch (tipoRelatorio) {
             case 1:
-                path = "./relatorios/RelatorioSemanal.csv";
+                path = servletContext.getRealPath("") + "resources/relatorios/RelatorioSemanal.csv";
+
+                filePath = new File(path).getCanonicalPath();
+
+                writeCsvReservasSemana(relatorioReservas);
                 break;
             case 2:
-                path = "./relatorios/RelatorioMensal.csv";
+                path = servletContext.getRealPath("") + "resources/relatorios/RelatorioMensal.csv";
+
+                filePath = new File(path).getCanonicalPath();
+
+                writeCsvReservasMensalOrAnual(relatorioReservas);
                 break;
             case 3:
-                path = "./relatorios/RelatorioAnual.csv";
+                path = servletContext.getRealPath("") + "resources/relatorios/RelatorioAnual.csv";
+
+                filePath = new File(path).getCanonicalPath();
+
+                writeCsvReservasMensalOrAnual(relatorioReservas);
                 break;
         }
-        try {
-            filePath = new File(path).getCanonicalPath();
-        } catch (IOException ex) {
-            Logger.getLogger(ParserCsvBO.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
     }
 
-    public void writeCsvReservasSemana(List<RelatorioReservas> relatorioReservas) {
-        PrintWriter writeFile = null;
-        try {
-            writeFile = new PrintWriter(new OutputStreamWriter(new FileOutputStream(filePath), Charset.forName("UTF-8")));
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(ParserCsvBO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        writeFile.print("ESTATÍSTICA DO USO DAS SALAS DE ESTUDO");
-        writeFile.println();
-        writeFile.print("Data, Manhã, Tarde, Noite, Total,");
-        writeFile.println();
+    private void writeCsvReservasSemana(List<RelatorioReservas> relatorioReservas) throws Exception {
+//        PrintWriter writeFile = null;
+        BufferedWriter writeFile = new BufferedWriter(new FileWriter(new File(filePath)));
+//        try {
+//            writeFile = new PrintWriter(new OutputStreamWriter(new FileOutputStream(filePath), Charset.forName("UTF-8")));
+//        } catch (FileNotFoundException ex) {
+//            Logger.getLogger(ParserCsvBO.class.getName()).log(Level.SEVERE, null, ex);
+//
+//        }
+        writeFile.write("ESTATÍSTICA DO USO DAS SALAS DE ESTUDO");
+        writeFile.newLine();
+        writeFile.write("Data, Manhã, Tarde, Noite, Total,");
+        writeFile.newLine();
         for (RelatorioReservas relatorio : relatorioReservas) {
-            writeFile.print(CalendarioHelper.getDiaMesAno(relatorio.getData()) + ",");
-            writeFile.print(relatorio.getQuantidadeAlunosManha() + ",");
-            writeFile.print(relatorio.getQuantidadeAlunosTarde() + ",");
-            writeFile.print(relatorio.getQuantidadeAlunosNoite() + ",");
-            writeFile.print(relatorio.getQuantidadeAlunosTotal() + ",");
-            writeFile.println();
+            writeFile.write(CalendarioHelper.getDiaMesAno(relatorio.getData()) + ",");
+            writeFile.write(relatorio.getQuantidadeAlunosManha() + ",");
+            writeFile.write(relatorio.getQuantidadeAlunosTarde() + ",");
+            writeFile.write(relatorio.getQuantidadeAlunosNoite() + ",");
+            writeFile.write(relatorio.getQuantidadeAlunosTotal() + ",");
+            writeFile.newLine();
         }
         writeFile.close();
     }
 
-    public void writeCsvReservasMensalOrAnual(List<RelatorioReservas> relatorioReservas) {
-        PrintWriter writeFile = null;
-        try {
-            writeFile = new PrintWriter(new OutputStreamWriter(new FileOutputStream(filePath), Charset.forName("UTF-8")));
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(ParserCsvBO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        writeFile.print("ESTATÍSTICA DO USO DAS SALAS DE ESTUDO");
-        writeFile.println();
-        writeFile.print("Mês, Manhã, Tarde, Noite, Total,");
-        writeFile.println();
+    private void writeCsvReservasMensalOrAnual(List<RelatorioReservas> relatorioReservas) throws Exception {
+      BufferedWriter writeFile = new BufferedWriter(new FileWriter(new File(filePath)));
+      
+        writeFile.write("ESTATÍSTICA DO USO DAS SALAS DE ESTUDO");
+        writeFile.newLine();
+        writeFile.write("Mês, Manhã, Tarde, Noite, Total,");
+        writeFile.newLine();
         HashMap<String, List<RelatorioReservas>> relatorioByMes = getMeses(relatorioReservas);
         for (Map.Entry<String, List<RelatorioReservas>> meses : relatorioByMes.entrySet()) {
-            writeFile.print(meses.getKey() + ",");
+            writeFile.write(meses.getKey() + ",");
             int quantidadeAlunosManha = 0;
             int quantidadeAlunosTarde = 0;
             int quantidadeAlunosNoite = 0;
@@ -90,11 +101,11 @@ public class ParserCsvBO {
                 quantidadeAlunosTarde += relatorio.getQuantidadeAlunosNoite();
                 quantidadeAlunosNoite += relatorio.getQuantidadeAlunosNoite();
             }
-            writeFile.print(quantidadeAlunosManha + ",");
-            writeFile.print(quantidadeAlunosTarde + ",");
-            writeFile.print(quantidadeAlunosTarde + ",");
-            writeFile.print((quantidadeAlunosManha + quantidadeAlunosTarde + quantidadeAlunosNoite) + ",");
-            writeFile.println();
+            writeFile.write(quantidadeAlunosManha + ",");
+            writeFile.write(quantidadeAlunosTarde + ",");
+            writeFile.write(quantidadeAlunosTarde + ",");
+            writeFile.write((quantidadeAlunosManha + quantidadeAlunosTarde + quantidadeAlunosNoite) + ",");
+            writeFile.newLine();
         }
         writeFile.close();
     }

@@ -16,7 +16,61 @@ and open the template in the editor.
         <ui:include src="header.xhtml"/>
     </h:head>
     <h:body>
-        <div>TODO write content</div>
+
+        <div class="">
+
+            <h:form id="form" class="relatorioAling">
+                <p:growl id="msgs" showDetail="true" />
+                <h:panelGrid columns="2" cellpadding="5">
+
+
+                    <p:outputLabel for="console" value="Escolha um tipo de Relatório" />
+                    <p:selectOneMenu id="console" value="#{relatorioMB.tipoRelatorio}" style="width:125px">
+                        <f:selectItem itemLabel="Selecione" itemValue="" />
+                        <f:selectItem itemLabel="Relatório Semanal" itemValue="1" />
+                        <f:selectItem itemLabel="Relatório Mensal" itemValue="2" />
+                        <f:selectItem itemLabel="Relatório Anual" itemValue="3" />
+                    </p:selectOneMenu>
+
+                    <p:outputLabel for="button" value="Selecione a data inicial:" />
+                    <p:calendar id="button" value="#{relatorioMB.dataInicial}" showOn="button" />
+                    <p:outputLabel for="button" value="Selecione a data final:" />
+                    <p:calendar id="button2" value="#{relatorioMB.dataFinal}" showOn="button" />
+
+                </h:panelGrid>
+
+
+                <p:commandButton value="Gerar relatório" icon="ui-icon-check" actionListener="#{relatorioMB.gerarRelatorio}" ajax="false"/>
+
+                <p:dialog modal="true" widgetVar="statusDialog" header="Status" draggable="false" closable="false" resizable="false">
+                    
+                </p:dialog>
+                <p:commandButton value="Download do relatório" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" icon="ui-icon-arrowthick-1-s">
+                    <p:fileDownload value="#{relatorioMB.file}" />
+                </p:commandButton>
+
+                <p:dialog modal="true" resizable="false" header="Values" widgetVar="dlg" showEffect="fold">
+                    <h:outputText value="Button:" />
+                    <h:outputText value="#{relatorioMB.dataInicial}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                </p:dialog>
+
+
+            </h:form>
+
+            <script type="text/javascript">
+                function start() {
+                    PF('statusDialog').show();
+                }
+
+                function stop() {
+                    PF('statusDialog').hide();
+                }
+            </script>
+
+        </div>
+
         <ui:include src="footer.xhtml"/>
     </h:body>
 </html>
